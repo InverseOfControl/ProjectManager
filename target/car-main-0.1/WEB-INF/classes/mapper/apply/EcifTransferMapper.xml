@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.EcifTransferMapper">
+	<resultMap id="ecifTransferResultMap" type="com.ezendai.credit2.apply.model.EcifTransfer">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PERSON_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="ECIF_ID" property="ecifId" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="ECIF_REQ" property="ecifReq" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="ECIF_RES" property="ecifRes" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="INTERFACE_TYPE" property="interfaceType" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="STATUS_MESSAGE" property="statusMessage" jdbcType="VARCHAR" javaType="java.lang.String" />
+		
+		<result column="PERSON_NAME" property="personName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PERSON_IDNUM" property="personIdnum" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		
+		
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+	    <result column="CREATED_TIME" property="createdTime" jdbcType="DATE" />
+	    <result column="CREATOR_ID" property="creatorId" jdbcType="DECIMAL" />
+	    <result column="MODIFIER_ID" property="modifierId" jdbcType="DECIMAL" />
+	    <result column="MODIFIER" property="modifier" jdbcType="VARCHAR" />
+	    <result column="MODIFIED_TIME" property="modifiedTime" jdbcType="DATE" />
+	    <result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    	
+	</resultMap>
+	<sql id="ecifTransferField">
+	ECIF_TRANSFER.ID, 
+		ECIF_TRANSFER.PERSON_ID, 
+		ECIF_TRANSFER.ECIF_ID, 
+		ECIF_TRANSFER.ECIF_REQ, 
+		ECIF_TRANSFER.ECIF_RES,
+		 ECIF_TRANSFER.STATUS,
+		 ECIF_TRANSFER.INTERFACE_TYPE, 
+		 ECIF_TRANSFER.STATUS_MESSAGE, 
+		 ECIF_TRANSFER.PERSON_NAME, 
+		 ECIF_TRANSFER.PERSON_IDNUM, 
+		 ECIF_TRANSFER.PRODUCT_ID, 
+		 ECIF_TRANSFER.PRODUCT_TYPE, 	 
+		 ECIF_TRANSFER.CREATOR,
+		ECIF_TRANSFER.CREATED_TIME, 
+		ECIF_TRANSFER.CREATOR_ID, 
+		ECIF_TRANSFER.MODIFIER_ID,
+		ECIF_TRANSFER.MODIFIER, 
+		ECIF_TRANSFER.MODIFIED_TIME, 
+		ECIF_TRANSFER.VERSION
+	</sql>
+
+	
+<!-- 	<sql id="ecifTransferExtensionField">
+		<include refid="ecifTransferField" />
+		,
+		person.NAME as person_name,
+		person.IDNUM as person_idnum
+		
+	</sql> -->
+	
+	<sql id="ecifTransferConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="createdTimeAfter != null and createdTimeAfter != '' ">
+				AND ECIF_TRANSFER.CREATED_TIME  <![CDATA[ >= ]]> #{createdTimeAfter}
+			</if>
+			<if test="createdTimeBefore != null and createdTimeBefore != '' ">
+				AND ECIF_TRANSFER.CREATED_TIME  <![CDATA[ <= ]]> #{createdTimeBefore}
+			</if>
+			<if test="status != null and status !=''">
+				AND ECIF_TRANSFER.STATUS = #{status}
+			</if>
+			<!-- <if test="personName != null">
+				AND person.NAME LIKE '%'||#{personName}||'%'
+			</if>
+			
+			<if test="personIdnum != null">
+				AND person.IDNUM = #{personIdnum}
+			</if> -->
+			
+			<if test="personName != null and personName != ''">
+				AND  ECIF_TRANSFER.PERSON_NAME LIKE '%'||#{personName}||'%'
+			</if>
+			
+			<if test="personIdnum != null and personIdnum != ''">
+				AND ECIF_TRANSFER.PERSON_IDNUM = #{personIdnum}
+			</if> 
+			
+			
+				
+		
+		</trim>
+	</sql>
+	
+	<select id="count" parameterType="EcifTransferVO" resultType="java.lang.Integer">
+	
+		SELECT COUNT(*) FROM (
+			SELECT
+			<include refid="ecifTransferField" />	
+			FROM ECIF_TRANSFER
+			<!-- left join PERSON person on ECIF_TRANSFER.PERSON_ID = person.ID -->
+			<include refid="ecifTransferConditions" />
+		)
+	</select>
+	<select id="findWithPG"  resultMap="ecifTransferResultMap" parameterType="EcifTransferVO" >
+	 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		SELECT
+		<include refid="ecifTransferField" />		
+		FROM ECIF_TRANSFER
+		<!-- left join PERSON person on ECIF_TRANSFER.PERSON_ID = person.ID -->
+		<include refid="ecifTransferConditions" />
+		
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />	
+	</select>
+
+	<insert id="insert" parameterType="EcifTransfer">
+	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT SEQ_ECIF_TRANSFER_ID.nextval AS id FROM dual
+		</selectKey>
+		
+		INSERT INTO ECIF_TRANSFER
+		<trim prefix="(" suffixOverrides="," suffix=")">
+		ID,
+			<if test="personId != null">
+				PERSON_ID,
+			</if>
+			<if test="ecifId != null">
+				ECIF_ID,
+			</if>
+			<if test="ecifReq != null">
+				ECIF_REQ,
+			</if>
+			<if test="ecifRes != null">
+				ECIF_RES,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="interfaceType != null">
+				INTERFACE_TYPE,
+			</if>
+			
+			<if test="statusMessage != null">
+				STATUS_MESSAGE,
+			</if>
+			
+			<if test="personName != null">
+				PERSON_NAME,
+       		</if>
+       		 	<if test="personIdnum != null">
+				PERSON_IDNUM,
+       		</if>
+       		 	<if test="productId != null">
+				PRODUCT_ID,
+       		</if>
+       		 	<if test="productType != null">
+				PRODUCT_TYPE,
+       		</if>
+			
+			 <if test="creator != null" >
+		        CREATOR,
+		      </if>
+		      <if test="createdTime != null" >
+		        CREATED_TIME,
+		      </if>
+		      <if test="creatorId != null" >
+		        CREATOR_ID,
+		      </if>
+		      <if test="modifierId != null" >
+		        MODIFIER_ID,
+		      </if>
+		      <if test="modifier != null" >
+		        MODIFIER,
+		      </if>
+		      <if test="modifiedTime != null" >
+		        MODIFIED_TIME,
+		      </if>
+	      	<if test="version != null">
+				VERSION,
+       		</if>
+			
+	
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+		#{id},
+			<if test="personId != null">
+				#{personId},
+			</if>
+			<if test="ecifId != null">
+				#{ecifId},
+			</if>
+			<if test="ecifReq != null">
+				#{ecifReq},
+			</if>
+			<if test="ecifRes != null">
+				#{ecifRes},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="interfaceType != null">
+				#{interfaceType},
+			</if>
+			<if test="statusMessage != null">
+				#{statusMessage},
+			</if>
+			
+			<if test="personName != null">
+				#{personName},
+			</if>	<if test="personIdnum != null">
+				#{personIdnum},
+			</if>	
+			<if test="productId != null">
+				#{productId},
+			</if>	<if test="productType != null">
+				#{productType},
+			</if>
+			
+			<if test="creator != null" >
+		        #{creator,jdbcType=VARCHAR},
+		      </if>
+		      <if test="createdTime != null" >
+		        #{createdTime,jdbcType=DATE},
+		      </if>
+		      <if test="creatorId != null" >
+		        #{creatorId,jdbcType=DECIMAL},
+		      </if>
+		      <if test="modifierId != null" >
+		        #{modifierId,jdbcType=DECIMAL},
+		      </if>
+		      <if test="modifier != null" >
+		        #{modifier,jdbcType=VARCHAR},
+		      </if>
+		      <if test="modifiedTime != null" >
+		        #{modifiedTime,jdbcType=DATE},
+		      </if>
+		       <if test="version != null" >
+        			#{version},
+      			</if>
+			
+		</trim>
+	</insert>
+	
+
+
+
+</mapper>

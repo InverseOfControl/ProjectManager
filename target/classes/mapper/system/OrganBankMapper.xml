@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.system.mapper.OrganBankMapper" >
+	  <resultMap id="organBankResultMap" type="OrganBank">
+	    <result column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	    <result column="ORGAN_ID" property="organId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	    <result column="BANK_ACCOUNT_ID" property="bankAccountId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	    <result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	  </resultMap>
+  
+   <resultMap id="bankAccountResultMap" type="com.ezendai.credit2.apply.model.BankAccount" >
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="account" column="ACCOUNT" jdbcType="VARCHAR"	javaType="java.lang.String" />
+		<result property="accountName" column="ACCOUNT_NAME" jdbcType="VARCHAR"	javaType="java.lang.String" />
+		<result property="bankName" column="BANK_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="branchName" column="BRANCH_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="cardType" column="CARD_TYPE" jdbcType="NUMERIC"  javaType="java.lang.Integer" />
+  </resultMap>
+  
+	<sql id="organBankField">
+		ORGAN_BANK.ID ,ORGAN_BANK.ORGAN_ID ,ORGAN_BANK.BANK_ACCOUNT_ID ,ORGAN_BANK.VERSION
+	</sql>
+  
+ 	<sql id="organBankSelective">
+		SELECT
+		<include refid="organBankField" />
+		FROM ORGAN_BANK
+	</sql>
+	
+    <sql id="bankAccountSelective">
+	    SELECT BANK_ACCOUNT.ID, 
+	    BANK_ACCOUNT.ACCOUNT_NAME,
+	    BANK_ACCOUNT.ACCOUNT,
+	    BANK_ACCOUNT.BRANCH_NAME,
+	    BANK_ACCOUNT.BANK_NAME,
+	    BANK_ACCOUNT.CARD_TYPE 
+		FROM ORGAN_BANK INNER JOIN BANK_ACCOUNT ON ORGAN_BANK.BANK_ACCOUNT_ID = BANK_ACCOUNT.ID  
+	</sql>
+	
+	<select id="findBankAccountListByVo"  resultMap="bankAccountResultMap" parameterType="OrganBankVO" >
+		<include refid="bankAccountSelective" />
+		<include refid="organBankConditions" />	
+		ORDER BY BANK_ACCOUNT.CARD_TYPE ASC
+	</select>
+	
+	<sql id="organBankConditions">
+	  <trim prefix="where" prefixOverrides="and">
+		  <if test="id != null ">
+		   AND ORGAN_BANK.ID= #{id}
+	      </if>
+	      <if test="organId != null ">
+	        AND ORGAN_BANK.ORGAN_ID =  #{organId}
+	      </if>
+	      <if test="bankAccountId != null ">
+	       AND  ORGAN_BANK.BANK_ACCOUNT_ID = #{bankAccountId}
+	      </if>
+	      <if test="version != null">
+	        AND ORGAN_BANK.VERSION =  #{version}
+	      </if>
+	   </trim>
+	</sql>
+
+  <insert id="insert" parameterType="OrganBank" >
+  		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			SEQ_ORGAN_BANK_ID.nextval AS id FROM dual
+		</selectKey>
+    insert into ORGAN_BANK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="organId != null ">
+        ORGAN_ID, 
+      </if>
+      <if test="bankAccountId != null ">
+       BANK_ACCOUNT_ID,
+      </if>
+      <if test="version != null" >
+        VERSION
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+         #{id},
+      </if>
+      <if test="organId != null ">
+         #{organId}, 
+      </if>
+      <if test="bankAccountId != null ">
+         #{bankAccountId},
+      </if>
+      <if test="version != null" >
+         #{version}
+      </if>
+    </trim>
+  </insert>
+  
+   <update id="update" parameterType="OrganBankVO">
+    update ORGAN
+    <trim prefix="set" suffixOverrides=",">        
+      <if test="organId != null ">
+       ORGAN_ID = #{organId},
+      </if>
+      <if test="bankAccountId != null ">
+       BANK_ACCOUNT_ID = #{bankAccountId},
+      </if>
+      <if test="version != null and version !=''">
+        VERSION = #{version}
+      </if>  
+       </trim>
+   		WHERE ID = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+  </update>
+  
+  <sql id="organBankOrderByConditions">
+		ORDER BY ORGAN.CREATED_TIME
+  </sql>
+  	
+	<select id="get" resultMap="organBankResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="organBankField" />
+		FROM ORGAN_BANK
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="findListByVO"  resultMap="organBankResultMap" parameterType="OrganBankVO" >
+		<include refid="organBankSelective" />
+		<include refid="organBankConditions" />	
+	</select>
+	
+	<delete id="delete" parameterType="java.lang.Long"  >
+		DELETE FROM ORGAN_BANK WHERE ID = #{id}
+	</delete>
+	
+	<delete id="deleteListByVo" parameterType="OrganBankVO">
+		DELETE FROM ORGAN_BANK 
+		<include refid="organBankConditions" />	
+	</delete>
+  
+  	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM ORGAN_BANK WHERE ID = #{ID}
+	</select>
+	
+    <select id="count" parameterType="OrganBankVO" resultType="java.lang.Integer">
+		SELECT count(*) FROM (
+		<include refid="organBankSelective" />
+		<include refid="organBankConditions" />
+		)
+	</select>
+	
+	<select id="findWithPG" parameterType="OrganBankVO" resultMap="organBankResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="organBankSelective" />
+		<include refid="organBankConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>	
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+</mapper>

@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.ProductMapper">
+	<resultMap id="productResultMap" type="Product">
+	
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PRODUCT_CODE" property="productCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PRODUCT_TYPE_NAME" property="productTypeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="CONSULTING_FEE_RATE" property="consultingFeeRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="MANAGE_PART_RATE" property="managePartRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="MANAGE_FEE_RATE" property="manageFeeRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="OVERDUE_INTEREST_RATE" property="overdueInterestRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="RISK_RATE" property="riskRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="ASSESSMENT_FEE_RATE" property="assessmentFeeRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="RATE" property="rate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="STATUS" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="THIRD_FEE_RATE" property="thirdFeeRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />	
+		<result column="MONTH_RATE" property="monthRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />	
+		<result column="PENALTY_RATE" property="penaltyRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />	
+		<result column="YEAR_RATE" property="yearRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />	
+		<result column="OVERDUE_INTEREST_RATE_CAR" property="overdueInterestRateCar" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+	</resultMap>
+	
+	<resultMap id="productTypeResultMap" type="Product">
+		<result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="PRODUCT_TYPE_NAME" property="productTypeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	
+	<sql id="productFeild">
+		PRODUCT.ID,
+		PRODUCT.PRODUCT_CODE,
+		PRODUCT.PRODUCT_NAME,
+		PRODUCT.PRODUCT_TYPE,
+		PRODUCT.PRODUCT_TYPE_NAME,
+		PRODUCT.CONSULTING_FEE_RATE,
+		PRODUCT.MANAGE_PART_RATE,
+		PRODUCT.MANAGE_FEE_RATE,
+		PRODUCT.OVERDUE_INTEREST_RATE,
+		PRODUCT.RISK_RATE,
+		PRODUCT.ASSESSMENT_FEE_RATE,
+		PRODUCT.RATE,
+		PRODUCT.STATUS,
+		PRODUCT.CREATOR_ID,
+		PRODUCT.CREATOR,
+		PRODUCT.CREATED_TIME,
+		PRODUCT.MODIFIER_ID,
+		PRODUCT.MODIFIER,
+		PRODUCT.MODIFIED_TIME,
+		PRODUCT.REMARK,
+		PRODUCT.VERSION,
+		PRODUCT.THIRD_FEE_RATE,
+		PRODUCT.MONTH_RATE,
+		PRODUCT.PENALTY_RATE,
+		PRODUCT.YEAR_RATE,
+		PRODUCT.OVERDUE_INTEREST_RATE_CAR
+	</sql>
+
+	<sql id="productSelective">
+		SELECT
+		<include refid="productFeild" />
+		FROM PRODUCT
+	</sql>
+
+	<sql id="productConditions">
+		<where>
+			<if test="id != null">
+				AND PRODUCT.ID = #{id}
+			</if>
+			<if test="productCode != null and productCode != ''">
+				AND PRODUCT.PRODUCT_CODE LIKE '%' || #{productCode} || '%'
+			</if>
+			<if test="productName != null and productName != ''">
+				AND PRODUCT.PRODUCT_NAME LIKE '%' || #{productName} || '%'
+			</if>
+			<if test="productFullName != null and productFullName != ''">
+				AND PRODUCT.PRODUCT_NAME = #{productFullName}
+			</if>
+			<if test="productType != null">
+				AND PRODUCT.PRODUCT_TYPE = #{productType}
+			</if>
+			<if test="productTypeName != null and productTypeName != ''">
+				AND PRODUCT.PRODUCT_TYPE_NAME = #{productTypeName}
+			</if>
+			<if test="consultingFeeRate != null">
+				AND PRODUCT.CONSULTING_FEE_RATE = #{consultingFeeRate}
+			</if>
+			<if test="managePartRate != null">
+				AND PRODUCT.MANAGE_PART_RATE = #{managePartRate}
+			</if>
+			<if test="manageFeeRate != null">
+				AND PRODUCT.MANAGE_FEE_RATE = #{manageFeeRate}
+			</if>
+			<if test="overdueInterestRate != null">
+				AND PRODUCT.OVERDUE_INTEREST_RATE = #{overdueInterestRate}
+			</if>
+			<if test="riskRate != null">
+				AND PRODUCT.RISK_RATE = #{riskRate}
+			</if>
+			<if test="assessmentFeeRate != null">
+				AND PRODUCT.ASSESSMENT_FEE_RATE = #{assessmentFeeRate}
+			</if>
+			<if test="rate != null">
+				AND PRODUCT.RATE = #{rate}
+			</if>
+			<if test="status != null">
+				AND PRODUCT.STATUS = #{status}
+			</if>
+			<if test="creatorId != null">
+				AND PRODUCT.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null">
+				AND PRODUCT.CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND PRODUCT.CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				AND PRODUCT.MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null">
+				AND PRODUCT.MODIFIER = #{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				AND PRODUCT.MODIFIED_TIME = #{modifiedTime}
+			</if>
+			<if test="idList !=null and idList.size() > 0">
+				AND PRODUCT.ID in(
+				<foreach item="guard" index="index" collection="idList"
+					separator=",">
+					#{guard}
+				</foreach>
+				)
+			</if>
+			<if test="remark != null and remark != ''">
+				AND PRODUCT.REMARK = #{remark}
+			</if>
+			<if test="thirdFeeRate != null ">
+				AND PRODUCT.THIRD_FEE_RATE = #{thirdFeeRate}
+			</if>
+			<if test="monthRate != null ">
+				AND PRODUCT.MONTH_RATE = #{monthRate}
+			</if>
+			<if test="penaltyRate != null ">
+				AND PRODUCT.PENALTY_RATE = #{penaltyRate}
+			</if>
+			<if test="yearRate != null ">
+				AND PRODUCT.YEAR_RATE = #{yearRate}
+			</if>
+		</where>
+	</sql>
+
+	<select id="get" parameterType="java.lang.Long" resultMap="productResultMap">
+		<include refid="productSelective" />
+		WHERE  PRODUCT.id = #{id}
+	</select>
+	
+	<!-- 根据用户ID查找贷款类型  -->
+	<select id="selectByUserId" parameterType="java.lang.Long" resultMap="productResultMap">
+		SELECT
+		<include refid="productFeild" />
+		FROM PRODUCT LEFT JOIN SYS_PRODUCT_USER sp on sp.product_id=product.id
+		WHERE sp.user_id = #{userId}
+	</select>
+  
+	<update id="update" parameterType="ProductVO">
+		UPDATE PRODUCT
+		<trim prefix="set" suffixOverrides=",">
+			<if test="id != null">
+				ID = #{id},
+			</if>
+			<if test="productCode != null">
+				PRODUCT_CODE = #{productCode},
+			</if>
+			<if test="productName != null">
+				PRODUCT_NAME = #{productName},
+			</if>
+			<if test="productType != null">
+				PRODUCT_TYPE = #{productType},
+			</if>
+			<if test="productTypeName != null">
+				PRODUCT_TYPE_NAME = #{productTypeName},
+			</if>
+			<if test="consultingFeeRate != null">
+				CONSULTING_FEE_RATE = #{consultingFeeRate},
+			</if>
+			<if test="managePartRate != null">
+				MANAGE_PART_RATE = #{managePartRate},
+			</if>
+			<if test="manageFeeRate != null">
+				MANAGE_FEE_RATE = #{manageFeeRate},
+			</if>
+			<if test="overdueInterestRate != null">
+				OVERDUE_INTEREST_RATE = #{overdueInterestRate},
+			</if>
+			<if test="riskRate != null">
+				RISK_RATE = #{riskRate},
+			</if>
+			<if test="assessmentFeeRate != null">
+				ASSESSMENT_FEE_RATE = #{assessmentFeeRate},
+			</if>
+			<if test="rate != null">
+				RATE = #{rate},
+			</if>
+			<if test="status != null">
+				STATUS = #{status},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="thirdFeeRate != null">
+				THIRD_FEE_RATE = #{thirdFeeRate},
+			</if>
+			<if test="monthRate != null">
+				MONTH_RATE = #{monthRate},
+			</if>
+			<if test="penaltyRate != null">
+				PENALTY_RATE = #{penaltyRate},
+			</if>
+			<if test="yearRate != null">
+				YEAR_RATE = #{yearRate},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark},
+			</if>
+		</trim>
+		WHERE ID = #{id}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM PRODUCT WHERE ID=#{id}
+	</delete>
+
+	<delete id="deleteByIdList" parameterType="ProductVO">
+		DELETE FROM PRODUCT WHERE ID IN (
+		<foreach item="guard" index="index" collection="idList"
+			separator=",">
+			#{guard}
+		</foreach>
+		)
+	</delete>
+
+	<insert id="insert" parameterType="Product">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT SEQ_PRODUCT_ID.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO PRODUCT
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				ID,
+			<if test="productCode != null">
+				PRODUCT_CODE ,
+			</if>
+			<if test="productName != null">
+				PRODUCT_NAME ,
+			</if>
+			<if test="productType != null">
+				PRODUCT_TYPE,
+			</if>
+			<if test="productTypeName != null">
+				PRODUCT_TYPE_NAME,
+			</if>
+			<if test="consultingFeeRate != null">
+				CONSULTING_FEE_RATE,
+			</if>
+			<if test="managePartRate != null">
+				MANAGE_PART_RATE ,
+			</if>
+			<if test="manageFeeRate != null">
+				MANAGE_FEE_RATE ,
+			</if>
+			<if test="overdueInterestRate != null">
+				OVERDUE_INTEREST_RATE ,
+			</if>
+			<if test="riskRate != null">
+				RISK_RATE ,
+			</if>
+			<if test="assessmentFeeRate != null">
+				ASSESSMENT_FEE_RATE ,
+			</if>
+			<if test="rate != null">
+				RATE ,
+			</if>
+			<if test="status != null">
+				STATUS ,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID ,
+			</if>
+			<if test="creator != null">
+				CREATOR ,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME ,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID ,
+			</if>
+			<if test="modifier != null">
+				MODIFIER ,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME ,
+			</if>
+			<if test="remark != null">
+				REMARK ,
+			</if>
+			<if test="thirdFeeRate != null">
+				THIRD_FEE_RATE ,
+			</if>
+			<if test="monthRate != null">
+				MONTH_RATE ,
+			</if>
+			<if test="penaltyRate != null">
+				PENALTY_RATE ,
+			</if>
+			<if test="productChannelID != null">
+				PRODUCT_CHANNEL_ID ,
+			</if>
+			<if test="productChannelName != null">
+				PRODUCT_CHANNEL_NAME ,
+			</if>
+			<if test="yearRate != null">
+				YEAR_RATE ,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				#{id},
+			<if test="productCode != null"> 
+				#{productCode},
+			</if>
+			<if test="productName != null">
+				#{productName},
+			</if>
+			<if test="productType != null">
+				#{productType},
+			</if>
+			<if test="productTypeName != null">
+				#{productTypeName},
+			</if>
+			<if test="consultingFeeRate != null">
+				#{consultingFeeRate},
+			</if>
+			<if test="managePartRate != null">
+				#{managePartRate},
+			</if>
+			<if test="manageFeeRate != null">
+				#{manageFeeRate},
+			</if>
+			<if test="overdueInterestRate != null">
+				#{overdueInterestRate},
+			</if>
+			<if test="riskRate != null">
+				#{riskRate},
+			</if>
+			<if test="assessmentFeeRate != null">
+				#{assessmentFeeRate},
+			</if>
+			<if test="rate != null">
+				#{rate},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="thirdFeeRate != null">
+				#{thirdFeeRate},
+			</if>
+			<if test="monthRate != null">
+				#{monthRate},
+			</if>
+			<if test="penaltyRate != null">
+				#{penaltyRate},
+			</if>
+			<if test="productChannelID != null">
+				#{productChannelID},
+			</if>
+			<if test="productChannelName != null">
+				#{productChannelName},
+			</if>
+			<if test="yearRate != null">
+				#{yearRate},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="findListByVO" parameterType="ProductVO" resultMap="productResultMap">
+		<include refid="productSelective" />
+		<include refid="productConditions" />
+	</select>
+
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM PRODUCT WHERE PRODUCT.ID = #{id}
+	</select>
+
+	<select id="count" parameterType="ProductVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="productSelective" />
+		<include refid="productConditions" />
+		)
+	</select>
+
+	<select id="findWithPG" parameterType="ProductVO" resultMap="productResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="productSelective" />
+		<include refid="productConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<select id="countUnionUser" parameterType="ProductVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		SELECT
+		<include refid="productFeild" />
+  		FROM PRODUCT
+  		LEFT JOIN SYS_PRODUCT_USER ON PRODUCT.ID = SYS_PRODUCT_USER.PRODUCT_ID
+ 		WHERE SYS_PRODUCT_USER.USER_ID = #{userId}
+ 		AND PRODUCT.STATUS IN(
+			<foreach item="guard" index="index" collection="statusList"
+				separator=",">
+				#{guard}
+			</foreach>
+			)
+		)
+	</select>
+	
+	<select id="findWithPgByUserId" parameterType="ProductVO" resultMap="productResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		SELECT
+		<include refid="productFeild" />
+  		FROM PRODUCT
+  		LEFT JOIN SYS_PRODUCT_USER ON PRODUCT.ID = SYS_PRODUCT_USER.PRODUCT_ID
+ 		WHERE SYS_PRODUCT_USER.USER_ID = #{userId}
+ 		AND PRODUCT.STATUS IN(
+			<foreach item="guard" index="index" collection="statusList"
+				separator=",">
+				#{guard}
+			</foreach>
+			)
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+	<select id="selectProductTypeByUserId"  parameterType="java.lang.Long" resultMap="productTypeResultMap">
+		SELECT DISTINCT PRODUCT_TYPE, PRODUCT_TYPE_NAME
+		FROM PRODUCT
+		WHERE ID IN
+			(SELECT U.PRODUCT_ID FROM SYS_PRODUCT_USER U WHERE U.USER_ID = #{userId})
+		ORDER BY PRODUCT_TYPE
+	</select>
+	
+	<select id="selectProductsByUserId" parameterType="java.lang.Long" resultMap="productResultMap">
+		<include refid="productSelective" />
+ 		WHERE ID IN
+       (SELECT P.PRODUCT_ID FROM SYS_PRODUCT_USER P WHERE P.USER_ID = #{userId})
+   		AND STATUS = 1
+ 		ORDER BY ID
+	</select>
+	
+	<select id="existsByProductName" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM PRODUCT WHERE PRODUCT.PRODUCT_NAME = #{productName}
+	</select>
+
+</mapper>

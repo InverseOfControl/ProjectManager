@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezendai.credit2.apply.mapper.BankMapper">
+	<resultMap id="bankResultMap" type="Bank">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="bankName" column="BANK_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="bankCode" column="BANK_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="tppBankCode" column="TPP_BANK_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="tppType" column="TPP_TYPE" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="bankType" column="BANK_TYPE" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+
+	<sql id="bankField">
+		BANK.ID,
+		BANK.BANK_NAME,
+		BANK.BANK_CODE,
+		BANK.TPP_BANK_CODE,
+		BANK.TPP_TYPE,
+		BANK.BANK_TYPE
+	</sql>
+
+	<sql id="bankSelective">
+		SELECT
+		<include refid="bankField" />
+		FROM BANK
+	</sql>
+
+	<sql id="bankConditions">
+		<where>
+			<if test="id != null">
+				BANK.ID = #{id}
+			</if>
+			<if test="bankName != null and bankName != ''">
+				AND BANK.BANK_NAME = #{bankName}
+			</if>
+			<if test="bankCode != null">
+				AND BANK.BANK_CODE = #{bankCode}
+			</if>
+			<if test="tppBankCode != null">
+				AND BANK.TPP_BANK_CODE = #{tppBankCode}
+			</if>
+			<if test="tppType != null">
+				AND BANK.TPP_TYPE = #{tppType}
+			</if>
+			<if test="bankType != null">
+				AND BANK.BANK_TYPE = #{bankType}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="bankOrderByConditions">
+		ORDER BY ID DESC
+	</sql>
+
+	<insert id="insert" parameterType="Bank">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_bank_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO BANK
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="bankName != null">
+				BANK_NAME,
+			</if>
+			<if test="bankCode != null">
+				BANK_CODE,
+			</if>
+			<if test="tppBankCode != null">
+				TPP_BANK_CODE,
+			</if>
+			<if test="tppType != null">
+				TPP_TYPE,
+			</if>
+			<if test="bankType != null">
+				BANK_TYPE
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			#{id},
+			<if test="bankName != null">
+				#{bankName},
+			</if>
+			<if test="bankCode != null">
+				#{bankCode},
+			</if>
+			<if test="tppBankCode != null">
+				#{tppBankCode},
+			</if>
+			<if test="tppType != null">
+				#{tppType},
+			</if>
+			<if test="bankType != null">
+				#{bankType}
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="BankVO">
+		UPDATE BANK
+		<trim prefix="set" suffixOverrides=",">
+			<if test="bankName != null">
+				BANK_NAME = #{bankName},
+			</if>
+			<if test="bankCode != null">
+				BANK_CODE = #{bankCode},
+			</if>
+			<if test="tppBankCode != null">
+				TPP_BANK_CODE = #{tppBankCode},
+			</if>
+			<if test="tppType != null">
+				TPP_TYPE = #{tppType},
+			</if>
+			<if test="bankType != null">
+				BANK_TYPE = #{bankType}
+			</if>
+		</trim>
+		WHERE ID = #{id}
+	</update>
+
+	<select id="get" parameterType="java.lang.Long" resultMap="bankResultMap">
+		<include refid="bankSelective" />
+		WHERE BANK.ID = #{id}
+	</select>
+
+	<select id="findListByVO" parameterType="BankVO" resultMap="bankResultMap">
+		<include refid="bankSelective" />
+		<include refid="bankConditions" />
+	</select>
+
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM BANK WHERE ID = #{id}
+	</delete>
+
+	<delete id="deleteByIdList" parameterType="BankVO">
+		DELETE FROM BANK
+		WHERE ID IN(
+		<foreach item="id" index="index" collection="idList"
+			separator=",">
+			#{id}
+		</foreach>
+		)
+	</delete>
+
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM BANK
+		<where>
+			<if test="bankName != null">
+				AND BANK.BANK_NAME = #{bankName}
+			</if>
+			<if test="bankCode != null">
+				AND BANK.BANK_CODE = #{bankCode}
+			</if>
+			<if test="tppBankCode != null">
+				AND BANK.TPP_BANK_CODE = #{tppBankCode}
+			</if>
+			<if test="tppType != null">
+				AND BANK.TPP_TYPE = #{tppType}
+			</if>
+			<if test="bankType != null">
+				AND BANK.BANK_TYPE = #{bankType}
+			</if>
+		</where>
+	</select>
+
+
+	<select id="count" parameterType="BankVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="bankSelective" />
+		<include refid="bankConditions" />
+		) AS total
+	</select>
+
+	<select id="findWithPG" parameterType="BankVO" resultMap="bankResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="bankSelective" />
+		<include refid="bankConditions" />
+		<include refid="bankOrderByConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+</mapper>

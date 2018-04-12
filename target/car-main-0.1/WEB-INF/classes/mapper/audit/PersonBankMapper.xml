@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.audit.mapper.PersonBankMapper">
+	<!-- 单表查询结果集 -->
+	<resultMap id="personBankResultMap" type="PersonBank">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="personId" column="PERSON_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="bankAccountId" column="bankAccountId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="loanId" column="LOAN_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="version" column="version" jdbcType="NUMERIC" javaType="java.lang.Long" />		
+	</resultMap>
+
+	<resultMap id="personBankResultMapExtension" type= "PersonBank">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="bankId" column="bankId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="bankAccountId" column="bankAccountId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="personId" column="personId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="personName" column="personName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="personIdnum" column="personIdnum" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="account" column="account" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="bankName" column="bankName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="branchName" column="branchName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="loanId" column="loanId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="productType" column="productType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="pactMoney" column="pactMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result property="loanStatus" column="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="accountAuthType" column="accountAuthType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+	
+	<sql id="personBankFeild">
+		personBank.ID as ID,
+		personBank.PERSON_ID as personId,
+		personBank.BANK_ACCOUNT_ID as bankAccountId,
+		personBank.LOAN_ID as loanId,
+		personBank.version as 
+	</sql>
+	
+	<sql id="personBankFeildExtension">
+		personBank.ID as ID,
+		bankAccount.BANK_ID as bankId,
+		bankAccount.id as bankAccountId,
+		person.ID as personId,
+		person.NAME as personName,
+		person.IDNUM as personIdnum,
+		bankAccount.ACCOUNT as account,
+		bankAccount.BANK_NAME as bankName,
+		bankAccount.BRANCH_NAME as branchName,
+		bankAccount.ACCOUNT_AUTH_TYPE as accountAuthType,
+		NVL(loan.ID, extension.ID) as loanId,
+		NVL(loan.PRODUCT_TYPE, extension.PRODUCT_TYPE) as productType,
+		NVL(loan.PACT_MONEY, extension.PACT_MONEY) as pactMoney,
+		NVL(loan.STATUS, extension.STATUS) as status
+	</sql>
+	
+	<sql id="personBankConditions">
+		<where>
+			<if test="id != null">
+				AND personBank.ID = #{id}
+			</if>
+			<if test="personId != null">
+				AND personBank.PERSON_ID = #{personId}
+			</if>
+			<if test="bankAccountId != null">
+				AND personBank.BANK_ACCOUNT_ID = #{bankAccountId}
+			</if>
+			<if test="loanId != null">
+				AND personBank.LOAN_ID = #{loanId}
+			</if>
+			<if test="personIdList !=null and personIdList.size() > 0">
+				AND personBank.PERSON_ID IN(
+				<foreach item="guard" index="index" collection="personIdList"
+				separator=",">
+				#{guard}
+				</foreach>
+				)
+			</if>
+			<if test="loanIdList !=null and loanIdList.size() > 0">
+				AND personBank.LOAN_ID IN(
+				<foreach item="guard" index="index" collection="loanIdList"
+				separator=",">
+				#{guard}
+				</foreach>
+				)
+			</if>
+			<if test="personIdnum != null and personIdnum != ''">
+				AND person.IDNUM = #{personIdnum}
+			</if>
+			<if test="personName != null and personName != ''">
+				AND person.NAME = #{personName}
+			</if>
+			<if test="salesDeptId != null">
+				AND NVL(loan.SALES_DEPT_ID, extension.SALES_DEPT_ID) = #{salesDeptId}
+			</if>
+			<if test="productType != null">
+				AND NVL(loan.PRODUCT_TYPE, extension.PRODUCT_TYPE) = #{productType}
+			</if>
+			<if test="productTypeList != null">
+				AND NVL(loan.PRODUCT_TYPE, extension.PRODUCT_TYPE) IN(
+				<foreach item="guard" index="index" collection="productTypeList"
+				separator=",">
+				#{guard}
+				</foreach>
+				)
+			</if>
+			<if test="statusList != null">
+				AND NVL(loan.STATUS, extension.STATUS) IN(
+				<foreach item="guard" index="index" collection="statusList"
+				separator=",">
+				#{guard}
+				</foreach>
+				)
+			</if>
+			<if test="accountAuthType != null">
+				AND bankAccount.ACCOUNT_AUTH_TYPE = #{accountAuthType}
+			</if>
+			<if test="bankId != null and bankId != ''">
+				AND bankAccount.BANK_ID = #{bankId}
+			</if>	
+			<if test="hasTppType != null and hasTppType != ''">
+				AND bankAccount.BANK_ID in (SELECT BK.ID FROM BANK BK WHERE BK.TPP_TYPE=30)
+			</if>			
+			
+		</where>
+	</sql>
+	
+	<!-- 基本单表查询语句 -->
+	<sql id="personBankSelective">
+		SELECT
+		<include refid="personBankFeild" />
+		FROM PERSON_BANK personBank
+	</sql>
+	<!-- 多表关联查询语句 -->
+	<sql id="personBankSelectiveExtension">
+		SELECT
+	<include refid="personBankFeildExtension"/>
+	FROM PERSON_BANK personBank
+	LEFT JOIN PERSON person ON personBank.PERSON_ID = person.ID
+	LEFT JOIN BANK_ACCOUNT bankAccount ON personBank.BANK_ACCOUNT_ID = bankAccount.ID
+	LEFT JOIN LOAN loan ON personBank.LOAN_ID = loan.ID
+	LEFT JOIN EXTENSION extension ON personBank.LOAN_ID = extension.ID
+	</sql>
+	
+	<select id="get" parameterType="java.lang.Long" resultMap="personBankResultMap">
+		<include refid="personBankSelective" />
+		WHERE personBank.ID = #{id}
+	</select>
+	
+	<select id="getExtension" parameterType="java.lang.Long" resultMap="personBankResultMapExtension">
+		<include refid="personBankSelectiveExtension" />
+		WHERE personBank.ID = #{id}
+	</select>
+	
+	<!-- 单表按属性查询 -->
+	<select id="findListByVO" parameterType="PersonBankVO" resultMap="personBankResultMap">
+		<include refid="personBankSelective" />
+		<include refid="personBankConditions" />
+	</select>
+	<!-- 多表关联按属性查询 -->
+	<select id="findListByVOExtension" parameterType="PersonBankVO" resultMap="personBankResultMapExtension">
+		<include refid="personBankSelectiveExtension"/>
+		<include refid="personBankConditions"/>
+	</select>
+	
+	<select id="findWithPGExtension" parameterType="PersonBankVO" resultMap="personBankResultMapExtension">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="personBankSelectiveExtension" />
+		<include refid="personBankConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<select id="countExtension" parameterType="PersonBankVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="personBankSelectiveExtension" />
+		<include refid="personBankConditions" />
+		)
+	</select>
+	
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM PERSON_BANK WHERE ID = #{id}
+	</select>
+	
+	<select id="count" parameterType="PersonBankVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="personBankSelective" />
+		<include refid="personBankConditions" />
+		)
+	</select>
+	
+	<select id="findWithPG" parameterType="PersonBankVO" resultMap="personBankResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="personBankSelective" />
+		<include refid="personBankConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<insert id="insert" parameterType="com.ezendai.credit2.audit.model.PersonBank">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT seq_person_bank_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO PERSON_BANK
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				ID, 
+			<if test="personId != null">
+				PERSON_ID,
+			</if>
+			<if test="bankAccountId != null">
+				BANK_ACCOUNT_ID,
+			</if>
+			<if test="loanId != null">
+				LOAN_ID,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				#{id},
+			<if test="personId != null">
+				#{personId},
+			</if>
+			<if test="bankAccountId != null">
+				#{bankAccountId},
+			</if>
+			<if test="loanId != null">
+				#{loanId},
+			</if>
+		</trim>
+	</insert>	
+	
+	<update id="update" parameterType="PersonBankVO">
+		UPDATE PERSON_BANK
+		<trim prefix="set" suffixOverrides=",">
+			<if test="personId != null">
+			PERSON_ID = #{personId},
+			</if>
+			<if test="bankAccountId != null">
+			BANK_ACCOUNT_ID = #{bankAccountId},
+			</if>
+			<if test="loanId != null">
+			LOAN_ID = #{loanId},
+			</if>
+		</trim>
+		WHERE ID = #{id}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM PERSON_BANK WHERE id = #{id}
+	</delete>
+	
+	<delete id="deleteByIdList" parameterType="PersonBankVO"> 
+		DELETE FROM PERSON_BANK WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+	
+</mapper>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.PushZonganFraudMapper">
+
+	 <insert id="insertZonganReturnData" parameterType="java.util.Map" >
+    insert into PUSH_LCB_RETURN_ZONGAN_FRAUD
+     <selectKey keyProperty="id" resultType="long" order="BEFORE">
+		select
+		SEQ_LCB_ZONGAN_FRAUD.nextval as id from dual
+    </selectKey>
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="riskGrade != null and riskGrade!=''" >
+        RISK_GRADE,
+      </if>
+      <if test="auditResult != null and auditResult!=''" >
+        AUDIT_RESULT,
+      </if>
+      <if test="loanId != null" >
+        LOAN_ID,
+      </if>
+      <if test="createdId != null" >
+       CREATED_ID,
+      </if>
+      <if test="createdName != null and createdName!=''" >
+       CREATED_NAME,
+      </if>
+      STATUS
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="riskGrade != null and riskGrade!=''" >
+        #{riskGrade},
+      </if>
+      <if test="auditResult != null and auditResult!=''" >
+        #{auditResult},
+      </if>
+      <if test="loanId != null" >
+        #{loanId},
+      </if>
+      <if test="createdId != null" >
+       #{createdId},
+      </if>
+      <if test="createdName != null and createdName!=''" >
+       #{createdName},
+      </if>
+      1
+    </trim>
+  </insert>
+  
+  
+  
+  
+  
+  <select id="findLoanIdAndStatus" resultType="int" parameterType="java.lang.String">
+		select count(1) from PUSH_LCB_RETURN_ZONGAN_FRAUD where loan_id = #{id} and status=1
+  </select>
+  
+  
+  
+   <select id="getZongAnReturnData" resultType="java.util.Map" parameterType="java.lang.String">
+		select RISK_GRADE as riskGrade,AUDIT_RESULT as auditResult from PUSH_LCB_RETURN_ZONGAN_FRAUD where loan_id = #{id} and status=1
+  </select>
+  
+  <select id="findLoanMoneyNoBelongTo" resultType="java.util.Map" parameterType="java.util.Map">
+		select sum(sumMoney) as sumMoney from (
+		select SUM(c.cur_remaining_principal) as sumMoney
+		  from loan a, person b, repayment_plan c
+		 where b.id = a.person_id
+		   and a.id = c.loan_id
+		   and a.status in(61,71,81,130,140,141)
+		   and b.IDNUM = #{idNo}
+		   and a.id != #{laonId}
+		UNION ALl
+		select SUM(c.cur_remaining_principal) as sumMoney
+		  from EXTENSION a, person b, repayment_plan c
+		 where b.id = a.person_id
+		   and a.id = c.loan_id
+		  and a.status in(61,71,81,130,140,141)
+		   and b.IDNUM = #{idNo})
+  </select>
+  
+  
+</mapper>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.LoanExtensionMapper">
+	<resultMap id="LoanExtensionResultMap" type="LoanExtension">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="EXTENSION_ID" property="extensionId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+	
+	<sql id="loanExtensionField">
+		LOAN_EXTENSION.ID,
+		LOAN_EXTENSION.LOAN_ID,
+		LOAN_EXTENSION.EXTENSION_ID
+	</sql>
+	
+	<sql id="loanExtensionSelective">
+		SELECT
+		<include refid="loanExtensionField" />
+		FROM LOAN_EXTENSION
+	</sql>
+	
+	<sql id="loanExtensionConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				AND LOAN_EXTENSION.ID = #{id}
+			</if>
+			<if test="loanId != null">
+				AND LOAN_EXTENSION.LOAN_ID = #{loanId}
+			</if>
+			<if test="extensionId != null">
+				AND	LOAN_EXTENSION.EXTENSION_ID = #{extensionId}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="get" resultMap="LoanExtensionResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="loanExtensionField" />
+		FROM LOAN_EXTENSION
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="getLoanIdByExtensionId"  resultType="java.lang.Long" parameterType="java.lang.Long">
+		SELECT LOAN_ID
+		FROM LOAN_EXTENSION
+		WHERE EXTENSION_ID = #{extensionId}
+	</select>
+	
+	<select id="getPreExtensionId" resultType="java.lang.Long"  parameterType="java.util.Map">
+		SELECT MAX(E.ID)
+		FROM LOAN_EXTENSION A
+		LEFT JOIN LOAN_EXTENSION B ON A.LOAN_ID = B.LOAN_ID
+		LEFT JOIN EXTENSION E ON B.EXTENSION_ID = E.ID
+		WHERE A.EXTENSION_ID = #{extensionId}
+		AND E.EXTENSION_TIME <![CDATA[ < ]]> #{extensionTime}
+		AND E.STATUS NOT IN (
+				<foreach item="guard" index="index" collection="notStatusList"
+					separator=",">
+					#{guard}
+				 </foreach>
+				)
+	</select>
+		
+	<select id="findListByVO"  resultMap="LoanExtensionResultMap" parameterType="LoanExtensionVO" >
+		SELECT
+		<include refid="loanExtensionField" />		
+		FROM LOAN_EXTENSION  
+		<include refid="loanExtensionConditions" />	
+		ORDER BY ID DESC
+	</select>
+	<select id="findWithPG" parameterType="LoanExtensionVO" resultMap="LoanExtensionResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="loanExtensionSelective" />
+		<include refid="loanExtensionConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<delete id="delete" parameterType="java.lang.Long"  >
+		DELETE FROM LOAN_EXTENSION WHERE ID = #{id}
+	</delete>
+	
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM LOAN_EXTENSION WHERE ID = #{ID}
+	</select>
+	
+	<delete id="deleteByIdList" parameterType="LoanExtensionVO">
+		DELETE FROM LOAN_EXTENSION WHERE ID IN (
+	<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+	
+	<select id="count" parameterType="LoanExtensionVO" resultType="java.lang.Integer">
+		SELECT count(*) FROM (
+		<include refid="loanExtensionSelective" />
+		<include refid="loanExtensionConditions" />
+		)
+	</select>
+	
+	<insert id="insert" parameterType="com.ezendai.credit2.apply.model.LoanExtension">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT seq_loan_extension_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO LOAN_EXTENSION
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				ID,
+			<if test="loanId != null">
+				LOAN_ID,
+			</if>
+			<if test="extensionId != null">
+				EXTENSION_ID,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			#{id},
+			<if test="loanId != null">
+				#{loanId},
+			</if>
+			<if test="extensionId != null">
+				#{extensionId},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="LoanExtensionVO">
+		UPDATE EXTENSION
+		<trim prefix="set" suffixOverrides=",">
+			<if test="loanId != null">
+				LOAN_ID = #{loanId},
+			</if>
+			<if test="extensionId != null">
+				EXTENSION_ID = #{extensionId}
+			</if>
+		</trim>
+		WHERE ID = #{id}
+	</update>
+	
+	<select id="maxExtensionTime"  resultType="java.lang.Integer">
+         select max(extension_time) from extension
+	</select>
+</mapper>

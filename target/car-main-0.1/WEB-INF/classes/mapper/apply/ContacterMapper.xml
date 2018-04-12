@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.ContacterMapper">
+	<resultMap id="ContacterResultMap" type="Contacter">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="RELATIONSHIP" property="relationship" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MOBILE_PHONE" property="mobilePhone" jdbcType="CHAR" javaType="java.lang.String" />
+		<result column="HOME_PHONE" property="homePhone" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="WORK_UNIT" property="workUnit" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="HAD_KNOWN" property="hadKnown" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="BORROWER_ID" property="borrowerId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="TITLE" property="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+
+	<sql id="contacterField">
+		ID, NAME, RELATIONSHIP, MOBILE_PHONE, HOME_PHONE,ADDRESS, WORK_UNIT,
+		HAD_KNOWN,BORROWER_ID, CREATOR_ID,
+		CREATOR, CREATED_TIME, MODIFIER_ID, MODIFIER, MODIFIED_TIME, VERSION, LOAN_ID,TITLE
+	</sql>
+
+	<sql id="contacterSelective">
+		SELECT
+		<include refid="contacterField"/>
+		FROM CONTACTER
+	</sql>
+	
+	<sql id="contacterConditions">
+		<where>
+			<if test="id != null">
+				CONTACTER.ID = #{id}
+			</if>
+			<if test="name != null and name != ''">
+				AND CONTACTER.NAME = #{name}
+			</if>
+			<if test="relationship != null and relationship != ''">
+				AND CONTACTER.RELATIONSHIP = #{relationship}
+			</if>
+			<if test="mobilePhone != null and mobilePhone != ''">
+				AND CONTACTER.MOBILE_PHONE = #{mobilePhone}
+			</if>
+			<if test="homePhone != null and homePhone != ''">
+				AND CONTACTER.HOME_PHONE = #{homePhone}
+			</if>
+			<if test="address != null and address != ''">
+				AND CONTACTER.ADDRESS = #{address}
+			</if>
+			<if test="workUnit != null and workUnit != ''">
+				AND CONTACTER.WORK_UNIT = #{workUnit}
+			</if>
+			<if test="hadKnown != null">
+				AND CONTACTER.HAD_KNOWN = #{hadKnown}
+			</if>
+			<if test="borrowerId != null">
+				AND CONTACTER.BORROWER_ID = #{borrowerId}
+			</if>
+			<if test="createdTime != null">
+				AND CONTACTER.CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifiedTime != null">
+				AND CONTACTER.MODIFIED_TIME = #{modifiedTime}
+			</if>
+			<if test="creatorId != null">
+				AND CONTACTER.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null and creator != ''">
+				AND CONTACTER.CREATOR = #{creator}
+			</if>
+			<if test="modifierId != null">
+				AND CONTACTER.MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null and modifier != ''">
+				AND CONTACTER.MODIFIER = #{modifier}
+			</if>
+			<if test="version != null">
+				AND CONTACTER.VERSION = #{version}
+			</if>
+			<if test="loanId != null">
+				AND CONTACTER.LOAN_ID = #{loanId}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="get" resultMap="ContacterResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="contacterField" />
+		FROM CONTACTER
+		WHERE ID = #{id}
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM CONTACTER WHERE ID = #{id}
+	</delete>
+	
+	<delete id="deleteByIdList" parameterType="ContacterVO"> 
+		DELETE FROM CONTACTER WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+
+	<select id="findListByVO" parameterType="ContacterVO" resultMap="ContacterResultMap"> 
+		<include refid="contacterSelective" /> 
+		<include refid="contacterConditions" />
+		ORDER BY ID
+	</select>
+
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM CONTACTER WHERE ID = #{id}
+	</select>
+
+	<select id="count" parameterType="ContacterVO" resultType="java.lang.Integer">
+		SELECT	COUNT(*)	FROM (
+		<include refid="contacterSelective" /> 
+		<include refid="contacterConditions" />
+		)
+	</select>
+
+	<select id="findWithPG" parameterType="ContacterVO" resultMap="ContacterResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="contacterSelective" />
+		<include refid="contacterConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+	<insert id="insert" parameterType="Contacter">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT seq_contacter_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO CONTACTER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="relationship != null">
+				RELATIONSHIP,
+			</if>
+			<if test="mobilePhone != null">
+				MOBILE_PHONE,
+			</if>
+			<if test="homePhone != null">
+				HOME_PHONE,
+			</if>
+			<if test="address != null">
+				ADDRESS,
+			</if>
+			<if test="workUnit != null">
+				WORK_UNIT,
+			</if>
+			<if test="hadKnown != null">
+				HAD_KNOWN,
+			</if>
+			<if test="borrowerId != null">
+				BORROWER_ID,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+			<if test="loanId != null">
+				LOAN_ID,
+			</if>
+			<if test="title != null">
+				TITLE,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="relationship != null">
+				#{relationship},
+			</if>
+			<if test="mobilePhone != null">
+				#{mobilePhone},
+			</if>
+			<if test="homePhone != null">
+				#{homePhone},
+			</if>
+			<if test="address != null">
+				#{address},
+			</if>
+			<if test="workUnit != null">
+				#{workUnit},
+			</if>
+			<if test="hadKnown != null">
+				#{hadKnown},
+			</if>
+			<if test="borrowerId != null">
+				#{borrowerId},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="loanId != null">
+				#{loanId},
+			</if>
+			<if test="title != null">
+				#{title},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="ContacterVO">
+		UPDATE CONTACTER
+		<set>
+			<if test="name != null">
+				NAME = #{name},
+			</if>
+			<if test="relationship != null">
+				RELATIONSHIP = #{relationship},
+			</if>
+			<if test="mobilePhone != null">
+				MOBILE_PHONE = #{mobilePhone},
+			</if>
+			<if test="homePhone != null">
+				HOME_PHONE = #{homePhone},
+			</if>
+			<if test="address != null">
+				ADDRESS = #{address},
+			</if>
+			<if test="workUnit != null">
+				WORK_UNIT = #{workUnit},
+			</if>
+			<if test="hadKnown != null">
+				HAD_KNOWN = #{hadKnown},
+			</if>
+			<if test="borrowerId != null">
+				BORROWER_ID = #{borrowerId},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="version != null">
+				VERSION = #{version},
+			</if>
+			<if test="title != null">
+				TITLE = #{title},
+			</if>
+		</set>
+		WHERE ID = #{id}
+		 <if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>  
+	</update>
+</mapper>

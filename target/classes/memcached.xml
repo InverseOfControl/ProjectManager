@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<pool id="data_pool" initConn="150" minConn="50" maxConn="500"
+		maintSleep="30000" socketTO="3000" socketConnectTO="3000"
+		defaultExpiryMinutes="720" compressEnable="true" compressThreshold="4096">
+		<servers>
+			<!-- 测试环境 -->
+			<server>127.0.0.1:11211</server>
+		</servers>
+	</pool>
+</config>

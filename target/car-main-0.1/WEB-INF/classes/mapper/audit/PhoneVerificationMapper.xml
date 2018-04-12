@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.audit.mapper.PhoneVerificationMapper">
+	<resultMap id="phoneVerificationMap" type="com.ezendai.credit2.audit.model.PhoneVerification">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CONTENT" property="content" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="inquiry_time"  property="inquiryTime"   javaType="java.util.Date" />
+		<result column="loan_Id" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="person_id" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="company_id" property="companyId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="name" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="operator_id" property="operatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="tel" property="tel" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="company" property="company" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="relation" property="relation" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="tel_type" property="telType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="created_time" property="createdTime"   javaType="java.util.Date" />
+		<result column="sc_name" property="scName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="sc_address" property="scAddress" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="home_address" property="homeAddress" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="phone" property="phone"   javaType="java.lang.String" />
+		<result column="home_phone" property="homePhone"   javaType="java.lang.String" />
+		<result column="parent_name" property="parentName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="parent_phone" property="parentPhone" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="colleague_name" property="colleagueName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="colleague_phone" property="colleaguePhone" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="IS_DELETE" property="isDelete" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIED_TIME" property="modifiedTime"   javaType="java.util.Date" />
+	</resultMap>
+	
+	<!-- 添加电核信息  -->
+	<insert id="insertTelInquiry"  parameterType="PhoneVerification" >
+			<selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
+				SELECT SEQ_TEL_INQUIRY_LOG_ID.nextval    FROM dual
+			</selectKey>
+			insert into tel_inquiry_log (id
+			<if test="content != null and content !=''">
+				,CONTENT
+			</if>
+			<if test="inquiryTimeStr != null and  inquiryTimeStr !=''">
+				,INQUIRY_TIME
+			</if>
+			<if test="loanId != null and  loanId !=''">
+				,LOAN_ID
+			</if>
+			<if test="name != null and  name !=''">
+				,NAME
+			</if>
+			<if test="operatorId != null and  operatorId !=''">
+				,OPERATOR_ID
+			</if>
+			<if test="tel != null and  tel !=''">
+				,TEL
+			</if>
+			<if test="company != null and  company !=''">
+				,COMPANY
+			</if>
+			<if test="relation != null and  relation !=''">
+				,RELATION
+			</if>
+			<if test="telType != null and  telType !=''">
+				,TEL_TYPE
+			</if>
+			,CREATED_TIME,CREATOR,CREATOR_ID
+			) values (#{id}
+				<if test="content != null and content !=''">
+				,#{content}
+			</if>
+			<if test="inquiryTimeStr != null and  inquiryTimeStr !=''">
+				,to_date(#{inquiryTimeStr},'yyyy-mm-dd hh24:mi:ss')
+			</if>
+			 
+			<if test="loanId != null and  loanId !=''">
+				,#{loanId}
+			</if>
+			<if test="name != null and  name !=''">
+				,#{name}
+			</if>
+			<if test="operatorId != null and  operatorId !=''">
+				,#{operatorId}
+			</if>
+			<if test="tel != null and  tel !=''">
+				,#{tel}
+			</if>
+			<if test="company != null and  company !=''">
+					,#{company}
+			</if>
+			<if test="relation != null and  relation !=''">
+				,#{relation}
+			</if>
+			<if test="telType != null and  telType !=''">
+				,#{telType}
+			</if>
+			,sysdate,#{creator},#{creatorId}
+			)
+	</insert>
+	<!-- 更新电核信息  -->
+	<update  id="updateTelInquiry"  parameterType="PhoneVerification" >
+		update tel_inquiry_log  set
+			<if test="content != null and content !=''">
+				 CONTENT = #{content}
+			</if>
+			<if test="relation != null and  relation !=''">
+				RELATION  = #{relation}
+			</if>
+			, operator_id  = #{operatorId},
+			 MODIFIER_ID=#{modifierId}
+			,MODIFIER=#{modifier}
+			,MODIFIED_TIME=sysdate
+			where id = #{id}
+	</update>
+	
+ 	<!-- 删除电核信息  -->
+	<delete  id="deleteTelInquiry"  parameterType="PhoneVerification" >
+		UPDATE tel_inquiry_log SET   IS_DELETE=1, operator_id  = #{operatorId},
+			 MODIFIER_ID=#{modifierId}
+			,MODIFIER=#{modifier}
+			,MODIFIED_TIME=sysdate
+			 where id=#{id}
+	</delete>
+ 
+	
+	<!-- 根据类型查出借款电核信息  -->
+	<select id="getTelInquiryByType" resultMap="phoneVerificationMap" parameterType="com.ezendai.credit2.audit.vo.PhoneVerificationVO">
+		select * from TEL_INQUIRY_LOG where LOAN_ID=#{loanId} and tel_type=#{telType} AND IS_DELETE=0
+	</select>
+	
+	
+	<!-- 查出借款电核人基本信息  -->
+	<select id="getPersonInfo" resultMap="phoneVerificationMap" parameterType="java.lang.Long">
+			 select co.id as company_id, p.id as person_id ,p.name,p.ADDRESS as home_address,l.id as loan_id ,co.name as sc_name,co.address as sc_address,p.MOBILE_PHONE as phone ,p.HOME_PHONE  
+					 from loan l left join person p on l.PERSON_ID=p.id   left join company co on p.COMPANY_ID=co.id  where l.id=#{id} 
+	</select>
+	<!-- 查出借款电核人父母基本信息  -->
+	<select id="getParentInfo" parameterType="java.lang.Long"  resultMap="phoneVerificationMap">
+		SELECT *  FROM (
+			 select    l.id as loan_id, con.NAME as parent_name  ,con.RELATIONSHIP,  con.MOBILE_PHONE as parent_phone   from loan l    left join CONTACTER con  on l.id=con.LOAN_ID 
+				 where (con.RELATIONSHIP like '母%' or con.RELATIONSHIP like '父%')  and  con.LOAN_ID= #{id}  
+			 )WHERE ROWNUM <![CDATA[ <= ]]>  1
+	</select>
+	
+	<!-- 查出借款电核人同事基本信息  -->
+	<select id="getColleagueInfo" parameterType="java.lang.Long"  resultMap="phoneVerificationMap">
+ 
+			 select    l.id as loan_id, con.NAME  ,con.RELATIONSHIP as relation,  con.MOBILE_PHONE as colleague_phone   from loan l    left join CONTACTER con  on l.id=con.LOAN_ID 
+				 where     con.LOAN_ID= #{id}  order by con.id asc 
+		 
+	</select>
+	
+	 <!-- 更新家庭住址  -->
+	<update  id="updateHomeAddres"  parameterType="PhoneVerification" >
+	 		update PERSON set ADDRESS =#{homeAddress} where id=#{personId}
+	</update> 
+ 	<!-- 更新公司 -->
+ 	 <update  id="updateCompanyInfo"  parameterType="PhoneVerification" >
+	 		update COMPANY set 
+	 		<if test="scName != null and scName !=''">
+				 NAME = #{scName}
+			</if>
+			<if test="scAddress != null and scAddress !=''">
+				 ADDRESS = #{scAddress}
+			</if>
+	 			where id=#{companyId}
+	</update>   
+</mapper>

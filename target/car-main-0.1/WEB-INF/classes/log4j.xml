@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-d{yyMMdd HH:mm:ss}][credit2] %p [%t] %c{1}.%M(%L) | %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="ALL" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/usr/local/tomcat7/logs/credit2/credit2.log" />
+		<param name="Append" value="true" />
+		<!-- yyyy-MM-dd,对应daily(每天) -->
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-d{yyMMdd HH:mm:ss}][credit2] %p [%t] %c{1}.%M(%L) | %m%n" />
+		</layout>
+	</appender>	
+	
+	<!-- 输出SQL语句配置(begin) -->	
+	<logger name="com.ibatis">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="java.sql">
+		<level value="DEBUG" />
+	</logger>	
+	
+	<!-- 输出SQL语句配置(end) -->
+	<!-- 临时调试用 上线后删除 -->
+	<logger name="org.springframework">
+		<level value="DEBUG" />
+	</logger>	
+	
+
+	<!-- 总输出 -->
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="ALL" />		
+		<appender-ref ref="CONSOLE" />
+	</root>
+</log4j:configuration>

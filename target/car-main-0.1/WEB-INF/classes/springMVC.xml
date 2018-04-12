@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-3.1.xsd
+			http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+			http://www.springframework.org/schema/util
+			http://www.springframework.org/schema/util/spring-util-3.1.xsd
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+			http://www.springframework.org/schema/aop
+			http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	">
+	<context:component-scan base-package="com.ezendai.credit2" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />  
+	</context:component-scan>
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<!-- 日期格式转换 -->
+		<property name="webBindingInitializer">
+			<bean class="com.ezendai.credit2.system.DateConverter" />
+		</property>
+	</bean>
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean id="jsonConverter"
+				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json</value>
+						<value>text/json</value>
+					</list>
+				</property>
+				<property name="features">
+	                <list>
+	                    <value>WriteDateUseDateFormat</value>
+	                </list>
+           		</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 默认首页 -->
+	<mvc:view-controller path="/" view-name="redirect:/system/sign" />
+	<!-- 静态资源跳转配置 -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<!-- 登录拦截器 -->
+	<mvc:interceptors>
+		<bean id="authIntercepter" class="com.ezendai.credit2.system.intercepter.AuthIntercepter" />
+	</mvc:interceptors>
+	<!-- 启用@AspectJ风格的切面声明 -->  
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<!-- 加载freemarker配置文件 -->
+	<bean id="freemarkerConfiguration"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:freemarker.properties" />
+	</bean>
+	<bean
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/views/" />
+		<property name="freemarkerSettings" ref="freemarkerConfiguration" />
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="suffix" value=".ftl" />
+		<property name="contentType" value="text/html; charset=UTF-8" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="requestContextAttribute" value="request" />
+		<property name="attributesMap" ref="freemarkerStaticModels" />
+	</bean>
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- one of the properties available; the maximum file size in bytes -->
+		<property name="maxUploadSize" value="10000000" />
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+	<!-- 页面访问静态属性和静态方法配置 -->
+	<bean id="freemarkerStaticModels" class="com.ezendai.credit2.freemarker.FreemarkerStaticModels"
+		factory-method="getInstance">
+		<property name="staticModels" ref="freemarkerStaticModelsProps" />
+	</bean>
+	<bean id="freemarkerStaticModelsProps"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:freemarkerstatic.properties" />
+	</bean>
+</beans>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.AccountAuthLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ezendai.credit2.apply.model.AccountAuthLog" >
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CARD_NO" property="cardNo" jdbcType="VARCHAR" />
+    <result column="OPERATOR_ID" property="operatorId" jdbcType="DECIMAL" />
+    <result column="BANK_ID" property="bankId" jdbcType="DECIMAL" />
+    <result column="SEND_MSG" property="sendMsg" jdbcType="VARCHAR" />
+    <result column="RETURN_CODE" property="returnCode" jdbcType="VARCHAR" />
+    <result column="RETURN_MSG" property="returnMsg" jdbcType="VARCHAR" />
+    <result column="SEND_TIME" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="LOAN_ID" property="loanId" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="AccountAuthLogField">
+  	  ATL.ID, ATL.NAME, ATL.CARD_NO, 
+      ATL.OPERATOR_ID, ATL.BANK_ID, ATL.SEND_MSG, 
+      ATL.RETURN_CODE, ATL.RETURN_MSG, ATL.SEND_TIME, ATL.LOAN_ID
+  </sql>
+  <sql id="AccountAuthLogSelective">
+  SELECT 
+  <include refid="AccountAuthLogField" />
+  FROM ACCOUNT_AUTH_LOG ATL
+  </sql>
+  
+  
+  <sql id="AccountAuthLogConditions">
+		<where>
+			1=1
+			<if test="id != null">
+				AND ATL.ID = #{id}
+			</if>
+			<if test="name != null and name != ''" >
+				AND ATL.NAME = #{name}
+			</if>
+			<if test="cardNo != null">
+				AND ATL.CARD_NO = #{cardNo}
+			</if>
+			<if test="operatorId != null">
+				AND ATL.OPERATOR_ID = #{operatorId}
+			</if>
+			<if test="bankId != null">
+				AND ATL.BANK_ID = #{bankId}
+			</if>
+			<if test="sendMsg != null">
+				AND ATL.SEND_MSG = #{sendMsg}
+			</if>
+			<if test="returnCode != null">
+				AND  ATL.RETURN_CODE= #{returnCode}
+			</if>
+			<if test="returnMsg != null">
+				AND ATL.RETURN_MSG = #{returnMsg}
+			</if>			
+			<if test="sendTime != null">
+				AND ATL.SEND_TIME = #{sendTime}
+			</if>	
+			<if test="sendStartDate != null" >
+		       AND  ATL.SEND_TIME <![CDATA[ >= ]]>  #{sendStartDate}
+		      </if>
+		      <if test="sendEndDate != null" >
+		       AND  ATL.SEND_TIME <![CDATA[ <= ]]>  #{sendEndDate}
+		     </if>		
+		  	<if test="loanId != null" >
+		       AND  ATL.LOAN_ID = #{loanId}
+		     </if>		   
+		</where>
+	</sql>
+  
+  	<select id="count" parameterType="AccountAuthLogVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="AccountAuthLogSelective" />
+		<include refid="AccountAuthLogConditions" />
+		) 
+	</select>
+
+	<select id="findWithPG" parameterType="AccountAuthLogVO" resultMap="BaseResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="AccountAuthLogSelective" />
+		<include refid="AccountAuthLogConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+  
+  <insert id="insert" parameterType="com.ezendai.credit2.apply.model.AccountAuthLog" >
+  	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			SEQ_ACCOUNT_AUTH_LOG_ID.nextval AS id FROM dual
+		</selectKey>
+    insert into ACCOUNT_AUTH_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="cardNo != null" >
+        CARD_NO,
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="bankId != null" >
+        BANK_ID,
+      </if>
+      <if test="sendMsg != null" >
+        SEND_MSG,
+      </if>
+      <if test="returnCode != null" >
+        RETURN_CODE,
+      </if>
+      <if test="returnMsg != null" >
+        RETURN_MSG,
+      </if>
+      <if test="sendTime != null" >
+        SEND_TIME,
+      </if>
+      <if test="loanId != null" >
+		LOAN_ID,
+	</if>		
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null" >
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="bankId != null" >
+        #{bankId,jdbcType=DECIMAL},
+      </if>
+      <if test="sendMsg != null" >
+        #{sendMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="returnCode != null" >
+        #{returnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="returnMsg != null" >
+        #{returnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime},
+      </if>
+       <if test="loanId != null" >
+		 #{loanId,jdbcType=DECIMAL},
+	 </if>	
+    </trim>
+  </insert>
+</mapper>

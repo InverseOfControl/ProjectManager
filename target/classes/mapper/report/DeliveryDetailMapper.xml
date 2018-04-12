@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.report.mapper.DeliveryDetailMapper">
+	<resultMap id="DeliveryDetailMap" type="DeliveryDetail">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PERSON_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="ORGAN_ID" property="organId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="SALES_TEAM_ID" property="salesTeamId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="SALES_DEPT_ID" property="salesDeptId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="BIZ_DIRECTOR_ID" property="bizDirectorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CRM_ID" property="crmId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="SERVICE_ID" property="serviceId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="REQUEST_TIME" property="requestTime" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="REQUEST_DATE" property="requestDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="REQUEST_DATE" property="lastRequestDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="REQUEST_MONEY" property="requestMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="STATUS" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	</resultMap>
+	<resultMap id="DeliveryDetailMapExtension" type="DeliveryDetail" extends="DeliveryDetailMap" >
+		<association property="person" column="PERSON_ID" javaType="Person" resultMap="personResultMap"/>
+		<association property="organ" column="ORGAN_ID" javaType="Organ" resultMap="organResultMap"/>
+		<association property="salesTeam" column="SALES_TEAM_ID" javaType="BaseArea" resultMap="salesTeamResultMap"/>
+		<association property="salesDept" column="SALES_DEPT_ID" javaType="BaseArea" resultMap="salesDeptResultMap"/>
+		<association property="service" column="SERVICE_ID" javaType="SysUser" resultMap="serviceResultMap"/>
+		<association property="crm" column="CRM_ID" javaType="SysUser" resultMap="crmResultMap"/>
+		<association property="bizDirector" column="BIZ_DIRECTOR_ID" javaType="SysUser" resultMap="bizDirectorResultMap"/>
+		<association property="product" column="product_id" javaType="Product" resultMap="productResultMap"/>
+	</resultMap>
+	<resultMap id="personResultMap" type="Person">
+		<id column="PERSON_ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="person_name" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="person_idnum" property="idnum" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="organResultMap" type="Organ">
+		<result column="organ_name" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="salesTeamResultMap" type="BaseArea">
+		<id property="id" column="SALES_TEAM_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="name" column="salesTeam_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="salesDeptResultMap" type="BaseArea">
+		<result property="name" column="salesDept_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="serviceResultMap" type="SysUser">
+		<result property="name" column="service_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="crmResultMap" type="SysUser">
+		<result property="name" column="crm_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="code" column="crm_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="bizDirectorResultMap" type="SysUser">
+		<result property="name" column="bizDirector_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="code" column="bizDirector_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="productResultMap" type="Product">
+		<result property="productName" column="product_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="baseAreaMap" type="BaseArea">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<sql id="DeliveryDetailField">
+		LOAN.ID,
+		LOAN.PERSON_ID,
+		LOAN.PRODUCT_TYPE,
+		LOAN.PRODUCT_ID,
+		LOAN.ORGAN_ID,
+		LOAN.SALES_TEAM_ID,
+		LOAN.SALES_DEPT_ID,
+		LOAN.BIZ_DIRECTOR_ID,
+		LOAN.CRM_ID,
+		LOAN.SERVICE_ID,
+		LOAN.REQUEST_TIME,
+		LOAN.REQUEST_DATE,
+		LOAN.REQUEST_MONEY,
+		LOAN.STATUS,
+		LOAN.CREATOR_ID,
+		LOAN.CREATOR,
+		LOAN.CREATED_TIME,
+		LOAN.MODIFIER_ID,
+		LOAN.MODIFIED_TIME,
+		LOAN.VERSION
+	</sql>
+		<sql id="DeliveryDetailFieldExtension">
+		<include refid="DeliveryDetailField" />
+		,
+		PERSON.NAME AS PERSON_NAME,
+		PERSON.IDNUM AS PERSON_IDNUM,
+		SALESTEAM.NAME AS SALESTEAM_NAME,
+		SALESDEPT.NAME AS SALESDEPT_NAME,
+		SERVICE.NAME AS SERVICE_NAME,
+		CRM.NAME AS CRM_NAME,
+		CRM.CODE AS CRM_CODE,
+		BIZDIRECTOR.NAME AS BIZDIRECTOR_NAME,
+		BIZDIRECTOR.CODE AS BIZDIRECTOR_CODE,
+		ORGAN.NAME AS ORGAN_NAME,
+		PRODUCT.PRODUCT_NAME AS PRODUCT_NAME
+	</sql>
+	<sql id="DeliveryDetailSelectiveExtesnsion">
+		SELECT 
+		<include refid="DeliveryDetailFieldExtension" />
+		FROM LOAN
+		LEFT JOIN PERSON PERSON ON LOAN.PERSON_ID = PERSON.ID
+		LEFT JOIN BASE_AREA SALESTEAM ON LOAN.SALES_TEAM_ID = SALESTEAM.ID 
+		LEFT JOIN BASE_AREA SALESDEPT ON LOAN.SALES_DEPT_ID = SALESDEPT.ID 
+		LEFT JOIN SYS_USER SERVICE ON LOAN.SERVICE_ID = SERVICE.ID
+		LEFT JOIN SYS_USER CRM ON LOAN.CRM_ID = CRM.ID 
+		LEFT JOIN SYS_USER BIZDIRECTOR ON LOAN.BIZ_DIRECTOR_ID = BIZDIRECTOR.ID
+		LEFT JOIN ORGAN ORGAN ON ORGAN.ID = LOAN.ORGAN_ID
+		LEFT JOIN PRODUCT PRODUCT ON PRODUCT.ID = LOAN.PRODUCT_ID
+	</sql>
+	<sql id="DeliveryDetailConditions">
+		<where>
+			<if test="version != null">
+				AND LOAN.VERSION = #{version}
+			</if>
+			<if test="productType != null">
+				AND LOAN.PRODUCT_TYPE = #{productType}
+			</if>
+			<if test="productId != null">
+				AND LOAN.PRODUCT_ID = #{productId}
+			</if>
+			<if test="salesDeptId != null">
+				AND	LOAN.SALES_DEPT_ID = #{salesDeptId}
+			</if>
+			<if test="requestDateStart != null">
+				AND TRUNC(LOAN.REQUEST_DATE) <![CDATA[ >=]]> TRUNC(#{requestDateStart})
+			</if>
+			<if test="requestDateEnd != null">
+				AND TRUNC(LOAN.REQUEST_DATE) <![CDATA[ <=]]> TRUNC(#{requestDateEnd})
+			</if>
+			<if test="status != null">
+				AND LOAN.STATUS > #{status}
+			</if>
+			<if test="carLoanDept != null">
+				AND LOAN.SALES_DEPT_ID  <![CDATA[ <> ]]> #{carLoanDept}
+			</if>
+			<if test="seLoanDept != null">
+				AND LOAN.SALES_DEPT_ID  <![CDATA[ <> ]]> #{seLoanDept}
+			</if>
+			<if test="statusList != null and statusList.size() > 0">
+				AND LOAN.STATUS NOT IN(
+			<foreach item="guard" index="index" collection="statusList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="productIdList != null and productIdList.size() > 0">
+			AND LOAN.PRODUCT_TYPE IN(
+			<foreach item="guard" index="index" collection="productIdList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+			AND LOAN.SALES_DEPT_ID IN(
+			<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		</where>
+	</sql>
+
+	<select id="count" parameterType="DeliveryDetailVO" resultType="java.lang.Integer">
+		SELECT  COUNT(*) FROM (
+		<include refid="DeliveryDetailSelectiveExtesnsion"/>
+		<include refid="DeliveryDetailConditions"/>
+		
+		)
+	</select>
+	<select id="findWithPG" parameterType="DeliveryDetailVO" resultMap="DeliveryDetailMapExtension">
+				<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="DeliveryDetailSelectiveExtesnsion" />
+		<include refid="DeliveryDetailConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderByPinying"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<select id="findWith" parameterType="DeliveryDetailVO" resultMap="DeliveryDetailMapExtension">
+		<include refid="DeliveryDetailSelectiveExtesnsion" />
+		<include refid="DeliveryDetailConditions" />
+		
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderByPinying"/>
+	</select>
+			<!--过件统计  -->
+	<select id="makeSummaryList" parameterType="DeliveryDetailVO" resultMap="DeliveryDetailMap">
+			SELECT LOAN.PRODUCT_ID, LOAN.SALES_DEPT_ID,LOAN.STATUS
+ 			 FROM LOAN 
+ 			<include refid="DeliveryDetailConditions"/>
+	</select>
+	<select id="countmakeSummaryList" parameterType="DeliveryDetailVO" resultType="java.lang.Integer">
+			SELECT   COUNT(*)
+ 			 FROM LOAN 
+ 			<include refid="DeliveryDetailConditions"/>
+ 			
+	</select>
+	<!-- 	小企业贷营业 -->
+	<select id="getStudentLoanSalesDepts" resultMap="baseAreaMap" parameterType="java.util.HashMap">
+	SELECT DISTINCT A.ID,A.NAME FROM BASE_AREA A 
+	  
+	          INNER JOIN SYS_USER B ON A.CODE=B.DATA_PERMISSION
+	      
+	          INNER JOIN SYS_PRODUCT_USER  C  ON B.ID=C.USER_ID
+	  
+	      WHERE A.IDENTIFIER='zdsys.SalesDepartment' AND C.PRODUCT_ID=8  
+	      	<if test="deptId != null">
+						AND  A.ID <![CDATA[ <>]]> #{deptId}
+			</if>			
+	</select>
+	<!-- 	车贷营业部 -->
+	<select id="getCarLoanSalesDepts" resultMap="baseAreaMap" parameterType="java.util.HashMap">
+		 SELECT DISTINCT A.ID,A.NAME FROM BASE_AREA A 
+			  
+			          INNER JOIN SYS_USER B ON A.CODE=B.DATA_PERMISSION
+			      
+			          INNER JOIN SYS_PRODUCT_USER  C  ON B.ID=C.USER_ID
+			  
+			      WHERE     A.IDENTIFIER='zdsys.SalesDepartment' AND C.PRODUCT_ID IN (2,4)  AND B.IS_DELETED = 0 
+			      <if test="deptId != null">
+						AND  A.ID <![CDATA[ <>]]> #{deptId}
+						
+					</if> 	
+	</select>
+</mapper>
+

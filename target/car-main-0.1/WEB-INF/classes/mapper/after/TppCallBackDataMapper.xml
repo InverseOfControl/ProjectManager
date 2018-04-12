@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.after.mapper.TppCallBackDataMapper">
+	 <resultMap id="tppCallBackDataResultMap" type="TppCallBackData">
+	   <result column="ID" jdbcType="NUMERIC" property="id" javaType="java.lang.Long" />
+	   <result column="OFFER_ID" jdbcType="NUMERIC" property="offerId" javaType="java.lang.Long" />
+	   <result column="REQUEST_CODE" jdbcType="VARCHAR" property="requestCode"  javaType="java.lang.String"/>
+	   <result column="RETURN_CODE" jdbcType="VARCHAR" property="returnCode" javaType="java.lang.String" />
+	   <result column="RETURN_INFO" jdbcType="VARCHAR" property="returnInfo" javaType="java.lang.String" />
+	   <result column="HANDLE_STATE" jdbcType="NUMERIC" property="handleState"  javaType="java.lang.Integer" />
+	   <result column="RECEIVE_TIME" jdbcType="TIMESTAMP" property="receiveTime" javaType="java.util.Date"  />
+	   <result column="HANDLE_TIME" jdbcType="TIMESTAMP" property="handleTime"  javaType="java.util.Date" />
+	   <result column="REMARK" jdbcType="VARCHAR" property="remark" javaType="java.lang.String" />
+	   <result column="VERSION" jdbcType="NUMERIC" property="version" javaType="java.lang.Long"  />
+	 </resultMap>
+	 
+	<sql id="tppCallBackDataField">
+	  ID, OFFER_ID, REQUEST_CODE, RETURN_CODE, RETURN_INFO, HANDLE_STATE, RECEIVE_TIME, 
+	  HANDLE_TIME, REMARK, VERSION
+	</sql>
+	 
+	 <sql id="tppCallBackDataSelective">
+		SELECT
+		<include refid="tppCallBackDataField" />
+		FROM TPP_CALL_BACK_DATA
+	 </sql>
+	  
+	 <sql id="tppCallBackDataConditions">
+	    <trim prefix="where" prefixOverrides="and">
+		 <if test="id != null">
+		    ID= #{id}
+		 </if>
+	     <if test="requestCode != null">
+	       AND REQUEST_CODE = #{requestCode}
+	     </if>
+	     <if test="returnCode != null">
+	      AND  RETURN_CODE = #{returnCode}
+	     </if>
+	     <if test="returnInfo != null">
+	      AND  RETURN_INFO = #{returnInfo}
+	     </if>
+	     <if test="handleState != null">
+	       AND HANDLE_STATE = #{handleState}
+	     </if>
+	     <if test="receiveTime != null">
+	       AND RECEIVE_TIME = #{receiveTime}
+	     </if>
+	     <if test="handleTime != null">
+	      AND  HANDLE_TIME = #{handleTime}
+	     </if>
+	     <if test="remark != null">
+	       AND REMARK = #{remark}
+	     </if>
+	     <if test="version != null">
+	      AND  VERSION = #{version}
+	     </if>
+	    </trim>
+	   </sql>
+	   
+	<select id="get" resultMap="tppCallBackDataResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="tppCallBackDataField" />
+		FROM TPP_CALL_BACK_DATA
+		WHERE ID = #{id}
+	</select>
+	
+	 <delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM TPP_CALL_BACK_DATA WHERE ID = #{id}
+	 </delete>
+	
+	 <insert id="insert" parameterType="TppCallBackData">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+		SELECT
+		seq_tpp_call_back_data_id.nextval AS id FROM dual 
+	</selectKey>
+	   insert into TPP_CALL_BACK_DATA
+	   <trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+	     <if test="offerId != null">
+	       OFFER_ID,
+	     </if>
+	     <if test="requestCode != null">
+	       REQUEST_CODE,
+	     </if>
+	     <if test="returnCode != null">
+	       RETURN_CODE,
+	     </if>
+	     <if test="returnInfo != null">
+	       RETURN_INFO,
+	     </if>
+	     <if test="handleState != null">
+	       HANDLE_STATE,
+	     </if>
+	     <if test="receiveTime != null">
+	       RECEIVE_TIME,
+	     </if>
+	     <if test="handleTime != null">
+	       HANDLE_TIME,
+	     </if>
+	     <if test="remark != null">
+	       REMARK,
+	     </if>
+	     <if test="version != null">
+	       VERSION
+	     </if>
+	   </trim>
+	     VALUES
+	 <trim prefix="(" suffixOverrides="," suffix=")">
+		#{id},
+	     <if test="offerId != null">
+	       #{offerId},
+	     </if>
+	     <if test="requestCode != null">
+	       #{requestCode},
+	     </if>
+	     <if test="returnCode != null">
+	       #{returnCode},
+	     </if>
+	     <if test="returnInfo != null">
+	       #{returnInfo},
+	     </if>
+	     <if test="handleState != null">
+	       #{handleState},
+	     </if>
+	     <if test="receiveTime != null">
+	       #{receiveTime},
+	     </if>
+	     <if test="handleTime != null">
+	       #{handleTime},
+	     </if>
+	     <if test="remark != null">
+	       #{remark},
+	     </if>
+	     <if test="version != null">
+	       #{version}
+	     </if>
+	   </trim>
+	 </insert>
+	 
+	 <update id="update" parameterType="TppCallBackDataVO">
+	   update TPP_CALL_BACK_DATA
+	 <trim prefix="set" suffixOverrides=",">
+	     <if test="offerId != null">
+	       OFFER_ID = #{offerId},
+	     </if>
+	     <if test="requestCode != null">
+	       REQUEST_CODE = #{requestCode},
+	     </if>
+	     <if test="returnCode != null">
+	       RETURN_CODE = #{returnCode},
+	     </if>
+	     <if test="returnInfo != null">
+	       RETURN_INFO = #{returnInfo},
+	     </if>
+	     <if test="handleState != null">
+	       HANDLE_STATE = #{handleState},
+	     </if>
+	     <if test="receiveTime != null">
+	       RECEIVE_TIME = #{receiveTime},
+	     </if>
+	     <if test="handleTime != null">
+	       HANDLE_TIME = #{handleTime},
+	     </if>
+	     <if test="remark != null">
+	       REMARK = #{remark},
+	     </if>
+	     <if test="version != null">
+	       VERSION = #{version}
+	     </if>
+	    </trim>
+	  WHERE ID = #{id}
+	  <if test="version != null">
+		 AND VERSION = #{version} -1 
+	     </if>
+	 </update>
+	 
+   	<!-- findListByVO   -->
+   <select id="findListByVO"  resultMap="tppCallBackDataResultMap" parameterType="TppCallBackDataVO">
+		<include refid="tppCallBackDataSelective" />
+		<include refid="tppCallBackDataConditions" />	
+   </select>
+		 
+   <select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM TPP_CALL_BACK_DATA WHERE OFFER_ID = #{offerId}
+   </select>
+   
+   <select id="count" parameterType="TppCallBackDataVO" resultType="java.lang.Integer">
+		SELECT count(*) FROM (
+		<include refid="tppCallBackDataSelective" />
+		<include refid="tppCallBackDataConditions" />
+		)
+	</select>
+	
+	<select id="findWithPG" parameterType="TppCallBackDataVO" resultMap="tppCallBackDataResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="tppCallBackDataSelective" />
+		<include refid="tppCallBackDataConditions" />	
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>	
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+		 
+</mapper>

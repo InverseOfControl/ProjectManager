@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.after.mapper.OfferMapper" >
+  <resultMap id="offerResultMap" type="Offer" >
+    <result column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="PERSON_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="PERSON_NAME" property="personName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="ACCOUNT_TYPE" property="accountType" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="BANK_ACCOUNT" property="bankAccount" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="HAS_GUARANTEE" property="hasGuarantee" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="GUARANTEE_ID" property="guaranteeId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="GUARANTEE_NAME" property="guaranteeName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="GUARANTEE_BANK_ACCOUNT" property="guaranteeBankAccount" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="GUARANTEE_BANK_NAME" property="guaranteeBankName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="RECEIVABLE_AMOUNT" property="receivableAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="OFFER_AMOUNT" property="offerAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    <result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    <result column="SEND_DATE" property="sendDate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    <result column="STATUS" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="TELLER_ID" property="tellerId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="SALES_DEPT_ID" property="salesDeptId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="TPPTYPE" property="tppType" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="OFFER_TYPE" property="offerType" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="SUCCESS_AMOUNT" property="successAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    
+  </resultMap>
+  	<resultMap id="offerResultMapExtension" type="Offer" extends="offerResultMap" >
+  		<association property="loan" column="LOAN_ID" javaType="Loan" resultMap="loanResultMap"/>		
+		<association property="person" column="PERSON_ID" javaType="Person" resultMap="personResultMap"/>	
+		<association property="tppCallBackData" column="OFFER_ID" javaType="TppCallBackData" resultMap="tppCallBackDataResultMap"/>
+		<association property="personBank" column="{personId=PERSON_ID,loanId=LOAN_ID}" javaType="PersonBank" resultMap="personBankResultMap"/>		
+		<association property="bankAcct" column="BANK_ACCOUNT_ID" javaType="BankAccount" resultMap="bankAccountResultMap"/>		
+		<association property="bank" column="BANK_ID" javaType="Bank" resultMap="bankResultMap"/>	
+		<association property="businessCompany" column="BUSINESS_COMPANY_ID" javaType="BusinessCompany" resultMap="businessCompanyResultMap"/>	
+	</resultMap>
+	
+	<resultMap id="loanResultMap" type="Loan">
+		<id column="LOAN_ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PERSON_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="contract_src" property="contractSrc" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="loanStatus" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+	<!-- -->
+	<resultMap id="personBankResultMap" type="PersonBank">
+		<id column="BANK_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+	
+	<resultMap id="bankAccountResultMap" type="BankAccount">
+		<id column="BANK_ACCOUNT_ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+	 
+	<resultMap id="bankResultMap" type="Bank">
+		<id column="BANK_ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="TPP_BANK_CODE" property="tppBankCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	
+  <resultMap id="personResultMap" type="Person">
+		<id column="PERSON_ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="person_no" property="personNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="person_idnum" property="idnum" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MOBILE_PHONE" property="mobilePhone" jdbcType="VARCHAR" javaType="java.lang.String" />
+  </resultMap>
+  <resultMap id="tppCallBackDataResultMap" type="TppCallBackData">
+    <result column="ID" jdbcType="NUMERIC" property="id" javaType="java.lang.Long"/>
+    <result column="OFFER_ID" jdbcType="NUMERIC" property="offerId" javaType="java.lang.Long"/>
+    <result column="REQUEST_CODE" jdbcType="VARCHAR" property="requestCode" javaType="java.lang.String"/>
+    <result column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" javaType="java.lang.String"/>
+    <result column="return_code" jdbcType="VARCHAR" property="returnCode" javaType="java.lang.String"/>
+    <result column="return_info" jdbcType="VARCHAR" property="returnInfo" javaType="java.lang.String"/>
+    <result column="handle_State" jdbcType="NUMERIC" property="handleState" javaType="java.lang.Integer"/>
+    <result column="receive_time" jdbcType="TIMESTAMP" property="receiveTime" javaType="java.util.Date"/>
+    <result column="handle_time" jdbcType="TIMESTAMP" property="handleTime" javaType="java.util.Date"/>   
+	<result column="TASK_ID" jdbcType="NUMERIC" property="taskId" javaType="java.lang.Long" />
+	<result column="FAIL_REASON" jdbcType="NUMERIC" property="failReason" javaType="java.lang.String"  />
+	<result column="TRADE_FLOW" jdbcType="NUMERIC" property="tradeFlow" javaType="java.lang.Long" />
+  </resultMap>
+  
+  <resultMap id="businessCompanyResultMap" type="BusinessCompany" >
+    <id column="BUSINESS_COMPANY_ID" property="id" jdbcType="DECIMAL" />
+    <result column="BUSINESS_COMPANY_NAME" property="name" jdbcType="VARCHAR" />
+    <result column="BUSINESS_COMPANY_account" property="account" jdbcType="VARCHAR" />
+    <result column="BUSINESS_COMPANY_SHORT_NAME" property="shortName" jdbcType="VARCHAR" />
+    <result column="BUSINESS_CODE" property="businessCode" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <sql id="offerField">
+    OFFER.ID, OFFER.LOAN_ID, OFFER.PERSON_ID, OFFER.PERSON_NAME,
+    OFFER.ACCOUNT_TYPE, OFFER.BANK_ACCOUNT,
+    OFFER.BANK_NAME, OFFER.HAS_GUARANTEE, 
+    OFFER.GUARANTEE_ID, OFFER.GUARANTEE_NAME, OFFER.GUARANTEE_BANK_ACCOUNT,
+    OFFER.GUARANTEE_BANK_NAME, OFFER.RECEIVABLE_AMOUNT, 
+    OFFER_AMOUNT, OFFER.CREATOR_ID, OFFER.CREATOR, OFFER.CREATED_TIME, 
+    OFFER.MODIFIER_ID, OFFER.MODIFIER, OFFER.MODIFIED_TIME, 
+    OFFER.SEND_DATE, OFFER.STATUS, OFFER.TELLER_ID,
+    OFFER.SALES_DEPT_ID, OFFER.REMARK,OFFER.VERSION,OFFER.TPPTYPE,
+    OFFER.OFFER_TYPE,
+    OFFER.SUCCESS_AMOUNT
+  </sql>
+  	<sql id="offerFieldExtension">
+		<include refid="offerField" />
+		,
+		person.PERSON_NO as person_no,
+		person.IDNUM as person_idnum,
+		person.MOBILE_PHONE as MOBILE_PHONE,
+		loan.CONTRACT_SRC as contract_src,
+		loan.status as loanStatus,
+		loan.PRODUCT_ID as PRODUCT_ID,
+		loan.BUSINESS_COMPANY_ID as BUSINESS_COMPANY_ID,
+		bc.account as BUSINESS_COMPANY_account,
+		bc.NAME as BUSINESS_COMPANY_NAME,
+		bc.SHORT_NAME as BUSINESS_COMPANY_SHORT_NAME,
+		bc.BUSINESS_CODE as BUSINESS_CODE,
+		tppCallBackData.RETURN_CODE  as return_code,	
+		tppCallBackData.RETURN_INFO as return_info,	
+		tppCallBackData.RECEIVE_TIME as receive_time,
+		tppCallBackData.HANDLE_TIME as handle_time,	
+		tppCallBackData.HANDLE_STATE as handle_State,
+		tppCallBackData.TASK_ID AS TASK_ID,
+		tppCallBackData.FAIL_REASON AS FAIL_REASON,
+		tppCallBackData.TRADE_FLOW AS TRADE_FLOW,
+		bank.TPP_BANK_CODE as TPP_BANK_CODE
+	</sql>	
+	<sql id="offerSelectiveExtesnsion">
+		SELECT 
+		<include refid="offerFieldExtension" />
+		FROM OFFER 
+		inner join LOAN loan on OFFER.LOAN_ID = loan.ID
+		inner join PERSON person on loan.PERSON_ID = person.ID
+		left join TPP_CALL_BACK_DATA tppCallBackData on (OFFER.ID = tppCallBackData.OFFER_ID and OFFER.STATUS=30)
+		inner join (      select * from (
+	       SELECT  personBank.Loan_Id,personBank.Bank_Account_Id, personBank.PERSON_ID,    
+          row_number() over (partition by personBank.loan_id order by id desc) rn
+			FROM PERSON_BANK personBank 
+ 		)  WHERE rn   <![CDATA[ <= 1 ]]>)  personBank on OFFER.PERSON_ID = personBank.PERSON_ID AND OFFER.LOAN_ID = personBank.LOAN_ID
+		inner join BANK_ACCOUNT bankAcct  on personBank.BANK_ACCOUNT_ID = bankAcct.ID
+		inner join BANK bank on bankAcct.BANK_ID = bank.ID
+		<if test="plFlag!=null and plFlag!=''">
+		 inner join SPECIAL_REPAYMENT sr on sr.loan_id=OFFER.LOAN_ID
+		</if>
+		left join BUSINESS_COMPANY bc on (bc.id=loan.BUSINESS_COMPANY_id and bc.status=1)
+		left join BASE_AREA salesDept on LOAN.SALES_DEPT_ID = salesDept.ID 
+	</sql>
+	
+	<sql id="extensionOfferSelectiveExtension">
+		SELECT
+		<include refid="offerFieldExtension" />
+		FROM OFFER 
+		inner join EXTENSION loan on OFFER.LOAN_ID = loan.ID
+		inner join PERSON person on loan.PERSON_ID = person.ID
+		left join TPP_CALL_BACK_DATA tppCallBackData on (OFFER.ID = tppCallBackData.OFFER_ID and OFFER.STATUS=30)
+		inner join (      select * from (
+	       SELECT  personBank.Loan_Id,personBank.Bank_Account_Id, personBank.PERSON_ID,    
+          row_number() over (partition by personBank.loan_id order by id desc) rn
+			FROM PERSON_BANK personBank 
+ 		)  WHERE rn   <![CDATA[ <= 1 ]]>) personBank on OFFER.PERSON_ID = personBank.PERSON_ID AND OFFER.LOAN_ID = personBank.LOAN_ID
+		inner join BANK_ACCOUNT bankAcct  on personBank.BANK_ACCOUNT_ID = bankAcct.ID
+		inner join BANK bank on bankAcct.BANK_ID = bank.ID
+		<if test="plFlag!=null and plFlag!=''">
+		 inner join SPECIAL_REPAYMENT sr on sr.loan_id=OFFER.LOAN_ID
+		</if>
+	
+		left join BUSINESS_COMPANY bc on (bc.id=loan.BUSINESS_COMPANY_id and bc.status=1)
+		left join BASE_AREA salesDept on LOAN.SALES_DEPT_ID = salesDept.ID 
+	</sql>
+ 	<sql id="offerSelective">
+		SELECT
+		<include refid="offerField" />
+		FROM OFFER
+	</sql>
+	<sql id="offerConditions">
+	  <trim prefix="where" prefixOverrides="and">
+		  <if test="id != null and id != ''">
+		   AND OFFER.ID= #{id}
+	      </if>
+	      <if test="loanId != null and loanId != ''">
+	        AND OFFER.LOAN_ID =  #{loanId}
+	      </if>
+	      <if test="personId != null and personId != ''">
+	       AND OFFER.PERSON_ID =  #{personId}
+	      </if>
+	      <if test="personName != null and personName != ''">
+	        AND OFFER.PERSON_NAME =  #{personName}
+	      </if>
+	      <if test="accountType != null  and accountType != ''">
+	        AND OFFER.ACCOUNT_TYPE = #{accountType}
+	      </if>
+	      <if test="bankAccount != null and bankAccount != ''">
+	        AND OFFER.BANK_ACCOUNT  = #{bankAccount}
+	      </if>
+	      <if test="bankName != null and bankName != ''">
+	        AND OFFER.BANK_NAME = #{bankName}
+	      </if>
+	      <if test="hasGuarantee != null and hasGuarantee != ''">
+	        AND OFFER.HAS_GUARANTEE = #{hasGuarantee}
+	      </if>
+	      <if test="guaranteeId != null  and guaranteeId != ''">
+	        AND OFFER.GUARANTEE_ID = #{guaranteeId}
+	      </if>
+	      <if test="guaranteeName != null   and guaranteeName != ''">
+	         AND OFFER.GUARANTEE_NAME = #{guaranteeName}
+	      </if>
+	      <if test="guaranteeBankAccount != null  and guaranteeBankAccount != ''">
+	        AND OFFER.GUARANTEE_BANK_ACCOUNT =  #{guaranteeBankAccount}
+	      </if>
+	      <if test="guaranteeBankName != null and guaranteeBankName != ''">
+	        AND OFFER.GUARANTEE_BANK_NAME = #{guaranteeBankName}
+	      </if>
+	      <if test="receivableAmount != null  and receivableAmount != ''">
+	       AND  OFFER.RECEIVABLE_AMOUNT = #{receivableAmount}
+	      </if>
+	      <if test="offerAmount != null  and offerAmount != ''">
+	         AND OFFER.OFFER_AMOUNT = #{offerAmount}
+	      </if>
+	      <if test="creatorId != null  and creatorId != ''">
+	       AND  OFFER.CREATOR_ID = #{creatorId}
+	      </if>
+	      <if test="creator != null and creator != ''">
+	       AND  OFFER.CREATOR  =  #{creator}
+	      </if>
+	      <if test="createdTime != null ">
+	        AND OFFER.CREATED_TIME = #{createdTime}
+	      </if>
+	      <if test="modifierId != null and modifierId != ''">
+	        AND  OFFER.MODIFIER_ID =  #{modifierId}
+	      </if>
+	      <if test="modifier != null  and modifier != ''">
+	        AND OFFER.MODIFIER =  #{modifier}
+	      </if>
+	      <if test="modifiedTime != null and modifiedTime != ''">
+	        AND OFFER.MODIFIED_TIME =  #{modifiedTime}
+	      </if>
+	      <if test="sendDateStart != null ">
+			AND OFFER.SEND_DATE  <![CDATA[ >= ]]> #{sendDateStart}
+		  </if>
+		  <if test="sendDateEnd != null">
+			AND OFFER.SEND_DATE <![CDATA[ <= ]]> #{sendDateEnd}
+		  </if>
+	      <if test="status != null and status != ''">
+	         AND OFFER.STATUS = #{status}
+	      </if>
+	      <if test="statusList !=null and statusList.size() > 0">
+				AND OFFER.STATUS IN(
+				<foreach item="guard" index="index" collection="statusList" separator=",">
+					#{guard}
+				</foreach>
+				)
+		  </if>
+	      <if test="tellerId != null and tellerId != ''">
+	        AND OFFER.TELLER_ID =  #{tellerId}
+	      </if>
+	      <if test="salesDeptId != null and salesDeptId != ''">
+	         AND OFFER.SALES_DEPT_ID = #{salesDeptId}
+	      </if>
+	      <if test="deptList !=null and deptList.size() > 0">
+				AND OFFER.SALES_DEPT_ID IN(
+				<foreach item="guard" index="index" collection="deptList"
+					separator=",">
+					#{guard}
+				</foreach>
+				)
+		  </if>
+	      <if test="remark != null and remark != ''">
+	         AND OFFER.REMARK = #{remark}
+	      </if>
+	      <if test="version != null and version != ''">
+	        AND  OFFER.VERSION =  #{version}
+	      </if>
+	      <if test="tppType != null and tppType != ''">
+	        AND  OFFER.TPPTYPE =  #{tppType}
+	      </if>
+	      <if test="productId != null and productId != ''">
+	        AND  loan.PRODUCT_ID =  #{productId}
+	      </if>
+	      <if test="productIds !=null and productIds.size() > 0">
+				AND loan.PRODUCT_ID IN(
+				<foreach item="guard" index="index" collection="productIds"
+					separator=",">
+					#{guard}
+				</foreach>
+				)
+		     </if>
+		      <if test="returnCodeList !=null and returnCodeList.size() > 0">
+				AND tppCallBackData.RETURN_CODE in(
+				<foreach item="guard" index="index" collection="returnCodeList"
+					separator=",">
+					#{guard}
+				</foreach>
+				)
+		     </if>
+		    <if test="returnInfo != null and returnInfo != ''">
+				AND tppCallBackData.RETURN_INFO = #{returnInfo}
+			</if>
+			 <if test="returnCode != null and returnCode != ''">
+				AND tppCallBackData.RETURN_CODE = #{returnCode}
+			</if>
+	      <if test="personIdnum != null and personIdnum != ''">
+				AND person.IDNUM = #{personIdnum}
+			</if>
+			<if test="personName != null and personName != ''">
+				AND person.NAME = #{personName}
+			</if>		
+			<if test="handleState != null and handleState != ''">
+				AND tppCallBackData.HANDLE_STATE = #{handleState}
+			</if>
+			<if test="failReasonType != null and failReasonType != ''">
+				AND tppCallBackData.FAIL_REASON like '%'|| #{failReasonType} ||'%'
+			</if>
+			<if test="createdTimeStart != null">
+				AND OFFER.CREATED_TIME <![CDATA[ >= ]]> #{createdTimeStart}
+		  	</if>
+		  	<if test="createdTimeEnd != null">
+				AND OFFER.CREATED_TIME <![CDATA[ <= ]]> #{createdTimeEnd}
+		  	</if>
+			<if test="amountCriteria != null">
+				AND OFFER.OFFER_AMOUNT <![CDATA[ > ]]> #{amountCriteria}
+		  	</if>
+			<if test="offerType != null">
+				AND OFFER.OFFER_TYPE = #{offerType}
+		  	</if>		  	
+			<if test="successAmount != null">
+				AND OFFER.SUCCESS_AMOUNT = #{successAmount}
+		  	</if>
+		  	<if test="cityId != null">
+			AND salesDept.CITY_ID = #{cityId}
+		</if>
+		<if test="plFlag!=null and plFlag!=''">
+			and sr.PL_FLAG='pl'
+		</if>	
+	   </trim>
+	</sql>
+
+  <insert id="insert" parameterType="Offer" >
+  		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_offer_id.nextval AS id FROM dual
+		</selectKey>
+    insert into OFFER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="loanId != null" >
+        LOAN_ID,
+      </if>
+      <if test="personId != null" >
+        PERSON_ID,
+      </if>
+      <if test="personName != null" >
+        PERSON_NAME,
+      </if>
+      <if test="accountType != null" >
+        ACCOUNT_TYPE,
+      </if>
+      <if test="bankAccount != null" >
+        BANK_ACCOUNT,
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME,
+      </if>
+      <if test="hasGuarantee != null" >
+        HAS_GUARANTEE,
+      </if>
+      <if test="guaranteeId != null" >
+        GUARANTEE_ID,
+      </if>
+      <if test="guaranteeName != null" >
+        GUARANTEE_NAME,
+      </if>
+      <if test="guaranteeBankAccount != null" >
+        GUARANTEE_BANK_ACCOUNT,
+      </if>
+      <if test="guaranteeBankName != null" >
+        GUARANTEE_BANK_NAME,
+      </if>
+      <if test="receivableAmount != null" >
+        RECEIVABLE_AMOUNT,
+      </if>
+      <if test="offerAmount != null" >
+        OFFER_AMOUNT,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME,
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID,
+      </if>
+      <if test="modifier != null" >
+        MODIFIER,
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME,
+      </if>
+      <if test="sendDate != null" >
+        SEND_DATE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="tellerId != null" >
+        TELLER_ID,
+      </if>
+      <if test="salesDeptId != null" >
+        SALES_DEPT_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="tppType != null" >
+        TPPTYPE,
+      </if>
+      <if test="offerType != null">
+		OFFER_TYPE,
+	</if>		  	
+	<if test="successAmount != null">
+		SUCCESS_AMOUNT
+	</if>	
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="loanId != null" >
+        #{loanId},
+      </if>
+      <if test="personId != null" >
+        #{personId},
+      </if>
+      <if test="personName != null" >
+        #{personName},
+      </if>
+      <if test="accountType != null" >
+        #{accountType},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount},
+      </if>
+      <if test="bankName != null" >
+        #{bankName},
+      </if>
+      <if test="hasGuarantee != null" >
+        #{hasGuarantee},
+      </if>
+      <if test="guaranteeId != null" >
+        #{guaranteeId},
+      </if>
+      <if test="guaranteeName != null" >
+        #{guaranteeName},
+      </if>
+      <if test="guaranteeBankAccount != null" >
+        #{guaranteeBankAccount},
+      </if>
+      <if test="guaranteeBankName != null" >
+        #{guaranteeBankName},
+      </if>
+      <if test="receivableAmount != null" >
+        #{receivableAmount},
+      </if>
+      <if test="offerAmount != null" >
+        #{offerAmount},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId},
+      </if>
+      <if test="creator != null" >
+        #{creator},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime},
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime},
+      </if>
+      <if test="sendDate != null" >
+        #{sendDate},
+      </if>
+      <if test="status != null" >
+        #{status},
+      </if>
+      <if test="tellerId != null" >
+        #{tellerId},
+      </if>
+      <if test="salesDeptId != null" >
+        #{salesDeptId},
+      </if>
+      <if test="remark != null" >
+        #{remark},
+      </if>
+      <if test="version != null" >
+        #{version},
+      </if>
+      <if test="tppType != null" >
+        #{tppType},
+      </if>
+      <if test="offerType != null">
+		#{offerType},
+	 </if>		  	
+	<if test="successAmount != null">
+		#{successAmount}
+	</if>	
+    </trim>
+  </insert>
+   <update id="update" parameterType="OfferVO">
+    update OFFER
+    <trim prefix="set" suffixOverrides=",">        
+      <if test="loanId != null and loanId !='' ">
+        LOAN_ID = #{loanId},
+      </if>
+      <if test="personId != null and personId !=''">
+        PERSON_ID = #{personId},
+      </if>
+      <if test="personName != null and personName !=''">
+        PERSON_NAME = #{personName},
+      </if>
+      <if test="accountType != null and accountType !=''">
+        ACCOUNT_TYPE = #{accountType},
+      </if>
+      <if test="bankAccount != null and bankAccount !=''">
+        BANK_ACCOUNT = #{bankAccount},
+      </if>
+      <if test="bankName != null and bankName !=''">
+        BANK_NAME = #{bankName},
+      </if>
+      <if test="hasGuarantee != null and hasGuarantee !=''">
+        HAS_GUARANTEE = #{hasGuarantee},
+      </if>     
+      <if test="guaranteeId != null  and guaranteeId !=''">
+        GUARANTEE_ID = #{guaranteeId},
+      </if>
+      <if test="guaranteeName != null and guaranteeName !=''">
+        GUARANTEE_NAME = #{guaranteeName},
+      </if>
+      <if test="guaranteeBankAccount != null  and guaranteeBankAccount !=''">
+        GUARANTEE_BANK_ACCOUNT = #{guaranteeBankAccount},
+      </if>
+      <if test="guaranteeBankName != null  and guaranteeBankName !=''">
+        GUARANTEE_BANK_NAME = #{guaranteeBankName},
+      </if>
+      <if test="receivableAmount != null  and receivableAmount !=''">
+        RECEIVABLE_AMOUNT = #{receivableAmount},
+      </if>
+      <if test="offerAmount != null  and offerAmount !=''">
+        OFFER_AMOUNT = #{offerAmount},
+      </if>
+      <if test="creatorId != null  and creatorId !=''">
+        CREATOR_ID = #{creatorId},
+      </if>
+      <if test="creator != null and creator !=''">
+        CREATOR = #{creator},
+      </if>
+      <if test="createdTime != null and createdTime !=''">
+        CREATED_TIME = #{createdTime},
+      </if>
+      <if test="modifierId != null and modifierId !=''">
+		MODIFIER_ID = #{modifierId},
+	  </if>
+	  <if test="modifier != null and modifier !=''">
+		MODIFIER = #{modifier},
+	  </if>
+	  <if test="modifiedTime != null  and modifiedTime !=''">
+		MODIFIED_TIME = #{modifiedTime},
+	  </if>
+      <if test="sendDate != null and sendDate !=''">
+        SEND_DATE = #{sendDate},
+      </if>
+      <if test="status != null and status !=''">
+        STATUS = #{status},
+      </if>
+      <if test="tellerId != null and tellerId !=''">
+        TELLER_ID = #{tellerId},
+      </if>
+      <if test="salesDeptId != null and salesDeptId !=''">
+        SALES_DEPT_ID = #{salesDeptId},
+      </if>
+      <if test="remark != null and remark !=''">
+        REMARK = #{remark},
+      </if>
+      <if test="version != null and version !=''">
+        VERSION = #{version},
+      </if>  
+      <if test="tppType != null and tppType !=''">
+        TPPTYPE = #{tppType},
+      </if> 
+      <if test="offerType != null and offerType !=''">
+		OFFER_TYPE = #{offerType},
+	  </if>		  	
+		<if test="successAmount != null and successAmount !=''">
+			SUCCESS_AMOUNT = #{successAmount},
+		</if>	
+      <!-- 没有担保，清空担保人信息 -->
+      <if test="hasGuarantee == 2" >           
+          GUARANTEE_ID = null,
+          GUARANTEE_NAME = null,
+          GUARANTEE_BANK_ACCOUNT =  null,
+          GUARANTEE_BANK_NAME = null
+      </if> 
+       </trim>
+   		WHERE ID = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+  </update>
+  
+  
+  
+ 	<update id="updateOfferTpp" parameterType="OfferVO">
+    update OFFER
+    <trim prefix="set" suffixOverrides=",">        
+      <if test="loanId != null and loanId !='' ">
+        LOAN_ID = #{loanId},
+      </if>
+      <if test="personId != null and personId !=''">
+        PERSON_ID = #{personId},
+      </if>
+      <if test="personName != null and personName !=''">
+        PERSON_NAME = #{personName},
+      </if>
+      <if test="accountType != null and accountType !=''">
+        ACCOUNT_TYPE = #{accountType},
+      </if>
+      <if test="bankAccount != null and bankAccount !=''">
+        BANK_ACCOUNT = #{bankAccount},
+      </if>
+      <if test="bankName != null and bankName !=''">
+        BANK_NAME = #{bankName},
+      </if>
+      <if test="hasGuarantee != null and hasGuarantee !=''">
+        HAS_GUARANTEE = #{hasGuarantee},
+      </if>     
+      <if test="guaranteeId != null  and guaranteeId !=''">
+        GUARANTEE_ID = #{guaranteeId},
+      </if>
+      <if test="guaranteeName != null and guaranteeName !=''">
+        GUARANTEE_NAME = #{guaranteeName},
+      </if>
+      <if test="guaranteeBankAccount != null  and guaranteeBankAccount !=''">
+        GUARANTEE_BANK_ACCOUNT = #{guaranteeBankAccount},
+      </if>
+      <if test="guaranteeBankName != null  and guaranteeBankName !=''">
+        GUARANTEE_BANK_NAME = #{guaranteeBankName},
+      </if>
+      <if test="receivableAmount != null  and receivableAmount !=''">
+        RECEIVABLE_AMOUNT = #{receivableAmount},
+      </if>
+      <if test="offerAmount != null  and offerAmount !=''">
+        OFFER_AMOUNT = #{offerAmount},
+      </if>
+      <if test="creatorId != null  and creatorId !=''">
+        CREATOR_ID = #{creatorId},
+      </if>
+      <if test="creator != null and creator !=''">
+        CREATOR = #{creator},
+      </if>
+      <if test="createdTime != null and createdTime !=''">
+        CREATED_TIME = #{createdTime},
+      </if>
+      <if test="modifierId != null and modifierId !=''">
+		MODIFIER_ID = #{modifierId},
+	  </if>
+	  <if test="modifier != null and modifier !=''">
+		MODIFIER = #{modifier},
+	  </if>
+	  <if test="modifiedTime != null  and modifiedTime !=''">
+		MODIFIED_TIME = #{modifiedTime},
+	  </if>
+      <if test="sendDate != null and sendDate !=''">
+        SEND_DATE = #{sendDate},
+      </if>
+      <if test="status != null and status !=''">
+        STATUS = #{status},
+      </if>
+      <if test="tellerId != null and tellerId !=''">
+        TELLER_ID = #{tellerId},
+      </if>
+      <if test="salesDeptId != null and salesDeptId !=''">
+        SALES_DEPT_ID = #{salesDeptId},
+      </if>
+      <if test="remark != null and remark !=''">
+        REMARK = #{remark},
+      </if>
+      <if test="version != null and version !=''">
+        VERSION = #{version},
+      </if>  
+      <if test="tppType != null and tppType !=''">
+        TPPTYPE = #{tppType},
+      </if> 
+      <if test="offerType != null and offerType !=''">
+		OFFER_TYPE = #{offerType},
+	  </if>		  	
+		<if test="successAmount != null and successAmount !=''">
+			SUCCESS_AMOUNT = #{successAmount},
+		</if>	
+      <!-- 没有担保，清空担保人信息 -->
+      <if test="hasGuarantee == 2" >           
+          GUARANTEE_ID = null,
+          GUARANTEE_NAME = null,
+          GUARANTEE_BANK_ACCOUNT =  null,
+          GUARANTEE_BANK_NAME = null
+      </if> 
+       </trim>
+	   WHERE  OFFER.ID IN
+		<if test="idList !=null and idList.size() > 0">
+			(
+			<foreach item="guard" index="index" collection="idList"
+				separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+  </update>
+  
+  
+  
+  
+
+  
+  <sql id="offerOrderByConditions">
+		ORDER BY OFFER.CREATED_TIME
+  </sql>
+  	
+	<select id="get" resultMap="offerResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="offerField" />
+		FROM OFFER
+		WHERE ID = #{id}
+	</select>
+	<!-- findListByVO   -->
+	<select id="findListByVO"  resultMap="offerResultMapExtension" parameterType="OfferVO" >
+		<include refid="offerSelectiveExtesnsion" />
+		<include refid="offerConditions" />	
+		union all
+		<include refid="extensionOfferSelectiveExtension" />
+		<include refid="offerConditions" />
+	</select>
+	
+	<delete id="delete" parameterType="java.lang.Long"  >
+		DELETE FROM OFFER WHERE ID = #{id}
+	</delete>
+  
+  	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM OFFER WHERE ID = #{ID}
+	</select>
+    <select id="count" parameterType="OfferVO" resultType="java.lang.Integer">
+		SELECT count(*) FROM (
+		<include refid="offerSelectiveExtesnsion" />
+		<include refid="offerConditions" />
+		union all
+		<include refid="extensionOfferSelectiveExtension" />
+		<include refid="offerConditions" />
+		)
+	</select>
+	
+	<select id="findWithPG" parameterType="OfferVO" resultMap="offerResultMapExtension">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="offerSelectiveExtesnsion" />
+		<include refid="offerConditions" />	
+		union all
+		<include refid="extensionOfferSelectiveExtension" />
+		<include refid="offerConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>	
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+    <delete id="deleteByVO" parameterType="OfferVO">
+		DELETE FROM OFFER where OFFER.STATUS = #{status}
+		     AND OFFER.CREATED_TIME <![CDATA[ >= ]]> #{createdTimeStart}
+		     AND OFFER.CREATED_TIME <![CDATA[ <= ]]> #{createdTimeEnd}
+	</delete>	
+
+</mapper>

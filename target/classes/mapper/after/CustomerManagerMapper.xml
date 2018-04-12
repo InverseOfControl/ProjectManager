@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.after.mapper.CustomerManagerMapper" >
+  <resultMap id="CustomerManagerResultMap" type="com.ezendai.credit2.after.model.CustomerManager" >
+  
+    <result column="personName" property="personName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="idNum" property="idNum" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="productId" property="productId" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="productType" property="productType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="cash" property="cash" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="contractNo" property="contractNo" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    
+    <result column="loanId" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result column="personId" property="personId" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result column="extenId" property="extenId" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result column="extensionTime" property="extensionTime" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result column="productName" property="productName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  </resultMap>
+	
+	<select id="findWithPG" parameterType="com.ezendai.credit2.after.vo.CustomerManagerVO" resultMap="CustomerManagerResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		select 
+		l.id as loanId,
+		p.name as personName,
+		p.id as personId,
+		p.idnum as idNum,
+		null as extenId,
+		0 as extensionTime,
+		sys.enum_value as productType,
+		d.cash,
+		l.contract_no as contractNo,
+		pro.product_name as productName
+		from 
+		loan l join ledger d on l.id = d.ACCOUNT_ID
+		left join person p on p.id = l.person_id
+		left join product pro on pro.id=l.product_id
+		left join sys_enumerate sys on l.product_type = sys.enum_code
+		where 1=1
+		and l.product_type = 2 
+		and sys.enum_type = 'PRODUCT_TYPE'
+	   <if test="personName != null and personName != ''">
+			AND p.NAME LIKE '%${personName}%'  
+	   </if>
+  	   <if test="idNum != null and idNum != ''">
+			AND p.idnum = #{idNum}
+	   </if>
+  	   <if test="contractNo != null and contractNo != ''">
+			AND l.contract_no = #{contractNo} 
+	   </if>	
+		union all
+		select 
+		l.id as loanId,
+		p.name as personName,
+		p.id as personId,
+		p.idnum as idNum,
+		e.id as extenId,
+		e.extension_time as extensionTime,
+		sys.enum_value as productType,
+		d.cash,
+		l.contract_no as contractNo,
+		pro.product_name as productName
+		from 
+		extension e left join loan_extension le on e.id = le.extension_id
+		left join loan l on l.id = le.loan_id
+		join ledger d on l.id = d.account_id
+		left join person p on p.id = l.person_id
+		left join product pro on pro.id=l.product_id
+		left join sys_enumerate sys on l.product_type = sys.enum_code
+		where 1=1
+		and l.product_type = 2 
+		and sys.enum_type = 'PRODUCT_TYPE'
+		
+	  	   <if test="personName != null and personName != ''">
+				AND p.NAME LIKE '%${personName}%'  
+		   </if>
+	  	   <if test="idNum != null and idNum != ''">
+				AND p.idnum = #{idNum}   
+		   </if>
+	  	   <if test="contractNo != null and contractNo != ''">
+				AND l.contract_no = #{contractNo} 
+		   </if>		   		   
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<select id="count" parameterType="com.ezendai.credit2.after.vo.CustomerManagerVO" resultType="integer">
+		select count(*) from (
+			select 
+			l.id as loanId,
+			p.name as personName,
+			p.id as personId,
+			p.idnum as idNum,
+			null as extenId,
+			0 as extensionTime,
+			sys.enum_value as productType,
+			d.cash,
+			l.contract_no as contractNo,
+			pro.product_name as productName
+			from 
+			loan l join ledger d on l.id = d.ACCOUNT_ID
+			left join person p on p.id = l.person_id
+			left join product pro on pro.id=l.product_id
+			left join sys_enumerate sys on l.product_type = sys.enum_code
+			where 1=1
+			and l.product_type = 2 
+			and sys.enum_type = 'PRODUCT_TYPE'
+		   <if test="personName != null and personName != ''">
+				AND p.NAME LIKE '%${personName}%'  
+		   </if>
+	  	   <if test="idNum != null and idNum != ''">
+				AND p.idnum = #{idNum}
+		   </if>
+	  	   <if test="contractNo != null and contractNo != ''">
+				AND l.contract_no = #{contractNo} 
+		   </if>	
+			union all
+			select 
+			l.id as loanId,
+			p.name as personName,
+			p.id as personId,
+			p.idnum as idNum,
+			e.id as extenId,
+			e.extension_time as extensionTime,
+			sys.enum_value as productType,
+			d.cash,
+			l.contract_no as contractNo,
+			pro.product_name as productName
+			from 
+			extension e left join loan_extension le on e.id = le.extension_id
+			left join loan l on l.id = le.loan_id
+			join ledger d on l.id = d.account_id
+			left join person p on p.id = l.person_id
+			left join product pro on pro.id=l.product_id
+			left join sys_enumerate sys on l.product_type = sys.enum_code
+			where 1=1
+			and l.product_type = 2 
+			and sys.enum_type = 'PRODUCT_TYPE'
+			
+		  	   <if test="personName != null and personName != ''">
+					AND p.NAME LIKE '%${personName}%'  
+			   </if>
+		  	   <if test="idNum != null and idNum != ''">
+					AND p.idnum = #{idNum}   
+			   </if>
+		  	   <if test="contractNo != null and contractNo != ''">
+					AND l.contract_no = #{contractNo} 
+			   </if>		   		   
+		)	   		   
+	</select>
+	
+</mapper>

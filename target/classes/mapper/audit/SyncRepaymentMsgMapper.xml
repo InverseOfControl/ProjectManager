@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.audit.mapper.SyncRepaymentMsgMapper" >
+  <resultMap id="SyncRepaymentMsgMap" type="com.ezendai.credit2.audit.model.SyncRepaymentMsg" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="LOAN_ID" property="loanId" jdbcType="DECIMAL" />
+    <result column="REPAYMENT_ID" property="repaymentId" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ID_NUM" property="idNum" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="TEMPLET_ID" property="templetId" jdbcType="DECIMAL" />
+    <result column="REPAY_AMOUNT" property="repayAmount" jdbcType="DECIMAL" />
+    <result column="CUR_TIME" property="curTime" jdbcType="DECIMAL" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="DECIMAL" />
+    <result column="PRODUCT_TYPE" property="productType" jdbcType="DECIMAL" />
+    <result column="SENDTIMES" property="sendtimes" jdbcType="DECIMAL" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="MSG" property="msg" jdbcType="VARCHAR" />
+    <result column="BUILD_DATE" property="buildDate" jdbcType="TIMESTAMP" />
+    <result column="SEND_DATE" property="sendDate" jdbcType="TIMESTAMP" />
+    <result column="RETURN_DATE" property="returnDate" jdbcType="TIMESTAMP" />
+    <result column="VERSION" property="version" jdbcType="DECIMAL" />
+    <result column="REPAY_DAY" property="repayDay" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="syncRepaymentMsgField" >
+    ID, LOAN_ID, REPAYMENT_ID, NAME, ID_NUM, MOBILE, TEMPLET_ID, REPAY_AMOUNT, CUR_TIME, 
+    PRODUCT_ID, PRODUCT_TYPE, SENDTIMES, STATUS, MSG, BUILD_DATE, SEND_DATE, RETURN_DATE, 
+    VERSION,REPAY_DAY
+  </sql>
+  
+  	
+	<sql id="syncRepaymentMsgSelective">
+		SELECT
+		<include refid="syncRepaymentMsgField" />
+		FROM SYNC_REPAYMENT_MSG 
+	</sql>
+  
+  <sql id="syncRepaymentMsgConditions">
+		<trim prefix="where" prefixOverrides="and">
+			 <if test="id != null" >
+     		   ID = #{id,jdbcType=DECIMAL}
+    		  </if>
+		     <if test="loanId != null" >
+		      AND   LOAN_ID = #{loanId,jdbcType=DECIMAL}
+		      </if>
+		      <if test="repaymentId != null" >
+		        AND REPAYMENT_ID = #{repaymentId,jdbcType=DECIMAL}
+		      </if>
+		     <if test="name != null and name != ''" >
+		        AND NAME = #{name,jdbcType=VARCHAR}
+		      </if>
+		      <if test="idNum != null and idNum != ''" >
+		       AND  ID_NUM = #{idNum,jdbcType=VARCHAR}
+		      </if>
+		      <if test="mobile != null" >
+		        AND MOBILE = #{mobile,jdbcType=VARCHAR}
+		      </if>
+		      <if test="templetId != null" >
+		         AND TEMPLET_ID = #{templetId,jdbcType=DECIMAL}
+		      </if>
+		      <if test="repayAmount != null" >
+		       AND  REPAY_AMOUNT = #{repayAmount,jdbcType=DECIMAL}
+		      </if>
+		      <if test="curTime != null" >
+		      AND   CUR_TIME = #{curTime,jdbcType=DECIMAL}
+		      </if>
+		      <if test="productId != null" >
+		       AND  PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+		      </if>
+		      <if test="productType != null" >
+		       AND  PRODUCT_TYPE = #{productType,jdbcType=DECIMAL}
+		      </if>
+		      <if test="sendtimes != null" >
+		      AND  SENDTIMES = #{sendtimes,jdbcType=DECIMAL}
+		      </if>
+		      <if test="status != null" >
+		      AND   STATUS = #{status,jdbcType=DECIMAL}
+		      </if>
+		      <if test="msg != null" >
+		       AND  MSG = #{msg,jdbcType=VARCHAR}
+		      </if>
+		      <if test="buildDate != null" >
+		       AND  BUILD_DATE = #{buildDate}
+		      </if>
+		      <if test="sendDate != null" >
+		       AND  SEND_DATE = #{sendDate}
+		      </if>
+		      <if test="returnDate != null" >
+		       AND  RETURN_DATE = #{returnDate}
+		      </if>
+		      <if test="version != null" >
+		      AND   VERSION = #{version,jdbcType=DECIMAL}
+		      </if>
+		     <if test="repayDay != null" >
+		       AND  REPAY_DAY = #{repayDay}
+		      </if>
+		    <if test="statusList !=null and statusList.size() > 0">
+				AND STATUS IN(
+				<foreach item="guard" index="index" collection="statusList" separator=",">
+					#{guard}
+				</foreach>
+			)
+			</if>
+			<if test="sendStartDate != null" >
+		       AND  SEND_DATE <![CDATA[ >= ]]>  #{sendStartDate}
+		      </if>
+		      <if test="sendEndDate != null" >
+		       AND  SEND_DATE <![CDATA[ <= ]]>  #{sendEndDate}
+		     </if>
+		     <if test="buildStartDate != null" >
+		       AND  BUILD_DATE <![CDATA[ >= ]]>  #{buildStartDate}
+		      </if>
+		      <if test="buildEndDate != null" >
+		       AND  BUILD_DATE <![CDATA[ <= ]]>  #{buildEndDate}
+		     </if>
+      	</trim>
+      	ORDER BY ID DESC
+	</sql>
+  <select id="findListByVO" parameterType="SyncRepaymentMsgVO" resultMap="SyncRepaymentMsgMap">
+    <include refid="syncRepaymentMsgSelective" />
+    <include refid="syncRepaymentMsgConditions" />
+  </select>
+   <select id="count" parameterType="SyncRepaymentMsgVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="syncRepaymentMsgSelective" />
+		<include refid="syncRepaymentMsgConditions" />
+		)
+  </select>
+ <select id="findWithPG" parameterType="SyncRepaymentMsgVO" resultMap="SyncRepaymentMsgMap">
+ 	<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+    <include refid="syncRepaymentMsgSelective" />
+    <include refid="syncRepaymentMsgConditions" />
+    <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+    <!-- <include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/> -->
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from SYNC_REPAYMENT_MSG
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="SyncRepaymentMsg" >
+  	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+		SELECT seq_SYNC_REPAYMENT_MSG_id.nextval AS id FROM dual
+	</selectKey>
+    insert into SYNC_REPAYMENT_MSG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="loanId != null" >
+        LOAN_ID,
+      </if>
+      <if test="repaymentId != null" >
+        REPAYMENT_ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="idNum != null" >
+        ID_NUM,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="templetId != null" >
+        TEMPLET_ID,
+      </if>
+      <if test="repayAmount != null" >
+        REPAY_AMOUNT,
+      </if>
+      <if test="curTime != null" >
+        CUR_TIME,
+      </if>
+      <if test="productId != null" >
+        PRODUCT_ID,
+      </if>
+      <if test="productType != null" >
+        PRODUCT_TYPE,
+      </if>
+      <if test="sendtimes != null" >
+        SENDTIMES,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="msg != null" >
+        MSG,
+      </if>
+      <if test="buildDate != null" >
+        BUILD_DATE,
+      </if>
+      <if test="sendDate != null" >
+        SEND_DATE,
+      </if>
+      <if test="returnDate != null" >
+        RETURN_DATE,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="repayDay != null" >
+		REPAY_DAY,
+	</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="loanId != null" >
+        #{loanId,jdbcType=DECIMAL},
+      </if>
+      <if test="repaymentId != null" >
+        #{repaymentId,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idNum != null" >
+        #{idNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="templetId != null" >
+        #{templetId,jdbcType=DECIMAL},
+      </if>
+      <if test="repayAmount != null" >
+        #{repayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="curTime != null" >
+        #{curTime,jdbcType=DECIMAL},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=DECIMAL},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=DECIMAL},
+      </if>
+      <if test="sendtimes != null" >
+        #{sendtimes,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="msg != null" >
+        #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="buildDate != null" >
+        #{buildDate},
+      </if>
+      <if test="sendDate != null" >
+        #{sendDate},
+      </if>
+      <if test="returnDate != null" >
+        #{returnDate},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=DECIMAL},
+      </if>
+ 	 <if test="repayDay != null" >
+		 #{repayDay},
+	</if>     
+    </trim>
+  </insert>
+  <update id="update" parameterType="SyncRepaymentMsgVO" >
+    update SYNC_REPAYMENT_MSG
+    <trim prefix="set" suffixOverrides=",">
+      <if test="loanId != null" >
+        LOAN_ID = #{loanId,jdbcType=DECIMAL},
+      </if>
+      <if test="repaymentId != null" >
+        REPAYMENT_ID = #{repaymentId,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idNum != null" >
+        ID_NUM = #{idNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="templetId != null" >
+        TEMPLET_ID = #{templetId,jdbcType=DECIMAL},
+      </if>
+      <if test="repayAmount != null" >
+        REPAY_AMOUNT = #{repayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="curTime != null" >
+        CUR_TIME = #{curTime,jdbcType=DECIMAL},
+      </if>
+      <if test="productId != null" >
+        PRODUCT_ID = #{productId,jdbcType=DECIMAL},
+      </if>
+      <if test="productType != null" >
+        PRODUCT_TYPE = #{productType,jdbcType=DECIMAL},
+      </if>
+      <if test="sendtimes != null" >
+        SENDTIMES = #{sendtimes,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="msg != null" >
+        MSG = #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="buildDate != null" >
+        BUILD_DATE = #{buildDate},
+      </if>
+      <if test="sendDate != null" >
+        SEND_DATE = #{sendDate},
+      </if>
+      <if test="returnDate != null" >
+        RETURN_DATE = #{returnDate},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="repayDay != null" >
+		 REPAY_DAY = #{repayDay},
+		</if>
+    </trim>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

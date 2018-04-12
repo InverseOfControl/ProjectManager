@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.AttachmentMapper">
+
+	<resultMap id="attachmentResultMap" type="Attachment">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PERSON_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="GUARANTEE_ID" property="guaranteeId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="TITLE" property="title" jdbcType="VARCHAR"  javaType="java.lang.String" />
+		<result column="CATEGORY" property="category" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="FILE_SIZE" property="fileSize" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="SUFFIX" property="suffix" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="FILE_PATH" property="filePath" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="UPLOAD_DATE" property="uploadDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="OPERATOR" property="operator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CLASSIFY_NAME" property="classifyName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="TYPE" property="type" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	    <result column="IS_DELETED" property="isDeleted" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	    <result column="CREATOR_ID"  property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	    <result column="CREATOR"  property="creator" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	    <result column="CREATED_TIME"  property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+	    <result column="MODIFIER_ID"  property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	    <result column="MODIFIER"  property="modifier"  jdbcType="VARCHAR" javaType="java.lang.String"/>
+	    <result column="MODIFIED_TIME"  property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	</resultMap>
+	
+	<sql id="attachmentFeild">
+		ID, PERSON_ID, GUARANTEE_ID, TITLE, CATEGORY, FILE_SIZE,
+		SUFFIX, FILE_PATH, UPLOAD_DATE, OPERATOR, REMARK, VERSION,
+		CLASSIFY_NAME,TYPE,LOAN_ID,IS_DELETED,CREATOR_ID, CREATOR, CREATED_TIME, 
+    	MODIFIER_ID, MODIFIER, MODIFIED_TIME
+	</sql>
+
+	<sql id="attachmentSelective">
+		SELECT
+		<include refid="attachmentFeild" />
+		FROM ATTACHMENT
+	</sql>
+
+	<sql id="attachmentConditions">
+	    where ATTACHMENT.IS_DELETED = 0 	 
+		<if test="id != null">
+			 AND ATTACHMENT.ID = #{id}
+		</if>
+		<if test="personId != null">
+			AND ATTACHMENT.PERSON_ID = #{personId}
+		</if>
+		<if test="guaranteeId != null">
+			AND ATTACHMENT.GUARANTEE_ID = #{guaranteeId}
+		</if>
+		<if test="title != null and title != ''">
+			AND ATTACHMENT.TITLE LIKE '%' || #{title} || '%'
+		</if>
+		<if test="category != null and category != ''">
+			AND ATTACHMENT.CATEGORY = #{category}
+		</if>
+		<if test="fileSize != null">
+			AND ATTACHMENT.FILE_SIZE = #{fileSize}
+		</if>
+		<if test="suffix != null and suffix != ''">
+			AND ATTACHMENT.SUFFIX = #{suffix}
+		</if>
+		<if test="filePath != null and filePath != ''">
+			AND ATTACHMENT.FILE_PATH = #{filePath}
+		</if>
+		<if test="uploadDate != null">
+			AND ATTACHMENT.UPLOAD_DATE = #{uploadDate}
+		</if>
+		<if test="operator != null and operator != ''">
+			AND ATTACHMENT.OPERATOR = #{operator}
+		</if>
+		<if test="remark != null and remark != ''">
+			AND ATTACHMENT.REMARK = #{remark}
+		</if>
+		<if test="version != null">
+			AND ATTACHMENT.VERSION = #{version}
+		</if>
+		<if test="classifyName != null">
+			AND ATTACHMENT.CLASSIFY_NAME = #{classifyName}
+		</if>
+		<if test="type != null">
+			AND ATTACHMENT.TYPE = #{type}
+		</if>
+		<if test="loanId != null">
+			AND ATTACHMENT.LOAN_ID = #{loanId}
+		</if>
+	</sql>
+
+	<select id="get" parameterType="java.lang.Long" resultMap="attachmentResultMap">
+		<include refid="attachmentSelective" />
+		WHERE ATTACHMENT.ID = #{id}
+	</select>
+
+	<update id="update" parameterType="AttachmentVO">
+		UPDATE ATTACHMENT
+		<trim prefix="set" suffixOverrides=",">
+			<if test="personId != null">
+				PERSON_ID = #{personId},
+			</if>
+			<if test="guaranteeId != null">
+				GUARANTEE_ID = #{guaranteeId},
+			</if>
+			<if test="title != null">
+				TITLE = #{title},
+			</if>
+			<if test="category != null">
+				CATEGORY = #{category},
+			</if>
+			<if test="fileSize != null">
+				FILE_SIZE = #{fileSize},
+			</if>
+			<if test="suffix != null">
+				SUFFIX = #{suffix},
+			</if>
+			<if test="filePath != null">
+				FILE_PATH = #{filePath},
+			</if>
+			<if test="uploadDate != null">
+				UPLOAD_DATE = #{uploadDate},
+			</if>
+			<if test="operator != null">
+				OPERATOR = #{operator},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark},
+			</if>
+			<if test="version != null">
+				VERSION=#{version},
+        	</if>
+        	<if test="classifyName != null">
+  				CLASSIFY_NAME = #{classifyName},
+  			</if>
+  			<if test="type != null">
+  				 TYPE = #{type},
+  			</if>
+  			<if test="loanId != null">
+  				 LOAN_ID = #{loanId},
+  			</if>
+  			 <if test="isDeleted != null">
+			     IS_DELETED = #{isDeleted},
+			 </if>
+			 <if test="creatorId != null">
+		        CREATOR_ID = #{creatorId},
+		      </if>
+		      <if test="creator != null">
+		        CREATOR = #{creator},
+		      </if>
+		      <if test="createdTime != null">
+		        CREATED_TIME = #{createdTime},
+		      </if>
+		      <if test="modifierId != null">
+		        MODIFIER_ID = #{modifierId},
+		      </if>
+		      <if test="modifier != null">
+		        MODIFIER = #{modifier},
+		      </if>
+		      <if test="modifiedTime != null">
+		        MODIFIED_TIME = #{modifiedTime},
+		      </if>
+		</trim>
+		WHERE ID = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>  
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		update ATTACHMENT set IS_DELETED=1   
+   		WHERE ID = #{id}	
+	</delete>
+
+	<delete id="deleteByIdList" parameterType="AttachmentVO">
+		DELETE FROM ATTACHMENT WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+
+	<insert id="insert" parameterType="Attachment">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_attachment_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO ATTACHMENT
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				ID,
+			<if test="personId != null">
+				PERSON_ID,
+			</if>
+			<if test="guaranteeId != null">
+				GUARANTEE_ID,
+			</if>
+			<if test="title != null">
+				TITLE,
+			</if>
+			<if test="category != null">
+				CATEGORY ,
+			</if>
+			<if test="fileSize != null">
+				FILE_SIZE,
+			</if>
+			<if test="suffix != null">
+				SUFFIX,
+			</if>
+			<if test="filePath != null">
+				FILE_PATH,
+			</if>
+			<if test="uploadDate != null">
+				UPLOAD_DATE,
+			</if>
+			<if test="operator != null">
+				OPERATOR,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="classifyName != null">
+  				CLASSIFY_NAME,
+  			</if>
+  			<if test="type != null">
+  				 TYPE,
+  			</if>
+  			<if test="loanId != null">
+  				 LOAN_ID,
+  			</if>
+  			 <if test="isDeleted != null">
+		       IS_DELETED,
+		     </if>
+		      <if test="creatorId != null">
+		        CREATOR_ID,
+		      </if>
+		      <if test="creator != null">
+		        CREATOR,
+		      </if>
+		      <if test="createdTime != null">
+		        CREATED_TIME,
+		      </if>
+		      <if test="modifierId != null">
+		        MODIFIER_ID,
+		      </if>
+		      <if test="modifier != null">
+		        MODIFIER,
+		      </if>
+		      <if test="modifiedTime != null">
+		        MODIFIED_TIME,
+		      </if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				#{id},
+			<if test="personId != null">
+				#{personId},
+			</if>
+			<if test="guaranteeId != null">
+				#{guaranteeId},
+			</if>
+			<if test="title != null">
+				#{title},
+			</if>
+			<if test="category != null">
+				#{category},
+			</if>
+			<if test="fileSize != null">
+				#{fileSize},
+			</if>
+			<if test="suffix != null">
+				#{suffix},
+			</if>
+			<if test="filePath != null">
+				#{filePath},
+			</if>
+			<if test="uploadDate != null">
+				#{uploadDate},
+			</if>
+			<if test="operator != null">
+				#{operator},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="classifyName != null">
+  				 #{classifyName},
+  			</if>
+  			<if test="type != null">
+  				 #{type},
+  			</if>
+  			<if test="loanId != null">
+  				 #{loanId},
+  			</if>
+  		 	<if test="isDeleted != null">
+		       #{isDeleted},
+		     </if>
+		     <if test="creatorId != null">
+		        #{creatorId},
+		      </if>
+		      <if test="creator != null">
+		        #{creator},
+		      </if>
+		      <if test="createdTime != null">
+		        #{createdTime},
+		      </if>
+		      <if test="modifierId != null">
+		        #{modifierId},
+		      </if>
+		      <if test="modifier != null">
+		        #{modifier},
+		      </if>
+		      <if test="modifiedTime != null">
+		        #{modifiedTime},
+		      </if>
+		</trim>
+	</insert>
+
+	<select id="findListByVO" parameterType="AttachmentVO" resultMap="attachmentResultMap">
+		<include refid="attachmentSelective" />
+		<include refid="attachmentConditions" />
+	</select>
+
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM ATTACHMENT WHERE ID = #{id}
+	</select>
+
+	<select id="count" parameterType="AttachmentVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="attachmentSelective" />
+		<include refid="attachmentConditions" />
+		)
+	</select>
+
+	<select id="findWithPG" parameterType="AttachmentVO" resultMap="attachmentResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="attachmentSelective" />
+		<include refid="attachmentConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+</mapper>

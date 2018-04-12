@@ -1,0 +1,71 @@
+.addTable td{
+    height: 30px;
+}
+.bottomLineTr td{
+    border-bottom: 1px solid #aaa;
+}
+#addSeLoanForm table td{
+    border-bottom:1px dashed #BFC5C5;
+    border-left:#dfe4e5;
+    border-right:#dfe4e5;
+    height:40px;
+    line-height:18px;
+    width:290px;
+    
+}
+#addSeLoanForm table tr td:nth-child(odd){
+    background: #f1f5f9;
+    padding-right:10px;
+    text-align:left;
+   
+}
+#addSeLoanForm table tr td:nth-child(even){
+    background: #FFFFFF;
+    padding-left:10px;
+    text-align:left;
+    
+}
+#editLoanForm table td{
+    border-bottom:1px dashed #BFC5C5;
+    border-left:#dfe4e5;
+    border-right:#dfe4e5;
+    height:40px;
+    line-height:18px;
+    width:290px;
+}
+#editLoanForm table tr td:nth-child(odd){
+    background: #f1f5f9;
+    padding-right:10px;
+    text-align:left;
+    
+}
+#editLoanForm table tr td:nth-child(even){
+    background: #FFFFFF;
+    padding-left:10px;
+    text-align:left;
+    
+}
+#browseForm table td{
+    border-bottom:1px dashed #BFC5C5;
+    border-left:#dfe4e5;
+    border-right:#dfe4e5;
+    height:40px;
+    line-height:18px;
+    width:290px;
+}
+#browseForm table tr td:nth-child(odd){
+    background: #f1f5f9;
+    padding-left:10px;
+    text-align:right;
+    text-indent:1em;
+}
+#browseForm table tr td:nth-child(even){
+    background: #FFFFFF;
+    padding-left:10px;
+    text-align:left;
+    text-indent:1em;
+}
+
+#addTable2 input{width:130px;}
+.chedai  label{display:inline-block}
+.chedai  input{display:inline-block}

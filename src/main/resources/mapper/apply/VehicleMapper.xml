@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.VehicleMapper">
+	<resultMap id="vehicleResultMap" type="Vehicle">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PERSON_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="BRAND" property="brand" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODEL" property="model" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="COTY" property="coty" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="FRAME_NUMBER" property="frameNumber" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PLATE_NUMBER" property="plateNumber" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MILEAGE" property="mileage" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+	
+	<sql id="vehicleFeild">
+		ID, PERSON_ID, BRAND, MODEL,
+		COTY, FRAME_NUMBER, PLATE_NUMBER,
+		MILEAGE, CREATOR_ID, CREATOR, CREATED_TIME,
+		MODIFIER_ID, MODIFIER, MODIFIED_TIME,
+		REMARK, VERSION, LOAN_ID
+	</sql>
+	
+	<sql id="vehicleConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				VEHICLE.ID = #{id}
+			</if>
+			<if test="personId != null">
+				AND VEHICLE.PERSON_ID = #{personId}
+			</if>
+			<if test="brand != null  and brand != ''">
+				AND VEHICLE.BRAND = #{brand}
+			</if>
+			<if test="model != null  and model != ''">
+				AND VEHICLE.MODEL = #{model}
+			</if>
+			<if test="coty != null">
+				AND VEHICLE.COTY = #{coty}
+			</if>
+			<if test="frameNumber != null">
+				AND VEHICLE.FRAME_NUMBER = #{frameNumber}
+			</if>
+			<if test="plateNumber != null">
+				AND VEHICLE.PLATE_NUMBER = #{plateNumber}
+			</if>
+			<if test="mileage != null">
+				AND VEHICLE.MILEAGE = #{mileage}
+			</if>
+			<if test="creatorId != null">
+				AND VEHICLE.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null">
+				AND VEHICLE.CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND VEHICLE.CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				AND VEHICLE.MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null">
+				AND VEHICLE.MODIFIER = #{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				AND VEHICLE.MODIFIED_TIME = #{modifiedTime}
+			</if>
+			<if test="remark != null">
+				AND VEHICLE.REMARK = #{remark}
+			</if>
+			<if test="version != null">
+				AND VEHICLE.VERSION = #{version}
+			</if>
+			<if test="loanId != null">
+				AND VEHICLE.LOAN_ID = #{loanId}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="vehicleSelective">
+		SELECT
+		<include refid="vehicleFeild" />
+		FROM VEHICLE
+	</sql>
+	
+	<insert id="insert" parameterType="Vehicle">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT seq_vehicle_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO VEHICLE
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				ID,
+			<if test="personId != null">
+				PERSON_ID,
+			</if>
+			<if test="brand != null">
+				BRAND,
+			</if>
+			<if test="model != null">
+				MODEL,
+			</if>
+			<if test="coty != null">
+				COTY,
+			</if>
+			<if test="frameNumber != null">
+				FRAME_NUMBER,
+			</if>
+			<if test="plateNumber != null">
+				PLATE_NUMBER,
+			</if>
+			<if test="mileage != null">
+				MILEAGE,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+			<if test="loanId != null">
+				LOAN_ID,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				#{id},
+			<if test="personId != null">
+				#{personId},
+			</if>
+			<if test="brand != null and brand != ''">
+				#{brand},
+			</if>
+			<if test="model != null and model !=''">
+				#{model},
+			</if>
+			<if test="coty != null">
+				#{coty},
+			</if>
+			<if test="frameNumber != null">
+				#{frameNumber},
+			</if>
+			<if test="plateNumber != null">
+				#{plateNumber},
+			</if>
+			<if test="mileage != null">
+				#{mileage},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="loanId != null">
+				#{loanId},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="VehicleVO">
+		UPDATE VEHICLE
+		<trim prefix="set" suffixOverrides=",">
+			<if test="personId != null">
+				PERSON_ID= #{personId},
+			</if>
+			<if test="brand != null">
+				BRAND = #{brand},
+			</if>
+			<if test="model != null">
+				MODEL = #{model},
+			</if>
+			<if test="coty != null">
+				COTY = #{coty},
+			</if>
+			<if test="frameNumber != null">
+				FRAME_NUMBER = #{frameNumber},
+			</if>
+			<if test="plateNumber != null">
+				PLATE_NUMBER = #{plateNumber},
+			</if>
+			<if test="mileage != null">
+				MILEAGE = #{mileage},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID =#{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark},
+			</if>
+			<if test="version != null">
+				VERSION= #{version},
+			</if>
+			<if test="loanId != null">
+				LOAN_ID = #{loanId},
+			</if>
+		</trim>
+		WHERE ID = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>  
+	</update>
+	
+	<select id="get" resultMap="vehicleResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="vehicleFeild" />
+		FROM VEHICLE
+		WHERE ID = #{id}
+	</select>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM VEHICLE WHERE ID =	#{id}
+	</delete>
+	
+	<delete id="deleteByIdList" parameterType="VehicleVO">
+		DELETE FROM VEHICLE  WHERE ID IN(
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+	
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM VEHICLE WHERE ID = #{id}
+	</select>
+	
+	<select id="findListByVO" parameterType="VehicleVO" resultMap="vehicleResultMap">
+		<include refid="vehicleSelective" />
+		<include refid="vehicleConditions" />
+	</select>
+	
+	<select id="count" parameterType="VehicleVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="vehicleSelective" />
+		<include refid="vehicleConditions" />
+		)
+	</select>
+
+	<select id="findWithPG" parameterType="VehicleVO" resultMap="vehicleResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="vehicleSelective" />
+		<include refid="vehicleConditions" />
+		ORDER BY VEHICLE.ID DESC
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<select id="getIdNoTwo" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM ATTACHMENT a,Attachment_Detail b where a.id=b.attachment_id and a.title='身份证正反面' and a.loan_id=#{id} and b.IS_DELETED=0
+	</select>
+		
+</mapper>

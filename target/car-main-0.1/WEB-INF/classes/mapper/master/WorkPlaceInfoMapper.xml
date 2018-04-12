@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.WorkPlaceInfoMapper">
+	<resultMap id="workPlaceInfoResultMap" type="WorkPlaceInfo">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="tel" column="TEL" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="cityNo" column="CITY_NO" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="site" column="SITE" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="zoneCode" column="ZONE_CODE" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="creatorId" column="CREATOR_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="creator" column="CREATOR" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="modifierId" column="MODIFIER_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="modifier" column="MODIFIER" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="modifiedTime" column="MODIFIED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="version" column="VERSION" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	</resultMap>
+
+	<sql id="workPlaceInfoSelective">
+		select 
+		<include refid="workPlaceInfoField" />
+		from WORK_PLACE_INFO workPlaceInfo
+	</sql>
+
+	<sql id="workPlaceInfoField">
+		workPlaceInfo.ID,workPlaceInfo.TEL,workPlaceInfo.CITY_NO,workPlaceInfo.SITE,workPlaceInfo.ZONE_CODE,
+		workPlaceInfo.CREATOR_ID,workPlaceInfo.CREATOR,workPlaceInfo.CREATED_TIME,
+		workPlaceInfo.MODIFIER_ID,workPlaceInfo.MODIFIER,workPlaceInfo.MODIFIED_TIME,
+		workPlaceInfo.VERSION
+	</sql>
+
+	<sql id="workPlaceInfoConditions">
+		<where>
+			<if test="id != null">
+				AND ID = #{id}
+			</if>
+			<if test="tel != null and tel != ''">
+				AND TEL LIKE '%'||#{tel}||'%'
+			</if>
+			<if test="cityNo != null and cityNo != ''">
+				AND CITY_NO LIKE '%'||#{cityNo}||'%'
+			</if>
+			<if test="site != null and site != ''">
+				AND SITE LIKE '%'||#{site}||'%'
+			</if>
+			<if test="zoneCode != null and zoneCode != ''">
+				AND ZONE_CODE = #{zoneCode}
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime}
+			</if>	
+			<if test="version != null">
+				VERSION = #{version}
+			</if>
+		</where>
+	</sql>
+
+	<select id="count" parameterType="WorkPlaceInfoVO" resultType="int">
+		SELECT
+		count(*)
+		FROM WORK_PLACE_INFO workPlaceInfo
+		<include refid="workPlaceInfoConditions" />
+	</select>
+	<select id="get" parameterType="java.lang.Long" resultMap="workPlaceInfoResultMap">
+		<include refid="workPlaceInfoSelective" />
+		where workPlaceInfo.id = #{id}
+	</select>
+	<select id="findListByVO" parameterType="WorkPlaceInfoVO" resultMap="workPlaceInfoResultMap">
+	
+	<if test="pager != null ">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+	</if>
+	
+		SELECT
+		<include refid="workPlaceInfoField" />
+		FROM  work_place_info workPlaceInfo
+		<include refid="workPlaceInfoConditions" />
+		
+		<if test="pager != null ">
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+		</if>
+	</select>
+
+	<insert id="insert" parameterType="WorkPlaceInfo">
+		<selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+			SELECT SEQ_WORK_PLACE_INFO_ID.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO work_place_info
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="id !=null">
+				id ,
+			</if>
+			<if test="tel !=null and tel != ''">
+				tel ,
+			</if>
+			<if test="cityNo !=null and cityNo != ''">
+				city_No ,
+			</if>
+			<if test="site != null and site != ''">
+				site ,
+			</if>
+			<if test="zoneCode != null and zoneCode != ''">
+				zone_Code ,
+			</if>
+			<if test="version != null">
+				version ,
+			</if>
+			<if test="creatorId != null">
+				creator_id ,
+			</if>
+			<if test="creator != null and creator != ''">
+				creator ,
+			</if>
+			<if test="createdTime != null">
+				created_time ,
+			</if>
+			<if test="modifierId != null">
+				modifier_id ,
+			</if>
+			<if test="modifier != null and modifier != ''">
+				modifier ,
+			</if>
+			<if test="modifiedTime != null">
+				modified_time
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" prefixOverrides="," suffix=")">
+			#{id} ,
+			<if test="tel !=null and tel != ''">
+				#{tel} ,
+			</if>
+			<if test="cityNo !=null and cityNo != ''">
+				#{cityNo} ,
+			</if>
+			<if test="site != null and site != ''">
+				#{site} ,
+			</if>
+			<if test="zoneCode != null and zoneCode != ''">
+				#{zoneCode} ,
+			</if>
+			<if test="version != null">
+				#{version} ,
+			</if>
+			<if test="creatorId != null">
+				#{creatorId} ,
+			</if>
+			<if test="creator != null and creator != ''">
+				#{creator} ,
+			</if>
+			<if test="createdTime != null">
+				#{createdTime} ,
+			</if>
+			<if test="modifierId != null">
+				#{modifierId} ,
+			</if>
+			<if test="modifier != null and modifier != ''">
+				#{modifier} ,
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime}
+			</if>
+		</trim>
+	</insert>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM work_place_info WHERE id=#{id}
+	</delete>
+
+	<delete id="deleteByIdList" parameterType="WorkPlaceInfoVO">
+		DELETE FROM WORK_PLACE_INFO WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+
+	<update id="update" parameterType="WorkPlaceInfoVO">
+		update work_place_info SET
+				TEL = #{tel},
+
+				CITY_NO = #{cityNo},
+
+				SITE = #{site},
+	
+				ZONE_CODE = #{zoneCode}
+
+		where ID=#{id}
+	</update>
+		<!-- 验证待添加的办公网点是否存在 -->
+	<select id="existsWorkPlaceInfo" parameterType="WorkPlaceInfo" resultType="int">
+		SELECT COUNT(*) FROM WORK_PLACE_INFO WHERE SITE=#{site} AND CITY_NO=#{cityNo} and TEL=#{tel} and ZONE_CODE=#{zoneCode}
+	</select>
+</mapper>

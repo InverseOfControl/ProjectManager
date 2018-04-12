@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.audit.mapper.RepaymentPlanMapper" >
+	<resultMap id="RepaymentPlanResultMap" type="com.ezendai.credit2.audit.model.RepaymentPlan">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="STATUS" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="REPAY_AMOUNT" property="repayAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_NUM" property="curNum" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="PRINCIPAL_AMT" property="principalAmt" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="OUTSTANDING" property="outstanding" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="AVERAGE_CAPITAL" property="averageCapital" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REMAINING_PRINCIPAL" property="remainingPrincipal" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="PENALTY" property="penalty" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="RISK" property="risk" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="ONE_TIME_REPAYMENT_AMOUNT" property="oneTimeRepaymentAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="FACT_RETURNDATE" property="factReturnDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="DEFICIT" property="deficit" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="MANAGE_PART0_FEE" property="managePart0Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="MANAGE_PART1_FEE" property="managePart1Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REFER_RATE" property="referRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="EVAL_RATE" property="evalRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="INTEREST_AMT" property="interestAmt" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REPAY_DAY" property="repayDay" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="PENALTY_DATE" property="penaltyDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CUR_REMAINING_MANAGE_PART0_FEE" property="curRemainingManagePart0Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_MANAGE_PART1_FEE" property="curRemainingManagePart1Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_REFER_RATE" property="curRemainingReferRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_EVAL_RATE" property="curRemainingEvalRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_RISK" property="curRemainingRisk" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_INTEREST_AMT" property="curRemainingInterestAmt" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_PRINCIPAL" property="curRemainingPrincipal" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REFUND" property="refund" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+	</resultMap>
+	
+	<resultMap id="RepaymentPlanResultWithLoanMap" type="com.ezendai.credit2.audit.model.RepaymentPlan">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="STATUS" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="REPAY_AMOUNT" property="repayAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_NUM" property="curNum" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="PRINCIPAL_AMT" property="principalAmt" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="OUTSTANDING" property="outstanding" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="AVERAGE_CAPITAL" property="averageCapital" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REMAINING_PRINCIPAL" property="remainingPrincipal" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="PENALTY" property="penalty" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="RISK" property="risk" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="ONE_TIME_REPAYMENT_AMOUNT" property="oneTimeRepaymentAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="FACT_RETURNDATE" property="factReturnDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="DEFICIT" property="deficit" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="MANAGE_PART0_FEE" property="managePart0Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="MANAGE_PART1_FEE" property="managePart1Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REFER_RATE" property="referRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="EVAL_RATE" property="evalRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="INTEREST_AMT" property="interestAmt" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REPAY_DAY" property="repayDay" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="PENALTY_DATE" property="penaltyDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CUR_REMAINING_MANAGE_PART0_FEE" property="curRemainingManagePart0Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_MANAGE_PART1_FEE" property="curRemainingManagePart1Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_REFER_RATE" property="curRemainingReferRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_EVAL_RATE" property="curRemainingEvalRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_RISK" property="curRemainingRisk" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_INTEREST_AMT" property="curRemainingInterestAmt" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CUR_REMAINING_PRINCIPAL" property="curRemainingPrincipal" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REFUND" property="refund" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="GRANT_ACCOUNT_ID" property="grantAccountId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="ACCOUNT_NAME" property="accountName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="ORG_REPAY_TERM" property="orgRepayTerm" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+  
+  <sql id="repaymentPlanField">
+		REPAYMENT_PLAN.ID,
+		REPAYMENT_PLAN.LOAN_ID,
+		REPAYMENT_PLAN.STATUS,
+		REPAYMENT_PLAN.REPAY_AMOUNT,
+		REPAYMENT_PLAN.CUR_NUM,
+		REPAYMENT_PLAN.PRINCIPAL_AMT,
+		REPAYMENT_PLAN.OUTSTANDING,
+		REPAYMENT_PLAN.AVERAGE_CAPITAL,
+		REPAYMENT_PLAN.REMAINING_PRINCIPAL,
+		REPAYMENT_PLAN.PENALTY,
+		REPAYMENT_PLAN.RISK,
+		REPAYMENT_PLAN.ONE_TIME_REPAYMENT_AMOUNT,
+		REPAYMENT_PLAN.FACT_RETURNDATE,
+		REPAYMENT_PLAN.DEFICIT,
+		REPAYMENT_PLAN.MANAGE_PART0_FEE,
+		REPAYMENT_PLAN.MANAGE_PART1_FEE,
+		REPAYMENT_PLAN.REFER_RATE,
+		REPAYMENT_PLAN.EVAL_RATE,
+		REPAYMENT_PLAN.INTEREST_AMT,
+		REPAYMENT_PLAN.REPAY_DAY,
+		REPAYMENT_PLAN.PENALTY_DATE,
+		REPAYMENT_PLAN.VERSION,
+		REPAYMENT_PLAN.CUR_REMAINING_MANAGE_PART0_FEE,
+		REPAYMENT_PLAN.CUR_REMAINING_MANAGE_PART1_FEE,
+		REPAYMENT_PLAN.CUR_REMAINING_REFER_RATE,
+		REPAYMENT_PLAN.CUR_REMAINING_EVAL_RATE,
+		REPAYMENT_PLAN.CUR_REMAINING_RISK,
+		REPAYMENT_PLAN.CUR_REMAINING_INTEREST_AMT,
+		REPAYMENT_PLAN.CUR_REMAINING_PRINCIPAL,
+		REPAYMENT_PLAN.REFUND
+	</sql>
+	 <sql id="extendField">
+		 ,
+		 TT.GRANT_ACCOUNT_ID,
+		 TT.PRODUCT_ID,
+		 PERSON.NAME,
+		 BANK_ACCOUNT.ACCOUNT_NAME,
+		 CPC.ORG_REPAY_TERM
+	 </sql>
+	 
+	<sql id="repaymentPlanExtendSelective">
+		SELECT
+		<include refid="repaymentPlanField" />
+		<include refid="extendField" />
+		FROM REPAYMENT_PLAN 
+		LEFT JOIN (
+			<include refid="LoanAndExtensionSelective" />
+		   ) TT ON (TT.ID=REPAYMENT_PLAN.LOAN_ID)
+		LEFT JOIN PERSON ON(PERSON.ID=TT.PERSON_ID)
+		LEFT JOIN BANK_ACCOUNT ON(BANK_ACCOUNT.ID=TT.GRANT_ACCOUNT_ID)
+		LEFT JOIN CHANNEL_PLAN_CHECK CPC ON(TT.SCHEME_ID=CPC.ID)
+	</sql>
+	
+	<sql id="LoanAndExtensionSelective">
+			SELECT L.ID,L.PERSON_ID,L.PRODUCT_ID,L.PRODUCT_TYPE,L.GRANT_ACCOUNT_ID,L.SCHEME_ID
+			 FROM LOAN L
+			  UNION
+			 SELECT 
+			 T.ID,T.PERSON_ID,T.PRODUCT_ID,T.PRODUCT_TYPE,T.GRANT_ACCOUNT_ID,T.SCHEME_ID
+			FROM EXTENSION T
+	
+	</sql>
+	
+	<sql id="repaymentPlanExtendConditions">
+		<trim prefix="where" prefixOverrides="and">
+			1=1 
+			<if test="id != null">
+				AND	REPAYMENT_PLAN.ID = #{id}
+			</if>
+			<if test="loanId != null and loanId != ''">
+				AND REPAYMENT_PLAN.LOAN_ID = #{loanId}
+			</if>
+			<if test="status != null">
+				AND REPAYMENT_PLAN.STATUS = #{status}
+			</if>
+			<if test="repayAmount != null">
+				AND REPAYMENT_PLAN.REPAY_AMOUNT = #{repayAmount}
+			</if>
+			<if test="curNum != null">
+				AND REPAYMENT_PLAN.CUR_NUM = #{curNum}
+			</if>
+			<if test="principalAmt != null">
+				AND REPAYMENT_PLAN.PRINCIPAL_AMT = #{principalAmt}
+			</if>
+			<if test="outstanding != null">
+				AND REPAYMENT_PLAN.OUTSTANDING = #{outstanding}
+			</if>
+			<if test="averageCapital != null">
+				AND REPAYMENT_PLAN.AVERAGE_CAPITAL = #{averageCapital}
+			</if>
+			<if test="remainingPrincipal != null">
+				AND REPAYMENT_PLAN.REMAINING_PRINCIPAL = #{remainingPrincipal}
+			</if>
+			<if test="penalty != null">
+				AND REPAYMENT_PLAN.PENALTY = #{penalty}
+			</if>
+			<if test="risk != null">
+				AND REPAYMENT_PLAN.RISK = #{risk}
+			</if>
+			<if test="oneTimeRepaymentAmount != null">
+				AND REPAYMENT_PLAN.ONE_TIME_REPAYMENT_AMOUNT = #{oneTimeRepaymentAmount}
+			</if>
+			<if test="factReturnDate != null">
+				AND REPAYMENT_PLAN.FACT_RETURNDATE = #{factReturnDate}
+			</if>
+			<if test="deficit != null">
+				AND	REPAYMENT_PLAN.DEFICIT = #{deficit}
+			</if>
+			<if test="managePart0Fee != null">
+				AND	REPAYMENT_PLAN.MANAGE_PART0_FEE = #{managePart0Fee}
+			</if>
+			<if test="managePart1Fee != null">
+				AND	REPAYMENT_PLAN.MANAGE_PART1_FEE = #{managePart1Fee}
+			</if>
+			<if test="referRate != null">
+				AND REPAYMENT_PLAN.REFER_RATE = #{referRate}
+			</if>
+			<if test="evalRate != null">
+				AND REPAYMENT_PLAN.EVAL_RATE = #{evalRate}
+			</if>
+			<if test="interestAmt != null">
+				AND REPAYMENT_PLAN.INTEREST_AMT = #{interestAmt}
+			</if>
+			<if test="curRemainingManagePart0Fee != null">
+				AND	REPAYMENT_PLAN.CUR_REMAINING_MANAGE_PART0_FEE = #{curRemainingManagePart0Fee}
+			</if>
+			<if test="curRemainingManagePart1Fee != null">
+				AND	REPAYMENT_PLAN.CUR_REMAINING_MANAGE_PART1_FEE = #{curRemainingManagePart1Fee}
+			</if>
+			<if test="curRemainingReferRate != null">
+				AND REPAYMENT_PLAN.CUR_REMAINING_REFER_RATE = #{curRemainingReferRate}
+			</if>
+			<if test="curRemainingEvalRate != null">
+				AND REPAYMENT_PLAN.CUR_REMAINING_EVAL_RATE = #{curRemainingEvalRate}
+			</if>
+			<if test="curRemainingInterestAmt != null">
+				AND REPAYMENT_PLAN.CUR_REMAINING_INTEREST_AMT = #{curRemainingInterestAmt}
+			</if>
+			<if test="curRemainingRisk != null">
+				AND REPAYMENT_PLAN.CUR_REMAINING_RISK = #{curRemainingRisk}
+			</if>
+			<if test="curRemainingPrincipal != null">
+				AND REPAYMENT_PLAN.CUR_REMAINING_PRINCIPAL = #{curRemainingPrincipal}
+			</if>
+			<if test="repayDay != null">
+				AND REPAYMENT_PLAN.REPAY_DAY = #{repayDay}
+			</if>
+			<if test="penaltyDate != null">
+				AND REPAYMENT_PLAN.PENALTY_DATE = #{penaltyDate}
+			</if>
+			<if test="version != null">
+				AND REPAYMENT_PLAN.VERSION = #{version}
+			</if>
+			 <if test="repayDayStart !=null">
+				AND REPAYMENT_PLAN.REPAY_DAY <![CDATA[ >= ]]> #{repayDayStart}
+		    </if> 
+		    <if test="repayDayEnd !=null">
+				AND REPAYMENT_PLAN.REPAY_DAY <![CDATA[ <= ]]> #{repayDayEnd}
+		    </if>
+		    <if test="statusExcept != null">
+				AND REPAYMENT_PLAN.STATUS != #{statusExcept}
+			</if>
+			<if test="notStatus != null">
+				AND REPAYMENT_PLAN.STATUS <![CDATA[ <> ]]> #{notStatus}
+			</if>
+			<if test="refund != null">
+				AND REPAYMENT_PLAN.REFUND = #{refund}
+			</if>
+			<if test="statusList !=null and statusList.size() > 0">
+				AND REPAYMENT_PLAN.STATUS IN(
+				<foreach item="guard" index="index" collection="statusList" separator=",">
+					#{guard}
+				</foreach>
+				)
+		    </if>		
+		</trim>
+	</sql>
+	
+	
+	<sql id="repaymentPlanSelective">
+		SELECT
+		<include refid="repaymentPlanField" />
+		FROM REPAYMENT_PLAN 
+	</sql>
+	
+	<sql id="repaymentPlanConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				REPAYMENT_PLAN.ID = #{id}
+			</if>
+			<if test="loanId != null and loanId != ''">
+				AND REPAYMENT_PLAN.LOAN_ID = #{loanId}
+			</if>
+			<if test="status != null">
+				AND REPAYMENT_PLAN.STATUS = #{status}
+			</if>
+			<if test="repayAmount != null">
+				AND REPAYMENT_PLAN.REPAY_AMOUNT = #{repayAmount}
+			</if>
+			<if test="curNum != null">
+				AND REPAYMENT_PLAN.CUR_NUM = #{curNum}
+			</if>
+			<if test="principalAmt != null">
+				AND REPAYMENT_PLAN.PRINCIPAL_AMT = #{principalAmt}
+			</if>
+			<if test="outstanding != null">
+				AND REPAYMENT_PLAN.OUTSTANDING = #{outstanding}
+			</if>
+			<if test="averageCapital != null">
+				AND REPAYMENT_PLAN.AVERAGE_CAPITAL = #{averageCapital}
+			</if>
+			<if test="remainingPrincipal != null">
+				AND REPAYMENT_PLAN.REMAINING_PRINCIPAL = #{remainingPrincipal}
+			</if>
+			<if test="penalty != null">
+				AND REPAYMENT_PLAN.PENALTY = #{penalty}
+			</if>
+			<if test="risk != null">
+				AND REPAYMENT_PLAN.RISK = #{risk}
+			</if>
+			<if test="oneTimeRepaymentAmount != null">
+				AND REPAYMENT_PLAN.ONE_TIME_REPAYMENT_AMOUNT = #{oneTimeRepaymentAmount}
+			</if>
+			<if test="factReturnDate != null">
+				AND REPAYMENT_PLAN.FACT_RETURNDATE = #{factReturnDate}
+			</if>
+			<if test="deficit != null">
+				AND	REPAYMENT_PLAN.DEFICIT = #{deficit}
+			</if>
+			<if test="managePart0Fee != null">
+				AND	REPAYMENT_PLAN.MANAGE_PART0_FEE = #{managePart0Fee}
+			</if>
+			<if test="managePart1Fee != null">
+				AND	REPAYMENT_PLAN.MANAGE_PART1_FEE = #{managePart1Fee}
+			</if>
+			<if test="referRate != null">
+				AND REPAYMENT_PLAN.REFER_RATE = #{referRate}
+			</if>
+			<if test="evalRate != null">
+				AND REPAYMENT_PLAN.EVAL_RATE = #{evalRate}
+			</if>
+			<if test="interestAmt != null">
+				AND REPAYMENT_PLAN.INTEREST_AMT = #{interestAmt}
+			</if>
+			<if test="curRemainingManagePart0Fee != null">
+				AND	REPAYMENT_PLAN.CUR_REMAINING_MANAGE_PART0_FEE = #{curRemainingManagePart0Fee}
+			</if>
+			<if test="curRemainingManagePart1Fee != null">
+				AND	REPAYMENT_PLAN.CUR_REMAINING_MANAGE_PART1_FEE = #{curRemainingManagePart1Fee}
+			</if>
+			<if test="curRemainingReferRate != null">
+				AND REPAYMENT_PLAN.CUR_REMAINING_REFER_RATE = #{curRemainingReferRate}
+			</if>
+			<if test="curRemainingEvalRate != null">
+				AND REPAYMENT_PLAN.CUR_REMAINING_EVAL_RATE = #{curRemainingEvalRate}
+			</if>
+			<if test="curRemainingInterestAmt != null">
+				AND REPAYMENT_PLAN.CUR_REMAINING_INTEREST_AMT = #{curRemainingInterestAmt}
+			</if>
+			<if test="curRemainingRisk != null">
+				AND REPAYMENT_PLAN.CUR_REMAINING_RISK = #{curRemainingRisk}
+			</if>
+			<if test="curRemainingPrincipal != null">
+				AND REPAYMENT_PLAN.CUR_REMAINING_PRINCIPAL = #{curRemainingPrincipal}
+			</if>
+			<if test="repayDay != null">
+				AND REPAYMENT_PLAN.REPAY_DAY = #{repayDay}
+			</if>
+			<if test="penaltyDate != null">
+				AND REPAYMENT_PLAN.PENALTY_DATE = #{penaltyDate}
+			</if>
+			<if test="version != null">
+				AND REPAYMENT_PLAN.VERSION = #{version}
+			</if>
+			 <if test="repayDayStart !=null">
+				AND REPAYMENT_PLAN.REPAY_DAY <![CDATA[ >= ]]> #{repayDayStart}
+		    </if> 
+		    <if test="repayDayEnd !=null">
+				AND REPAYMENT_PLAN.REPAY_DAY <![CDATA[ <= ]]> #{repayDayEnd}
+		    </if>
+		    <if test="statusExcept != null">
+				AND REPAYMENT_PLAN.STATUS != #{statusExcept}
+			</if>
+			<if test="notStatus != null">
+				AND REPAYMENT_PLAN.STATUS <![CDATA[ <> ]]> #{notStatus}
+			</if>
+			<if test="refund != null">
+				AND REPAYMENT_PLAN.REFUND = #{refund}
+			</if>
+			<if test="statusList !=null and statusList.size() > 0">
+				AND REPAYMENT_PLAN.STATUS IN(
+				<foreach item="guard" index="index" collection="statusList" separator=",">
+					#{guard}
+				</foreach>
+				)
+		    </if>		
+				ORDER BY cur_num
+		</trim>
+	</sql>
+	
+	<!-- 根据ID获取 -->
+	<select id="get" parameterType="java.lang.Long" resultMap="RepaymentPlanResultMap">
+		<include refid="repaymentPlanSelective" />		
+		WHERE REPAYMENT_PLAN.ID = #{id}
+	</select>
+
+	<select id="queryDetailFee" resultMap="RepaymentPlanResultMap" parameterType="java.lang.Long">
+		SELECT * FROM REPAYMENT_PLAN WHERE LOAN_ID = #{id} ORDER BY CUR_NUM
+	</select>
+	
+	<!-- 根据 贷款 ID获取 -->
+	<select id="getByLoanId" parameterType="java.lang.Long" resultMap="RepaymentPlanResultMap">
+		<include refid="repaymentPlanSelective" />		
+		WHERE REPAYMENT_PLAN.LOAN_ID = #{loanId}
+	</select>
+	
+	<select id="getByLoanIdAndCurNum" parameterType="RepaymentPlanVO" resultMap="RepaymentPlanResultMap">
+		<include refid="repaymentPlanSelective" />	
+		WHERE REPAYMENT_PLAN.LOAN_ID = #{loanId}
+		AND REPAYMENT_PLAN.CUR_NUM = #{curNum}
+	</select>
+	
+	<!-- 根据ID删除-->
+  <delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM REPAYMENT_PLAN  
+		WHERE ID = #{id}
+	</delete>
+	
+	<delete id="deleteByIdList" parameterType="RepaymentPlanVO"> 
+		DELETE FROM REPAYMENT_PLAN WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+	
+	<!-- 根据ID更新-->
+	<update id="update" parameterType="RepaymentPlan">
+	UPDATE REPAYMENT_PLAN
+	<trim prefix="set" suffixOverrides=",">
+		<if test="loanId != null">
+			LOAN_ID = #{loanId},
+		</if>
+		<if test="status != null">
+			STATUS = #{status},
+		</if>
+		<if test="repayAmount != null">
+			REPAY_AMOUNT = #{repayAmount},
+		</if>
+		<if test="curNum != null">
+			CUR_NUM = #{curNum},
+		</if>
+		<if test="principalAmt != null">
+			PRINCIPAL_AMT= #{principalAmt},
+		</if>
+		<if test="outstanding != null">
+			OUTSTANDING = #{outstanding},
+		</if>
+		<if test="averageCapital != null">
+			AVERAGE_CAPITAL = #{averageCapital},
+		</if>
+		<if test="remainingPrincipal != null">
+			REMAINING_PRINCIPAL = #{remainingPrincipal},
+		</if>
+		<if test="penalty != null">
+			PENALTY = #{penalty},
+		</if>
+		<if test="risk != null">
+			RISK = #{risk},
+		</if>
+		<if test="oneTimeRepaymentAmount != null">
+			ONE_TIME_REPAYMENT_AMOUNT = #{oneTimeRepaymentAmount},
+		</if>
+		<if test="factReturnDate != null">
+			FACT_RETURNDATE = #{factReturnDate},
+		</if>
+		<if test="deficit != null">
+			DEFICIT = #{deficit},
+		</if>
+		<if test="managePart0Fee != null">
+			MANAGE_PART0_FEE = #{managePart0Fee},
+		</if>
+		<if test="managePart1Fee != null">
+			MANAGE_PART1_FEE = #{managePart1Fee},
+		</if>
+		<if test="referRate != null">
+			REFER_RATE = #{referRate},
+		</if>
+		<if test="evalRate != null">
+			EVAL_RATE = #{evalRate},
+		</if>
+		<if test="interestAmt != null">
+			INTEREST_AMT = #{interestAmt},
+		</if>
+		<if test="repayDay != null">
+			REPAY_DAY = #{repayDay},
+		</if>
+		<if test="penaltyDate != null">
+			PENALTY_DATE = #{penaltyDate},
+		</if>
+		<if test="curRemainingManagePart0Fee != null">
+			CUR_REMAINING_MANAGE_PART0_FEE = #{curRemainingManagePart0Fee},
+		</if>
+		<if test="curRemainingManagePart1Fee != null">
+			CUR_REMAINING_MANAGE_PART1_FEE = #{curRemainingManagePart1Fee},
+		</if>
+		<if test="curRemainingReferRate != null">
+			CUR_REMAINING_REFER_RATE = #{curRemainingReferRate},
+		</if>
+		<if test="curRemainingEvalRate != null">
+			CUR_REMAINING_EVAL_RATE = #{curRemainingEvalRate},
+		</if>
+		<if test="curRemainingRisk != null">
+			CUR_REMAINING_RISK = #{curRemainingRisk},
+		</if>
+		<if test="curRemainingInterestAmt != null">
+			CUR_REMAINING_INTEREST_AMT = #{curRemainingInterestAmt},
+		</if>
+		<if test="curRemainingPrincipal != null">
+			CUR_REMAINING_PRINCIPAL = #{curRemainingPrincipal},
+		</if>
+		<if test="refund != null">
+			REFUND = #{refund},
+		</if>
+		<if test="version != null">
+			VERSION = #{version}
+		</if>
+	</trim>
+	WHERE REPAYMENT_PLAN.ID = #{id}
+	<if test="version != null">
+		AND VERSION = #{version} -1
+	</if>
+</update>
+
+	<insert id="insert" parameterType="RepaymentPlan">
+	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+		SELECT seq_repayment_plan_id.nextval AS id FROM dual
+	</selectKey>
+	INSERT INTO REPAYMENT_PLAN
+	<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+		<if test="loanId != null">
+			LOAN_ID,
+		</if>
+		<if test="status != null">
+			STATUS,
+		</if>
+		<if test="repayAmount != null">
+			REPAY_AMOUNT,
+		</if>
+		<if test="curNum != null">
+			CUR_NUM,
+		</if>
+		<if test="principalAmt != null">
+			PRINCIPAL_AMT,
+		</if>
+		<if test="outstanding != null">
+			OUTSTANDING,
+		</if>
+		<if test="averageCapital != null">
+			AVERAGE_CAPITAL,
+		</if>
+		<if test="remainingPrincipal != null">
+			REMAINING_PRINCIPAL,
+		</if>
+		<if test="penalty != null">
+			PENALTY,
+		</if>
+		<if test="risk != null">
+			RISK,
+		</if>
+		<if test="oneTimeRepaymentAmount != null">
+			ONE_TIME_REPAYMENT_AMOUNT,
+		</if>
+		<if test="factReturnDate != null">
+			FACT_RETURNDATE,
+		</if>
+		<if test="deficit != null">
+			DEFICIT,
+		</if>
+		<if test="managePart0Fee != null">
+			MANAGE_PART0_FEE,
+		</if>
+		<if test="managePart1Fee != null">
+			MANAGE_PART1_FEE,
+		</if>
+		<if test="referRate != null">
+			REFER_RATE,
+		</if>
+		<if test="evalRate != null">
+			EVAL_RATE,
+		</if>
+		<if test="interestAmt != null">
+			INTEREST_AMT,
+		</if>
+		<if test="repayDay != null">
+			REPAY_DAY,
+		</if>
+		<if test="penaltyDate != null">
+			PENALTY_DATE,
+		</if>
+		<if test="curRemainingManagePart0Fee != null">
+			CUR_REMAINING_MANAGE_PART0_FEE,
+		</if>
+		<if test="curRemainingManagePart1Fee != null">
+			CUR_REMAINING_MANAGE_PART1_FEE,
+		</if>
+		<if test="curRemainingReferRate != null">
+			CUR_REMAINING_REFER_RATE,
+		</if>
+		<if test="curRemainingEvalRate != null">
+			CUR_REMAINING_EVAL_RATE,
+		</if>
+		<if test="curRemainingInterestAmt != null">
+			CUR_REMAINING_INTEREST_AMT,
+		</if>
+		<if test="curRemainingRisk != null">
+			CUR_REMAINING_RISK,
+		</if>
+		<if test="curRemainingPrincipal != null">
+			CUR_REMAINING_PRINCIPAL,
+		</if>
+		<if test="refund != null">
+			REFUND,
+		</if>
+		<if test="version != null">
+			VERSION,
+		</if>
+	</trim>
+	VALUES
+	<trim prefix="(" suffixOverrides="," suffix=")">
+		#{id},
+		<if test="loanId != null">
+			#{loanId},
+		</if>
+		<if test="status != null">
+			#{status},
+		</if>
+		<if test="repayAmount != null">
+			#{repayAmount},
+		</if>
+		<if test="curNum != null">
+			#{curNum},
+		</if>
+		<if test="principalAmt != null">
+			#{principalAmt},
+		</if>
+		<if test="outstanding != null">
+			#{outstanding},
+		</if>
+		<if test="averageCapital != null">
+			#{averageCapital},
+		</if>
+		<if test="remainingPrincipal != null">
+			#{remainingPrincipal},
+		</if>
+		<if test="penalty != null">
+			#{penalty},
+		</if>
+		<if test="risk != null">
+			#{risk},
+		</if>
+		<if test="oneTimeRepaymentAmount != null">
+			#{oneTimeRepaymentAmount},
+		</if>
+		<if test="factReturnDate != null">
+			#{factReturnDate},
+		</if>
+		<if test="deficit != null">
+			#{deficit},
+		</if>
+		<if test="managePart0Fee != null">
+			#{managePart0Fee},
+		</if>
+		<if test="managePart1Fee != null">
+			#{managePart1Fee},
+		</if>
+		<if test="referRate != null">
+			#{referRate},
+		</if>
+		<if test="evalRate != null">
+			#{evalRate},
+		</if>
+		<if test="interestAmt != null">
+			#{interestAmt},
+		</if>
+		<if test="repayDay != null">
+			#{repayDay},
+		</if>
+		<if test="penaltyDate != null">
+			#{penaltyDate},
+		</if>
+		<if test="curRemainingManagePart0Fee != null">
+			#{curRemainingManagePart0Fee},
+		</if>
+		<if test="curRemainingManagePart1Fee != null">
+			#{curRemainingManagePart1Fee},
+		</if>
+		<if test="curRemainingReferRate != null">
+			#{curRemainingReferRate},
+		</if>
+		<if test="curRemainingEvalRate != null">
+			#{curRemainingEvalRate},
+		</if>
+		<if test="curRemainingInterestAmt != null">
+			#{curRemainingInterestAmt},
+		</if>
+		<if test="curRemainingRisk != null">
+			#{curRemainingRisk},
+		</if>
+		<if test="curRemainingPrincipal != null">
+			#{curRemainingPrincipal},
+		</if>
+		<if test="refund != null">
+			#{refund},
+		</if>
+		<if test="version != null">
+			#{version},
+		</if>
+	</trim>
+</insert>
+  
+ 	<select id="count" parameterType="RepaymentPlan" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="repaymentPlanSelective" />
+		<include refid="repaymentPlanConditions" />
+		) AS total
+	</select>
+	
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM REPAYMENT_PLAN WHERE ID = #{id}
+	</select>
+	
+	<select id="findListByVO" parameterType="RepaymentPlanVO" resultMap="RepaymentPlanResultMap"> 
+		<include refid="repaymentPlanSelective" /> 
+		<include refid="repaymentPlanConditions" />
+		
+	</select>
+	
+	<!-- 当期未还本息之和-->
+	<select id="getRemainingPrincipalByVO" parameterType="RepaymentPlanVO" resultType="java.math.BigDecimal"> 
+		SELECT
+		NVL(CUR_REMAINING_PRINCIPAL+CUR_REMAINING_INTEREST_AMT,0) <!-- 返回参数中的第一个非空表达式(从左向右) --> 
+		FROM REPAYMENT_PLAN 
+		<include refid="repaymentPlanConditions" />	
+	</select>
+	<select id="findWithPG" parameterType="RepaymentPlan" resultMap="RepaymentPlanResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="repaymentPlanSelective" />
+		<include refid="repaymentPlanConditions" /> 	
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<delete id="deleteRepaymentPlanByLoanId" parameterType="java.lang.Long">
+		DELETE FROM REPAYMENT_PLAN WHERE LOAN_ID = #{loanId}
+	</delete>
+	
+	<update id="updateByStatus" parameterType="RepaymentPlanVO">
+		UPDATE REPAYMENT_PLAN
+		<trim prefix="set" suffixOverrides=",">
+			<if test="status != null">
+				STATUS = #{status},
+			</if>
+			<if test="factReturnDate != null">
+				FACT_RETURNDATE = #{factReturnDate},
+			</if>
+			<if test="deficit != null">
+				DEFICIT = #{deficit},
+			</if>
+			<if test="curRemainingManagePart0Fee != null">
+				CUR_REMAINING_MANAGE_PART0_FEE = #{curRemainingManagePart0Fee},
+			</if>
+			<if test="curRemainingManagePart1Fee != null">
+				CUR_REMAINING_MANAGE_PART1_FEE = #{curRemainingManagePart1Fee},
+			</if>
+			<if test="curRemainingReferRate != null">
+				CUR_REMAINING_REFER_RATE = #{curRemainingReferRate},
+			</if>
+			<if test="curRemainingEvalRate != null">
+				CUR_REMAINING_EVAL_RATE = #{curRemainingEvalRate},
+			</if>
+			<if test="curRemainingInterestAmt != null">
+				CUR_REMAINING_INTEREST_AMT = #{curRemainingInterestAmt},
+			</if>
+			<if test="curRemainingRisk != null">
+				CUR_REMAINING_RISK = #{curRemainingRisk},
+			</if>
+			<if test="curRemainingPrincipal != null">
+				CUR_REMAINING_PRINCIPAL = #{curRemainingPrincipal},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>			
+		</trim>
+		WHERE LOAN_ID = #{loanId}
+		 <if test="notStatusList !=null and notStatusList.size() > 0">
+				AND REPAYMENT_PLAN.STATUS IN(
+				<foreach item="guard" index="index" collection="notStatusList" separator=",">
+					#{guard}
+				</foreach>
+				)
+		 </if>
+	</update>
+		
+	<!-- 根据条件获取台账信息 -->
+	<select id="getRepaymentPlanExtends" parameterType="RepaymentPlanVO" resultMap="RepaymentPlanResultWithLoanMap">
+		<include refid="repaymentPlanExtendSelective" />		
+		<include refid="repaymentPlanExtendConditions" />	
+		ORDER BY CUR_NUM ASC
+	</select>
+</mapper>

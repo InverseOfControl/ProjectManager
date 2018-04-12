@@ -1,0 +1,103 @@
+
+.addTable td{
+    height: 30px;
+}
+.bottomLineTr td{
+    border-bottom: 1px solid #aaa;
+}
+#editCarLoanForm table td{
+    border-bottom:1px dashed #BFC5C5;
+    border-left:#dfe4e5;
+    border-right:#dfe4e5;
+    height:40px;
+    line-height:18px;
+    width:260px
+}
+#editCarLoanForm table tr td:nth-child(odd){
+    background: #f1f5f9;
+    padding-right:10px;
+    padding-left:10px;
+    
+}
+#editCarLoanForm table tr td:nth-child(even){
+    background: #FFFFFF;
+    padding-left:10px;
+    text-align:left;
+    
+}
+#browseCLForm table td{
+    border-bottom:1px dashed #BFC5C5;
+    border-left:#dfe4e5;
+    border-right:#dfe4e5;
+    height:40px;
+    line-height:18px;
+    width:110px
+}
+#browseCLForm table tr td:nth-child(odd){
+    background: #f1f5f9;
+    padding-right:10px;
+    text-align:right;
+    text-indent:1em;
+}
+#browseCLForm table tr td:nth-child(even){
+    background: #FFFFFF;
+    padding-left:10px;
+    text-align:left;
+    text-indent:1em;
+}
+#browseExtensionCLForm table td{
+    border-bottom:1px dashed #BFC5C5;
+    border-left:#dfe4e5;
+    border-right:#dfe4e5;
+    height:40px;
+    line-height:18px;
+    width:110px
+}
+#browseExtensionCLForm table tr td:nth-child(odd){
+    background: #f1f5f9;
+    padding-right:10px;
+    text-align:right;
+    text-indent:1em;
+}
+#browseExtensionCLForm table tr td:nth-child(even){
+    background: #FFFFFF;
+    padding-left:10px;
+    text-align:left;
+    text-indent:1em;
+}
+
+#addCarLoanForm table td{
+    border-bottom:1px dashed #BFC5C5;
+    border-left:#dfe4e5;
+    border-right:#dfe4e5;
+    height:40px;
+    line-height:18px;
+    width:260px
+}
+#addCarLoanForm table tr td:nth-child(odd){
+    background: #f1f5f9;
+    padding-right:10px;
+    padding-left:10px;
+    
+}
+#addCarLoanForm table tr td:nth-child(even){
+    background: #FFFFFF;
+    padding-left:10px;
+    text-align:left;
+    
+}
+.attachmentListRow{
+    background:#f1f5f9;
+    text-align:center;
+}
+.attachmentListCol{
+    border-bottom: 1px dashed #BFC5C5;
+    border-left: #dfe4e5;
+    border-right: #dfe4e5;
+    height: 40px;
+    line-height: 18px;
+    width: 110px;
+}
+.spe{margin-left:0}
+.chedai  label{display:inline-block}
+.chedai  input{display:inline-block}

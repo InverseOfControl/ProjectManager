@@ -1,0 +1,126 @@
+/**
+ * ZenDaiMoney.com Inc.
+ * Copyright (c) 2014-2016 All Rights Reserved.
+ */
+package com.ezendai.credit2.apply.model;
+
+import com.ezendai.credit2.framework.model.BaseModel;
+
+/**
+ * <pre>
+ * 车辆信息
+ * </pre>
+ *
+ * @author fangqingyuan
+ * @version $Id: Vehicle.java, v 0.1 2014-6-24 下午1:29:42 fangqingyuan Exp $
+ */
+public class Vehicle extends BaseModel {
+
+	private static final long serialVersionUID = -687959381096242528L;
+
+	/** 客户ID */
+	private Long personId;
+
+	/** 车辆品牌 */
+	private String brand;
+
+	/** 车型 */
+	private String model;
+
+	/** 车龄 */
+	private Integer coty;
+	
+	/***车架号 **/
+    private String frameNumber;
+    
+    /***车牌号 **/
+    private String  plateNumber;
+    
+	/** 行驶里程 */
+	private Long mileage;
+
+	/** 备注 */
+	private String remark;
+	
+	/**借款id*/
+	private Long loanId;
+
+	public Long getPersonId() {
+		return personId;
+	}
+
+	public void setPersonId(Long personId) {
+		this.personId = personId;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public Integer getCoty() {
+		return coty;
+	}
+
+	public void setCoty(Integer coty) {
+		this.coty = coty;
+	}
+
+	public Long getMileage() {
+		return mileage;
+	}
+
+	public void setMileage(Long mileage) {
+		this.mileage = mileage;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	@Override
+	public String toString() {
+		return "Vehicle [personId=" + personId + ", brand=" + brand + ", model=" + model
+				+ ", coty=" + coty + ", mileage=" + mileage + ", remark=" + remark + "]";
+	}
+
+    public String getFrameNumber() {
+        return frameNumber;
+    }
+
+    public void setFrameNumber(String frameNumber) {
+        this.frameNumber = frameNumber;
+    }
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
+    }
+
+	public Long getLoanId() {
+		return loanId;
+	}
+
+	public void setLoanId(Long loanId) {
+		this.loanId = loanId;
+	}
+
+}

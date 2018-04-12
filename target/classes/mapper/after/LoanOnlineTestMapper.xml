@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.after.mapper.LoanOnlineTestMapper">
+	<resultMap id="LoanOnlineTestResultMap" type="LoanOnlineTest">
+		<result column="ID" property="id" jdbcType="NUMERIC" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="SALES_DEPT_ID" property="salesDeptId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+	<sql id="LoanOnlineTestConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null ">
+				AND  ID= #{id}
+			</if>
+			<if test="loanId != null ">
+				AND LOAN_ID = #{loanId}
+			</if>
+			<if test="salesDeptId != null ">
+				AND SALES_DEPT_ID = #{salesDeptId}
+			</if>
+		</trim>
+	</sql>
+	<!-- findListByVO -->
+	<select id="findListByVO" resultMap="LoanOnlineTestResultMap" parameterType="LoanOnlineTestVO">
+		SELECT LOAN_ONLINE_TEST.ID, LOAN_ONLINE_TEST.LOAN_ID,LOAN_ONLINE_TEST.SALES_DEPT_ID FROM LOAN_ONLINE_TEST
+		<include refid="LoanOnlineTestConditions" />	
+	</select>
+</mapper>

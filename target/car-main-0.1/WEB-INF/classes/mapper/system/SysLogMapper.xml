@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.system.mapper.SysLogMapper">
+	<resultMap id="sysLogResultMap" type="SysLog">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="OPT_TYPE" property="optType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="OPT_MODULE" property="optModule" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="IP_ADDRESS" property="ipAddress" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+
+	<sql id="sysLogResultField">
+		sysLog.ID,
+		sysLog.OPT_TYPE,
+		sysLog.OPT_MODULE,
+		sysLog.IP_ADDRESS,
+		sysLog.REMARK,
+		sysLog.CREATOR_ID,
+		sysLog.CREATOR,
+		sysLog.CREATED_TIME,
+		sysLog.VERSION
+	</sql>
+	
+	<sql id="sysLogSelective">
+		SELECT
+		<include refid="sysLogResultField" />
+		FROM SYS_LOG sysLog
+	</sql>
+	
+	<sql id="sysLogConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				sysLog.ID = #{id}
+			</if>
+			<if test="optType != null">
+				AND sysLog.OPT_TYPE = #{optType}
+			</if>
+			<if test="optModule != null">
+				AND sysLog.OPT_MODULE = #{optModule}
+			</if>
+			<if test="ipAddress != null and ipAddress !=''">
+				AND sysLog.IP_ADDRESS = #{ipAddress}
+			</if>
+			<if test="creatorId != null">
+				AND sysLog.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="startTime != null  and  endTime!=null">
+				AND sysLog.CREATED_TIME between #{startTime} AND #{endTime}
+			</if>
+			<!-- 用于系统日志按备注模糊查询  -->
+			<if test="remark !=null and remark !=''">
+			 AND sysLog.REMARK LIKE CONCAT(CONCAT('%', #{remark}), '%')
+			</if>
+			
+		</trim>
+	</sql>
+	
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM from SYS_LOG sysLog WHERE sysLog.ID = #{id}
+	</select>
+	
+	<select id="count" parameterType="SysLogVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="sysLogSelective" />
+		<include refid="sysLogConditions" />
+		)
+	</select>
+	
+	<select id="findWithPG" parameterType="SysLogVO" resultMap="sysLogResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="sysLogSelective" />
+		<include refid="sysLogConditions" />
+		ORDER BY sysLog.ID DESC
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+	<select id="findListByVO" parameterType="SysLogVO" resultMap="sysLogResultMap">
+		<include refid="sysLogSelective" />
+		<include refid="sysLogConditions" />
+	</select>
+
+	<insert id="insert" parameterType="SysLog">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_sys_log_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO SYS_LOG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="optType != null">
+				OPT_TYPE,
+			</if>
+			<if test="optModule != null">
+				OPT_MODULE,
+			</if>
+			<if test="ipAddress != null">
+				IP_ADDRESS,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="optType != null">
+				#{optType},
+			</if>
+			<if test="optModule != null">
+				#{optModule},
+			</if>
+			<if test="ipAddress != null">
+				#{ipAddress},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+		</trim>
+	</insert>
+</mapper>

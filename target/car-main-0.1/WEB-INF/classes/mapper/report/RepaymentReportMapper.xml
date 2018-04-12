@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.report.mapper.RepaymentReportMapper" >
+  <resultMap id="repaymentReportResultMap" type="RepaymentReport" >
+    <result column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="QUERY_DATE" property="queryDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result column="sales_dept_id" property="salesDeptId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="sales_Dept_Name" property="salesDeptName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="PERSON_NAME" property="personName" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="IDNUM" property="idnum" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+    <result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+    <result column="PACT_MONEY" property="pactMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="TIME" property="time" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="CUR_NUM" property="curNum" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+    <result column="REPAY_DAY" property="repayDay" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result column="REPAY_AMOUNT" property="repayAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="PRINCIPAL_AMT" property="principalAmt" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="INTEREST_AMT" property="interestAmt" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    
+    <result column="REFER_RATE" property="referRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="EVAL_RATE" property="evalRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="MANAGE_PART0_FEE" property="managePart0Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="MANAGE_PART1_FEE" property="managePart1Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="RISK" property="risk" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    
+    <result column="CONTRACT_SRC" property="contractSrc" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="TRADE_TIME" property="tradeTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result column="TRADE_AMOUNT" property="tradeAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="TRADE_CODE" property="tradeCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="PAY_TYPE" property="payType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+    <result column="TRADE_AMOUNT_Begin" property="tradeAmountBegin" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="RELIEF_AMOUNT" property="reliefAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="PENALTY_Interest_AMT" property="penaltyInterestAmt" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="OVERDUE_Interest_AMT" property="overdueInterestAmt" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="OVERDUE_PRINCIPAL" property="overduePrincipal" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="CUR_Interest_AMT" property="curInterestAmt" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="CUR_PRINCIPAL" property="curPrincipal" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="PENALTY" property="penalty" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="CUR_REFER_RATE" property="curReferRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="CUR_EVAL_RATE" property="curEvalRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="CUR_MANAGE_PART0_FEE" property="curManagePart0Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="CUR_MANAGE_PART1_FEE" property="curManagePart1Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="CUR_RISK" property="curRisk" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="OVERDUE_CUR_REFER_RATE" property="overdueCurReferRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="OVERDUE_CUR_EVAL_RATE" property="overdueCurEvalRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="OVERDUE_CUR_MANAGE_PART0_FEE" property="overdueCurManagePart0Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="OVERDUE_CUR_MANAGE_PART1_FEE" property="overdueCurManagePart1Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="OVERDUE_CUR_RISK" property="overdueCurRisk" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="TRADE_AMOUNT_END" property="tradeAmountEnd" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="BATCH_NO" property="batchNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="CUR_REFUND_PART0_FEE" property="curRefundPart0Fee" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    
+  </resultMap>
+   <sql id="noRepaymentFields">
+      id,sales_dept_name,PERSON_NAME,idnum,product_type,pact_money,time,cur_num,repay_day,repay_amount,principal_amt,interest_amt,
+      REFER_RATE,EVAL_RATE,MANAGE_PART0_FEE,MANAGE_PART1_FEE,RISK
+   </sql>
+   <sql id="noRepaymentFieldsExt">
+        l.id,
+		ba.name AS sales_dept_name,
+		P.NAME AS PERSON_NAME, 
+		P.idnum,
+		l.product_type,
+		l.pact_money,
+		l.time,
+		rd.cur_num,
+		rd.repay_day,
+		rd.repay_amount,
+        rd.PRINCIPAL_AMT,
+		rd.interest_amt,
+		rd.refer_rate,
+        rd.eval_rate,
+        rd.manage_part0_fee,
+        rd.manage_part1_fee,
+	    rd.risk
+   </sql>
+   
+    <sql id="noRepaymentCondition">
+	    <if test="salesDeptId != null">
+	        AND ba.id = #{salesDeptId}
+	    </if>
+	    <if test="productType != null">
+	        AND l.product_type = #{productType}
+	    </if>
+	    <if test="queryDate != null">
+			AND to_char(rd.repay_day,'yyyy') = case
+			WHEN L.END_REPAY_DATE <![CDATA[ >= ]]> #{queryDate} then
+			to_char(#{queryDate},'yyyy')
+			ELSE
+			to_char(L.END_REPAY_DATE,'yyyy')
+			END
+			AND to_char(rd.repay_day,'mm') = case
+			WHEN L.END_REPAY_DATE <![CDATA[ >= ]]> #{queryDate} then
+			to_char(#{queryDate},'mm')
+			ELSE
+			to_char(L.END_REPAY_DATE,'mm')
+			END
+	    </if>
+	</sql>
+	<sql id="noRepaymentSelective">
+		SELECT 
+		<include refid="noRepaymentFieldsExt" />	
+		FROM loan l, base_area ba, repayment_plan rd, person P
+		WHERE l.person_id = p.id
+		AND l.id = rd.loan_id
+		and l.sales_dept_id = ba.id
+		AND l.status IN (130, 140)
+		AND l.id NOT IN
+		(SELECT ri.account_id
+		FROM repay_info ri
+		WHERE ri.trade_code IN ('1001', '3001')
+		<include refid="repayDateconditions" />	
+		)
+	    <include refid="noRepaymentCondition" />	
+		union all
+		SELECT 
+		<include refid="noRepaymentFieldsExt" />
+		FROM extension l, base_area ba, repayment_plan rd, person P
+		WHERE l.person_id = p.id
+		AND l.id = rd.loan_id
+		and l.sales_dept_id = ba.id
+		AND l.status IN (130, 140)
+		AND l.id NOT IN
+		(SELECT ri.account_id
+		FROM repay_info ri
+		WHERE ri.trade_code IN ('1001', '3001')
+		<include refid="repayDateconditions" />	
+		)
+        <include refid="noRepaymentCondition" />
+	</sql>
+	
+	<sql id="noRepaymentSelectiveExt">
+	   select 
+		<include refid="noRepaymentFields" />	
+		from (
+		<include refid="noRepaymentSelective" />	
+		) order by sales_dept_name, PERSON_NAME,repay_day
+	</sql>
+	
+	<select id="queryNoRepaymentReportCount" parameterType="RepaymentReportVO" resultType="java.lang.Integer">
+		select 
+		count(1)	
+		from (
+		<include refid="noRepaymentSelective" />	
+		) order by sales_dept_name, PERSON_NAME,repay_day
+	</select>
+	
+	<select id="queryNoRepaymentReport" parameterType="RepaymentReportVO" resultMap="repaymentReportResultMap">
+		<include refid="noRepaymentSelectiveExt" />	
+	</select>
+
+	<sql id="repapymentReportFields">
+	   ID, SALES_DEPT_NAME, PERSON_NAME, IDNUM, PRODUCT_TYPE, PACT_MONEY, TIME, CUR_NUM, REPAY_DAY, REPAY_AMOUNT,
+	   PRINCIPAL_AMT, INTEREST_AMT, REFER_RATE, EVAL_RATE, manage_part0_fee,
+	   manage_part1_fee,RISK,TRADE_TIME, TRADE_AMOUNT, TRADE_CODE, PAY_TYPE, REMARK, TRADE_AMOUNT_BEGIN, 
+	   TRADE_AMOUNT_END, RELIEF_AMOUNT, PENALTY_INTEREST_AMT, PENALTY,  OVERDUE_PRINCIPAL, CUR_PRINCIPAL, OVERDUE_INTEREST_AMT, CUR_INTEREST_AMT,
+	   OVERDUE_CUR_REFER_RATE,OVERDUE_CUR_EVAL_RATE,OVERDUE_CUR_MANAGE_PART0_FEE,OVERDUE_CUR_MANAGE_PART1_FEE,OVERDUE_CUR_RISK,
+	   CUR_REFER_RATE,CUR_EVAL_RATE,CUR_MANAGE_PART0_FEE,CUR_MANAGE_PART1_FEE,CUR_RISK,CUR_REFUND_PART0_FEE
+	</sql>
+	<sql id="repapymentReportFieldsExt">
+	    l.id,
+		ba.name AS sales_dept_name,
+		ps.NAME AS PERSON_NAME,
+		ps.idnum,
+		l.product_type,
+		l.pact_money,
+		l.time,
+		rd.cur_num,
+		rd.repay_day,
+		rd.repay_amount,
+		rd.principal_amt,
+		rd.interest_amt,
+		rd.refer_rate,
+        rd.eval_rate,
+        rd.manage_part0_fee,
+        rd.manage_part1_fee,
+	    rd.risk,		
+		ri.trade_time,
+		ri.trade_amount,
+		ri.trade_code,
+		ri.pay_type,
+		ri.remark,
+		SUM (
+		CASE
+		WHEN fw.account_title = '111'
+		AND fw.opp_d_or_c = 'C' THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS TRADE_AMOUNT_Begin,
+		SUM (
+		CASE
+		WHEN fw.account_title = '111'
+		AND fw.opp_d_or_c = 'D' THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS TRADE_AMOUNT_END,
+		SUM (
+		CASE
+		WHEN fw.account_title = '452'
+		AND fw.account_id = '10002' THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS RELIEF_AMOUNT,
+		SUM (
+		CASE
+		WHEN fw.account_title = '452'
+		AND fw.account_id  <![CDATA[ <> ]]>  '10002' THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS PENALTY_Interest_AMT, /*罚息*/
+		SUM (
+		CASE
+		WHEN fw.account_title = '494' THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS PENALTY, /*违约金*/
+		SUM (
+		CASE
+		WHEN fw.account_title = '491'  AND fw.term <![CDATA[ >= ]]> rd.cur_num THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS CUR_REFER_RATE,
+		SUM (
+		CASE
+		WHEN fw.account_title = '491' AND fw.term <![CDATA[ < ]]> rd.cur_num THEN 
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS OVERDUE_CUR_REFER_RATE,
+		SUM (
+		CASE
+		WHEN fw.account_title = '492' AND fw.term <![CDATA[ >= ]]> rd.cur_num THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS CUR_EVAL_RATE,
+		SUM (
+		CASE
+		WHEN fw.account_title = '492' AND fw.term <![CDATA[ < ]]> rd.cur_num THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS OVERDUE_CUR_EVAL_RATE,
+		SUM (
+		CASE
+		WHEN fw.account_title = '493' 
+		AND fw.opp_d_or_c = 'C'
+		AND fw.term <![CDATA[ >= ]]> rd.cur_num THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS CUR_MANAGE_PART0_FEE,
+		SUM (
+		CASE
+		WHEN fw.account_title = '493' 
+		AND fw.opp_d_or_c = 'C'
+		AND fw.term <![CDATA[ < ]]> rd.cur_num THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS OVERDUE_CUR_MANAGE_PART0_FEE,
+		SUM (
+		CASE
+		WHEN fw.account_title = '493' 
+		AND fw.opp_d_or_c = 'D'
+		AND fw.term <![CDATA[ >= ]]> rd.cur_num THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS CUR_REFUND_PART0_FEE,
+		SUM (
+		CASE
+		WHEN fw.account_title = '481' AND fw.term <![CDATA[ >= ]]> rd.cur_num  THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS CUR_MANAGE_PART1_FEE,
+		SUM (
+		CASE
+		WHEN fw.account_title = '481'  AND fw.term <![CDATA[ < ]]> rd.cur_num  THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS OVERDUE_CUR_MANAGE_PART1_FEE,
+		SUM (
+		CASE
+		WHEN fw.account_title = '211'
+		AND fw.term <![CDATA[ < ]]> rd.cur_num THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS OVERDUE_PRINCIPAL,
+		SUM (
+		CASE
+		WHEN fw.account_title = '211'
+		AND fw.term <![CDATA[ >= ]]> rd.cur_num THEN
+		       ( CASE WHEN 
+		       		fw.trade_code='3001' then
+			       		(CASE WHEN 
+	                       (SELECT SUM(FW2.TRADE_AMOUNT) FROM FLOW FW2 WHERE FW2.D_OR_C='C'AND FW2.TERM >= RD.CUR_NUM AND FW2.TRADE_NO=FW.TRADE_NO AND FW2.TRADE_CODE='3001')
+	                       - (SELECT SUM(FW2.TRADE_AMOUNT) FROM FLOW FW2 WHERE FW2.D_OR_C='D'AND FW2.TERM >= RD.CUR_NUM AND FW2.TRADE_NO=FW.TRADE_NO
+	                       AND FW2.ACCOUNT_TITLE <![CDATA[ <> ]]> '211' AND FW2.TRADE_CODE='3001'
+	                       ) <![CDATA[ <> ]]>
+	                        FW.TRADE_AMOUNT THEN (SELECT SUM(FW2.TRADE_AMOUNT) FROM FLOW FW2 WHERE FW2.D_OR_C='C'AND FW2.TERM >= RD.CUR_NUM AND FW2.TRADE_NO=FW.TRADE_NO AND FW2.TRADE_CODE='3001')
+	                       - (SELECT SUM(FW2.TRADE_AMOUNT) FROM FLOW FW2 WHERE FW2.D_OR_C='D'AND FW2.TERM >= RD.CUR_NUM AND FW2.TRADE_NO=FW.TRADE_NO
+	                       AND FW2.ACCOUNT_TITLE <![CDATA[ <> ]]> '211' AND FW2.TRADE_CODE='3001'
+	                       ) ELSE 
+	                	FW.TRADE_AMOUNT END
+	               	  )
+	               	  ELSE
+	               	  fw.trade_amount
+                 	END
+                 )
+		ELSE
+		0
+		END
+		) AS CUR_PRINCIPAL,
+		SUM (
+		CASE
+		WHEN fw.account_title = '451'
+		AND fw.term  <![CDATA[ < ]]> rd.cur_num THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS OVERDUE_Interest_AMT,
+		SUM (
+		CASE
+		WHEN fw.account_title = '451'
+		AND fw.term <![CDATA[ >= ]]> rd.cur_num THEN
+		fw.trade_amount
+		ELSE
+		0
+		END
+		) AS CUR_Interest_AMT,
+		SUM (
+        CASE
+        WHEN fw.account_title = '495' AND fw.term <![CDATA[ >= ]]> rd.cur_num THEN
+         fw.trade_amount
+        ELSE
+         0
+        END
+        ) AS CUR_RISK,	
+		SUM (
+        CASE
+        WHEN fw.account_title = '495' AND fw.term <![CDATA[ < ]]> rd.cur_num  THEN
+         fw.trade_amount
+        ELSE
+         0
+        END
+        ) AS OVERDUE_CUR_RISK	
+	</sql>
+	
+    <sql id="orderConditions">
+		 ORDER BY sales_Dept_Name, person_name, repay_day, trade_time ASC
+    </sql>
+    <sql id="groupByConditions">
+		group
+		by fw.trade_no,
+		l.id,
+		ba.name ,
+		ps.NAME,
+		ps.idnum,
+		l.product_type,
+		l.pact_money,
+		l.time,
+		rd.cur_num,
+		rd.repay_day,
+		rd.repay_amount,
+		rd.principal_amt,
+		rd.interest_amt,
+		rd.refer_rate,
+        rd.eval_rate,
+        rd.manage_part0_fee,
+        rd.manage_part1_fee,
+	    rd.risk,
+		ri.trade_time,
+		ri.trade_amount,
+		ri.trade_code,
+		ri.pay_type,
+		ri.remark
+    </sql>
+	<sql id="repayDateconditions">
+	    <if test="repayDateStart != null">
+	        AND ri.trade_time <![CDATA[ >= ]]> #{repayDateStart}
+	    </if>
+	    <if test="repayDateEnd != null">
+	        AND ri.trade_time <![CDATA[ <= ]]> #{repayDateEnd}
+	    </if>
+	</sql>
+	<sql id="conditions">
+	    <include refid="repayDateconditions" />	
+	    <if test="salesDeptId != null">
+	        AND ba.id = #{salesDeptId}
+	    </if>
+	    <if test="productType != null">
+	        AND l.product_id = #{productType}
+	    </if>
+	    <if test="statusList !=null and statusList.size() > 0">
+				AND l.STATUS IN(
+				<foreach item="guard" index="index" collection="statusList" separator=",">
+					#{guard}
+				</foreach>
+				)
+		</if>
+	    <if test="queryDate != null">
+		    AND to_char(rd.repay_day,'yyyy') = case
+			when #{queryDate} <![CDATA[ <= ]]>  l.start_repay_date then
+			to_char(l.start_repay_date,'yyyy')
+			WHEN #{queryDate} BETWEEN l.start_repay_date AND l.end_repay_date THEN
+			to_char(#{queryDate},'yyyy')
+			ELSE
+			to_char(l.end_repay_date,'yyyy')
+			END
+			AND to_char(rd.repay_day,'mm') = case
+			when #{queryDate} <![CDATA[ <= ]]> l.start_repay_date then
+			to_char(l.start_repay_date,'mm')
+			WHEN #{queryDate} BETWEEN l.start_repay_date AND l.end_repay_date THEN
+			to_char(#{queryDate},'mm')
+			ELSE
+			to_char(l.end_repay_date,'mm')
+			END
+	    </if>
+	</sql>
+
+	<select id="queryRepaymentReportCount" parameterType="RepaymentReportVO" resultType="java.lang.Integer">
+		select  
+		count(1)
+		from (
+		<include refid="repaymentSelective" />
+		)
+	 <include refid="orderConditions" />
+	</select>	
+	
+	<select id="queryRepaymentReport" parameterType="RepaymentReportVO" resultMap="repaymentReportResultMap">
+	  <include refid="repaymentSelectiveExt" />
+	</select>
+	
+	<sql id ="repaymentSelectiveExt">
+		select  
+		<include refid="repapymentReportFields"/>
+		from (
+		 <include refid="repaymentSelective" />
+		)
+	    <include refid="orderConditions" />
+	</sql>
+	
+	<sql id="repaymentSelective">
+		SELECT 
+	    <include refid="repapymentReportFieldsExt" />
+		FROM
+		repay_info ri,
+		loan l,
+		repayment_plan rd,
+		flow fw,
+		person ps,
+		base_area ba
+		WHERE ri.trade_code IN ('1001','3001')
+		AND l.ID = ri.account_id
+		AND rd.loan_id = l.id
+		AND fw.trade_no = ri.trade_no
+		AND l.person_id = ps.ID
+		AND l.sales_dept_id = ba.id
+        <include refid="conditions" />
+		<include refid="groupByConditions" />
+		union all
+		SELECT 
+		 <include refid="repapymentReportFieldsExt" />
+		FROM
+		repay_info ri,
+		extension l,
+		repayment_plan rd,
+		flow fw,
+		person ps,
+		base_area ba
+		WHERE ri.trade_code IN ('1001','3001')
+		AND l.ID = ri.account_id
+		AND rd.loan_id = l.id
+		AND fw.trade_no = ri.trade_no
+		AND l.person_id = ps.ID
+		AND l.sales_dept_id = ba.id
+        <include refid="conditions" />
+		<include refid="groupByConditions" />
+	</sql>
+	
+	<!-- 有还款记录 -->
+	<select id="findWithPgOnRepayment" parameterType="RepaymentReportVO" resultMap="repaymentReportResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		select * from (
+        	<include refid="repaymentSelectiveExt"/>
+		)
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>	
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select> 
+	
+	<!-- 无还款记录 -->
+	<select id="findWithPgOnNoRepayment" parameterType="RepaymentReportVO" resultMap="repaymentReportResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		select * from (
+		  <include refid="noRepaymentSelectiveExt" />	
+		)
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>	
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select> 
+</mapper>

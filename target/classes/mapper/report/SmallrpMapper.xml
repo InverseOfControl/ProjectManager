@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.report.mapper.SmallrpMapper">
+  <resultMap id="smallrpResultMap" type="com.ezendai.credit2.report.model.Smallrp">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="loanId" column="LOAN_ID"  jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="contractNo" column="CONTRACT_NO"  jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="signDate" column="SIGN_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="cityName" column="CITY_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="areaName" column="AREA_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="personName" column="PERSON_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="idNum" column="ID_NUM" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="address" column="ADDRESS" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="email" column="EMAIL" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="payAmount" column="PAY_AMOUNT"  jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result property="bankAccountName" column="BANK_ACCOUNT_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="bankAccountNum" column="BANK_ACCOUNT_NUM" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="openingBank" column="OPENING_BANK" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="assessmentFees" column="ASSESSMENT_FEES" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result property="manageFees" column="MANAGE_FEES" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result property="ttpManageFees" column="TTP_MANAGE_FEES" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result property="purpose" column="PURPOSE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="pactMoney" column="PACT_MONEY"  jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result property="monthInterestAmount" column="MONTH_INTEREST_AMOUNT"  jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result property="monthAmount" column="MONTH_AMOUNT"  jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result property="times" column="TIMES" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="startRepayDate" column="START_REPAY_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="endRepayDate" column="END_REPAY_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="zipCode" column="ZIP_CODE" jdbcType="CHAR" javaType="java.lang.String" />
+		<result property="guaranteeName" column="GUARANTEE_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="guaranteeIdNum" column="GUARANTEE_ID_NUM" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="legalGuarantee" column="LEGAL_GUARANTEE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="repayDate" column="REPAY_DATE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="bankBranchName" column="BANK_BRANCH_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="contact" column="CONTACT" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="diffRefund" column="diffRefund" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result property="modifiedTime" column="MODIFIED_TIME"  jdbcType="TIMESTAMP" javaType="java.util.Date" />
+	</resultMap>
+
+    <resultMap id="carPrintResultMap" type="com.ezendai.credit2.report.model.Smallrp">
+        <id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+        <result property="loanId" column="LOAN_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+        <result property="contractNo" column="CONTRACT_NO" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="signDate" column="SIGN_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result property="cityName" column="CITY_NAME" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="areaName" column="AREA_NAME" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="personName" column="PERSON_NAME" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="idNum" column="ID_NUM" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="address" column="ADDRESS" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="email" column="EMAIL" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="businessCompanyName" column="business_company_name" jdbcType="VARCHAR"
+                javaType="java.lang.String"/>
+        <result property="businessAddress" column="business_address" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="tell" column="TELL" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="zipCode" column="ZIP_CODE" jdbcType="CHAR" javaType="java.lang.String"/>
+        <result property="payAmount" column="PAY_AMOUNT" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+        <result property="preparatoryAmount" column="preparatory_amount" jdbcType="NUMERIC"
+                javaType="java.math.BigDecimal"/>
+        <result property="raskAmount" column="rask_amount" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+        <result property="bankAccountName" column="BANK_ACCOUNT_NAME" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="bankAccountNum" column="BANK_ACCOUNT_NUM" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="openingBank" column="OPENING_BANK" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="isMarried" column="IS_MARRIED" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+        <result property="territory" column="territory" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="plateNumber" column="plate_number" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="frameNumber" column="frame_number" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="loanAgreeNum" column="loan_agree_num" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="purpose" column="PURPOSE" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result property="pactMoney" column="PACT_MONEY" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+        <result property="totalAmount" column="total_amount" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+        <result property="times" column="TIMES" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+        <result property="startRepayDate" column="START_REPAY_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result property="endRepayDate" column="END_REPAY_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result property="contact" column="contact" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="bankBranchName" column="bank_branch_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="lender" column="lender" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="repayDate" column="REPAY_DATE" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="brand" column="brand" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="orgPactMoney" column="org_Pact_Money" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+        <result property="auditMoney" column="AUDIT_MONEY"  jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+        
+    </resultMap>
+
+    <!-- 表中公用抽取的列 -->
+    <sql id="columns">
+	ID,LOAN_ID,CONTRACT_NO,SIGN_DATE,CITY_NAME,AREA_NAME,PERSON_NAME,ID_NUM,ADDRESS,EMAIL,PAY_AMOUNT,BANK_ACCOUNT_NAME,
+	BANK_ACCOUNT_NUM,OPENING_BANK,ASSESSMENT_FEES,MANAGE_FEES,TTP_MANAGE_FEES,PURPOSE,PACT_MONEY,MONTH_INTEREST_AMOUNT,MONTH_AMOUNT,
+	TIMES,START_REPAY_DATE,END_REPAY_DATE,ZIP_CODE,GUARANTEE_NAME,GUARANTEE_ID_NUM,LEGAL_GUARANTEE,REPAY_DATE,BANK_BRANCH_NAME,CONTACT,diffRefund,modified_time
+	</sql>
+
+    <sql id="otherColumns">
+        ID,LOAN_ID,CONTRACT_NO,SIGN_DATE,CITY_NAME,AREA_NAME,PERSON_NAME,ID_NUM,ADDRESS,EMAIL,business_company_name,business_address,
+        TELL,ZIP_CODE,PAY_AMOUNT,preparatory_amount,rask_amount,BANK_ACCOUNT_NAME,BANK_ACCOUNT_NUM,OPENING_BANK,IS_MARRIED,territory,
+        plate_number,frame_number,loan_agree_num,PURPOSE,PACT_MONEY,total_amount,TIMES,START_REPAY_DATE,END_REPAY_DATE,contact,bank_branch_name,lender,
+        REPAY_DATE,brand,org_Pact_Money,AUDIT_MONEY
+    </sql>
+
+    <select id="getSmallrpByContractNo"  parameterType="java.util.Map"   resultMap = "smallrpResultMap">
+		SELECT <include refid="columns"/> FROM contract 
+		where   TYPE = #{type} 
+		<if test="contractNo!=null">  
+                and contract_no like '${contractNo}%'  
+        </if>  
+		<if test="guaranteeName != null">
+				AND GUARANTEE_NAME = #{guaranteeName}
+		</if>
+		<if test="legalGuarantee != null">
+				AND LEGAL_GUARANTEE = #{legalGuarantee}
+		</if>
+	</select>
+
+    <select id="queryCarCreditByContractNo" parameterType="java.util.Map" resultMap="carPrintResultMap">
+        SELECT <include refid="otherColumns" /> from contract where contract_no=#{contractNo} and  type=#{type} 
+       
+    </select>
+    
+    <select id="queryCarCreditByExtensionId" parameterType="java.util.Map" resultMap="carPrintResultMap">
+        SELECT <include refid="otherColumns" /> from contract where loan_id=#{extensionId} and type=#{type}
+    </select>
+</mapper>

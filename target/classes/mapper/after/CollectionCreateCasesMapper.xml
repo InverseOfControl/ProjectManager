@@ -1,0 +1,1175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.after.mapper.CollectionCreateCasesMapper">
+	<resultMap id="collectionCreateCasesMap" type="com.ezendai.credit2.after.model.CollectionCreateCases">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="REQUEST_TIME" property="time" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="LOAN_TYPE" property="loanType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="SIGN_DATE" property="signDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="START_REPAY_DATE" property="startRepayDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="END_REPAY_DATE" property="endRepayDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="GRANT_DATE" property="grantDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="STATUS" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="name"    property="personName" />
+		<result column="IDNUM" property="idNum" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="TRANSFER_TYPE" property="transferCode"  />
+		<result column="CASE_STATE" property="caseState"  />
+		<result column="CASE_END_DATE" property="caseEndDate"  />
+		<result column="CASE_MEMO" property="caseMemo"  />
+	    <result column="CASE_TYPE" property="caseType"  />
+		<result column="CONTRACT_NO" property="contractNo"  />
+		<result column="dept_name" property="deptName"  />
+		<result column="TRANSFER_DATE" property="transferDateStr"  />
+		<result column="loan_id" property="loanId"  /> 
+		<result column="tid" property="tid"  />
+		<result column="person_id" property="personId"  />
+		<result column="caseId" property="caseId"  />
+		<result column="CREATED_TIME" property="createdTime"  />
+		<result column="CASE_FROM" property="caseFrom"  />
+		<result column="CASE_NUM" property="caseNum"  />
+		<result column="product_type" property="productType"  />
+		<result column="GRANT_DATE" property="requestDate"  />
+		<result column="TASK_END_DATE" property="taskEndDate"  />
+		<result column="FACT_REPAYMENT_SUM" property="factRepaymentSum"  />
+		<result column="PACT_MONEY" property="pactMoney"  />
+		 <result column="TIME" property="time"  />
+		 <result column="optName" property="optName"  /> 
+		 <result column="TASK_START_DATE" property="taskStartDate"  />
+		 <result column="product_name" property="productName"  />
+		 <result column="sb_amount" property="sbAmount"  />
+		 <result column="sb_date" property="sbDate"  />
+	</resultMap>
+	
+	<resultMap id="collectionCasesTaskMap" type="com.ezendai.credit2.after.model.CollectionCasesTask">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CASE_ID" property="caseId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+			<result column="loan_id" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="TASK_STATE" property="taskState" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="TASK_TYPE" property="taskType"   />
+		<result column="TASK_MEMO" property="taskMemo"  />
+		<result column="FACT_REPAYMENT" property="factRepayment"   />
+		<result column="PROMISED_REPAYMENT" property="promisedRepayMent"   />
+		<result column="TASK_END_DATE" property="taskEndDate"  />
+		<result column="OPERATOR_ID"    property="operaorId" />
+		<result column="TASK_START_DATE" property="taskStartDate"  />
+		<result column="optName" property="optName"  />
+	    <result column="name" property="name"  />
+	     <result column="CASE_STATE" property="caseState"  />
+	    
+	</resultMap>
+	<resultMap id="casesPersonMap" type="com.ezendai.credit2.after.model.CasesPerson">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="name" property="name" />
+		<result column="RELATIONSHIP" property="relationShip"  />
+		<result column="sex" property="sex"   />
+		<result column="part" property="part"  />
+		<result column="idnum" property="idnum"   />
+		<result column="MOBILE_PHONE" property="mobilePhone"   />
+		<result column="home_phone" property="homePhone"   />
+		<result column="ADDRESS" property="address"   />
+	    <result column="work_unit" property="workUnit"   />
+   		<result column="job" property="job"   />
+		<result column="dept_name" property="deptName"   />
+  		<result column="company_phone" property="companyPhone"   />
+ 	    <result column="relation_id" property="relationId"   />
+  		<result column="person_id" property="personId"   />
+  		<result column="subordinate" property="subordinate"   />
+	</resultMap>
+	<resultMap id="casesRecordMap" type="com.ezendai.credit2.after.model.CollectionCasesRecord">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="TASK_ID" property="taskId" />
+		<result column="RECORD_TYPE" property="recordType"  />
+		<result column="RECORD_ADDRESS" property="recordAddress"   />
+		<result column="RECORD_CONTENT" property="recordContent"  />
+		<result column="RECORD_START_DATE" property="recordStartDate"   />
+		<result column="RECORD_END_DATE" property="recordEndDate"   />
+		<result column="RECORD_MEMO" property="recordMemo"   />
+		<result column="RECORD_NAME" property="recordName"   />
+		<result column="OPERATOR_ID" property="operaorId"   />
+		<result column="RECORD_TEL" property="recordTel"   />
+		<result column="optname" property="optname"   />
+	</resultMap>
+  <resultMap id="additionalnMap" type="com.ezendai.credit2.audit.model.PersonContacterAdditional">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="type" property="additionalType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="address" property="additionalAddress" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="tel" property="additionalTel"  jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="relation_id" property="relationId"  />
+	</resultMap> 
+		  <delete id="deletePersonContacterAdditional"  parameterType="long" >
+	 	delete PERSON_CONTACTER_ADDITIONAL where id=#{id}
+	 </delete>
+		 <insert id="insertPersonContacterAdditional" parameterType="com.ezendai.credit2.audit.model.PersonContacterAdditional"   >
+		 		insert into PERSON_CONTACTER_ADDITIONAL(id,type,tel,address ,relation_id)
+		 				values(SEQ_CONTACTER_ADDITIONAL_ID.nextval,#{additionalType},#{additionalTel,jdbcType=VARCHAR},#{additionalAddress,jdbcType=VARCHAR},#{relationId})
+		 </insert>
+		 
+	<update id="updatePersonContacterAdditional" parameterType="com.ezendai.credit2.after.model.CasesPerson"  >
+	 	update PERSON_CONTACTER_ADDITIONAL set relation_id=#{id} where relation_id=#{relationId} and type=#{part}
+	 </update>
+	  <select  id="findPersonContactAdditionalnMap" resultMap="additionalnMap" parameterType="com.ezendai.credit2.audit.model.PersonContacterAdditional" >
+ 	  	 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+ 	  	select * from   PERSON_CONTACTER_ADDITIONAL   p
+   		 <if test="additionalType == 1">
+			inner join person pe  on pe.id=p.relation_id
+		 </if>
+     	 <if test="additionalType ==2">
+			inner join CONTACTER c  on c.id=p.relation_id
+	 	 </if>
+	 	 <if test="innerCollection ==1">
+			inner join COLLECTION_CONTACTER cc  on cc.id=p.relation_id
+	 	 </if>
+		 	where 1=1  
+		  <if test="relationId !=null and relationId !='' ">
+			and   p.relation_id=#{relationId}
+	 	 </if>
+	 	 	<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" /> 
+  	</select> 
+  	<select  id="findPersonContactAdditionalnCount" resultType="integer" parameterType="com.ezendai.credit2.audit.model.PersonContacterAdditional" >
+   	select count(*) from  PERSON_CONTACTER_ADDITIONAL   p
+   		<if test="additionalType == 1">
+			inner join person pe  on pe.id=p.relation_id
+		 </if>
+     	 <if test="additionalType ==2">
+			inner join CONTACTER c  on c.id=p.relation_id
+	 	 </if>
+	 	 <if test="innerCollection ==1">
+			inner join COLLECTION_CONTACTER cc  on cc.id=p.relation_id
+	 	 </if>
+	 	 
+		 	where 1=1  
+		  <if test="relationId !=null and relationId !='' ">
+			and   p.relation_id=#{relationId}
+	 	 </if>
+	 	 
+	 	 
+  	</select>  
+	<select id="findCollectionCreateCasesWithPG"  resultMap="collectionCreateCasesMap" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+		 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		  select l.id,p.name ,p.idnum,l.time,l.loan_type,l.PRODUCT_TYPE,l.start_repay_date,l.SIGN_DATE,l.status,l.GRANT_DATE from loan l 
+    <!--   left join overdue_receivables_case o on l.id=LOAN_ID    o.CASE_STATE,-->
+      left join person  p   on l.person_id=p.id
+       left join product pr on pr.id=l.product_id
+		 	where 1=1 and pr.id!=1  <include refid="loanConditions" /> 
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	<select  id="findCollectionCreateCasesCount" resultType="integer" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+   	select count(*) from loan l 
+    <!--   left join overdue_receivables_case o on l.id=LOAN_ID -->
+      left join person  p   on l.person_id=p.id
+        left join product pr on pr.id=l.product_id
+		 	where 1=1 and pr.id!=1
+		 	   <include refid="loanConditions" />
+  	</select>
+  	
+  	<!-- 催收作业管理 -->
+  	<select id="findCollectionCasesTaskWithPG"  resultMap="collectionCasesTaskMap" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		  select o.loan_id as loan_id, t.id,t.task_start_date,t.task_end_date,u.name,t.task_type,t.task_state,t.promised_repayment,t.fact_repayment,t.task_memo,o.CASE_STATE   
+		  			 from  overdue_receivables_task t left join sys_user u on u.id=t.operator_id left join   OVERDUE_RECEIVABLES_CASE o on o.id=t.CASE_ID
+		 		where 1=1   <if test="caseId != null and caseId !=''">
+								and t.CASE_ID=#{caseId}
+							</if>
+				order by 	t.task_end_date		desc
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	<select  id="findCollectionCasesTaskCount" resultType="integer" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+    select  count(*)
+		  			from  overdue_receivables_task t left join sys_user u on u.id=t.operator_id  
+		 		where 1=1    <if test="caseId != null and caseId !=''">
+								and t.CASE_ID=#{caseId}
+							</if>
+  	</select>
+  	<!-- 催收案件管理 -->
+  	<select id="findManagerCasesWithPG"  resultMap="collectionCreateCasesMap" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+		 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		select o.id, l.id as loan_id,l.CONTRACT_NO, p.name ,p.idnum,l.time,l.loan_type,l.PRODUCT_TYPE,l.start_repay_date,l.GRANT_DATE,l.SIGN_DATE,l.status,b.name as dept_name,o.CASE_STATE,o.TRANSFER_TYPE,o.TRANSFER_DATE,pr.PRODUCT_NAME from overdue_receivables_case o 
+    		  left join  loan l  on l.id=LOAN_ID
+     		 left join person  p   on l.person_id=p.id
+     		 left join base_area b on b.id =l.sales_dept_id
+     		    left join product pr on pr.id=l.product_id
+		 	where 1=1 and pr.id!=1  <include refid="loanConditions" /> 
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+  	<select  id="findManagerCasesCount" resultType="integer" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+ 	select count(*) from overdue_receivables_case o 
+    		  left join  loan l  on l.id=LOAN_ID
+     		 left join person  p   on l.person_id=p.id
+     		 left join base_area b on b.id =l.sales_dept_id
+		 	 left join product pr on pr.id=l.product_id
+		 	where 1=1 and pr.id!=1  <include refid="loanConditions" /> 
+  	</select>
+  	
+  	<select id="findManagerTaskWithPG"  resultMap="collectionCreateCasesMap" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+		 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		 select o.id, t.id as tid,  l.id as loan_id,l.CONTRACT_NO, p.name ,p.idnum,l.time,l.loan_type,l.PRODUCT_TYPE,l.start_repay_date,l.GRANT_DATE,l.SIGN_DATE,l.status,b.name as dept_name,o.CASE_STATE,o.TRANSFER_TYPE,o.TRANSFER_DATE 
+      ,overdue.overdue_start_date,l.PRODUCT_ID,t.TASK_START_DATE,l.pact_money,t.OPERATOR_ID,u.name as optName,   pr.product_name
+      from  OVERDUE_RECEIVABLES_TASK t
+			   left join  overdue_receivables_case o   on t.CASE_ID=o.ID
+    		  left join  loan l  on l.id=LOAN_ID
+     		 left join person  p   on l.person_id=p.id
+     		 left join base_area b on b.id =l.sales_dept_id
+     		 left join product pr on pr.id=l.product_id
+         left join sys_user u on t.OPERATOR_ID=u.id
+         left join   (SELECT ovderV.id,
+        ( rp2.REPAY_DAY) AS overdue_start_date
+      FROM repayment_plan rp2
+      INNER JOIN （select ll.id ,
+        MIN(rp.CUR_NUM) AS minCumNum
+      FROM loan ll
+      LEFT JOIN repayment_plan rp
+      ON rp.loan_id                       =ll.id
+      WHERE ll.status                      =140 and 
+      <![CDATA[  rp.repay_day<TRUNC(sysdate) ]]>
+      AND rp.FACT_RETURNDATE                IS NULL
+      and  rp.status!=60 
+      GROUP BY ll.id） ovderV ON rp2.loan_id=ovderV.id
+      AND rp2.CUR_NUM                     =ovderV.minCumNum
+      ) overdue on overdue.id=l.id
+		 	 
+		 	where 1=1  and pr.id!=1 and t.TASK_STATE=1  <include refid="loanConditions" /> 
+		  
+      	<if test="pager.sidx != null and pager.sort != null ">
+      	 	<choose>  
+            <when test="pinyin !=null "> 
+            		ORDER BY  NLSSORT( ${pager.sidx},'NLS_SORT=SCHINESE_PINYIN_M')  ${pager.sort} ,tid desc
+            </when >  
+             <otherwise>  
+             		ORDER BY  ${pager.sidx}  ${pager.sort}	
+            </otherwise>  
+        </choose> 
+		
+	   </if>
+      
+		 
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+  	<select  id="findManagerTaskCount" resultType="integer" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+ 		 select count(*)
+      from  OVERDUE_RECEIVABLES_TASK t
+			   left join  overdue_receivables_case o   on t.CASE_ID=o.ID
+    		  left join  loan l  on l.id=LOAN_ID
+     		 left join person  p   on l.person_id=p.id
+     		 left join base_area b on b.id =l.sales_dept_id
+     		   left join product pr on pr.id=l.product_id
+         left join sys_user u on t.OPERATOR_ID=u.id
+         left join  (SELECT ovderV.id,
+        ( rp2.REPAY_DAY+1) AS overdue_start_date
+      FROM repayment_plan rp2
+      INNER JOIN （select ll.id ,
+        MIN(rp.CUR_NUM) AS minCumNum
+      FROM loan ll
+      LEFT JOIN repayment_plan rp
+      ON rp.loan_id                       =ll.id
+      WHERE ll.status                      =140 and
+      <![CDATA[  rp.repay_day<sysdate ]]>
+      AND FACT_RETURNDATE                IS NULL
+      GROUP BY ll.id） ovderV ON rp2.loan_id=ovderV.id
+      AND rp2.CUR_NUM                     =ovderV.minCumNum
+      ) overdue on overdue.id=l.id
+		 	where 1=1  and pr.id!=1  and t.TASK_STATE=1<include refid="loanConditions" /> 
+  	</select>
+  	 <insert id="insertCollectionContacer" parameterType="com.ezendai.credit2.after.model.CasesPerson"   >
+  	 <selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">  
+            select SEQ_COLLECTION_CONTACTER_ID.nextval from dual
+    	</selectKey>
+		 		insert into COLLECTION_CONTACTER(id,name,relationship,sex,part,mobile_phone,home_phone,idnum,address,work_unit,job,dept_name,company_phone
+		 				,person_id,relation_id,creator,created_time,creator_id)
+		 				values(#{id},#{name,jdbcType=VARCHAR},#{relationShip,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},#{part,jdbcType=VARCHAR}
+		 				,#{mobilePhone,jdbcType=VARCHAR},#{homePhone,jdbcType=VARCHAR},#{idnum,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{workUnit,jdbcType=VARCHAR},#{job,jdbcType=VARCHAR}
+		 				,#{deptName,jdbcType=VARCHAR},#{companyPhone,jdbcType=VARCHAR},#{personId,jdbcType=NUMERIC},#{relationId ,jdbcType=NUMERIC},
+		 				#{creator,jdbcType=VARCHAR},#{createdTime},#{creatorId})
+		 </insert>
+  	<select id="findCollectionContacerWithPG"  resultMap="casesPersonMap" parameterType="com.ezendai.credit2.after.model.CasesPerson" >
+		 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		  select cc.*,'2' as  subordinate from   COLLECTION_CONTACTER  cc 
+		 	where 1=1 and  cc.person_id=#{personId}  order by  part asc
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	<select  id="findCollectionContacerCount" resultType="integer" parameterType="com.ezendai.credit2.after.model.CasesPerson" >
+ 	  	select count(*) from COLLECTION_CONTACTER cc 
+  		 	where 1=1 and  cc.person_id=#{personId}
+  	</select>
+  	<select id="selectCollectionContacerById"  resultMap="casesPersonMap" parameterType="java.lang.Long" >
+  		select * from COLLECTION_CONTACTER where  id=#{id}
+	 </select>
+  	 <update id="updateCollectionContacer"  parameterType="com.ezendai.credit2.after.model.CasesPerson" >
+	 	update COLLECTION_CONTACTER  set  name=#{name}
+	 				 <if test="relationShip != null and  relationShip != ''" >
+        				  ,relationship=#{relationShip}
+     				 </if>
+     				 
+        				  ,sex=#{sex}
+     				 
+     				  <if test="mobilePhone != null and  mobilePhone != ''" >
+        				 , mobile_phone=#{mobilePhone}
+     				 </if>
+     				  <if test="part != null and  part != ''" >
+        				 , part=#{part}
+     				 </if>
+     				   <if test="homePhone != null and  homePhone != ''" >
+        				 , home_phone=#{homePhone}
+     				 </if>
+     				   <if test="idnum != null and  idnum != ''" >
+        				 , idnum=#{idnum}
+     				 </if>
+     				   <if test="address != null and  address != ''" >
+        				 , address=#{address}
+     				 </if>
+     				 <if test="workUnit != null and  workUnit != ''" >
+        				 , work_unit=#{workUnit}
+     				 </if>
+     				   <if test="job != null and  job != ''" >
+        				 , job=#{job}
+     				 </if>
+     				   <if test="deptName != null and  deptName != ''" >
+        				 , dept_name=#{deptName}
+     				 </if>
+     				   <if test="companyPhone != null and  companyPhone != ''" >
+        				 , company_phone=#{companyPhone}
+     				 </if>
+     				 
+	 				 <if test="modifiedTime != null" >
+        				 ,MODIFIED_TIME=#{modifiedTime}
+     				 </if>
+     				  <if test="modifier != null" >
+        				 ,MODIFIER=#{modifier}
+     				 </if> 
+     				  <if test="modifierId != null" >
+        				 ,MODIFIER_ID=#{modifierId}
+     				 </if>
+	 	
+	 	where id =#{id}
+			 
+	 </update>
+  	
+  	
+  	<!-- 查询联系人 -->
+  	<select id="findPersonWithPG"  resultMap="casesPersonMap" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+		 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+				select * from (SELECT
+					ID, NAME, RELATIONSHIP,   null as sex, null as idnum,  2 as part, '1' as  subordinate,MOBILE_PHONE
+					FROM CONTACTER
+		 			WHERE  CONTACTER.BORROWER_ID = #{personId}
+    				AND CONTACTER.LOAN_ID = #{loanId} 
+ 					union  
+  					select id,name, '本人' as RELATIONSHIP,sex,idnum ,1 as part, '1' as subordinate,null as  MOBILE_PHONE from person where id =#{personId}
+  					) order by part asc
+         <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+  	<select  id="findPersonCount" resultType="integer" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+ 			select count(*) from (
+				SELECT
+		ID, NAME, RELATIONSHIP,   null as sex, null as idnum,  2 as part, '1' as subordinate
+		FROM CONTACTER
+		 WHERE  CONTACTER.BORROWER_ID = #{personId}
+     AND CONTACTER.LOAN_ID = #{loanId} 
+  union  
+  select id,name, '本人' as RELATIONSHIP,sex,idnum ,1 as part , '1' as subordinate from person where id = #{personId})
+  	</select>
+  	<!-- 查询电核 外访记录 -->
+  	<select id="findCasesRecordWithPG"  resultMap="casesRecordMap" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+		 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+				  	   select o.id,o.RECORD_START_DATE,o.RECORD_END_DATE,o.RECORD_NAME,o.RECORD_TEL,o.RECORD_CONTENT ,o.RECORD_ADDRESS, u.name as optname  from  
+				   		overdue_receivables_record  o left join sys_user u on o.creator_id=u.id  
+				   		left join OVERDUE_RECEIVABLES_TASK ort on ort.id=o.task_id 	
+				   		where  
+				   		<if test="caseId != null and  caseId != ''" >
+        				 	ort.case_id =#{caseId}
+     					 </if>
+				   		<if test="taskId != null and  taskId != ''" >
+        				 	o.task_id =#{taskId}
+     					 </if>
+				   	  and o.RECORD_TYPE =#{recordType}
+				   		order by id desc
+		 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+  		<select  id="findCasesRecordCount" resultType="integer" parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+ 			select count(*)  from  
+				   		overdue_receivables_record  o left join sys_user u on o.creator_id=u.id  
+				   		left join OVERDUE_RECEIVABLES_TASK ort on ort.id=o.task_id 	
+				   		where  
+				   		<if test="caseId != null and  caseId != ''" >
+        				 	ort.case_id =#{caseId}
+     					 </if>
+				   		<if test="taskId != null and  taskId != ''" >
+        				 	o.task_id =#{taskId}
+     					 </if>
+				   	  and o.RECORD_TYPE =#{recordType}
+    
+  	</select>
+  	 <select id="selectLoanInfoById"  resultMap="collectionCreateCasesMap" parameterType="java.lang.Long" >
+  	select l.id,  p.name ,p.idnum,l.time,l.loan_type,l.GRANT_DATE,l.PRODUCT_TYPE,l.start_repay_date,l.SIGN_DATE,l.status, l.person_id  from loan l 
+  	
+    <!--   left join overdue_receivables_case o on l.id=LOAN_ID -->
+      left join person  p   on l.person_id=p.id
+		 	where 1=1  and l.id=#{id}
+  </select>	
+  <!-- 	<select id="selectLoanInfoById"  resultMap="collectionCreateCasesMap" parameterType="java.lang.Long" >
+  	select l.id,o.id as caseId, p.name ,p.idnum,l.time,l.loan_type,l.GRANT_DATE,l.PRODUCT_TYPE,l.start_repay_date,l.SIGN_DATE,l.status,o.CASE_STATE ,l.person_id,
+  		o.CASE_TYPE,o.CASE_MEMO,o.CASE_END_DATE from loan l 
+      left join overdue_receivables_case o on l.id=LOAN_ID
+      left join person  p   on l.person_id=p.id
+		 	where 1=1  and l.id=#{id}
+  </select>	 -->	
+  <select id="selectLoanInfoByLoanId"  resultMap="collectionCreateCasesMap" parameterType="java.lang.Long" >
+  	select l.id,o.id as caseId, p.name ,p.idnum,l.time,l.loan_type,l.GRANT_DATE,l.PRODUCT_TYPE,l.start_repay_date,l.SIGN_DATE,l.status,o.CASE_STATE ,l.person_id,
+  		o.CASE_TYPE,o.CASE_MEMO,o.CASE_END_DATE from loan l 
+      left join overdue_receivables_case o on l.id=LOAN_ID
+      left join person  p   on l.person_id=p.id
+		 	where 1=1  and o.CASE_STATE ！=6 and l.id=#{id}
+  </select>	
+   <select id="selectLoanInfoByCaseId"  resultMap="collectionCreateCasesMap" parameterType="java.lang.Long" >
+  	select l.id,o.id as caseId, p.name ,p.idnum,l.time,l.loan_type,l.GRANT_DATE,l.PRODUCT_TYPE,l.start_repay_date,l.SIGN_DATE,l.status,o.CASE_STATE ,l.person_id,
+  		o.CASE_TYPE,o.CASE_MEMO,o.CASE_END_DATE from loan l 
+      left join overdue_receivables_case o on l.id=LOAN_ID
+      left join person  p   on l.person_id=p.id
+		 	where 1=1    and o.id=#{id}
+  </select>	
+  <select id="selectCaseInfo"  resultMap="collectionCreateCasesMap" parameterType="java.lang.Long" >
+  	  select o.id ,o.CASE_NUM,o.TRANSFER_TYPE,o.TRANSFER_DATE,o.OPERATOR_ID,o.CREATED_TIME,o.CASE_STATE,o.CASE_FROM,l.GRANT_DATE, l.REQUEST_TIME,l.product_type,l.GRANT_DATE,l.PACT_MONEY,o.CASE_STATE ,o.CASE_TYPE,
+      o.CASE_END_DATE,u.name, (select sum(FACT_REPAYMENT)  from   OVERDUE_RECEIVABLES_TASK  where   CASE_ID=#{id}) as FACT_REPAYMENT_SUM,
+      (select max(TASK_END_DATE)  from   OVERDUE_RECEIVABLES_TASK  where   CASE_ID=#{id} and  TASK_END_DATE is not null) AS TASK_END_DATE
+        from overdue_receivables_case  o left join loan l   on l.id=LOAN_ID LEFT JOIN SYS_USER  u on u.ID=o.OPERATOR_ID WHERE   o.id=#{id}  --and o.CASE_STATE ！=6
+  </select>	
+  <select id="selectLoanId"  resultMap="collectionCreateCasesMap" parameterType="java.lang.Long" >
+  	   select loan_id from OVERDUE_RECEIVABLES_CASE where id=#{id}
+  </select>	
+  <select id="selectTaskById"  resultMap="collectionCasesTaskMap" parameterType="java.lang.Long" >
+  	   select PROMISED_REPAYMENT,FACT_REPAYMENT,TASK_STATE ,TASK_MEMO from overdue_receivables_task where id =#{taskId}
+  </select>	
+   <select id="selectRecordById"  resultMap="casesRecordMap" parameterType="java.lang.Long" >
+  	   select * from OVERDUE_RECEIVABLES_RECORD where id =#{id}
+  </select>	
+  
+	<sql id="loanConditions">
+		 		AND l.SALES_DEPT_ID IN( SELECT DISTINCT A.ID  FROM BASE_AREA A 
+  
+		      INNER JOIN SYS_USER B ON A.CODE=B.DATA_PERMISSION
+		  
+		      INNER JOIN SYS_PRODUCT_USER  C  ON B.ID=C.USER_ID
+	
+			WHERE A.IDENTIFIER='zdsys.SalesDepartment' AND C.PRODUCT_ID=8  AND A.ID <![CDATA[ <>]]>    #{deptSerch})
+		<if test="idNum != null and idNum !=''">
+			and p.idNum=#{idNum}
+		</if>
+		<!-- 姓名模糊查询 -->
+		<if test="personName != null and personName != ''">
+			AND p.name LIKE '%'||#{personName}||'%'
+		</if>
+		<if test="loanType != null and loanType !=''">
+			and l.LOAN_TYPE=#{loanType}
+		</if>
+		<if test="productType != null and productType !=''">
+			and l.product_type=#{productType}
+		</if>
+		<if test="caseState != null and caseState !='' and caseState !=8">
+			and o.case_state in #{caseState}
+		</if>
+		<if test="caseState ==8">
+			and o.case_state in (2,4,5)
+		</if>
+		<if test="statusList !=null and statusList.size() > 0">
+			AND l.STATUS IN(
+			<foreach item="guard" index="index" collection="statusList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+			AND l.SALES_DEPT_ID IN(
+			<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="productTypeList !=null and productTypeList.size() > 0">
+			AND l.product_id IN(
+			<foreach item="guard" index="index" collection="productTypeList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="productId != null and productId !=''">
+			and l.product_id=#{productId}
+		</if>
+		<!-- <if test="salesDeptId != null and salesDeptId !='' ">
+			and l.SALES_DEPT_ID = #{salesDeptId}
+		</if> -->
+		<if test="casesStartDate != null and casesStartDate != ''">
+				    	and o.CREATED_TIME >= to_date(#{casesStartDate},'yyyy-mm-dd hh24:mi:ss') 
+		</if>
+		<if test="casesEndDate != null and casesEndDate != ''">
+				    	and o.CREATED_TIME  <![CDATA[<=]]>  to_date(#{casesEndDate},'yyyy-mm-dd hh24:mi:ss') 
+		</if>
+		<if test="overdueStart != null and overdueStart != ''">
+				    	and overdue.overdue_start_date  >= to_date(#{overdueStart},'yyyy-mm-dd hh24:mi:ss') 
+		</if>
+		<if test="overdueEnd != null and overdueEnd != ''">
+				    	and overdue.overdue_start_date  <![CDATA[<=]]>  to_date(#{overdueEnd},'yyyy-mm-dd hh24:mi:ss') 
+		</if>
+		<if test="salesDeptId != null and salesDeptId !=''">
+			and l.sales_dept_id in #{salesDeptId}
+		</if>
+		<if test="withoutNoSend != null">
+		and l.id not in (select orc.loan_id from OVERDUE_RECEIVABLES_CASE orc where orc.case_state = 2)
+		</if>
+		<if test="operatorId != null and operatorId !=''">
+				and t.OPERATOR_ID = #{operatorId}
+		</if>
+		  <if test="operatorIdList !=null and operatorIdList.size() > 0">
+			AND  t.OPERATOR_ID IN(
+			<foreach item="guard" index="index" collection="operatorIdList"
+				separator=",">
+				#{guard,jdbcType=NUMERIC javaType=long}
+			</foreach>
+			)
+		</if>  
+	</sql>
+	 <update id="dispatchCases"  parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+	 	update OVERDUE_RECEIVABLES_CASE  set OPERATOR_ID = #{operatorId}, CASE_STATE=3 
+	 	 <if test="modifiedTime != null" >
+        				 ,MODIFIED_TIME=#{modifiedTime}
+     				 </if>
+     				  <if test="modifier != null" >
+        				 ,MODIFIER=#{modifier}
+     				 </if> 
+     				  <if test="modifierId != null" >
+        				 ,MODIFIER_ID=#{modifierId}
+     				 </if>
+	 	
+	 	where id in
+	 			<foreach collection="idList" index="index" item="item" open="("
+						separator="," close=")">
+						#{item}
+				</foreach>
+	 </update>
+	  <update id="casesChange"  parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+	 	update OVERDUE_RECEIVABLES_CASE  set   
+	 	 
+     	  <if test="operatorId != null" >
+        	 OPERATOR_ID=	#{operatorId}
+     	 </if>
+     	  <if test="modifiedTime != null" >
+        				 ,MODIFIED_TIME=#{modifiedTime}
+     				 </if>
+     				  <if test="modifier != null" >
+        				 ,MODIFIER=#{modifier}
+     				 </if> 
+     				  <if test="modifierId != null" >
+        				 ,MODIFIER_ID=#{modifierId}
+     				 </if>
+	 	 where id =#{id}
+	 </update>
+	  <update id="taskChange"  parameterType="com.ezendai.credit2.after.vo.CollectionTaskVO" >
+	 		update OVERDUE_RECEIVABLES_TASK  set   
+	 				 
+     				  <if test="operatorId != null" >
+        				 OPERATOR_ID=#{operatorId}
+     				 </if>
+     				 <if test="modifiedTime != null" >
+        				 ,MODIFIED_TIME=#{modifiedTime}
+     				 </if>
+     				  <if test="modifier != null" >
+        				 ,MODIFIER=#{modifier}
+     				 </if> 
+     				  <if test="modifierId != null" >
+        				 ,MODIFIER_ID=#{modifierId}
+     				 </if>
+	 		 where 
+     				  <if test="id != null" >
+        				 id= #{id}
+     				 </if>
+	 </update>
+	 <update id="casesClosed"  parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+	 	update OVERDUE_RECEIVABLES_CASE  set   CASE_STATE=#{closedType} 
+	 	 <if test="caseEndDate != null" >
+        	 ,CASE_END_DATE=#{caseEndDate}
+     	 </if>
+     	  <if test="operatorId != null" >
+        	 ,OPERATOR_ID=	#{operatorId}
+     	 </if>
+     	  <if test="modifiedTime != null" >
+        				 ,MODIFIED_TIME=#{modifiedTime}
+     				 </if>
+     				  <if test="modifier != null" >
+        				 ,MODIFIER=#{modifier}
+     				 </if> 
+     				  <if test="modifierId != null" >
+        				 ,MODIFIER_ID=#{modifierId}
+     				 </if>
+	 	 where id in
+	 			<foreach collection="idList" index="index" item="item" open="("
+						separator="," close=")">
+						#{item}
+				</foreach>
+	 </update>
+	 <!-- 更新task -->
+	 <update id="updateTask"  parameterType="com.ezendai.credit2.after.vo.CollectionTaskVO" >
+	 		update OVERDUE_RECEIVABLES_TASK  set   TASK_END_DATE=#{taskEndDate}
+	 				 <if test="taskState != null" >
+        				 ,TASK_STATE=#{taskState}
+     				 </if>
+     				  <if test="taskType != null" >
+        				 ,TASK_TYPE=#{taskType}
+     				 </if>
+     				  <if test="operatorId != null" >
+        				, OPERATOR_ID=#{operatorId}
+     				 </if>
+     				 <if test="modifiedTime != null" >
+        				 ,MODIFIED_TIME=#{modifiedTime}
+     				 </if>
+     				  <if test="modifier != null" >
+        				 ,MODIFIER=#{modifier}
+     				 </if> 
+     				  <if test="modifierId != null" >
+        				 ,MODIFIER_ID=#{modifierId}
+     				 </if>
+	 		 where 
+	 		 		 <if test="caseId != null" >
+        				 case_id= #{caseId}
+     				 </if>
+     				  <if test="id != null" >
+        				 id= #{id}
+     				 </if>
+	 </update>
+	 <!-- delete record -->
+	 <delete id="deleteRecord"  parameterType="long" >
+	 	delete OVERDUE_RECEIVABLES_RECORD where id=#{id}
+	 </delete>
+	 
+	 
+	  <update id="updateTaskById"  parameterType="com.ezendai.credit2.after.vo.CollectionTaskVO" >
+	 		update OVERDUE_RECEIVABLES_TASK  set    
+	 				 <if test="taskMemo != null" >
+        				 TASK_MEMO=#{taskMemo}
+     				 </if>
+     				  <if test="promisedRepayMent != null" >
+        				 ,PROMISED_REPAYMENT=#{promisedRepayMent}
+     				 </if>
+ 					  <if test="factRepayment != null" >
+        				 ,FACT_REPAYMENT=#{factRepayment}
+     				 </if>
+     				  <if test="modifiedTime != null" >
+        				 ,MODIFIED_TIME=#{modifiedTime}
+     				 </if>
+     				  <if test="modifier != null" >
+        				 ,MODIFIER=#{modifier}
+     				 </if> 
+     				  <if test="modifierId != null" >
+        				 ,MODIFIER_ID=#{modifierId}
+     				 </if>
+	 		  where id= #{id}
+	 </update>
+	  <update id="updateCaseInfo"  parameterType="com.ezendai.credit2.after.vo.CollectionCreateCasesVO" >
+	  update OVERDUE_RECEIVABLES_CASE  set  
+	  		 <if test="caseType != null" >
+        				 CASE_TYPE=#{caseType} 
+     		 </if>
+     		  <if test="caseMemo != null" >
+        				 CASE_MEMO=#{caseMemo} 
+     		 </if> 
+	  	  <if test="caseFrom != null" >
+        				 CASE_FROM=#{caseFrom} 
+     		 </if>
+     		   <if test="caseState != null" >
+        				 ,CASE_STATE=#{caseState} 
+     		 </if>
+     		   <if test="transferDate != null" >
+        				 ,TRANSFER_DATE=#{transferDate} 
+     		 </if>
+			  <if test="caseEndDate != null">
+		  		, CASE_END_DATE=#{caseEndDate}
+	 		 </if>
+	  				 <if test="modifiedTime != null" >
+        				 ,MODIFIED_TIME=#{modifiedTime}
+     				 </if>
+     				  <if test="modifier != null" >
+        				 ,MODIFIER=#{modifier}
+     				 </if> 
+     				  <if test="modifierId != null" >
+        				 ,MODIFIER_ID=#{modifierId}
+     				 </if>
+	   where id =#{id}
+	 		 
+	 </update>
+	 <!-- 重新分派 -->
+	  <update id="assignmentCaseInfo"  parameterType="com.ezendai.credit2.after.vo.CollectionTaskVO" >
+	  update OVERDUE_RECEIVABLES_TASK  set   TASK_MEMO=null,PROMISED_REPAYMENT=null,FACT_REPAYMENT=null,TASK_END_DATE=null
+     		   <if test="taskState != null" >
+        				 ,TASK_STATE=#{taskState} 
+     		 </if>
+     		 <if test="operatorId != null" >
+        				 ,OPERATOR_ID=#{operatorId} 
+     		 </if>
+			 <if test="taskStartDate != null" >
+        				 ,TASK_START_DATE=#{taskStartDate} 
+     		 </if>
+
+	   where id =#{id}
+	 </update>
+  <select id="assignmentByLoanId"  resultMap="collectionCasesTaskMap" parameterType="java.lang.Long" >
+  	   select * from (select * from OVERDUE_RECEIVABLES_TASK where CASE_ID=#{id} order by id desc) where rownum<![CDATA[<=]]>1
+  </select>	
+
+	  <update id="updateRecord"  parameterType="com.ezendai.credit2.after.model.CollectionCasesRecord" >
+	  update OVERDUE_RECEIVABLES_RECORD  set    
+	  <if test="recordContent != null">
+		   RECORD_CONTENT=#{recordContent}
+	  </if>
+	   <if test="recordStartDateStr != null">
+		  , RECORD_START_DATE=to_date(#{recordStartDateStr},'yyyy-mm-dd hh24:mi:ss') 
+	  </if>
+	   <if test="recordEndDateStr != null">
+		  , RECORD_END_DATE= to_date(#{recordEndDateStr},'yyyy-mm-dd hh24:mi:ss') 
+		      
+	  </if>
+	   <if test="recordName != null">
+		  , RECORD_NAME=#{recordName}
+	  </if>
+	  <if test="recordAddress != null">
+		  , RECORD_ADDRESS=#{recordAddress}
+	  </if>
+	  <if test="recordTel != null">
+		  , RECORD_TEL=#{recordTel}
+	  </if>
+	   <if test="modifiedTime != null" >
+        				 ,MODIFIED_TIME=#{modifiedTime}
+      </if>
+     				  <if test="modifier != null" >
+        				 ,MODIFIER=#{modifier}
+     				 </if> 
+     				  <if test="modifierId != null" >
+        				 ,MODIFIER_ID=#{modifierId}
+     				 </if>
+	   where id =#{id}
+	 		 
+	 </update>
+	 <insert id="insert" parameterType="com.ezendai.credit2.after.vo.OverdueReceivablesCaseVO"   useGeneratedKeys="true" keyProperty="id" >
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
+		SELECT
+		SEQ_OVERDUE_CASE_ID.NEXTVAL AS id FROM DUAL
+	</selectKey>
+    insert into OVERDUE_RECEIVABLES_CASE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     <if test="id != null" >
+        ID,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="loanId != null" >
+        LOAN_ID,
+      </if>
+      <if test="caseFrom != null" >
+       CASE_FROM,
+      </if>   
+        CASE_NUM,  
+      <if test="caseState != null" >
+        CASE_STATE,
+      </if>
+      <if test="caseType != null" >
+        CASE_TYPE,
+      </if>
+      <if test="caseEndDate != null" >
+        CASE_END_DATE,
+      </if>
+      <if test="caseMemo != null" >
+        CASE_MEMO,
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="overdueDateStr != null" >
+        OVERDUE_DATE,
+      </if>
+      <if test="transferType != null" >
+        TRANSFER_TYPE,
+      </if>
+      <if test="transferDate != null" >
+        TRANSFER_DATE,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID,
+      </if>
+      <if test="modifier != null" >
+        MODIFIER,
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+<!--         SEQ_OVERDUE_CASE_ID.NEXTVAL, -->
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="loanId != null" >
+        #{loanId,jdbcType=DECIMAL},
+      </if>
+      <if test="caseFrom != null" >
+        #{caseFrom,jdbcType=DECIMAL},
+      </if>
+  		LPAD (#{id,jdbcType=DECIMAL},10,'0'),
+      <if test="caseState != null" >
+        #{caseState,jdbcType=DECIMAL},
+      </if>
+      <if test="caseType != null" >
+        #{caseType,jdbcType=DECIMAL},
+      </if>
+      <if test="caseEndDate != null" >
+        #{caseEndDate},
+      </if>
+      <if test="caseMemo != null" >
+        #{caseMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="overdueDateStr != null" >
+         to_date(#{overdueDateStr},'yyyy-mm-dd hh24:mi:ss') ,
+      </if>
+      <if test="transferType != null" >
+        #{transferType,jdbcType=DECIMAL},
+      </if>
+      <if test="transferDate != null" >
+        #{transferDate},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=DECIMAL},
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId,jdbcType=DECIMAL},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime},
+      </if>
+    </trim>
+  </insert>
+	 <insert id="insertTask" parameterType="com.ezendai.credit2.after.vo.CollectionTaskVO"    >
+	 	  insert into OVERDUE_RECEIVABLES_TASK 
+	 	   <trim prefix="(" suffix=")" suffixOverrides="," >
+   <!--   <if test="id != null" > -->
+        ID,
+   <!--    </if> -->
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="caseId != null" >
+        CASE_ID,
+      </if>
+      <if test="taskState != null" >
+       TASK_STATE,
+      </if>  
+        <if test="taskType != null" >
+       TASK_TYPE,
+      </if>   
+      <if test="taskMemo != null" >
+        TASK_MEMO,
+      </if>
+      <if test="promisedRepayMent != null" >
+        PROMISED_REPAYMENT,
+      </if>
+      <if test="factRepayment != null" >
+        FACT_REPAYMENT,
+      </if>
+      <if test="taskEndDate != null" >
+        TASK_END_DATE,
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="taskStartDate != null" >
+        TASK_START_DATE,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID,
+      </if>
+      <if test="modifier != null" >
+        MODIFIER,
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME,
+      </if>
+    </trim>
+   
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    <!--   <if test="id != null" > -->
+      <!--   #{id,jdbcType=DECIMAL}, -->
+       SEQ_OVERDUE_TASK_ID.NEXTVAL,
+      <!-- </if> -->
+      <if test="version != null" >
+        #{version },
+      </if>
+      <if test="caseId != null" >
+        #{caseId },
+      </if>
+      <if test="taskState != null" >
+        #{taskState },
+      </if>
+ 
+      <if test="taskType != null" >
+        #{taskType },
+      </if>
+      <if test="taskMemo != null" >
+        #{taskMemo },
+      </if>
+      <if test="promisedRepayMent != null" >
+        #{promisedRepayMent},
+      </if>
+      <if test="factRepayment != null" >
+        #{factRepayment},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId },
+      </if>
+      <if test="taskEndDate != null" >
+         #{taskEndDate} ,
+      </if>
+      <if test="taskStartDate != null" >
+        #{taskStartDate},
+      </if>
+      
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId },
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId },
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime},
+      </if>
+    </trim>
+	 </insert>
+	 
+	 
+	 
+	 <insert id="insertRecord" parameterType="com.ezendai.credit2.after.model.CollectionCasesRecord"    >
+	 	  insert into OVERDUE_RECEIVABLES_RECORD 
+	 	   <trim prefix="(" suffix=")" suffixOverrides="," >
+   <!--   <if test="id != null" > -->
+        ID,
+   <!--    </if> -->
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="taskId != null" >
+        TASK_ID,
+      </if>
+      <if test="recordAddress != null" >
+       RECORD_ADDRESS,
+      </if>  
+        <if test="recordContent != null" >
+       RECORD_CONTENT,
+      </if>   
+      <if test="recordStartDateStr != null" >
+        RECORD_START_DATE,
+      </if>
+      <if test="recordEndDateStr != null" >
+        RECORD_END_DATE,
+      </if>
+      <if test="recordMemo != null" >
+        RECORD_MEMO,
+      </if>
+      <if test="recordType != null" >
+        RECORD_TYPE,
+      </if>
+       <if test="recordName != null" >
+        RECORD_NAME,
+      </if>
+       <if test="recordTel != null" >
+        RECORD_TEL,
+      </if>  
+      
+      <if test="operaorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID,
+      </if>
+      <if test="modifier != null" >
+        MODIFIER,
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME,
+      </if>
+    </trim>
+   
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    <!--   <if test="id != null" > -->
+      <!--   #{id,jdbcType=DECIMAL}, -->
+       SEQ_OVERDUE_RECORD_ID.NEXTVAL,
+      <!-- </if> -->
+      <if test="version != null" >
+        #{version },
+      </if>
+      <if test="taskId != null" >
+        #{taskId },
+      </if>
+      <if test="recordAddress != null" >
+        #{recordAddress },
+      </if>
+ 
+      <if test="recordContent != null" >
+        #{recordContent },
+      </if>
+      <if test="recordStartDateStr != null" >
+        to_date(#{recordStartDateStr},'yyyy-mm-dd hh24:mi:ss') ,
+      </if>
+      <if test="recordEndDateStr != null" >
+        to_date(#{recordEndDateStr},'yyyy-mm-dd hh24:mi:ss') ,
+      </if>
+      <if test="recordMemo != null" >
+        #{recordMemo},
+      </if>
+      <if test="recordType != null" >
+        #{recordType },
+      </if>
+      <if test="recordName != null" >
+         #{recordName} ,
+      </if>
+      <if test="recordTel != null" >
+        #{recordTel},
+      </if>
+       <if test="operaorId != null" >
+        #{operaorId},
+      </if>
+      
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId },
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId },
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime},
+      </if>
+    </trim>
+	 </insert>
+	  <!-- 查询催收主管id -->
+	 <select id="selectCollectionManager" resultMap="casesPersonMap" parameterType="java.lang.String">
+	 	select id from  sys_user where login_name=#{loginName}
+	 </select> 
+	 <!-- 查询联系人手机号-->
+	 <select id="seleCtcontactsTel" resultMap="casesPersonMap" parameterType="com.ezendai.credit2.after.model.CasesPerson">
+	 	
+ 		select TEL as MOBILE_PHONE ,ADDRESS  from   PERSON_CONTACTER_ADDITIONAL       where   type=#{part} and relation_id=#{id}
+	 	<if test="subordinate == 2">
+	 	union 
+				select MOBILE_PHONE,ADDRESS from COLLECTION_CONTACTER  where id=#{id}
+				union 
+				select HOME_PHONE as MOBILE_PHONE,null as ADDRESS from COLLECTION_CONTACTER  where id=#{id}
+				union 
+				select COMPANY_PHONE as MOBILE_PHONE,null as ADDRESS from COLLECTION_CONTACTER  where id=#{id}
+	 				
+		 </if>
+		 <if test="subordinate == 1">
+			 union 
+				select MOBILE_PHONE,ADDRESS from contacter  where id=#{id}
+				 union 
+				select HOME_PHONE as MOBILE_PHONE,null as  ADDRESS from contacter  where id=#{id}
+	 				
+		 </if>
+		 
+	 
+	 </select>
+	  <!-- 查询借款人手机号-->
+	  <select id="selePersonTel" resultMap="casesPersonMap" parameterType="com.ezendai.credit2.after.model.CasesPerson">
+ 		select TEL as MOBILE_PHONE ,ADDRESS  from   PERSON_CONTACTER_ADDITIONAL       where  type=#{part} and relation_id=#{id}
+	<if test="subordinate == 2">
+	 			union 
+				select MOBILE_PHONE,ADDRESS from COLLECTION_CONTACTER  where id=#{id}
+				union 
+				select HOME_PHONE as MOBILE_PHONE,null as ADDRESS from COLLECTION_CONTACTER  where id=#{id}
+				union 
+				select COMPANY_PHONE as MOBILE_PHONE,null as ADDRESS from COLLECTION_CONTACTER  where id=#{id}
+	 				
+		 </if>
+		 <if test="subordinate == 1">
+			         union 
+					select MOBILE_PHONE,ADDRESS from person where id=#{id}
+					 union 
+					select  HOME_PHONE  as MOBILE_PHONE ,null as ADDRESS from person where id=#{id}
+					union
+					select  com.phone as MOBILE_PHONE ,null as ADDRESS from person person left join  company  com on person.company_id=com.id
+	 				where person.id=#{id}
+		 </if>
+	 </select>
+	  <select id="seleTaskById" resultMap="collectionCasesTaskMap">
+	 	select t.*,u.name as optName from OVERDUE_RECEIVABLES_TASK t left join sys_user u on t.OPERATOR_ID=u.id  where t.id=#{id}
+	 </select>
+	   <!-- 查询借款人最后一次还款金额 和 还款日期-->
+	   <select id="selectLastAmountAndDate" resultMap="collectionCreateCasesMap" parameterType="java.lang.Long">
+	   		
+		<!-- select sb.sb_date,sb.REPAY_AMOUNT as sb_amount from loan l   left join 	(select  distinct  zh.person_id, zh.sb_date, hk.REPAY_AMOUNT  from ( select l.person_id,max(rp.FACT_RETURNDATE) as sb_date from loan l left join REPAYMENT_PLAN rp on l.id= rp.loan_id 
+        				where  l.RESIDUAL_TIME=0  and l.status =150  and rp.FACT_RETURNDATE is not null
+       					 group by l.person_id )  zh
+ 			 left join     (select   l.person_id, rp.FACT_RETURNDATE,rp.REPAY_AMOUNT  from loan l left join REPAYMENT_PLAN rp on l.id= rp.loan_id 
+        				where  l.RESIDUAL_TIME=0  and l.status =150  and rp.FACT_RETURNDATE is not null)  hk  on zh.person_id=hk.person_id and zh.sb_date=hk.FACT_RETURNDATE
+       					    
+                )  sb on sb.PERSON_ID=l.PERSON_ID     where l.id=#{loanId}  -->
+                
+                    select REPAY_AMOUNT as sb_amount, FACT_RETURNDATE as sb_date from (  select LOAN_ID, REPAY_AMOUNT, FACT_RETURNDATE from   REPAYMENT_PLAN where  LOAN_ID=#{loanId}  and FACT_RETURNDATE is not null order by  FACT_RETURNDATE desc )
+         		     where rownum<![CDATA[<=]]>1
+	   </select>
+</mapper>
+ 

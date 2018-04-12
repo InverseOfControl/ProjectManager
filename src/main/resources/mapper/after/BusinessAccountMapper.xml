@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.after.mapper.BusinessAccountMapper">
+	<resultMap id="businessAccountResultMap" type="BusinessAccount">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="FIRST_ACCOUNT" property="firstAccount" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="SECOND_ACCOUNT" property="secondAccount" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="SECOND_COMPANY" property="secondCompany" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="SECOND_BANK" property="secondBank" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="REPAY_DATE" property="repayDate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result column="REPAY_TIME" property="repayTime" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="AMOUNT" property="amount" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+		<result column="VOUCHER_NO" property="voucherNo" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="TYPE" property="type" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="PURPOSE" property="purpose" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="COMMENTS" property="comments" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="REC_TIME" property="recTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result column="REC_OPERATOR_ID" property="recOperatorId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="STATUS" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    	<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    	<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    	<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    	<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	</resultMap>
+	<!-- 对公还款列表 -->
+	<resultMap id="businessAccountResultMapExtension" type="BusinessAccount" extends="businessAccountResultMap" >
+  		<association property="sysUser" column="REC_OPERATOR_ID" javaType="SysUser" resultMap="sysUserResultMap"/>
+  		<association property="loan" column="LOAN_ID" javaType="Loan" resultMap="businessLoanResultMap"/>
+	</resultMap>
+	<resultMap id="businessLoanResultMap" type="Loan">
+		<id column="LOAN_ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="loanStatus" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />	
+		<result column="pactMoney" property="pactMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />		
+		<result column="auditMoney" property="auditMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />		
+		<result column="auditTime" property="auditTime" jdbcType="NUMERIC" javaType="java.lang.Integer" />	
+		<result column="startRepayDate" property="startRepayDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />	
+		<result column="SALES_DEPT_ID" property="salesDeptId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />		
+		<result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer" />		
+	</resultMap>
+	
+	<resultMap id="sysUserResultMap" type="SysUser">
+		<id column="REC_OPERATOR_ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOGIN_NAME" property="loginName"  jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="NAME" property="name"  jdbcType="VARCHAR" javaType="java.lang.String"/>
+	</resultMap>
+	<!-- 认领结果导出 -->
+	<resultMap id="receiveResultMap" type="BusinessAccount" extends="businessAccountResultMap" >
+  		<association property="loan" column="LOAN_ID" javaType="Loan" resultMap="loanResultMap"/>
+	</resultMap>
+	<resultMap id="loanResultMap" type="Loan">
+		<id column="LOAN_ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="loanStatus" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />	
+		<result column="productId" property="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="pactMoney" property="pactMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />		
+		<result column="auditMoney" property="auditMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />		
+		<result column="auditTime" property="auditTime" jdbcType="NUMERIC" javaType="java.lang.Integer" />	
+		<result column="startRepayDate" property="startRepayDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />		
+		<association property="person" column="PERSON_ID" javaType="Person" resultMap="personResultMap"/>	
+	</resultMap>
+	
+	<resultMap id="personResultMap" type="Person">
+		<id column="PERSON_ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PERSON_NO" property="personNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="IDNUM" property="idnum" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PROFESSION_TYPE" property="professionType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  	</resultMap> 
+	<sql id="businessAccountField">
+		BUSINESS_ACCOUNT.ID,
+		BUSINESS_ACCOUNT.LOAN_ID,
+		BUSINESS_ACCOUNT.FIRST_ACCOUNT,
+		BUSINESS_ACCOUNT.SECOND_ACCOUNT,
+		BUSINESS_ACCOUNT.SECOND_COMPANY,
+		BUSINESS_ACCOUNT.SECOND_BANK,
+		BUSINESS_ACCOUNT.REPAY_DATE,
+		BUSINESS_ACCOUNT.REPAY_TIME,
+		BUSINESS_ACCOUNT.AMOUNT,
+		BUSINESS_ACCOUNT.VOUCHER_NO,
+		BUSINESS_ACCOUNT.TYPE,
+		BUSINESS_ACCOUNT.PURPOSE,
+		BUSINESS_ACCOUNT.REMARK,
+		BUSINESS_ACCOUNT.COMMENTS,
+		BUSINESS_ACCOUNT.REC_TIME,
+		BUSINESS_ACCOUNT.REC_OPERATOR_ID,
+		BUSINESS_ACCOUNT.STATUS,
+		BUSINESS_ACCOUNT.CREATOR_ID,
+		BUSINESS_ACCOUNT.CREATOR,
+		BUSINESS_ACCOUNT.CREATED_TIME,
+		BUSINESS_ACCOUNT.MODIFIER_ID,
+		BUSINESS_ACCOUNT.MODIFIER,
+		BUSINESS_ACCOUNT.MODIFIED_TIME,
+		BUSINESS_ACCOUNT.VERSION
+	</sql>
+	
+	<sql id="businessAccountSelective">
+		SELECT
+		<include refid="businessAccountField"/>
+		FROM BUSINESS_ACCOUNT
+	</sql>
+	<sql id="businessAccountConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+		   		AND BUSINESS_ACCOUNT.ID= #{id}
+	      	</if>
+	      	<if test="loanId != null">
+	        	AND BUSINESS_ACCOUNT.LOAN_ID =  #{loanId}
+	      	</if>
+	      	<if test="firstAccount != null and firstAccount != ''">
+	      		AND BUSINESS_ACCOUNT.FIRST_ACCOUNT = #{firstAccount}
+	      	</if>
+	      	<if test="secondAccount != null and secondAccount != ''">
+	      		AND BUSINESS_ACCOUNT.SECOND_ACCOUNT = #{secondAccount}
+	      	</if>
+	      	<if test="secondCompany != null and secondCompany  != ''">
+	      		AND BUSINESS_ACCOUNT.SECOND_COMPANY = #{secondCompany}
+	      	</if>
+	      	<if test="secondBank != null and secondBank != ''">
+	      		AND BUSINESS_ACCOUNT.SECOND_BANK = #{secondBank}
+	      	</if>
+	      	<if test="repayDate != null">
+	      		AND BUSINESS_ACCOUNT.REPAY_DATE = #{repayDate} 
+	      	</if>
+	      	<if test="repayTime != null and repayTime != ''">
+	      		AND BUSINESS_ACCOUNT.REPAY_TIME = #{repayTime}
+	      	</if>
+	      	<if test="amount != null">
+	      		AND BUSINESS_ACCOUNT.AMOUNT = #{amount}
+	      	</if>
+	      	<if test="voucherNo != null and voucherNo != ''">
+	      		AND BUSINESS_ACCOUNT.VOUCHER_NO = #{voucherNo}
+	      	</if>
+	      	<if test="type != null">
+	      		AND BUSINESS_ACCOUNT.TYPE = #{type}
+	      	</if>
+	      	<if test="purpose != null and purpose != ''">
+	      		AND BUSINESS_ACCOUNT.PURPOSE = #{purpose}
+	      	</if>
+	      	<if test="remark != null and remark != ''">
+	      		AND BUSINESS_ACCOUNT.REMARK = #{remark}
+	      	</if>
+	      	<if test="comments != null and comments != ''">
+	      		AND BUSINESS_ACCOUNT.COMMENTS = #{comments}
+	      	</if>
+	      	<if test="recTime != null">
+	      		AND BUSINESS_ACCOUNT.REC_TIME = #{recTime}
+	      	</if>
+	      	<if test="recOperatorId != null">
+	      		AND BUSINESS_ACCOUNT.REC_OPERATOR_ID = #{recOperatorId}
+	      	</if>
+	      	<if test="status != null">
+	      		AND BUSINESS_ACCOUNT.STATUS = #{status}
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		AND  BUSINESS_ACCOUNT.CREATOR_ID = #{creatorId}
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		AND  BUSINESS_ACCOUNT.CREATOR  =  #{creator}
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	AND BUSINESS_ACCOUNT.CREATED_TIME = #{createdTime}
+	      	</if>
+	      	<if test="modifierId != null and modifierId != ''">
+	        	AND  BUSINESS_ACCOUNT.MODIFIER_ID =  #{modifierId}
+	      	</if>
+	      	<if test="modifier != null  and modifier != ''">
+	        	AND BUSINESS_ACCOUNT.MODIFIER =  #{modifier}
+	      	</if>
+	      	<if test="modifiedTime != null and modifiedTime != ''">
+	        	AND BUSINESS_ACCOUNT.MODIFIED_TIME =  #{modifiedTime}
+	      	</if>
+			<if test="recTimeStart != null ">
+				AND BUSINESS_ACCOUNT.REC_TIME  <![CDATA[ >= ]]>#{recTimeStart}
+			</if>
+			<if test="recTimeEnd != null">
+				AND BUSINESS_ACCOUNT.REC_TIME <![CDATA[ <= ]]>#{recTimeEnd}
+			</if>
+			<if test="recOperatorId != null ">
+	        	AND BUSINESS_ACCOUNT.REC_OPERATOR_ID = #{recOperatorId}
+	      	</if>
+	      	<if test="version != null and version != ''">
+	        	AND  BUSINESS_ACCOUNT.VERSION =  #{version}
+	        </if>		    
+		</trim>
+	</sql>
+	
+	<insert id="insert"  parameterType="BusinessAccount">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			SEQ_BUSINESS_ACCOUNT_ID.NEXTVAL AS id FROM dual
+		</selectKey>
+		INSERT INTO BUSINESS_ACCOUNT
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="loanId != null" >
+        		LOAN_ID,
+      		</if>
+      		<if test="firstAccount != null and firstAccount != ''">
+      			FIRST_ACCOUNT,
+      		</if>
+      		<if test="secondAccount != null and secondAccount != ''">
+      			SECOND_ACCOUNT,
+      		</if>
+      		<if test="secondCompany != null and secondCompany  != ''">
+      			SECOND_COMPANY,
+      		</if>
+      		<if test="secondBank != null and secondBank != ''">
+      			SECOND_BANK,
+      		</if>
+      		<if test="repayDate != null">
+      			REPAY_DATE,
+      		</if>
+      		<if test="repayTime != null and repayTime != ''">
+      			REPAY_TIME,
+      		</if>
+      		<if test="amount != null">
+      			AMOUNT,
+      		</if>
+      		<if test="voucherNo != null and voucherNo != ''">
+      			VOUCHER_NO,
+      		</if>
+      		<if test="type != null">
+	      		TYPE,
+	      	</if>
+	      	<if test="purpose != null and purpose != ''">
+	      		PURPOSE,
+	      	</if>
+	      	<if test="remark != null and remark != ''">
+	      		REMARK,
+	      	</if>
+	      	<if test="comments != null and comments != ''">
+	      		COMMENTS,
+	      	</if>
+	      	<if test="recTime != null">
+	      		REC_TIME,
+	      	</if>
+	      	<if test="recOperatorId != null">
+	      		REC_OPERATOR_ID,
+	      	</if>
+			<if test="status != null">
+	      		STATUS,
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		CREATOR_ID,
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		CREATOR,
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	CREATED_TIME,
+	      	</if>
+	      	<if test="modifierId != null and modifierId != ''">
+	        	MODIFIER_ID,
+	      	</if>
+	      	<if test="modifier != null  and modifier != ''">
+	        	MODIFIER,
+	      	</if>
+	      	<if test="modifiedTime != null and modifiedTime != ''">
+	        	MODIFIED_TIME,
+	      	</if>
+	      	<if test="version != null and version != ''">
+	        	VERSION,
+	      	</if>
+	      </trim>
+	      VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+		 	<if test="id != null" >
+				#{id},
+			</if>
+			<if test="loanId != null" >
+        		#{loanId},
+      		</if>
+      		<if test="firstAccount != null and firstAccount != ''">
+      			#{firstAccount},
+      		</if>
+      		<if test="secondAccount != null and secondAccount != ''">
+      			#{secondAccount},
+      		</if>
+      		<if test="secondCompany != null and secondCompany  != ''">
+      			#{secondCompany},
+      		</if>
+      		<if test="secondBank != null and secondBank != ''">
+      			#{secondBank},
+      		</if>
+      		<if test="repayDate != null">
+      			#{repayDate},
+      		</if>
+      		<if test="repayTime != null and repayTime != ''">
+      			#{repayTime},
+      		</if>
+      		<if test="amount != null">
+      			#{amount},
+      		</if>
+      		<if test="voucherNo != null and voucherNo != ''">
+      			#{voucherNo},
+      		</if>
+      		<if test="type != null">
+	      		#{type},
+	      	</if>
+	      	<if test="purpose != null and purpose != ''">
+	      		#{purpose},
+	      	</if>
+	      	<if test="remark != null and remark != ''">
+	      		#{remark},
+	      	</if>
+	      	<if test="comments != null and comments != ''">
+	      		#{comments},
+	      	</if>
+	      	<if test="recTime != null">
+	      		#{recTime},
+	      	</if>
+	      	<if test="recOperatorId != null">
+	      		#{recOperatorId},
+	      	</if>
+			<if test="status != null">
+	      		#{status},
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		#{creatorId},
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		#{creator},
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	#{createdTime},
+	      	</if>
+	      	<if test="modifierId != null and modifierId != ''">
+	        	#{modifierId},
+	      	</if>
+	      	<if test="modifier != null  and modifier != ''">
+	        	#{modifier},
+	      	</if>
+	      	<if test="modifiedTime != null and modifiedTime != ''">
+	        	#{modifiedTime},
+	      	</if>
+	      	<if test="version != null and version != ''">
+	        	#{version},
+	      	</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="BusinessAccountVO">
+		UPDATE BUSINESS_ACCOUNT
+		<trim prefix="set" suffixOverrides=",">        
+      		<if test="loanId != null and loanId !='' ">
+        		LOAN_ID = #{loanId},
+      		</if>
+      		<if test="firstAccount != null and firstAccount != ''">
+      			FIRST_ACCOUNT = #{firstAccount},
+      		</if>
+      		<if test="secondAccount != null and secondAccount != ''">
+      			SECOND_ACCOUNT = #{secondAccount},
+      		</if>
+      		<if test="secondCompany != null and secondCompany  != ''">
+      			SECOND_COMPANY = #{secondCompany},
+      		</if>
+      		<if test="secondBank != null and secondBank != ''">
+      			SECOND_BANK = #{secondBank},
+      		</if>
+      		<if test="repayDate != null">
+      			REPAY_DATE = #{repayDate},
+      		</if>
+      		<if test="repayTime != null and repayTime != ''">
+      			REPAY_TIME = #{repayTime},
+      		</if>
+      		<if test="amount != null">
+      			AMOUNT = #{amount},
+      		</if>
+      		<if test="voucherNo != null and voucherNo != ''">
+      			VOUCHER_NO = #{voucherNo},
+      		</if>
+      		<if test="type != null">
+	      		TYPE = #{type},
+	      	</if>
+	      	<if test="purpose != null and purpose != ''">
+	      		PURPOSE = #{purpose},
+	      	</if>
+	      	<if test="remark != null and remark != ''">
+	      		REMARK = #{remark},
+	      	</if>
+	      	<if test="comments != null and comments != ''">
+	      		COMMENTS = #{comments},
+	      	</if>
+	      	<if test="recTime != null">
+	      		REC_TIME = #{recTime},
+	      	</if>
+	      	<if test="recOperatorId != null">
+	      		REC_OPERATOR_ID = #{recOperatorId},
+	      	</if>
+			<if test="status != null">
+	      		STATUS = #{status},
+	      	</if>
+	      	<if test="system != null">
+	      		SYSTEM = #{system},
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		CREATOR_ID = #{creatorId},
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		CREATOR = #{creator},
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	CREATED_TIME = #{createdTime},
+	      	</if>
+	      	<if test="modifierId != null and modifierId != ''">
+	        	MODIFIER_ID = #{modifierId},
+	      	</if>
+	      	<if test="modifier != null  and modifier != ''">
+	        	MODIFIER = #{modifier},
+	      	</if>
+	      	<if test="modifiedTime != null and modifiedTime != ''">
+	        	MODIFIED_TIME = #{modifiedTime},
+	      	</if>
+	      	<!-- 清空领取信息 -->
+	      	<if test="recOperatorIdIsNull != null and recOperatorIdIsNull == true">
+	        	REC_OPERATOR_ID = null,
+	        	LOAN_ID = null,
+	        	REC_TIME = null,
+	      	</if>
+	      	<if test="version != null and version != ''">
+	        	VERSION = #{version},
+	      	</if>
+      	</trim>
+      	WHERE ID = #{id}		  
+		 <if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM BUSINESS_ACCOUNT WHERE ID = #{id}
+	</delete>
+	
+	<delete id="deleteByIdList" parameterType="BusinessAccountVO">
+		DELETE FROM BUSINESS_ACCOUNT WHERE ID IN (
+		<foreach item="guard" index="index" collection="idList"
+			separator=",">
+			#{guard}
+		</foreach>
+		)
+	</delete>
+	
+	<select id="get" parameterType="java.lang.Long" resultMap="businessAccountResultMap">
+		<include refid="businessAccountSelective" />
+		WHERE BUSINESS_ACCOUNT.ID = #{id}
+	</select>
+	
+	<select id="findListByVO" parameterType="BusinessAccountVO" resultMap="businessAccountResultMap">
+		<include refid="businessAccountSelective" />
+		<include refid="businessAccountConditions" />
+		   order by loan_id ,amount desc
+	</select>
+	<select id="count" parameterType="BusinessAccountVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="businessAccountSelective" />
+		<include refid="businessAccountConditions" />
+		)
+	</select>
+	<select id="findWithPG" parameterType="BusinessAccountVO" resultMap="businessAccountResultMapExtension">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="businessAccountSelective" />
+		<include refid="businessAccountConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<select id="exists" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM BUSINESS_ACCOUNT WHERE BUSINESS_ACCOUNT.ID = #{id}
+	</select>
+	
+</mapper>

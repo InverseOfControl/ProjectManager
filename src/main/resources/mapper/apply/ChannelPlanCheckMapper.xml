@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.ChannelPlanCheckMapper" >
+  <resultMap id="replyMap" type="com.ezendai.credit2.apply.model.ChannelPlanCheck" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="APPROVER_ID" property="approverId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="END_DATE" property="endDate"   javaType="java.util.Date" />
+    <result column="MARGIN" property="margin" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="MEMO" property="memo" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="OPERATOR_ID" property="operatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="ORG_REPAY_TERM" property="orgRepayTerm" jdbcType="NUMERIC"   />
+    <result column="ORGANIZATION_ID" property="organizationId" jdbcType="NUMERIC" javaType="java.lang.Long" /> 
+    <result column="PACT_MONEY" property="pactMoney" jdbcType="NUMERIC"   />
+    <result column="PLAN_TYPE" property="planType" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="RATE_SUM" property="rateSum" jdbcType="NUMERIC"   />
+    <result column="REQUEST_MONEY" property="requestMoney" jdbcType="NUMERIC"  />
+    <result column="RETURNETERM1" property="returneterm1" jdbcType="NUMERIC"  />
+    <result column="RETURNETERM2" property="returneterm2" jdbcType="NUMERIC"  />
+    <result column="SEND_BACK_MEMO" property="sendBackMemo" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="START_DATE" property="startDate"   javaType="java.util.Date" />
+    <result column="TIME" property="time" jdbcType="NUMERIC"  />
+    <result column="TO_TERM1" property="toTerm1" jdbcType="NUMERIC"   />
+    <result column="TO_TERM2" property="toTerm2" jdbcType="NUMERIC"  />
+    <result column="ACTUAL_RATE" property="actualRate" jdbcType="NUMERIC"  />
+    <result column="APPROVER_STATE" property="approverState" jdbcType="NUMERIC" />
+    <result column="RETURN_TYPE" property="returnType" jdbcType="NUMERIC"   />
+    <result column="PLAN_ID" property="plan_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" /> 
+    <result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" /> 
+    <result column="ORG_FEE_STATE" property="orgFeeState" jdbcType="VARCHAR" javaType="java.lang.String" /> 
+    <result column="CREATED_TIME" property="createdTime"   javaType="java.util.Date" />
+   	<result column="MODIFIED_TIME" property="modifiedTime"   javaType="java.util.Date" />
+   	<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC"   javaType="java.lang.Long" />
+    <result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC"  javaType="java.lang.Long"  />
+    <result column="IS_DELETED" property="isDeleted" jdbcType="NUMERIC"  javaType="java.lang.Long" />
+     
+      <result column="org_name" property="orgName"    />
+      <result column="org_num" property="orgNum"   /> 
+  </resultMap>
+  <sql id="checkField" >
+  		ch.ID,
+		ch.APPROVER_ID,
+		ch.CODE,
+		ch.END_DATE,
+		ch.MARGIN,
+		ch.MEMO,
+		ch.NAME,
+		ch.OPERATOR_ID,
+		ch.ORG_REPAY_TERM,
+		ch.ORGANIZATION_ID,
+		ch.PACT_MONEY,
+		ch.PLAN_TYPE,
+		ch.RATE_SUM,
+		ch.REQUEST_MONEY,
+		ch.RETURNETERM1,
+		ch.RETURNETERM2,
+		ch.SEND_BACK_MEMO,
+		ch.START_DATE,
+		ch.TIME,
+		ch.TO_TERM1,
+		ch.TO_TERM2,
+		ch.ACTUAL_RATE,
+		ch.APPROVER_STATE,
+		ch.PLAN_ID,
+		ch.CREATOR,
+		ch.CREATED_TIME,
+		ch.CREATOR_ID,
+		ch.MODIFIER_ID,
+		ch.MODIFIER,
+		ch.MODIFIED_TIME,
+		ch.ORG_FEE_STATE,
+		ch.RETURN_TYPE
+  </sql>
+ 
+  <sql id="checkConditions">
+		<where>
+			<if test="id != null">
+				FLOW.ID = #{id}
+			</if>
+			<if test="accountId != null" >
+		        AND FLOW.IDACCOUNT_ID = #{accountId}
+		    </if>
+		    <if test="dOrC != null" >
+		    	AND FLOW.D_OR_C = #{dOrC}
+		    </if>
+		    <if test="accountTitle != null" >
+		    	AND FLOW.ACCOUNT_TITLE = #{accountTitle}
+		    </if>
+		    <if test="tradeTime != null" >
+		    	AND FLOW.TRADE_TIME = #{tradeTime}
+		    </if>
+		    <if test="tradeCode != null" >
+		    	AND FLOW.TRADE_CODE = #{tradeCode}
+		    </if>
+		    <if test="tradeAmount != null" >
+		    	AND FLOW.TRADE_AMOUNT = #{tradeAmount}
+		    </if>
+		    <if test="balance != null" >
+		    	AND FLOW.BALANCE = #{balance}
+		    </if>
+		    <if test="tradeType != null" >
+		    	AND FLOW.TRADE_TYPE = #{tradeType}
+		    </if>
+		    <if test="tradeKind != null" >
+		    	AND FLOW.TRADE_KIND = #{tradeKind}
+		    </if>
+		    <if test="tradeNo != null" >
+		    	AND FLOW.TRADE_NO = #{tradeNo}
+		    </if>
+		    <if test="reversedNo != null" >
+		    	AND FLOW.REVERSED_NO = #{reversedNo}
+		    </if>
+		    <if test="teller != null" >
+		    	AND FLOW.TELLER = #{teller}
+		    </if>
+		    <if test="authorizedTeller != null" >
+		    	AND FLOW.AUTHORIZED_TELLER = #{authorizedTeller}
+		    </if>
+		    <if test="salesdepartmentId != null" >
+		    	AND FLOW.SALESDEPARTMENT_ID = #{salesdepartmentId}
+		    </if>
+		    <if test="oppAccount != null" >
+		    	AND FLOW.OPP_ACCOUNT = #{oppAccount}
+		    </if>
+		    <if test="oppAccountTitle != null" >
+		    	AND FLOW.OPP_ACCOUNT_TITLE = #{oppAccountTitle}
+		    </if>
+		    <if test="oppDOrC != null" >
+		    	AND FLOW.OPP_D_OR_C = #{oppDOrC}
+		    </if>
+		    <if test="term != null" >
+		    	AND FLOW.TERM = #{term}
+		    </if>
+		    <if test="version != null" >
+		    	AND FLOW.VERSION = #{version}
+		    </if>
+		    <if test="creatorId != null" >
+		    	AND FLOW.CREATOR_ID = #{creatorId}
+		    </if>
+		    <if test="creator != null" >
+		    	AND FLOW.CREATOR = #{creator}
+		    </if>
+		    <if test="createdTime != null" >
+		    	AND FLOW.CREATED_TIME = #{createdTime}
+		    </if>
+		    <if test="modifierId != null" >
+		    	AND FLOW.MODIFIER_ID = #{modifierId}
+		    </if>
+		    <if test="modifier != null" >
+		    	AND FLOW.MODIFIER = #{modifier}
+		    </if>
+		    <if test="modifiedTime != null" >
+		    	AND FLOW.MODIFIED_TIME = #{modifiedTime}
+		    </if>
+		    <if test="remark != null" >
+		    	AND FLOW.REMARK = #{remark}
+		    </if>
+		</where>
+  </sql>
+
+  <select id="findCheckFindWithPG"  resultMap="replyMap" parameterType="com.ezendai.credit2.apply.vo.ChannelPlanCheckVO" >
+   		 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		 select <include refid="checkField"></include> ,o.code as org_num,o.name as org_name
+			  from channel_plan_check ch  left join  ORGAN o on  o.id= ch.organization_id
+		  	where 1=1  and is_deleted=0
+		  	<if test="orgName != null and orgName !=''" >
+		    	AND o.name  like '%${orgName}%'
+		    </if>
+		    <if test="orgNum != null and orgNum !=''" >
+		    	AND o.code = #{orgNum}
+		    </if>
+		     
+		     <if test="name != null and name!=''" >
+		    	AND ch.name  = #{name}
+		    </if>
+		     <if test="approverState != null  " >
+		    	AND ch.APPROVER_STATE = #{approverState}
+		    </if>
+		    <if test="organizationId != null and organizationId !=''" >
+		    	AND ch.organization_id  = #{organizationId}
+		    </if>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+  </select>
+  
+    <select id="findListByVO"  resultMap="replyMap" parameterType="com.ezendai.credit2.apply.vo.ChannelPlanCheckVO" >
+		 select <include refid="checkField"></include> ,o.code as org_num,o.name as org_name
+			  from channel_plan_check ch  left join  ORGAN o on  o.id= ch.organization_id
+		  	where 1=1  and is_deleted=0
+		  	<if test="orgName != null and orgName !=''" >
+		    	AND o.name  like '%${orgName}%'
+		    </if>
+		    <if test="orgNum != null and orgNum !=''" >
+		    	AND o.code = #{orgNum}
+		    </if>
+		     
+		     <if test="name != null and name!=''" >
+		    	AND ch.name  like '%${name}%'
+		    </if>
+		     <if test="approverState != null  " >
+		    	AND ch.APPROVER_STATE = #{approverState}
+		    </if>
+		    <if test="organizationId != null and organizationId !=''" >
+		    	AND ch.organization_id  = #{organizationId}
+		    </if>
+		    ORDER BY nlssort(ch.name , 'NLS_SORT=SCHINESE_PINYIN_M')
+		    
+  </select>
+  
+   <select  id="checkCount" resultType="integer" parameterType="com.ezendai.credit2.apply.vo.ChannelPlanCheckVO" >
+    select 
+   		count(ch.id)
+    from channel_plan_check ch  left join  ORGAN o on  o.id= ch.organization_id
+    	where 1=1 and is_deleted=0
+		  	 <if test="orgName != null and orgName !=''" >
+		    	AND o.name  like '%${orgName}%'
+		    </if>
+		    <if test="orgNum != null and orgNum !=''" >
+		    	AND o.code = #{orgNum}
+		    </if>
+		     
+		     <if test="name != null and name !=''" >
+		    	AND ch.name  like '%${name}%'
+		    </if>
+		     <if test="approverState != null" >
+		    	AND ch.APPROVER_STATE = #{approverState}
+		    </if>
+		    <if test="organizationId != null and organizationId !=''" >
+		    	AND ch.organization_id  = #{organizationId}
+		    </if>
+  </select>
+   <insert id="addReply" parameterType="com.ezendai.credit2.apply.vo.ChannelPlanCheckVO" >
+    insert into CHANNEL_PLAN_CHECK
+     <selectKey keyProperty="id" resultType="long" order="BEFORE">
+		select
+		SEQ_CHANNEL_PLAN_CHECK_ID.nextval as id from dual
+    </selectKey>
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="approverId != null" >
+        APPROVER_ID,
+      </if>
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="margin != null" >
+        MARGIN,
+      </if>
+      <if test="memo != null" >
+        MEMO,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="orgRepayTerm != null" >
+        ORG_REPAY_TERM,
+      </if>
+      <if test="organizationId != null" >
+        ORGANIZATION_ID,
+      </if>
+      <if test="pactMoney != null" >
+        PACT_MONEY,
+      </if>
+      <if test="planType != null" >
+        PLAN_TYPE,
+      </if>
+      <if test="rateSum != null" >
+        RATE_SUM,
+      </if>
+      <if test="requestMoney != null" >
+        REQUEST_MONEY,
+      </if>
+      <if test="returneterm1 != null" >
+        RETURNETERM1,
+      </if>
+      <if test="returneterm2 != null" >
+        RETURNETERM2,
+      </if>
+      <if test="sendBackMemo != null" >
+        SEND_BACK_MEMO,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+      <if test="toTerm1 != null" >
+        TO_TERM1,
+      </if>
+      <if test="toTerm2 != null" >
+        TO_TERM2,
+      </if>
+      <if test="actualRate != null" >
+        ACTUAL_RATE,
+      </if>
+      <if test="approverState != null" >
+        APPROVER_STATE,
+      </if>
+        PLAN_ID,
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID,
+      </if>
+      <if test="modifier != null" >
+        MODIFIER,
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME,
+      </if>
+      <if test="orgFeeState != null" >
+        ORG_FEE_STATE,
+      </if>
+      <if test="returnType != null" >
+        RETURN_TYPE,
+      </if>
+      <if test="isDeleted != null" >
+        IS_DELETED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="approverId != null" >
+        #{approverId},
+      </if>
+      <if test="code != null" >
+        #{code},
+      </if>
+      <if test="endDate != null" >
+        #{endDate},
+      </if>
+      <if test="margin != null" >
+        #{margin},
+      </if>
+      <if test="memo != null" >
+        #{memo},
+      </if>
+      <if test="name != null" >
+        #{name},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId},
+      </if>
+      <if test="orgRepayTerm != null" >
+        #{orgRepayTerm},
+      </if>
+      <if test="organizationId != null" >
+        #{organizationId},
+      </if>
+      <if test="pactMoney != null" >
+        #{pactMoney},
+      </if>
+      <if test="planType != null" >
+        #{planType},
+      </if>
+      <if test="rateSum != null" >
+        #{rateSum},
+      </if>
+      <if test="requestMoney != null" >
+        #{requestMoney},
+      </if>
+      <if test="returneterm1 != null" >
+        #{returneterm1},
+      </if>
+      <if test="returneterm2 != null" >
+        #{returneterm2},
+      </if>
+      <if test="sendBackMemo != null" >
+        #{sendBackMemo},
+      </if>
+      <if test="startDate != null" >
+        #{startDate},
+      </if>
+      <if test="time != null" >
+        #{time},
+      </if>
+      <if test="toTerm1 != null" >
+        #{toTerm1},
+      </if>
+      <if test="toTerm2 != null" >
+        #{toTerm2},
+      </if>
+      <if test="actualRate != null" >
+        #{actualRate},
+      </if>
+      <if test="approverState != null" >
+        #{approverState},
+      </if>
+		SEQ_CHANNEL_PLAN_ID.currval ,
+      <if test="creator != null" >
+        #{creator},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId},
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime},
+      </if>
+      <if test="orgFeeState != null" >
+        #{orgFeeState},
+      </if>
+      <if test="returnType != null" >
+        #{returnType},
+      </if>
+       <if test="isDeleted != null" >
+        #{isDeleted},
+      </if> 
+    </trim>
+  </insert>
+  
+  
+   <select id="getReplyById" resultMap="replyMap">
+      select <include refid="checkField"></include> ,o.name as org_name from  channel_plan_check ch  left join  ORGAN o on  o.id = ch.organization_id  where ch.ID = #{id}
+   </select>    
+     
+  <update id="updateReply" parameterType="com.ezendai.credit2.apply.vo.ChannelPlanCheckVO" >
+    update channel_plan_check
+    <set >
+      <if test="approverId != null" >
+        APPROVER_ID = #{approverId},
+      </if>
+      <if test="code != null" >
+        CODE = #{code},
+      </if>
+      <if test="margin != null" >
+        MARGIN = #{margin},
+      </if>
+      <if test="memo != null" >
+        MEMO = #{memo},
+      </if>
+      <if test="name != null" >
+        NAME = #{name},
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID = #{operatorId},
+      </if>
+      <if test="orgRepayTerm != null" >
+        ORG_REPAY_TERM = #{orgRepayTerm},
+      </if>
+      <if test="organizationId != null" >
+        ORGANIZATION_ID = #{organizationId},
+      </if>
+      <if test="pactMoney != null" >
+        PACT_MONEY = #{pactMoney},
+      </if>
+      <if test="planType != null" >
+        PLAN_TYPE = #{planType},
+      </if>
+      <if test="rateSum != null" >
+        RATE_SUM = #{rateSum},
+      </if>
+      <if test="requestMoney != null" >
+        REQUEST_MONEY = #{requestMoney},
+      </if>
+      <if test="returneterm1 != null" >
+        RETURNETERM1 = #{returneterm1},
+      </if>
+      <if test="returneterm2 != null" >
+        RETURNETERM2 = #{returneterm2},
+      </if>
+      <if test="sendBackMemo != null" >
+        SEND_BACK_MEMO = #{sendBackMemo},
+      </if>
+      <if test="time != null" >
+        TIME = #{time},
+      </if>
+      <if test="toTerm1 != null" >
+        TO_TERM1 = #{toTerm1},
+      </if>
+      <if test="toTerm2 != null" >
+      TO_TERM2   = #{toTerm2},
+      </if>
+      <if test="actualRate != null" >
+        ACTUAL_RATE = #{actualRate},
+      </if>
+       <if test="approverState != null" >
+        APPROVER_STATE = #{approverState}, 
+      </if>
+       <if test="returnType != null" >
+        RETURN_TYPE = #{returnType}, 
+      </if>
+       <if test="plan_id != null" >
+        PLAN_ID = #{plan_id}, 
+      </if>
+       
+      <if test="creatorId != null" >
+        CREATOR_ID = #{creatorId},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator},
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME = #{createdTime},
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID = #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        MODIFIER = #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME = #{modifiedTime},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate},
+      </if>
+     <if test="startDate != null" >
+        START_DATE = #{startDate},
+      </if>
+     <if test="orgFeeState != null" >
+        ORG_FEE_STATE = #{orgFeeState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id}
+  </update>
+  <update id="updateReplyStatus" parameterType="com.ezendai.credit2.apply.vo.ChannelPlanCheckVO" >
+  		update channel_plan_check set APPROVER_STATE=#{approverState}
+  			 <if test="sendBackMemo != null" >
+      		  	,SEND_BACK_MEMO = #{sendBackMemo}
+    		  </if>
+  		   where id=#{id}
+  
+  </update>	
+  <delete id="deleteReply"  parameterType="java.lang.Integer" >
+  		update channel_plan_check set is_deleted=1 where id=#{id}
+  </delete>
+  
+  <select  id="isExistCount" resultType="integer" parameterType="com.ezendai.credit2.apply.vo.ChannelPlanCheckVO" >
+    select 
+   		count(ch.id)
+   		from channel_plan_check ch
+   		where 1=1 and is_deleted=0
+   			<if test="code != null and code !=''" >
+		    	 AND  CODE = #{code}
+		    </if>
+		    <if test="name != null and name !=''" >
+		    	AND NAME = #{name}
+		    </if>
+  </select>
+	 
+</mapper>

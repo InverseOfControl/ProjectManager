@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.BaseAreaMapper">
+	<resultMap id="baseAreaResultMap" type="BaseArea">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="code" column="CODE" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="fullName" column="FULL_NAME" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="name" column="NAME" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="identifier" column="IDENTIFIER" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="cityId" column="CITY_ID" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="areaId" column="AREA_ID" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="serviceTel" column="SERVICE_TEL" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="salesDeptId" column="SALES_DEPT_ID" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="companyId" column="COMPANY_ID" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result property="workPlaceInfoId" column="WORK_PLACE_INFO_ID"
+			jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="deptNo" column="DEPT_NO" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="deptType" column="DEPT_TYPE" jdbcType="NUMERIC"
+			javaType="java.lang.Integer" />
+		<result property="remark" column="REMARK" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="deleted" column="IS_DELETED" jdbcType="NUMERIC"
+			javaType="java.lang.Integer" />
+		<result property="version" column="VERSION" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result property="creatorId" column="CREATOR_ID" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result property="creator" column="CREATOR" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"
+			javaType="java.util.Date" />
+		<result property="modifierId" column="MODIFIER_ID" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result property="modifier" column="MODIFIER" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="modifiedTime" column="MODIFIED_TIME"
+			jdbcType="TIMESTAMP" javaType="java.util.Date" />
+	</resultMap>
+	<!-- 用于获取刘娜对应的网点数据集合 -->
+	<resultMap id="baseAreaResultMap2" type="BaseArea">
+		<id property="id" column="BASE_AREA_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<id property="identifier" column="BASE_AREA_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		
+	</resultMap>
+	
+
+
+	<sql id="fields">
+		BASE_AREA.ID ,
+		BASE_AREA.CODE ,
+		BASE_AREA.FULL_NAME ,
+		BASE_AREA.NAME ,
+		BASE_AREA.IDENTIFIER ,
+		BASE_AREA.CITY_ID ,
+		BASE_AREA.AREA_ID ,
+		BASE_AREA.SERVICE_TEL,
+		BASE_AREA.SALES_DEPT_ID ,
+		BASE_AREA.COMPANY_ID ,
+		BASE_AREA.WORK_PLACE_INFO_ID ,
+		BASE_AREA.DEPT_NO
+		,
+		BASE_AREA.DEPT_TYPE ,
+		BASE_AREA.REMARK ,
+		BASE_AREA.IS_DELETED ,
+		BASE_AREA.VERSION ,
+		BASE_AREA.CREATOR_ID ,
+		BASE_AREA.CREATOR ,
+		BASE_AREA.CREATED_TIME ,
+		BASE_AREA.MODIFIER_ID ,
+		BASE_AREA.MODIFIER ,
+		BASE_AREA.MODIFIED_TIME
+	</sql>
+
+	<!-- 单表查询条件 -->
+	<sql id="baseAreaConditions">
+		<where>
+			1=1
+			AND BASE_AREA.IS_DELETED = 0
+			<if test="id != null">
+				AND BASE_AREA.ID = #{id}
+			</if>
+			<if test="code != null">
+				AND BASE_AREA.CODE = #{code}
+			</if>
+			<if test="fullName != null and  fullName != ''">
+				AND BASE_AREA.FULL_NAME like '%${fullName}%'
+			</if>
+			<if test="name != null and name != ''">
+				AND BASE_AREA.NAME = #{name}
+			</if>
+			<if test="identifier != null">
+				AND BASE_AREA.IDENTIFIER = #{identifier}
+			</if>
+			<if test="cityId != null and cityId != ''">
+				AND BASE_AREA.CITY_ID = #{cityId}
+			</if>
+			<if test="areaId != null and areaId != ''">
+				AND BASE_AREA.AREA_ID = #{areaId}
+			</if>
+			<if test="serviceTel != null">
+				AND BASE_AREA.SERVICE_TEL = #{serviceTel}
+			</if>
+			<if test="salesDeptId != null and salesDeptId != ''">
+				AND BASE_AREA.SALES_DEPT_ID = #{salesDeptId}
+			</if>
+			<if test="companyId != null">
+				AND BASE_AREA.COMPANY_ID = #{companyId}
+			</if>
+			<if test="workPlaceInfoId != null">
+				AND BASE_AREA.WORK_PLACE_INFO_ID = #{workPlaceInfoId}
+			</if>
+			<if test="deptNo != null">
+				AND BASE_AREA.DEPT_NO = #{deptNo}
+			</if>
+			<if test="deptType != null">
+				AND BASE_AREA.DEPT_TYPE = #{deptType}
+			</if>
+			<if test="remark != null">
+				AND BASE_AREA.REMARK = #{remark}
+			</if>
+			<if test="deleted != null">
+				AND BASE_AREA.IS_DELETED = #{deleted}
+			</if>
+			<if test="version != null">
+				AND BASE_AREA.VERSION = #{version}
+			</if>
+			<if test="creatorId != null">
+				AND BASE_AREA.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null">
+				AND BASE_AREA.CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND BASE_AREA.CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				AND BASE_AREA.MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null">
+				AND BASE_AREA.MODIFIER = #{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				AND BASE_AREA.MODIFIED_TIME = #{modifiedTime}
+			</if>
+			<if test="idList !=null ">
+				AND BASE_AREA.ID in (
+				<foreach item="guard" index="index" collection="idList"
+					separator=",">
+					#{guard}
+				</foreach>
+				)
+			</if>
+			<!-- 用来通过code来模糊查询 -->
+			<if test="matchCode != null and matchCode ">
+				AND BASE_AREA.CODE like #{matchCode}||'%'
+			</if>
+		</where>
+	</sql>
+
+	<select id="findWithPG" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultMap="baseAreaResultMap">
+		<if test="pager != null ">
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		</if>
+		select * from(
+		<if test="isDeptPerson != null">
+			select * from base_area where IDENTIFIER = 'zdsys.Company'
+			UNION ALL
+			SELECT * FROM BASE_AREA WHERE IDENTIFIER = 'zdsys.Area'
+			UNION ALL
+
+			SELECT *FROM BASE_AREA WHERE IDENTIFIER = 'zdsys.City'
+
+			UNION ALL
+		</if>
+		SELECT
+		*
+		FROM BASE_AREA
+		<include refid="baseAreaConditions" />
+		) BASE_AREA
+		where 1=1
+		<if test="fullName != null and  fullName != ''">
+			AND BASE_AREA.FULL_NAME like '%${fullName}%'
+		</if>
+		<if test="cityId != null and cityId != ''">
+			AND BASE_AREA.CITY_ID = #{cityId}
+		</if>
+		<if test="areaId != null and areaId != ''">
+			AND BASE_AREA.AREA_ID = #{areaId}
+		</if>
+		<if test="salesDeptId != null and salesDeptId != ''">
+			AND BASE_AREA.SALES_DEPT_ID = #{salesDeptId}
+		</if>
+		<if test="pager != null ">
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy" />
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+		</if>
+	</select>
+
+	<select id="findWithList" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultMap="baseAreaResultMap">
+		SELECT
+		<include refid="fields" />
+		FROM BASE_AREA
+		<include refid="baseAreaConditions" />
+
+	</select>
+	<select id="findListByVO" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultMap="baseAreaResultMap">
+
+		SELECT
+		<include refid="fields" />
+		FROM BASE_AREA
+		<include refid="baseAreaConditions" />
+
+	</select>
+	<select id="count" parameterType="baseAreaVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS TOTAL FROM (
+		select * from(
+		<if test="isDeptPerson != null">
+
+			select * from base_area where IDENTIFIER = 'zdsys.Company'
+			UNION ALL
+			SELECT * FROM BASE_AREA WHERE IDENTIFIER = 'zdsys.Area'
+			UNION ALL
+
+			SELECT *FROM BASE_AREA WHERE IDENTIFIER = 'zdsys.City'
+
+			UNION ALL
+		</if>
+		SELECT
+		*
+		FROM BASE_AREA
+		<include refid="baseAreaConditions" />
+		) BASE_AREA where 1=1
+		<if test="fullName != null and  fullName != ''">
+			AND BASE_AREA.FULL_NAME like '%${fullName}%'
+		</if>
+		<if test="cityId != null and cityId != ''">
+			AND BASE_AREA.CITY_ID = #{cityId}
+		</if>
+		<if test="areaId != null and areaId != ''">
+			AND BASE_AREA.AREA_ID = #{areaId}
+		</if>
+		<if test="salesDeptId != null and salesDeptId != ''">
+			AND BASE_AREA.SALES_DEPT_ID = #{salesDeptId}
+		</if>
+		)
+	</select>
+
+	<select id="get" parameterType="java.lang.Long" resultMap="baseAreaResultMap">
+		SELECT
+		<include refid="fields" />
+		FROM BASE_AREA
+		WHERE BASE_AREA.ID = #{id}
+	</select>
+
+	<select id="queryForBaseAreaOfIdentifier" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultMap="baseAreaResultMap">
+		SELECT * FROM BASE_AREA WHERE IDENTIFIER=#{identifier}
+	</select>
+
+	<select id="maxCode" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultType="string">
+		SELECT MAX(code) FROM BASE_AREA WHERE
+		IDENTIFIER=#{identifier}
+	</select>
+
+	<select id="queryAllBaseArea" parameterType="String" resultMap="baseAreaResultMap">
+		SELECT * FROM BASE_AREA WHERE IDENTIFIER=#{identifier}
+	</select>
+
+	<select id="querySingleCityByName" parameterType="String"
+		resultMap="baseAreaResultMap">
+		SELECT * FROM BASE_AREA WHERE IDENTIFIER='zdsys.City' AND
+		NAME=#{name}
+	</select>
+
+	<select id="countSalesDepartment" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultType="int">
+		SELECT COUNT(*) FROM BASE_AREA WHERE
+		IDENTIFIER=#{identifier} AND CITY_ID=#{cityId}
+	</select>
+
+	<!-- 根据ID查询网点信息 -->
+	<select id="findById" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultMap="baseAreaResultMap">
+		SELECT
+		<include refid="fields" />
+		FROM BASE_AREA WHERE BASE_AREA.ID = (SELECT B.SALES_DEPT_ID FROM
+		BASE_AREA B WHERE B.ID = #{id}) AND BASE_AREA.IDENTIFIER=#{identifier}
+	</select>
+
+	<select id="existsCompany" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultType="int">
+		SELECT COUNT(*) FROM BASE_AREA WHERE NAME=#{name} AND
+		IDENTIFIER=#{identifier}
+	</select>
+
+	<!-- 验证待添加的分区在某个公司下是否存在 -->
+	<select id="existsArea" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultType="int">
+		SELECT COUNT(*) FROM BASE_AREA WHERE NAME=#{name} AND
+		COMPANY_ID=#{companyId}
+	</select>
+
+	<!-- 验证待添加的城市在某个分区下是否存在 -->
+	<select id="existsCity" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultType="int">
+		SELECT COUNT(*) FROM BASE_AREA WHERE
+		<if test="name !=null and name != ''"></if>
+		NAME=#{name}
+		<if test="areaId != null and  areaId != ''">
+			AND AREA_ID=#{areaId}
+		</if>
+	</select>
+
+	<!-- 验证待添加的网点在某个城市下是否存在 -->
+	<select id="existsSalesDepartment" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultType="int">
+		SELECT COUNT(*) FROM BASE_AREA WHERE CITY_ID=#{cityId} AND
+		NAME=#{name}
+	</select>
+
+	<!-- 验证待添加的销售团队在某个网点下是否存在 -->
+	<select id="existsSalesTeam" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultType="int">
+		SELECT COUNT(*) FROM BASE_AREA WHERE
+		SALES_DEPT_ID=#{salesDeptId} AND NAME=#{name}
+	</select>
+
+	<!-- 取出指定公司下code最大的一条记录 -->
+	<select id="maxCodeAreaItem" parameterType="long" resultMap="baseAreaResultMap">
+
+		SELECT * FROM(
+		SELECT * FROM BASE_AREA WHERE COMPANY_ID=#{companyId}
+		ORDER BY CODE DESC) WHERE ROWNUM=1
+	</select>
+
+	<!-- 取出指定区域下code最大的一条记录 -->
+	<select id="maxCodeCityItem" parameterType="string" resultMap="baseAreaResultMap">
+		SELECT * FROM(
+		SELECT * FROM BASE_AREA WHERE AREA_ID=#{areaId} ORDER BY
+		CODE DESC) WHERE
+		ROWNUM=1
+	</select>
+
+	<!-- 取出指定城市下code最大的一条记录 -->
+	<select id="maxCodeSalesDepartmentItem" parameterType="int"
+		resultMap="baseAreaResultMap">
+		SELECT * FROM (
+		SELECT * FROM BASE_AREA WHERE
+		CITY_ID=#{cityId} ORDER BY CODE DESC) WHERE
+		ROWNUM=1
+	</select>
+
+	<!-- 取出指定网点下code最大的一条记录 -->
+	<select id="maxCodeSalesTeamItem" parameterType="string"
+		resultMap="baseAreaResultMap">
+		SELECT * FROM (
+		SELECT * FROM BASE_AREA WHERE
+		SALES_DEPT_ID=#{salesDeptId} ORDER BY CODE DESC) WHERE
+		ROWNUM=1
+	</select>
+
+	<select id="queryCitiesOfOneArea" parameterType="java.lang.Long"
+		resultMap="baseAreaResultMap">
+		SELECT
+		<include refid="fields" />
+		FROM BASE_AREA WHERE AREA_ID=#{id}
+	</select>
+
+	<insert id="insert" parameterType="BaseArea">
+		<selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+			SELECT seq_base_area_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO BASE_AREA
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="id !=null">
+				ID ,
+			</if>
+			<if test="code !=null and code != ''">
+				CODE ,
+			</if>
+			<if test="fullName !=null and fullName != ''">
+				FULL_NAME ,
+			</if>
+			<if test="name != null and name != ''">
+				NAME ,
+			</if>
+			<if test="identifier != null and identifier != ''">
+				IDENTIFIER ,
+			</if>
+			<if test="cityId != null and cityId != ''">
+				CITY_ID ,
+			</if>
+			<if test="areaId != null and areaId != ''">
+				AREA_ID ,
+			</if>
+			<if test="serviceTel != null and serviceTel != ''">
+				SERVICE_TEL ,
+			</if>
+			<if test="salesDeptId != null and salesDeptId != ''">
+				SALES_DEPT_ID ,
+			</if>
+			<if test="companyId != null">
+				COMPANY_ID ,
+			</if>
+			<if test="workPlaceInfoId != null">
+				WORK_PLACE_INFO_ID ,
+			</if>
+			<if test="deptNo != null">
+				DEPT_NO ,
+			</if>
+			<if test="deptType != null">
+				DEPT_TYPE ,
+			</if>
+			<if test="remark != null and remark != ''">
+				REMARK ,
+			</if>
+			<if test="deleted != null">
+				IS_DELETED ,
+			</if>
+			<if test="version != null">
+				VERSION ,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID ,
+			</if>
+			<if test="creator != null and creator != ''">
+				CREATOR ,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME ,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID ,
+			</if>
+			<if test="modifier != null and modifier != ''">
+				MODIFIER ,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" prefixOverrides="," suffix=")">
+			#{id} ,
+			<if test="code !=null and code != ''">
+				#{code} ,
+			</if>
+			<if test="fullName !=null and fullName != ''">
+				#{fullName} ,
+			</if>
+			<if test="name != null and name != ''">
+				#{name} ,
+			</if>
+			<if test="identifier != null and identifier != ''">
+				#{identifier} ,
+			</if>
+			<if test="cityId != null and cityId != ''">
+				#{cityId} ,
+			</if>
+			<if test="areaId != null and areaId != ''">
+				#{areaId} ,
+			</if>
+			<if test="serviceTel != null and serviceTel != ''">
+				#{serviceTel} ,
+			</if>
+			<if test="salesDeptId != null and salesDeptId != ''">
+				#{salesDeptId} ,
+			</if>
+			<if test="companyId != null">
+				#{companyId} ,
+			</if>
+			<if test="workPlaceInfoId != null">
+				#{workPlaceInfoId} ,
+			</if>
+			<if test="deptNo != null">
+				#{deptNo} ,
+			</if>
+			<if test="deptType != null">
+				#{deptType} ,
+			</if>
+			<if test="remark != null and remark != ''">
+				#{remark} ,
+			</if>
+			<if test="deleted != null">
+				#{deleted} ,
+			</if>
+			<if test="version != null">
+				#{version} ,
+			</if>
+			<if test="creatorId != null">
+				#{creatorId} ,
+			</if>
+			<if test="creator != null and creator != ''">
+				#{creator} ,
+			</if>
+			<if test="createdTime != null">
+				#{createdTime} ,
+			</if>
+			<if test="modifierId != null">
+				#{modifierId} ,
+			</if>
+			<if test="modifier != null and modifier != ''">
+				#{modifier} ,
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime}
+			</if>
+		</trim>
+	</insert>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM BASE_AREA WHERE
+		ID=#{id}
+	</delete>
+
+	<delete id="deleteByIdList" parameterType="BaseAreaVO">
+		DELETE FROM BASE_AREA WHERE ID IN (
+		<foreach item="id" index="index" collection="idList"
+			separator=","> #{id} </foreach>
+		)
+	</delete>
+
+	<update id="update" parameterType="BaseAreaVO">
+		UPDATE BASE_AREA
+		<trim prefix="set" suffixOverrides=",">
+			<if test="code != null">
+				BASE_AREA.CODE = #{code},
+			</if>
+			<if test="fullName != null and  fullName != ''">
+				BASE_AREA.FULL_NAME = #{fullName},
+			</if>
+			<if test="name != null and name != ''">
+				BASE_AREA.NAME = #{name},
+			</if>
+			<if test="identifier != null">
+				BASE_AREA.IDENTIFIER = #{identifier},
+			</if>
+			<if test="cityId != null and cityId != ''">
+				BASE_AREA.CITY_ID = #{cityId},
+			</if>
+			<if test="areaId != null and areaId != ''">
+				BASE_AREA.AREA_ID = #{areaId},
+			</if>
+			<if test="serviceTel != null">
+				BASE_AREA.SERVICE_TEL = #{serviceTel},
+			</if>
+			<if test="salesDeptId != null and salesDeptId != ''">
+				BASE_AREA.SALES_DEPT_ID = #{salesDeptId},
+			</if>
+			<if test="companyId != null">
+				BASE_AREA.COMPANY_ID = #{companyId},
+			</if>
+			<if test="workPlaceInfoId != null">
+				BASE_AREA.WORK_PLACE_INFO_ID = #{workPlaceInfoId},
+			</if>
+			<if test="deptNo != null">
+				BASE_AREA.DEPT_NO = #{deptNo},
+			</if>
+			<if test="deptType != null">
+				BASE_AREA.DEPT_TYPE = #{deptType},
+			</if>
+			<if test="remark != null">
+				BASE_AREA.REMARK = #{remark},
+			</if>
+			<if test="deleted != null">
+				BASE_AREA.IS_DELETED = #{deleted},
+			</if>
+			<if test="version != null">
+				BASE_AREA.VERSION = #{version},
+			</if>
+			<if test="creatorId != null">
+				BASE_AREA.CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				BASE_AREA.CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				BASE_AREA.CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				BASE_AREA.MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				BASE_AREA.MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				BASE_AREA.MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="isDeleted != null">
+				BASE_AREA.IS_DELETED = #{isDeleted}
+			</if>
+		</trim>
+		WHERE ID=#{id}
+	</update>
+
+	<!-- 求出指定部门类型下最大的部门编号 -->
+	<select id="queryCurrentMaxDeptNoByDeptType" parameterType="int"
+		resultType="string">
+		SELECT MAX(DEPT_NO) FROM BASE_AREA WHERE
+		DEPT_TYPE=#{deptType}
+	</select>
+	<!-- 获取可操作助学贷的营业网点信息 -->
+	<select id="getStudentLoanSalesDepts" resultMap="baseAreaResultMap">
+		SELECT DISTINCT A.* FROM BASE_AREA A
+
+		INNER JOIN SYS_USER B ON A.CODE=B.DATA_PERMISSION
+
+		INNER JOIN SYS_PRODUCT_USER C ON B.ID=C.USER_ID
+
+		WHERE A.IDENTIFIER='zdsys.SalesDepartment' AND C.PRODUCT_ID=8
+	</select>
+	<!-- 获取可操作小企业贷的营业网点信息 -->
+	<select id="getSeloanDept" resultMap="baseAreaResultMap">
+		SELECT DISTINCT A.* FROM BASE_AREA A
+		inner join sys_user b on a.code=b.data_permission
+		inner join sys_product_user c on b.id=c.user_id
+		where a.identifier='zdsys.SalesDepartment' and c.product_id in(1,5,6,7,8)
+
+	</select>
+
+	<!-- 获取部门经理可以操作的所有营业网点（目前只限刘娜（上海营业部经理）操作沈阳以及青岛的营业网点权限） -->
+	<select id="getDeptsByUserIdAndDeptsTypes" parameterType="com.ezendai.credit2.master.vo.BaseAreaVO"
+		resultMap="baseAreaResultMap2">
+		SELECT 
+		 UB.BASE_AREA_ID,UB.BASE_AREA_TYPE FROM
+  		 USER_BASE_AREA UB 
+		 WHERE 1=1 
+		<if test="userId != null and userId !=''">
+				AND UB.USER_ID = #{userId}
+			</if>
+			
+			<if test="identifier != null and identifier !=''">
+				AND UB.BASE_AREA_TYPE = #{identifier}
+			</if>
+			 AND UB.IS_DELETED=0
+		 
+	</select>
+</mapper>

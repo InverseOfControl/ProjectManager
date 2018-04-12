@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.OfferManagerMapper">
+	<resultMap type="com.ezendai.credit2.master.model.OfferManager" id="offerResultMap">
+		<id column="id" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="day"      		property="day"    		jdbcType="NUMERIC" 	 javaType="java.lang.Integer" />
+		<result column="beforeDay"      property="beforeDay"    jdbcType="NUMERIC" 	 javaType="java.lang.Integer" />
+		<result column="afterDay"  		property="afterDay" 	jdbcType="NUMERIC" 	 javaType="java.lang.Integer" />
+		<result column="generateTime"   property="generateTime" jdbcType="VARCHAR" 	 javaType="java.lang.String" />
+		<result column="sendTime"     	property="sendTime"     jdbcType="VARCHAR" 	 javaType="java.lang.String" />
+		<result column="status"     	property="status"    	jdbcType="NUMERIC" 	 javaType="java.lang.Integer" />
+		<result column="VERSION" 		property="version" 		jdbcType="NUMERIC" 	 javaType="java.lang.Long" />
+		<result column="CREATOR_ID" 	property="creatorId" 	jdbcType="NUMERIC" 	 javaType="java.lang.Long" />
+		<result column="CREATOR" 		property="creator" 		jdbcType="VARCHAR" 	 javaType="java.lang.String" />
+		<result column="CREATED_TIME" 	property="createdTime" 	jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER_ID" 	property="modifierId" 	jdbcType="NUMERIC" 	 javaType="java.lang.Long" />
+		<result column="MODIFIER" 		property="modifier" 	jdbcType="VARCHAR" 	 javaType="java.lang.String" />
+		<result column="MODIFIED_TIME"  property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="REMARK" 		property="remark" 		jdbcType="VARCHAR" 	 javaType="java.lang.String" />
+	</resultMap>
+	
+	<sql id="offerColumn">
+		offer.id as id,
+		offer.day as day,
+		offer.before_Day as beforeDay,
+		offer.after_Day as afterDay,
+		offer.generate_Time as generateTime,
+		offer.send_Time as sendTime,
+		offer.status as status,
+		offer.version as version,
+		offer.creator_id as creatorId,
+		offer.creator as creator,
+		offer.created_time as createdTime,
+		offer.modifier_id as modifierId,
+		offer.modifier as modifier,
+		offer.modified_time as modifiedTime,
+		offer.remark as remark
+	</sql>
+	
+	<!-- 获取银行列表 -->
+	<select id="getOfferList" resultMap="offerResultMap" parameterType="com.ezendai.credit2.master.vo.OfferManagerVO">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart"/>
+		select  
+		<include refid="offerColumn"/>
+		from OFFER_MANAGE offer
+		where 1=1
+		<if test="offerDay != null">
+			and offer.day = #{offerDay}
+		</if>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd"/>
+	</select>
+	
+	<!-- 主键获取银行信息 -->
+	<select id="get" resultMap="offerResultMap" parameterType="java.lang.Long">
+		select 
+		<include refid="offerColumn"/>
+		from OFFER_MANAGE offer
+		where offer.id = #{id}
+	</select>
+	
+	<!-- 获取银行总条数 -->
+	<select id="getOfferCount"  resultType="int"  parameterType="com.ezendai.credit2.master.vo.OfferManagerVO">
+		select count(*) from OFFER_MANAGE offer
+		where 1=1
+		<if test="offerDay != null">
+			and offer.day = #{offerDay}
+		</if>
+	</select>
+	
+	<!-- 添加新银行信息 -->
+	<insert id="insert"  parameterType="com.ezendai.credit2.master.vo.OfferManagerVO">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			select SEQ_OFFER_MANAGE_ID.nextval as id from dual
+	    </selectKey>
+		insert into OFFER_MANAGE 
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    ID ,
+			<if test="day != null">
+				DAY ,
+	        </if>  
+			<if test="beforeDay != null">
+				BEFORE_DAY ,
+	        </if>  
+			<if test="afterDay != null">
+				AFTER_DAY ,
+	        </if>  
+			<if test="generateTime != null and generateTime !=''">
+				GENERATE_TIME ,
+	        </if>  
+	        <if test="sendTime != null and sendTime !=''">
+				SEND_TIME ,
+			</if>
+			<if test="status != null ">
+				STATUS ,
+	        </if>  
+	        <if test="version != null">
+				VERSION ,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID ,
+			</if>
+			<if test="creator != null and creator != ''">
+				CREATOR ,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME ,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID ,
+			</if>
+			<if test="modifier != null and modifier != ''">
+				MODIFIER ,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME ,
+			</if>
+			<if test="remark != null and remark != '' ">
+				REMARK
+			</if>
+	    </trim>
+		values 
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    #{id},
+			<if test="day != null">
+				#{day},
+	        </if>  
+			<if test="beforeDay != null">
+				#{beforeDay},
+	        </if>  
+			<if test="afterDay != null">
+				#{afterDay},
+	        </if>  
+			<if test="generateTime != null and generateTime !=''">
+				#{generateTime},
+	        </if>  
+	        <if test="sendTime != null and sendTime !=''">
+				#{sendTime},
+			</if>
+			<if test="status != null">
+				#{status},
+	        </if>  
+	        <if test="version != null">
+				#{version} ,
+			</if>
+			<if test="creatorId != null">
+				#{creatorId} ,
+			</if>
+			<if test="creator != null and creator != ''">
+				#{creator} ,
+			</if>
+			<if test="createdTime != null">
+				#{createdTime} ,
+			</if>
+			<if test="modifierId != null">
+				#{modifierId} ,
+			</if>
+			<if test="modifier != null and modifier != ''">
+				#{modifier} ,
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime} ,
+			</if>
+			<if test="remark != null and remark!=''">
+				#{remark}
+			</if>
+	    </trim>
+	</insert>
+	
+	
+	<!-- 主键修改银行信息 -->
+	<update id="updateOffer"  parameterType="com.ezendai.credit2.master.vo.OfferManagerVO">
+		update OFFER_MANAGE offer
+		<trim prefix="set" suffixOverrides="," >
+			<if test="day != null">
+				offer.day = #{day},
+			</if>
+			<if test="beforeDay != null">
+				offer.before_Day = #{beforeDay},
+			</if>
+			<if test="afterDay != null">
+				offer.after_Day = #{afterDay},
+			</if>
+			<if test="generateTime != '' and generateTime != null">
+				offer.generate_Time = #{generateTime},
+			</if>
+			<if test="sendTime != '' and sendTime != null">
+				offer.send_Time = #{sendTime},
+			</if>
+			<if test="status != null">
+				offer.status = #{status},
+			</if>
+			<if test="version != null">
+				offer.version = #{version},
+			</if>
+			<if test="creatorId != null">
+				offer.creator_id = #{creatorId},
+			</if>
+			<if test="creator != null">
+				offer.creator = #{creator},
+			</if>
+			<if test="createdTime != null">
+				offer.created_time = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				offer.modifier_id = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				offer.modifier = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				offer.modified_time = #{modifiedTime},
+			</if>
+			<if test="remark != null and remark!=''">
+				offer.remark = #{remark}
+			</if>
+		</trim>
+		WHERE offer.id=#{id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="deleteOffer" parameterType="java.lang.Long">
+		DELETE FROM OFFER_MANAGE WHERE
+		ID=#{id}
+	</delete>
+	
+	<!-- 获取银行列表 -->
+	<select id="getOfferListByStatus" resultMap="offerResultMap" >
+		select  
+		<include refid="offerColumn"/>
+		from OFFER_MANAGE offer
+		where offer.status=1
+	</select>
+</mapper>

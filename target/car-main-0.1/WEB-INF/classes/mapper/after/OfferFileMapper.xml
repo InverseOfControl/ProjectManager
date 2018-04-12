@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.after.mapper.OfferFileMapper">
+	<resultMap id="offerFileResultMap" type="OfferFile">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="ORIGINAL_NAME" property="originalName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="NAME" property="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="CREATED_DATE" property="createdDate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result column="TYPE" property="type" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    	<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    	<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	</resultMap>
+	
+	<sql id="offerFileField">
+		OFFER_FILE.ID,
+		OFFER_FILE.ORIGINAL_NAME,
+		OFFER_FILE.NAME,
+		OFFER_FILE.CREATED_DATE,
+		OFFER_FILE.TYPE,
+		OFFER_FILE.REMARK,
+		OFFER_FILE.CREATOR_ID,
+		OFFER_FILE.CREATOR,
+		OFFER_FILE.CREATED_TIME,
+		OFFER_FILE.VERSION
+	</sql>
+	
+	<sql id="offerFileSelective">
+		SELECT
+		<include refid="offerFileField"/>
+		FROM OFFER_FILE
+	</sql>
+	
+	<sql id="offerFileConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+		   		AND OFFER_FILE.ID = #{id}
+	      	</if>
+	      	<if test="originalName != null and originalName != ''">
+	      		AND OFFER_FILE.ORIGINAL_NAME = #{originalName}
+	      	</if>
+	      	<if test="name != null and name != ''">
+	      		AND OFFER_FILE.NAME = #{name}
+	      	</if>
+	      	<if test="createdDate != null">
+	      		AND OFFER_FILE.CREATED_DATE = #{createdDate}
+	      	</if>
+	      	<if test="type != null">
+	      		AND OFFER_FILE.TYPE = #{type}
+	      	</if>
+	      	<if test="remark != null and remark != ''">
+	      		AND OFFER_FILE.REMARK = #{remark}
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		AND  OFFER_FILE.CREATOR_ID = #{creatorId}
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		AND  OFFER_FILE.CREATOR  =  #{creator}
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	AND OFFER_FILE.CREATED_TIME = #{createdTime}
+	      	</if>
+	      	<if test="version != null and version != ''">
+	        	AND  OFFER_FILE.VERSION =  #{version}
+	      	</if>
+		</trim>
+	</sql>
+	
+	<insert id="insert"  parameterType="OfferFile">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			SEQ_OFFER_FILE_ID.NEXTVAL AS id FROM dual
+		</selectKey>
+		INSERT INTO OFFER_FILE
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="originalName != null and originalName != ''">
+	      		ORIGINAL_NAME,
+	      	</if>
+	      	<if test="name != null and name != ''">
+	      		NAME,
+	      	</if>
+	      	<if test="createdDate != null">
+	      		CREATED_DATE,
+	      	</if>
+	      	<if test="type != null">
+	      		TYPE,
+	      	</if>
+	      	<if test="remark != null and remark != ''">
+	      		REMARK,
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		CREATOR_ID,
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		CREATOR,
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	CREATED_TIME,
+	      	</if>
+	      	<if test="version != null and version != ''">
+	        	VERSION,
+	      	</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+		 	<if test="id != null" >
+				#{id},
+			</if>
+				<if test="originalName != null and originalName != ''">
+	      		#{originalName},
+	      	</if>
+	      	<if test="name != null and name != ''">
+	      		#{name},
+	      	</if>
+	      	<if test="createdDate != null">
+	      		#{createdDate},
+	      	</if>
+	      	<if test="type != null">
+	      		#{type},
+	      	</if>
+	      	<if test="remark != null and remark != ''">
+	      		#{remark},
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		#{creatorId},
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		#{creator},
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	#{createdTime},
+	      	</if>
+	      	<if test="version != null and version != ''">
+	        	#{version},
+	      	</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="OfferFileVO">
+		UPDATE OFFER_FILE
+		<trim prefix="set" suffixOverrides=",">
+			<if test="originalName != null and originalName != ''">
+	      		ORIGINAL_NAME = #{originalName},
+	      	</if>
+	      	<if test="name != null and name != ''">
+	      		NAME = #{name},
+	      	</if>
+	      	<if test="createdDate != null">
+	      		CREATED_DATE = #{createdDate},
+	      	</if>
+	      	<if test="type != null">
+	      		TYPE = #{type},
+	      	</if>
+	      	<if test="remark != null and remark != ''">
+	      		REMARK = #{remark},
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		CREATOR_ID = #{creatorId},
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		CREATOR  =  #{creator},
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	CREATED_TIME = #{createdTime},
+	      	</if>
+	      	<if test="version != null and version != ''">
+	        	VERSION =  #{version},
+	      	</if>        
+		</trim>
+		WHERE ID = #{id}		  
+		 <if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM OFFER_FILE WHERE ID = #{id}
+	</delete>
+	
+	<delete id="deleteByIdList" parameterType="OfferFileVO">
+		DELETE FROM OFFER_FILE WHERE ID IN (
+		<foreach item="guard" index="index" collection="idList"
+			separator=",">
+			#{guard}
+		</foreach>
+		)
+	</delete>
+	
+	<select id="get" parameterType="java.lang.Long" resultMap="offerFileResultMap">
+		<include refid="offerFileSelective" />
+		WHERE OFFER_FILE.ID = #{id}
+	</select>
+	
+	<select id="findListByVO" parameterType="OfferFileVO" resultMap="offerFileResultMap">
+		<include refid="offerFileSelective" />
+		<include refid="offerFileConditions" />
+	</select>
+	
+	<select id="findWithPG" parameterType="OfferFileVO" resultMap="offerFileResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="offerFileSelective" />
+		<include refid="offerFileConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<select id="exists" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM OFFER_FILE WHERE OFFER_FILE.ID = #{id}
+	</select>
+
+	<select id="count" parameterType="OfferFileVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="offerFileSelective" />
+		<include refid="offerFileConditions" />
+		)
+	</select>
+</mapper>

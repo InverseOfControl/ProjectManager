@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.apply.mapper.GuaranteeMapper">
+	<resultMap id="guaranteeResultMap" type="Guarantee">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="guaranteeType" column="GUARANTEE_TYPE" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="personId" column="PERSON_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="loanId" column="LOAN_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="sex" column="SEX" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="idnum" column="IDNUM" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="married" column="MARRIED" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="educationLevel" column="EDUCATION_LEVEL" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="hasChildren" column="HAS_CHILDREN" jdbcType="NUMERIC" javaType="java.lang.Integer" />	
+		<result property="bankAccountId" column="BANK_ACCOUNT_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="zipCode" column="ZIP_CODE" jdbcType="CHAR" javaType="java.lang.String" />
+		<result property="address" column="ADDRESS" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="mobilePhone" column="MOBILE_PHONE" jdbcType="CHAR" javaType="java.lang.String" />
+		<result property="email" column="EMAIL" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="homePhone" column="HOME_PHONE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="companyFullName" column="COMPANY_FULL_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="companyPhone" column="COMPANY_PHONE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="companyAddress" column="COMPANY_ADDRESS" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="version" column="VERSION" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="creatorId" column="CREATOR_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="creator" column="CREATOR" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="modifierId" column="MODIFIER_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="modifier" column="MODIFIER" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="modifiedTime" column="MODIFIED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="flag" column="FLAG" jdbcType="NUMERIC" javaType="java.lang.Integer" />	
+		<association property="person" column="PERSON_ID" jdbcType="NUMERIC" javaType="Person" resultMap="personResultMap" />
+		<association property="loan" column="LOAN_ID" jdbcType="NUMERIC" javaType="Loan" resultMap="loanResultMap" />
+	</resultMap>
+
+	<resultMap type="Person" id="personResultMap">
+		<id property="id" column="PERSON_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+
+	<resultMap type="Loan" id="loanResultMap">
+		<id property="id" column="LOAN_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+
+	<sql id="guaranteeField">
+		ID, LOAN_ID, PERSON_ID, BANK_ACCOUNT_ID,
+		NAME, GUARANTEE_TYPE, SEX, IDNUM, MARRIED,
+		EDUCATION_LEVEL, HAS_CHILDREN, ZIP_CODE, ADDRESS,
+		MOBILE_PHONE, EMAIL, HOME_PHONE,
+		COMPANY_FULL_NAME, COMPANY_PHONE, COMPANY_ADDRESS,
+		CREATOR_ID, CREATOR, CREATED_TIME, MODIFIER_ID,
+		MODIFIER, MODIFIED_TIME, VERSION, FLAG
+	</sql>
+
+	<sql id="guaranteeSelective">
+		SELECT
+		<include refid="guaranteeField" />
+		FROM GUARANTEE
+	</sql>
+
+	<sql id="guaranteeOrderByConditions">
+		ORDER BY ID DESC
+	</sql>
+	
+	<!-- 根据客户ID查找担保人 -->
+	<select id="selectByPersonId" parameterType="java.lang.Long" resultMap="guaranteeResultMap">
+		<include refid="guaranteeSelective" />
+		WHERE GUARANTEE.PERSON_ID = #{personId}
+	</select>
+	
+	<!-- 根据贷款 ID查找担保人 -->
+	<select id="selectByLoanId" parameterType="java.lang.Long" resultMap="guaranteeResultMap">
+		<include refid="guaranteeSelective" />
+		WHERE GUARANTEE.LOAN_ID = #{loanId}
+	</select>
+	
+	<sql id="guaranteeConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				GUARANTEE.ID = #{id}
+			</if>
+			<if test="name != null">
+				AND GUARANTEE.NAME = #{name}
+			</if>
+			<if test="guaranteeType != null">
+				AND GUARANTEE.GUARANTEE_TYPE = #{guaranteeType}
+			</if>
+			<if test="sex != null">
+				AND GUARANTEE.SEX = #{sex}
+			</if>
+			<if test="idnum != null">
+				AND GUARANTEE.IDNUM = #{idnum}
+			</if>
+			<if test="married != null">
+				AND GUARANTEE.MARRIED = #{married}
+			</if>
+			<if test="educationLevel != null">
+				AND GUARANTEE.EDUCATION_LEVEL = #{educationLevel}
+			</if>
+			<if test="hasChildren != null">
+				AND GUARANTEE.HAS_CHILDREN = #{hasChildren}
+			</if>
+			<if test="zipCode != null">
+				AND GUARANTEE.ZIP_CODE = #{zipCode}
+			</if>
+			<if test="address != null">
+				AND GUARANTEE.ADDRESS = #{address}
+			</if>
+			<if test="mobilePhone != null">
+				AND GUARANTEE.MOBILE_PHONE = #{mobilePhone}
+			</if>
+			<if test="email != null">
+				AND GUARANTEE.EMAIL = #{email}
+			</if>
+			<if test="homePhone != null">
+				AND GUARANTEE.HOME_PHONE = #{homePhone}
+			</if>
+			<if test="companyFullName != null">
+				AND GUARANTEE.COMPANY_FULL_NAME = #{companyFullName}
+			</if>
+			<if test="companyPhone != null">
+				AND GUARANTEE.COMPANY_PHONE = #{companyPhone}
+			</if>
+			<if test="companyAddress != null">
+				AND GUARANTEE.COMPANY_ADDRESS = #{companyAddress}
+			</if>
+			<if test="version != null">
+				AND GUARANTEE.VERSION = #{version}
+			</if>
+			<if test="bankAccountId != null">
+				AND GUARANTEE.BANK_ACCOUNT_ID = #{bankAccountId}
+			</if>
+			<if test="personId != null">
+				AND GUARANTEE.PERSON_ID = #{personId}
+			</if>
+			<if test="loan != null">
+				AND GUARANTEE.LOAN_ID = #{loan.id}
+			</if>
+			<if test="loanId != null">
+				AND GUARANTEE.LOAN_ID = #{loanId}
+			</if>
+			<if test="creatorId != null">
+				AND GUARANTEE.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null and creator != ''">
+				AND GUARANTEE.CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND GUARANTEE.CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				AND GUARANTEE.MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null and modifier != ''">
+				AND GUARANTEE.MODIFIER = #{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				AND GUARANTEE.MODIFIED_TIME = #{modifiedTime}
+			</if>
+			<if test="flag != null">
+				AND GUARANTEE.FLAG = #{flag}
+			</if>
+		</trim>
+	</sql>
+
+	<insert id="insert" parameterType="Guarantee">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_guarantee_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO GUARANTEE
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="loan != null">
+				LOAN_ID,
+			</if>
+			<if test="loanId != null">
+				LOAN_ID,
+			</if>
+			<if test="personId != null">
+				PERSON_ID,
+			</if>
+			<if test="bankAccountId != null">
+				BANK_ACCOUNT_ID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="guaranteeType != null">
+				GUARANTEE_TYPE,
+			</if>
+			<if test="sex != null">
+				SEX,
+			</if>
+			<if test="idnum != null">
+				IDNUM,
+			</if>
+			<if test="married != null">
+				MARRIED,
+			</if>
+			<if test="educationLevel != null">
+				EDUCATION_LEVEL,
+			</if>
+			<if test="hasChildren != null">
+				HAS_CHILDREN,
+			</if>
+			<if test="zipCode != null">
+				ZIP_CODE,
+			</if>
+			<if test="address != null">
+				ADDRESS,
+			</if>
+			<if test="mobilePhone != null">
+				MOBILE_PHONE,
+			</if>
+			<if test="email != null">
+				EMAIL,
+			</if>
+			<if test="homePhone != null">
+				HOME_PHONE,
+			</if>
+			<if test="companyFullName != null">
+				COMPANY_FULL_NAME,
+			</if>
+			<if test="companyPhone != null">
+				COMPANY_PHONE,
+			</if>
+			<if test="companyAddress != null">
+				COMPANY_ADDRESS,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="flag != null">
+				FLAG,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				#{id},
+			<if test="loan != null">
+				#{loan.id},
+			</if>
+			<if test="loanId != null">
+				#{loanId},
+			</if>
+			<if test="personId != null">
+				#{personId},
+			</if>
+			<if test="bankAccountId != null">
+				#{bankAccountId},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="guaranteeType != null">
+				#{guaranteeType},
+			</if>
+			<if test="sex != null">
+				#{sex},
+			</if>
+			<if test="idnum != null">
+				#{idnum},
+			</if>
+			<if test="married != null">
+				#{married},
+			</if>
+			<if test="educationLevel != null">
+				#{educationLevel},
+			</if>
+			<if test="hasChildren != null">
+				#{hasChildren},
+			</if>
+			<if test="zipCode != null">
+				#{zipCode},
+			</if>
+			<if test="address != null">
+				#{address},
+			</if>
+			<if test="mobilePhone != null">
+				#{mobilePhone},
+			</if>
+			<if test="email != null">
+				#{email},
+			</if>
+			<if test="homePhone != null">
+				#{homePhone},
+			</if>
+			<if test="companyFullName != null">
+				#{companyFullName},
+			</if>
+			<if test="companyPhone != null">
+				#{companyPhone},
+			</if>
+			<if test="companyAddress != null">
+				#{companyAddress},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="flag != null">
+				#{flag},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="GuaranteeVO">
+		UPDATE GUARANTEE
+		<trim prefix="set" suffixOverrides=",">
+			<if test="loanId != null">
+				LOAN_ID = #{loanId},
+			</if>
+			<if test="isFlagNull == true">
+				FLAG = null,
+			</if>
+			<if test="personId != null">
+				PERSON_ID = #{personId},
+			</if>
+			<if test="bankAccountId != null">
+				BANK_ACCOUNT_ID = #{bankAccountId},
+			</if>
+			<if test="name != null">
+				NAME = #{name},
+			</if>
+			<if test="guaranteeType != null">
+				GUARANTEE_TYPE = #{guaranteeType},
+			</if>
+			<if test="sex != null">
+				SEX = #{sex},
+			</if>
+			<if test="idnum != null">
+				IDNUM = #{idnum},
+			</if>
+			<if test="married != null">
+				MARRIED = #{married},
+			</if>
+			<if test="educationLevel != null">
+				EDUCATION_LEVEL = #{educationLevel},
+			</if>
+			<if test="hasChildren != null">
+				HAS_CHILDREN = #{hasChildren},
+			</if>
+			<if test="zipCode != null">
+				ZIP_CODE = #{zipCode},
+			</if>
+			<if test="address != null">
+				ADDRESS = #{address},
+			</if>
+			<if test="mobilePhone != null">
+				MOBILE_PHONE = #{mobilePhone},
+			</if>
+			<if test="email != null">
+				EMAIL = #{email},
+			</if>
+			<if test="homePhone != null">
+				HOME_PHONE = #{homePhone},
+			</if>
+			<if test="companyFullName != null">
+				COMPANY_FULL_NAME = #{companyFullName},
+			</if>
+			<if test="companyPhone != null">
+				COMPANY_PHONE = #{companyPhone},
+			</if>
+			<if test="companyAddress != null">
+				COMPANY_ADDRESS = #{companyAddress},
+			</if>
+			<if test="version != null">
+				VERSION = #{version},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="flag != null">
+				FLAG = #{flag},
+			</if>
+		</trim>
+		WHERE ID=#{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>  
+	</update>
+
+	<select id="get" parameterType="java.lang.Long" resultMap="guaranteeResultMap">
+		<include refid="guaranteeSelective" />
+		WHERE GUARANTEE.ID = #{id}
+	</select>
+
+	<select id="findListByVO" parameterType="GuaranteeVO" resultMap="guaranteeResultMap">
+		<include refid="guaranteeSelective" />
+		<include refid="guaranteeConditions" />
+		order by GUARANTEE.ID ASC
+	</select>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM GUARANTEE
+		WHERE ID = #{id}
+	</delete>
+
+	<delete id="deleteByIdList" parameterType="GuaranteeVO">
+		DELETE FROM GUARANTEE
+		WHERE ID IN(
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM GUARANTEE
+		<where>
+			<if test="name != null">
+				AND GUARANTEE.NAME = #{name}
+			</if>
+			<if test="idnum != null">
+				AND GUARANTEE.IDNUM = #{idnum}
+			</if>
+			<if test="mobilePhone != null">
+				AND GUARANTEE.MOBILE_PHONE = #{mobilePhone}
+			</if>
+		</where>
+	</select>
+
+	<select id="count" parameterType="GuaranteeVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="guaranteeSelective" />
+		<include refid="guaranteeConditions" />
+		) AS total
+	</select>
+
+	<select id="findWithPG" parameterType="GuaranteeVO" resultMap="guaranteeResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="guaranteeSelective" />
+		<include refid="guaranteeConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+</mapper>

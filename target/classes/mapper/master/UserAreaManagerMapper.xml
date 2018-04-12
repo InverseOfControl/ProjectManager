@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.UserAreaManagerMapper">
+
+	<resultMap type="com.ezendai.credit2.master.vo.UserAreaManagerVO" id="UserAreaManagerResultMap">
+		<id column="id" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="userId" property="userId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="baseAreaId" property="baseAreaId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="baseAreaType" property="baseAreaType" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="creatorId"    property="creatorId"    jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="creator"      property="creator"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="createdTime"  property="createdTime"      jdbcType="TIMESTAMP" javaType="java.util.Date"  />
+		<result column="modifierId"   property="modifierId"    jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="modifier"     property="modifier"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="modifiedTime" property="modifiedTime"      jdbcType="TIMESTAMP" javaType="java.util.Date"  />
+		<result column="version"      property="version"    jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="isDeleted"   property="isDeleted"    jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="userName"   property="userName"    jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	
+	<sql id="UserAreaManagerColumn">
+		UserAreaManager.ID as id,
+		UserAreaManager.USER_ID as userId,  
+		UserAreaManager.BASE_AREA_ID as baseAreaId,
+		UserAreaManager.BASE_AREA_TYPE as baseAreaType,
+		UserAreaManager.CREATOR_ID as creatorId,
+		UserAreaManager.CREATOR as creator,
+		UserAreaManager.CREATED_TIME as createdTime,
+		UserAreaManager.MODIFIER_ID as modifierId,
+		UserAreaManager.MODIFIER as modifier,
+		UserAreaManager.MODIFIED_TIME as modifiedTime,
+		UserAreaManager.VERSION as version,
+		UserAreaManager.IS_DELETED as isDeleted,
+		sysUser.Name AS userName,
+		baseArea.NAME AS baseAreaName
+	</sql>
+	
+	<sql id="selectCondition">
+		WHERE 1=1 
+		<if test="userName !=null and userName !=''">
+			AND sysUser.Name = #{userName}
+		</if>
+		<if test="id !=null and id !=''">
+			AND UserAreaManager.id = #{id}
+		</if>
+		 ORDER BY UserAreaManager.CREATED_TIME DESC
+	</sql>
+	
+	<!-- 获取用户地区信息列表 -->
+	<select id="getUserAreaManagerList" resultMap="UserAreaManagerResultMap" parameterType="com.ezendai.credit2.master.vo.UserAreaManagerVO">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart"/>
+		select  
+			<include refid="UserAreaManagerColumn"/>
+		from USER_BASE_AREA UserAreaManager 
+		LEFT JOIN base_area baseArea on UserAreaManager.base_area_id = baseArea.id 
+		LEFT JOIN SYS_USER  sysUser on sysUser.id = UserAreaManager.user_id
+		<include refid="selectCondition"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd"/>
+	</select>
+	
+	<!-- 获取用户地区信息总条数 -->
+	<select id="getUserAreaManagerCount"  resultType="int"  parameterType="com.ezendai.credit2.master.vo.UserAreaManagerVO">
+		select count(*) from USER_BASE_AREA UserAreaManager 
+		LEFT JOIN base_area baseArea on UserAreaManager.base_area_id = baseArea.id 
+		LEFT JOIN SYS_USER  sysUser on sysUser.id = UserAreaManager.user_id
+		<include refid="selectCondition"/>
+	</select>
+	
+	<!-- 新增 -->
+  	<insert id="insert" parameterType="com.ezendai.credit2.master.model.UserAreaManager">
+	  	<selectKey keyProperty ="id" resultType = "Long" order = "BEFORE">
+	  			SELECT SEQ_USER_BASE_AREA_ID.NEXTVAL AS ID FROM DUAL
+	  	</selectKey> 
+    	insert into USER_BASE_AREA 
+    	<trim prefix="(" suffix=")" suffixOverrides="," > 
+	        ID,
+	      <if test="userId != null" >
+	        USER_ID,
+	      </if>
+	      <if test="baseAreaId != null" >
+	        BASE_AREA_ID,
+	      </if>
+	      <if test="baseAreaType != null" >
+	        BASE_AREA_TYPE,
+	      </if>
+	        <if test="creatorId != null" >
+	        CREATOR_ID,
+	      </if>
+	      <if test="creator != null" >
+	        CREATOR,
+	      </if>
+	      <if test="createdTime != null" >
+	        CREATED_TIME,
+	      </if>
+	       <if test="modifierId != null" >
+	        MODIFIER_ID,
+	      </if>
+	      <if test="modifier != null" >
+	        MODIFIER,
+	      </if>
+	      <if test="modifiedTime != null" >
+	        MODIFIED_TIME,
+	      </if>
+	    <!--   <if test="isDeleted != null" >
+	        IS_DELETED,
+	      </if> 
+	      <if test="version != null" >
+	        VERSION,
+	      </if>  -->
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+        #{id},
+      <if test="userId != null" >
+        #{userId},
+      </if>
+      <if test="baseAreaId != null" >
+        #{baseAreaId},
+      </if>
+      <if test="baseAreaType != null" >
+        #{baseAreaType},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId},
+      </if>
+      <if test="creator != null" >
+        #{creator},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime},
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime},
+      </if>
+      <!--  <if test="isDeleted != null" >
+        #{isDeleted},
+      </if>
+      <if test="version != null" >
+        #{version},
+      </if> -->
+    </trim>
+  	</insert>
+  	<update id="update" parameterType="com.ezendai.credit2.master.vo.UserAreaManagerVO" >
+    update USER_BASE_AREA
+    <set >
+      <if test="userId != null and userId != ''" >
+        USER_ID = #{userId},
+      </if>
+      <if test="baseAreaId != null and baseAreaId != ''" >
+        BASE_AREA_ID = #{baseAreaId},
+      </if>
+       <if test="baseAreaType != null and baseAreaType != ''" >
+        BASE_AREA_TYPE = #{baseAreaType},
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID = #{creatorId},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator},
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME = #{createdTime},
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID = #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        MODIFIER = #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME = #{modifiedTime},
+      </if>
+       <if test="isDeleted != null" >
+        IS_DELETED = #{isDeleted},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version},
+      </if>
+    </set>
+    where ID = #{id}  
+  </update>
+  <!-- 根据ID查询出唯一一条数据 -->
+   <select id="get" resultMap="UserAreaManagerResultMap" parameterType="java.lang.Long" >
+		   select * from USER_BASE_AREA where 1=1
+			AND id = #{id}	 
+	</select>
+	<!-- 获取所有的数据根据条件 -->
+	<select id="findUserAreaManagerByCondition" resultMap="UserAreaManagerResultMap" parameterType="com.ezendai.credit2.master.vo.UserAreaManagerVO">
+		select  
+			<include refid="UserAreaManagerColumn"/>
+		from USER_BASE_AREA UserAreaManager 
+		LEFT JOIN base_area baseArea on UserAreaManager.base_area_id = baseArea.id 
+		LEFT JOIN SYS_USER  sysUser on sysUser.id = UserAreaManager.user_id
+		<include refid="selectCondition"/>
+	</select>
+</mapper>

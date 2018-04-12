@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.system.mapper.SysRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.ezendai.credit2.system.model.SysRole" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="CREATOR_ID" property="creatorId" jdbcType="DECIMAL" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+    <result column="CREATED_TIME" property="createdTime" jdbcType="DATE" />
+    <result column="MODIFIER_ID" property="modifierId" jdbcType="DECIMAL" />
+    <result column="MODIFIER" property="modifier" jdbcType="VARCHAR" />
+    <result column="MODIFIED_TIME" property="modifiedTime" jdbcType="DATE" />
+    <result column="IS_DELETED" property="isDeleted" jdbcType="DECIMAL" />
+    <result column="VERSION" property="version" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, 
+    CODE, 
+    NAME, 
+    MEMO, 
+    STATUS, 
+    CREATOR_ID, 
+    CREATOR, 
+    CREATED_TIME, 
+    MODIFIER_ID, 
+    MODIFIER, 
+    MODIFIED_TIME, 
+    IS_DELETED, 
+    VERSION
+  </sql>
+  <sql id="sysRoleSelective">
+  	select <include refid="Base_Column_List"/>
+  	from  SYS_ROLE
+  </sql>
+  <sql id = "sysRoleConditions">
+ 	 where 1=1
+ 		AND IS_DELETED = 0
+	 <if test="code != null and code != ''" >
+        AND CODE like '%${code}%' 
+      </if>
+      <if test="name != null and name != ''" >
+        AND NAME like '%${name}%' 
+      </if>
+      <if test="memo != null" >
+        AND MEMO = #{memo}
+      </if>
+      <if test="status != null" >
+        AND STATUS = #{status}
+      </if>
+      <if test="creatorId != null" >
+        AND CREATOR_ID = #{creatorId}
+      </if>
+      <if test="creator != null" >
+         AND CREATOR = #{creator}
+      </if>
+      <if test="createdTime != null" >
+        AND CREATED_TIME = #{createdTime}
+      </if>
+      <if test="modifierId != null" >
+        AND MODIFIER_ID = #{modifierId}
+      </if>
+      <if test="modifier != null" >
+        AND MODIFIER = #{modifier}
+      </if>
+      <if test="modifiedTime != null" >
+        AND MODIFIED_TIME = #{modifiedTime}
+      </if>
+      <if test="version != null" >
+        AND VERSION = #{version}
+      </if>
+  </sql>
+  <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROLE
+    where ID = #{id}
+  </select>
+  <select id="count" parameterType="SysRoleVO" resultType="java.lang.Integer">
+  		select count(*)  as total from (
+  			<include refid="sysRoleSelective"/>
+  			<include refid="sysRoleConditions"/> 
+ 		 )
+  </select>
+  <select id="findWithPG" parameterType="SysRoleVO" resultMap ="BaseResultMap">
+  		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart"/>
+  		<include refid="sysRoleSelective"/>
+  		<include refid="sysRoleConditions"/>
+  		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+  		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd"/>
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    update SYS_ROLE set is_deleted = 1
+    where ID = #{id}
+  </delete>
+  <select id="getId" resultType="java.lang.Long">
+  		SELECT SEQ_SYS_ROLE_ID.NEXTVAL AS ID FROM DUAL
+  </select>
+  <insert id="insert" parameterType="com.ezendai.credit2.system.model.SysRole" >
+<!--   	<selectKey keyProperty ="id" resultType = "Long" order = "BEFORE">
+  			SELECT SEQ_SYS_ROLE_ID.NEXTVAL AS ID FROM DUAL
+  	</selectKey> -->
+    insert into SYS_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >  
+        ID,
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="memo != null" >
+        MEMO,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME,
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID,
+      </if>
+      <if test="modifier != null" >
+        MODIFIER,
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME,
+      </if>
+      <if test="isDeleted != null" >
+        IS_DELETED,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     
+        #{id},
+      <if test="code != null" >
+        #{code},
+      </if>
+      <if test="name != null" >
+        #{name},
+      </if>
+      <if test="memo != null" >
+        #{memo},
+      </if>
+      <if test="status != null" >
+        #{status},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId},
+      </if>
+      <if test="creator != null" >
+        #{creator},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime},
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted},
+      </if>
+      <if test="version != null" >
+        #{version},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.ezendai.credit2.system.vo.SysRoleVO" >
+    update SYS_ROLE
+    <set >
+      <if test="code != null and code != ''" >
+        CODE = #{code},
+      </if>
+      <if test="name != null and name != ''" >
+        NAME = #{name},
+      </if>
+      <if test="memo != null" >
+        MEMO = #{memo},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status},
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID = #{creatorId},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator},
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME = #{createdTime},
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID = #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        MODIFIER = #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME = #{modifiedTime},
+      </if>
+      <if test="isDeleted != null" >
+        IS_DELETED = #{isDeleted},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version},
+      </if>
+    </set>
+    where ID = #{id}  
+  </update>
+</mapper>

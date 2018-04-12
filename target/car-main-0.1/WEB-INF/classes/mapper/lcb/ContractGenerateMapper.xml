@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.lcb.mapper.ContractGenerateMapper" >
+
+	<resultMap id="personInfoMap" type="com.ezendai.credit2.sign.lcb.model.LcbModel" >
+    	<id column="ID" property="loanId" jdbcType="NUMERIC"/>
+    	<result column="PERSON_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    	<result column="NAME" property="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="IDNUM" property="idnum" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="MOBILE_PHONE" property="mobilePhone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="IS_LCB_PHONE" property="isLcbPhone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="IS_LCB_REGISTER" property="isLcbRegister" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="IS_LCB_REALNAME" property="isLcbRealname" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="IS_LCB_BINDCARD" property="isLcbBindcard" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="LCB_CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="LCB_BORROW_NO" property="lcbBorrowNo" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="LCB_BORROW_STATUS" property="lcbBorrowStatus" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="ACCOUNT" property="bankAccount" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  	</resultMap>
+	
+	<!-- 根据loanId获取用户信息 -->
+	<select id="getPersonInfoByLoanId" parameterType="java.lang.String" resultMap="personInfoMap">
+		select l.id,l.lcb_borrow_no,l.lcb_borrow_status,p.id person_id,p.name,p.idnum,p.mobile_phone,p.is_lcb_phone,p.is_lcb_register,
+		p.is_lcb_realname,p.is_lcb_bindcard,p.lcb_customer_id,ba.account from loan l 
+		left join person p on l.person_id = p.id 
+		left join person_bank pb on l.id = pb.loan_id
+    	left join bank_account ba on pb.bank_account_id = ba.id
+		where l.id = #{loanId}
+	</select>
+	
+	<!-- 修改用户在捞财宝注册、实名、绑卡状态 -->
+	<update id="updateLcbStatus" parameterType="java.util.Map">
+		update person set  
+		<if test="flag == 'phone'"> is_lcb_phone = '0' </if>
+		<if test="flag == 'register'"> is_lcb_register = '0',lcb_customer_id=#{customerId}</if>
+		<if test="flag == 'realname'"> is_lcb_realname = '0' </if>
+		<if test="flag == 'bindcard'"> is_lcb_bindcard = '0' </if>
+		where id = #{personId}
+	</update>
+	
+	<!-- 通过bankId获取bankCode -->
+	<select id="getBankCodeById" parameterType="java.lang.String" resultType="java.util.Map">
+		select * from bank where id = #{id}
+	</select>
+	
+	<!-- 获取推标数据 -->
+	<resultMap id="bidPushDataMap" type="com.ezendai.credit2.sign.lcb.model.LcbBidPushModel" >
+    	<result column="LCB_BORROW_NO" property="borrowNo" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="REQUEST_MONEY" property="borrowAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    	<result column="REQUEST_TIME" property="borrowTerm" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="GRANT_MONEY" property="remitMoney" jdbcType="NUMERIC" javaType="java.lang.String"/>
+    	<result column="YEAR_RATE" property="yearRate" jdbcType="NUMERIC" javaType="java.lang.String"/>
+    	<result column="SERVICE_CHARGES" property="serviceFee" jdbcType="NUMERIC" javaType="java.lang.String"/>
+    	<result column="RISK" property="riskFund" jdbcType="NUMERIC" javaType="java.lang.String"/>
+    	<result column="CONSULT" property="consultFee" jdbcType="NUMERIC" javaType="java.lang.String"/>
+    	<result column="ASSESSMENT" property="auditFee" jdbcType="NUMERIC" javaType="java.lang.String"/>
+    	<result column="B_MANAGE" property="managementFee" jdbcType="NUMERIC" javaType="java.lang.String"/>
+    	<result column="SUM_RATE" property="borrowRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    	<result column="REPAYMENT_METHOD" property="repaymentType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="PURPOSE" property="borrowPurpose" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="NAME" property="borrowerName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="MOBILE_PHONE" property="borrowerPhone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="IDNUM" property="idNo" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="MARRIED" property="maritalStatus" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="PLACE_DOMICILE" property="city" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="TOP_EDUCATION" property="educationLevel" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="HAS_HOUSE" property="hasHourse" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="COMPANY_TYPE" property="companyNature" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="MONTH_INCOME" property="monthlyIncome" jdbcType="NUMERIC" javaType="java.lang.String"/>
+    	<result column="IS_HAVE_CARLOAN" property="hasCarLoan" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="LOAN_SIZE" property="loanNums" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="CARD_NUM" property="creditNums" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="PROFESSION_TYPE" property="post" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="UNIT_INDUSTRYCATE_GORY" property="trade" jdbcType="VARCHAR" javaType="java.lang.String"/>
+  	</resultMap>
+	<select id="getBidPushData" parameterType="java.lang.String" resultMap="bidPushDataMap">
+		select l.id,
+			<!-- 借款编号、借款金额、借款期限、划拨金额 、年利率、服务费、风险金、咨询费、审核费、-->	
+			l.lcb_borrow_no,l.request_money,l.request_time,l.grant_money,p.year_rate,l.service_charges,l.risk,l.consult,l.assessment,
+			<!-- 管理费、借款费率、还款方式、借款用途、产品名称、借款人姓名、手机号、证件号、婚姻状况、-->
+			l.b_manage,pd.sum_rate,l.repayment_method,l.purpose,p.product_name,pe.name,pe.mobile_phone,pe.idnum,pe.married,
+			<!-- 所在城市、教育程度、是否有房贷、单位性质、月收入、是否有车贷、贷款笔数、信用卡数-->
+			pe.place_domicile,pe.top_education,l.has_house,pe.company_type,pe.month_income,pe.is_have_carloan,pe.loan_size,ch.card_num,
+			<!-- 岗位信息、行业信息-->
+			pe.profession_type,pe.unit_industrycate_gory
+		from loan l left join product p on l.product_id = p.id
+		left join product_detail pd on p.id = pd.product_id 
+		left join person pe on l.person_id = pe.id 
+		left join credit_history ch on p.id = ch.person_id
+		where l.product_type = pd.car_product_type and l.request_time = pd.term and l.id = #{id} 
+	</select>
+	
+	<!-- 获取贷款信息 -->
+	<select id="getLoanInfo" parameterType="java.lang.String" resultType="java.util.Map">
+		select l.audit_money,l.audit_time,l.contract_created_time,l.time,p.id product_id,p.risk_rate,pd.sum_rate,pe.name,pe.idnum,pe.mobile_phone,p.product_code
+		from loan l 
+		left join person pe on l.person_id = pe.id
+		left join product p on l.product_id = p.id 
+		left join product_detail pd on p.id = pd.product_id
+		where l.product_type = pd.car_product_type and l.request_time = pd.term and l.id = #{id} 
+	</select>
+	
+	<!-- 记录推送给捞财宝的借款编号 -->
+	<update id="insertLcbBorrowNo" parameterType="java.util.Map">
+		update loan set lcb_borrow_no = #{lcbBorrowNo} where id = #{id}
+	</update>
+</mapper>

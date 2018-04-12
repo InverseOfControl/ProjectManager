@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezendai.credit2.system.mapper.SysUserMapper">
+
+<resultMap  id="sysUserResultMap" type="SysUser">
+	<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="salesTeamId" column="SALES_TEAM_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="loginName" column="LOGIN_NAME" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="name" column="NAME" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="areaId" column="AREA_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="email" column="EMAIL" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="code" column="CODE" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="telephone" column="TELEPHONE" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="cellphone" column="CELLPHONE" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="loginRetry" column="LOGIN_RETRY" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result property="signPassword" column="SIGN_PASSWORD" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="signPasswordExpireDate" column="SIGN_PASSWORD_EXPIRE_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result property="lastLoginTime" column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result property="lastLoginIp" column="LAST_LOGIN_IP" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="userType" column="USER_TYPE" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result property="dataPermission" column="DATA_PERMISSION" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="isDeleted" column="IS_DELETED" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result property="status" column="STATUS" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result property="creatorId" column="CREATOR_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="creator" column="CREATOR" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result property="modifierId" column="MODIFIER_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="modifier" column="MODIFIER" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="modifiedTime" column="MODIFIED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result property="version" column="VERSION" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="acceptAuditTask" column="ACCEPT_AUDIT_TASK" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result property="isAddOtherDepts" column="IS_ADD_OTHER_DEPTS" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	
+	
+	
+	<association property="baseArea" columnPrefix="role_" resultMap="baseAreaResultMap"/>  
+</resultMap>
+
+<resultMap  id="sysPermissionLoginResultMap" type="SysPermission">
+	 <result property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	 <result property="name" column="NAME" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	 <result property="code" column="CODE" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	 <result property="levels" column="LEVELS" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	 <result property="levelOrder" column="LEVEL_ORDER" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	 <result property="parentId" column="PARENT_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	 <result property="url" column="URL" jdbcType="VARCHAR" javaType="java.lang.String"/>
+</resultMap>
+
+<resultMap  id="baseAreaResultMap" type="BaseArea">
+	 <result property="fullName" column="FULL_NAME" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	 <result property="code" column="CODE" jdbcType="VARCHAR" javaType="java.lang.String"/>
+</resultMap>
+
+<resultMap  id="groupUserMap" type="SysGroupUser">
+	 <result property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	 <result property="userId" column="USER_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	 <result property="groupId" column="GROUP_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	 <result property="version" column="VERSION" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+</resultMap>
+
+<sql id="sysUserField">
+    sysUser.ID,
+    sysUser.SALES_TEAM_ID,
+    sysUser.LOGIN_NAME,   
+    sysUser.NAME,
+    sysUser. AREA_ID,
+    sysUser.EMAIL,
+    sysUser.CODE,
+    sysUser.TELEPHONE,
+    sysUser.CELLPHONE,
+    sysUser.LOGIN_RETRY,
+   	sysUser.SIGN_PASSWORD,
+   	sysUser.SIGN_PASSWORD_EXPIRE_DATE,
+	sysUser.LAST_LOGIN_TIME,
+	sysUser.LAST_LOGIN_IP,
+	sysUser.USER_TYPE,
+	sysUser.DATA_PERMISSION,
+	sysUser.IS_DELETED,
+	sysUser.STATUS,
+	sysUser.CREATOR_ID,
+   	sysUser.CREATOR,sysUser.CREATED_TIME,sysUser.MODIFIER_ID,sysUser.MODIFIER,sysUser.MODIFIED_TIME,
+   	sysUser.VERSION,
+   	sysUser.ACCEPT_AUDIT_TASK,
+   	sysUser.IS_ADD_OTHER_DEPTS
+</sql>
+
+<sql id="sysUserSelective">
+	select 
+	<include refid="sysUserField" />
+	from SYS_USER sysUser
+</sql>
+
+<sql id="sysUserConditions">
+   where IS_DELETED = 0 
+   		<if test="userType != null">
+			AND user_type = #{userType}
+        </if>
+		<if test="id != null">
+			AND id = #{id}
+        </if>
+        <if test="code != null">
+			AND code = #{code}
+        </if>
+		<if test="name != null and name != ''">
+			AND NAME = #{name}
+        </if>
+        <if test="areaId != null">
+			AND AREA_ID = #{areaId}
+        </if>
+        <if test="loginName != null">
+			AND LOGIN_NAME = #{loginName}
+        </if>
+        <if test="acceptAuditTask != null">
+			AND ACCEPT_AUDIT_TASK = #{acceptAuditTask}
+        </if>
+        <if test="userTypeList !=null and userTypeList.size() > 0">
+			AND USER_TYPE IN(
+			<foreach item="guard" index="index" collection="userTypeList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+        <if test="areaIdList !=null and areaIdList.size() > 0">
+			AND AREA_ID IN(
+			<foreach item="guard" index="index" collection="areaIdList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="matchDataPermission != null and matchDataPermission != ''">
+			AND DATA_PERMISSION LIKE #{matchDataPermission}||'%'
+		</if>
+</sql>
+
+<delete id="deleteByIdList" parameterType="SysUserVO">
+   update SYS_USER set IS_DELETED = #{isDeleted}
+   WHERE ID in(
+				<foreach item="guard" index="index"  collection="idList" separator=",">
+					${guard}
+	    		</foreach>
+    		)
+</delete>
+
+<select id="selectUserId"  resultType="long">
+		select
+		SEQ_SYS_USER_ID.nextval as id from dual
+</select>
+
+<insert id="insert" parameterType="SysUser">
+
+	insert into SYS_USER
+	<trim prefix="(" suffixOverrides="," suffix=")">        
+		    ID,      
+		<if test="salesTeamId != null">
+			SALES_TEAM_ID,
+        </if>  
+		<if test="loginName != null">
+			LOGIN_NAME,
+        </if>
+        <if test="name != null">
+			NAME,
+        </if>
+        <if test="areaId != null">
+			AREA_ID,
+        </if>
+         <if test="email != null">
+			EMAIL,
+        </if>
+        <if test="code != null">
+			CODE,
+        </if>
+         <if test="telephone != null">
+			TELEPHONE,
+        </if>
+        <if test="cellphone != null">
+			CELLPHONE,
+        </if>
+        <if test="loginRetry != null">
+			LOGIN_RETRY,
+        </if>
+		<if test="signPassword != null">
+			SIGN_PASSWORD, 
+        </if>
+		<if test="signPasswordExpireDate != null">
+			SIGN_PASSWORD_EXPIRE_DATE,
+        </if>
+        <if test="lastLoginTime != null">
+			LAST_LOGIN_TIME,
+        </if>
+        <if test="lastLoginIp != null">
+			LAST_LOGIN_IP,
+        </if>
+         <if test="userType != null">
+			USER_TYPE,
+        </if>
+		<if test="isDeleted != null">
+			IS_DELETED,
+        </if>
+		<if test="status != null">
+			STATUS,
+        </if>
+        <if test="creatorId != null">
+			creator_Id,
+        </if>
+        <if test="creator != null">
+			creator,
+        </if>
+        <if test="createdTime != null">
+			created_Time,
+        </if>
+        <if test="modifierId != null">
+			modifier_Id,
+        </if>
+        <if test="modifier != null">
+			modifier,
+        </if>
+        <if test="modifiedTime != null">
+			modified_Time,
+        </if>
+        <if test="fullName != null">
+			FULL_NAME,
+        </if>  
+        <if test="dataPermission != null">
+			DATA_PERMISSION,
+        </if>  
+        <if test="acceptAuditTask != null">
+			 ACCEPT_AUDIT_TASK,
+        </if>
+	</trim>
+	values
+	<trim prefix="(" suffixOverrides="," suffix=")">	    
+		    #{id},
+		<if test="salesTeamId != null">
+			#{salesTeamId},
+        </if>    
+		<if test="loginName != null">
+			#{loginName},
+        </if>
+        <if test="name != null">
+			#{name},
+        </if>
+        <if test="areaId != null">
+			#{areaId},
+        </if>
+       	 <if test="email != null">
+			#{email},
+        </if>
+         <if test="code != null">
+			#{code},
+        </if>
+         <if test="telephone != null">
+			#{telephone},
+        </if>
+		<if test="cellphone != null">
+			#{cellphone}, 
+        </if>
+        <if test="loginRetry != null">
+			#{loginRetry},
+        </if>
+        <if test="signPassword != null">
+			#{signPassword},
+        </if>
+         <if test="signPasswordExpireDate != null">
+			#{signPasswordExpireDate},
+        </if>
+		<if test="lastLoginTime != null">
+			#{lastLoginTime},
+        </if>
+		<if test="lastLoginIp != null">
+			#{lastLoginIp},
+        </if>
+        <if test="userType != null">
+			#{userType},
+        </if>
+		<if test="isDeleted != null">
+			#{isDeleted},
+        </if>
+        <if test="status != null">
+			#{status},
+        </if>
+        <if test="creatorId != null">
+			#{creatorId},
+        </if>
+        <if test="creator != null">
+			#{creator},
+        </if>
+        <if test="createdTime != null">
+			#{createdTime},
+        </if>
+        <if test="modifierId != null">
+			#{modifierId},
+        </if>
+        <if test="modifier != null">
+			#{modifier},
+        </if>
+        <if test="modifiedTime != null">
+			#{modifiedTime},
+        </if>
+        <if test="fullName != null">
+			#{fullName},
+        </if>  
+          <if test="dataPermission != null">
+			#{dataPermission},
+        </if>  
+         <if test="acceptAuditTask != null">
+		    #{acceptAuditTask},
+        </if>
+	</trim>
+</insert>
+
+<update id="update" parameterType="SysUserVO">
+	update SYS_USER
+	<trim prefix="set" suffixOverrides=",">
+		<if test="name != null">
+			name=#{name},
+        </if>
+        <if test="areaId != null">
+			area_Id=#{areaId},
+        </if>
+		<if test="loginName != null">
+			login_Name=#{loginName},
+        </if>
+        <if test="userType != null">
+			user_type=#{userType},
+        </if>
+         <if test="loginRetry != null">
+			LOGIN_RETRY=#{loginRetry},
+        </if>
+         <if test="signPassword != null">
+			SIGN_PASSWORD=#{signPassword},
+        </if>
+        <if test="lastLoginTime != null">
+			LAST_LOGIN_TIME=#{lastLoginTime},
+        </if>
+        <if test="lastLoginIp != null">
+			LAST_LOGIN_IP=#{lastLoginIp},
+        </if>
+        <if test="creatorId != null">
+            CREATOR_ID = #{creatorId},
+        </if>
+		<if test="creator != null">
+		    CREATOR = #{creator},
+	    </if>
+		<if test="createdTime != null">
+		    CREATED_TIME = #{createdTime},
+		</if>
+		<if test="modifierId != null">
+		    MODIFIER_ID = #{modifierId},
+		</if>
+		<if test="modifier != null">
+		    MODIFIER = #{modifier},
+		</if>
+		<if test="modifiedTime != null">
+		    MODIFIED_TIME = #{modifiedTime},
+		</if>
+        <if test="version != null">
+			VERSION=#{version},
+        </if>
+        <if test="status != null">
+			STATUS=#{status},
+        </if>
+        <if test="fullName != null">
+			FULL_NAME=#{fullName},
+        </if>
+      	 <if test="isDeleted != null">
+			IS_DELETED=#{isDeleted},
+        </if>
+        <if test="dataPermission != null">
+			DATA_PERMISSION=#{dataPermission},
+        </if>
+       <if test="acceptAuditTask != null">
+			ACCEPT_AUDIT_TASK = #{acceptAuditTask},
+        </if>
+	</trim>
+	where id = #{id}
+	 <if test="version != null">
+			AND VERSION = #{version} -1 
+     </if>  
+</update>
+
+<delete id="delete" parameterType="java.lang.Integer">
+   update  SYS_USER set is_deleted = 1 where id = #{id}
+</delete>
+
+<select id="get" parameterType="java.lang.Long" resultMap="sysUserResultMap">
+	<include refid="sysUserSelective" />
+	where sysUser.id = #{id}
+</select>
+
+<select id="getBizDirector" parameterType="java.util.Map" resultMap="sysUserResultMap">
+	<include refid="sysUserSelective" />
+	WHERE	sysUser.DATA_PERMISSION = #{dataPermission}
+	AND 	sysUser.USER_TYPE = #{userType}
+	AND 	sysUser.IS_DELETED = 0
+</select>
+<select id="getBizDirectorListLike" parameterType="java.util.Map" resultMap="sysUserResultMap">
+	<include refid="sysUserSelective" />
+	WHERE	sysUser.DATA_PERMISSION  LIKE  #{dataPermission}||'%'
+	AND 	sysUser.USER_TYPE = #{userType}
+	AND 	sysUser.IS_DELETED = 0
+</select>
+<select id="getAllCrmsInSalesDept" parameterType="java.lang.String"  resultMap="sysUserResultMap">
+	<include refid="sysUserSelective" />
+	where sysUser.data_permission like #{salesDeptcode}||'%' and sysUser.data_permission != #{salesDeptcode}
+</select>
+
+<select id="findListByVO" parameterType="SysUserVO"  resultMap="sysUserResultMap">
+	<include refid="sysUserSelective" />
+	<include refid="sysUserConditions" />
+</select>
+<!-- 查询做该产品的所有用户 -->
+<select id="findListByUserId" parameterType="java.util.Map"  resultMap="sysUserResultMap">
+	select <include refid="sysUserField" /> 
+  from SYS_USER sysUser,  SYS_PRODUCT_USER   pu
+ where sysUser.id = pu.user_id
+   and sysUser.data_permission = #{dataPermission}
+   and pu.product_id =#{productId}       
+</select>
+<select id="count" parameterType="SysUserVO"  resultType="java.lang.Integer"> 
+  SELECT count(*) as total FROM (
+  
+		<include refid="sysUserAndBaseAreaSelective" />
+		<include refid="sysUserAndBaseAreaConditions" />
+		) 
+</select>
+
+<!-- 登录时根据用户id加载的菜单  -->
+<select id="findPermissionListBySysUserId"  parameterType="java.lang.Long" resultMap="sysPermissionLoginResultMap">
+	SELECT DISTINCT
+	   sysPermission.ID          ID,
+       sysPermission.NAME        NAME,
+       sysPermission.CODE        CODE,
+       sysPermission.LEVELS      LEVELS,
+       sysPermission.LEVEL_ORDER LEVEL_ORDER,
+       sysPermission.PARENT_ID   PARENT_ID,
+       sysPermission.URL         URL
+  FROM sys_group_user      sysGroupUser,
+       sys_group_role      sysGroupRole,
+       sys_role_permission sysRolePermission,
+       sys_permission      sysPermission
+  WHERE sysGroupUser.USER_ID = #{id}
+   AND sysGroupUser.Group_Id = sysGroupRole.Group_Id
+   AND sysGroupRole.Role_Id = sysRolePermission.Role_Id
+   AND sysRolePermission.Permission_Id = sysPermission.Id
+   AND sysPermission.TYPE = 1
+   AND sysPermission.IS_DELETED = 0
+   
+   ORDER BY sysPermission.LEVELS,sysPermission.LEVEL_ORDER
+</select>
+<select id="findSysUserByLoginName" parameterType="java.lang.String" resultMap="sysUserResultMap">
+	SELECT 	sysUser.ID ,
+			sysUser.SIGN_PASSWORD ,
+       		sysUser.NAME ,
+       		sysUser.AREA_ID ,
+       		sysUser.LOGIN_RETRY 
+  	FROM sys_user sysUser
+  	WHERE sysUser.login_name = #{loginName}
+  	AND sysUser.IS_DELETED = 0
+  	AND sysUser.STATUS = 0
+</select>
+
+<select id="getSysUserByCode" parameterType="java.lang.String" resultMap="sysUserResultMap">
+	<include refid="sysUserSelective" />
+  	WHERE sysUser.code = #{code}
+  	AND sysUser.IS_DELETED = 0
+  	AND sysUser.STATUS = 0
+</select>
+
+<!--获取营业网点下的可以指定参与产品的客户经理-->
+<select id="getCrmsInSalesDeptByProductId" parameterType="java.util.HashMap" resultMap="sysUserResultMap">
+	SELECT
+	<include refid="sysUserField" />
+  	FROM sys_user sysUser, SYS_PRODUCT_USER product_user, PRODUCT product
+  	WHERE sysUser.ID = product_user.USER_ID 
+  	AND product_user.PRODUCT_ID = product.ID
+  	AND sysUser.IS_DELETED = 0
+  	AND sysUser.DATA_PERMISSION != #{salesDeptCode} 
+  	AND sysUser.DATA_PERMISSION like #{salesDeptCode} || '%'
+  	AND product_ID = #{productId}
+</select>
+
+<!--获取营业网点下的可以指定参与产品的 用户-->
+<select id="getSalesByProductId" parameterType="java.util.HashMap" resultMap="sysUserResultMap">
+	SELECT
+	<include refid="sysUserField" />
+  	FROM sys_user sysUser, SYS_PRODUCT_USER product_user, PRODUCT product
+  	WHERE sysUser.ID = product_user.USER_ID 
+  	AND product_user.PRODUCT_ID = product.ID
+  	AND sysUser.IS_DELETED = 0  	
+  	AND sysUser.DATA_PERMISSION like #{salesDeptCode} || '%'
+  	AND product_ID = #{productId}
+</select>
+
+<!--获取当前用户拥有营业网点下的可以指定参与产品的客服经理-->
+<select id="getServicesInCurSalesDeptByProductId" parameterType="java.util.HashMap" resultMap="sysUserResultMap">
+	SELECT
+	<include refid="sysUserField" />
+  	FROM sys_user sysUser, SYS_PRODUCT_USER product_user, PRODUCT product
+  	WHERE sysUser.ID = product_user.USER_ID 
+  	AND product_user.PRODUCT_ID = product.ID
+  	AND sysUser.IS_DELETED = 0
+  	AND sysUser.DATA_PERMISSION IN (
+  	  <foreach item="guard" index="index" collection="salesDeptCodeList" separator=",">
+		  #{guard}
+	  </foreach>
+  	)
+  	AND product_ID = #{productId}
+</select>
+
+<!--获取当前用户拥有营业网点下的可以指定参与产品的客服经理-->
+<select id="getServicesInCurSalesDeptByProductIdList" parameterType="java.util.HashMap" resultMap="sysUserResultMap">
+	SELECT
+	<include refid="sysUserField" />
+  	FROM sys_user sysUser, SYS_PRODUCT_USER product_user, PRODUCT product
+  	WHERE sysUser.ID = product_user.USER_ID 
+  	AND product_user.PRODUCT_ID = product.ID
+  	AND sysUser.IS_DELETED = 0
+  	AND sysUser.DATA_PERMISSION IN (
+	  	  <foreach item="guard" index="index" collection="salesDeptCodeList" separator=",">
+			  #{guard}
+		  </foreach>
+  	)
+  	AND product_ID IN(
+	  	 <foreach item="guard" index="index" collection="productIdList" separator=",">
+			  #{guard}
+		  </foreach>
+  	)
+</select>
+
+<!-- 查询指定字段是否有重复 -->
+<select id="exists" parameterType="java.util.Map"  resultType="java.lang.Integer"> 
+	select count(*) from SYS_USER sysUser 	
+	<where>
+		<if test="loginName != null">
+			sysUser.Login_name = #{loginName}
+		</if>	
+	</where>
+</select>
+<select id="testConnection" resultType="java.lang.Integer">
+	select 1 from dual
+</select> 
+<select id="findPermissionCodeList" parameterType="java.lang.Long" resultType="java.lang.String">
+	SELECT 
+	DISTINCT
+	sysPermission.CODE
+  	FROM SYS_GROUP_USER sysGroupUser, 
+  		 SYS_GROUP_ROLE sysGroupRole, 
+  		 SYS_ROLE_PERMISSION sysRolePermission,
+  		 SYS_PERMISSION  sysPermission
+ 	WHERE sysGroupUser.GROUP_ID = sysGroupRole.GROUP_ID
+      AND sysGroupRole.ROLE_ID = sysRolePermission.ROLE_ID
+      AND sysRolePermission.PERMISSION_ID = sysPermission.ID
+     AND sysPermission.IS_DELETED = 0
+      AND sysGroupUser.USER_ID = #{id}
+</select>
+
+<!-- 获取所有客户经理 -->
+<select id="findAllCrmByUserTypeMap" parameterType="java.util.HashMap" resultMap="sysUserResultMap">
+	SELECT
+	<include refid="sysUserField" />
+	FROM SYS_USER sysUser
+	WHERE sysUser.IS_DELETED = 0
+	AND sysUser.USER_TYPE IN (#{businessDirector}, #{salesManager})
+</select>
+
+	<!-- Ivan -->
+	<select id="findListWithPGByVO" parameterType="SysUserVO"  resultMap="sysUserResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="sysUserAndBaseAreaSelective" />
+		<include refid="sysUserAndBaseAreaConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<sql id="sysUserAndBaseAreaSelective">
+		select 
+		DISTINCT
+			<include refid="sysUserField"/>
+			,
+			 BASEAREA.FULL_NAME ROLE_FULL_NAME,
+			 BASEAREA.CODE      ROLE_CODE
+			  FROM SYS_USER SYSUSER
+			  RIGHT JOIN SYS_PRODUCT_USER P
+			    ON SYSUSER.ID = P.USER_ID
+			  LEFT JOIN BASE_AREA BASEAREA
+			    ON SYSUSER.AREA_ID = BASEAREA.ID
+	</sql>
+	
+	<sql id="sysUserAndBaseAreaConditions">
+		<where>
+		
+			
+	  		  AND sysUser.IS_DELETED = 0
+	  		 <if test="productIdList !=null and productIdList.size() > 0">
+			AND 	P.PRODUCT_ID IN(
+				<foreach item="guard" index="index" collection="productIdList" separator=",">
+					#{guard}
+				</foreach>
+			)
+			</if>
+
+	  		<if test="userTypeList !=null and userTypeList.size() > 0">
+			AND sysUser.USER_TYPE IN(
+				<foreach item="guard" index="index" collection="userTypeList" separator=",">
+					#{guard}
+				</foreach>
+			)
+			</if>
+			<if test="id != null">
+				AND sysUser.id = #{id}
+	        </if>
+	        <if test="code != null and code != ''">
+				AND sysUser.code = #{code}
+	        </if>
+			<if test="name != null and name != ''">
+				AND sysUser.NAME = #{name}
+	        </if>
+	        <if test="areaId != null">
+				AND sysUser.AREA_ID = #{areaId}
+	        </if>
+	        <if test="loginName != null">
+				AND sysUser.LOGIN_NAME = #{loginName}
+	        </if>
+	        <if test="userType != null">
+				AND sysUser.USER_TYPE = #{userType}
+	        </if>
+	        <if test="matchDataPermission != null and matchDataPermission != ''" >
+	        	AND sysUser.DATA_PERMISSION LIKE #{matchDataPermission} || '%'
+	        </if>
+	         <if test="fullName != null and fullName !='' " >
+	        	AND sysUser.FULL_NAME like '%${fullName}%'
+	        </if>
+	       </where>
+	</sql>
+
+	<select id="queryMyGroupList" parameterType="java.lang.Long" resultMap="groupUserMap">
+		SELECT T.ID,T.USER_ID,T.GROUP_ID,T.VERSION FROM SYS_GROUP_USER T WHERE T.USER_ID = #{userId}
+	</select>
+	
+	<select id='getMaxPermission' parameterType="java.lang.Long"  resultType="java.lang.String">
+			SELECT MAX(U.DATA_PERMISSION) FROM  SYS_USER U WHERE U.AREA_ID=#{areaId} AND U.IS_DELETED=0
+	</select>
+	<!-- Ivan -->
+
+<!-- 获取该用户所在营业部的所有客服 -->
+<!-- <select id="getServicesInCurSalesDeptByDataPermission" parameterType="java.util.HashMap" resultMap="sysUserResultMap">
+	SELECT
+	<include refid="sysUserField" />
+  	FROM sys_user sysUser
+  	WHERE
+  	sysUser.DATA_PERMISSION = #{dataPermission}
+  	AND sysUser.USER_TYPE = #{userType}
+  	
+  
+</select> -->
+<!-- 获取所助学贷的初审人员 -->
+<select id="assessorList" parameterType="SysUserVO"  resultMap="sysUserResultMap">
+	select * from sys_user where user_type=#{userType} and status=0 and is_deleted = 0
+	<if test="acceptAuditTask !=null">
+		and ACCEPT_AUDIT_TASK=#{acceptAuditTask}
+	</if>
+</select>
+<!-- 获取五大营业部的的测试客服门店经理  催收人员 -->
+	<select id="araeTestAssessorList" parameterType="SysUserVO"  resultMap="sysUserResultMap">
+	
+	select * from  sys_user where user_type in (3,2,6) and area_id in (
+		SELECT DISTINCT A.ID FROM BASE_AREA A 
+	  
+	          INNER JOIN SYS_USER B ON A.CODE=B.DATA_PERMISSION
+	      
+	          INNER JOIN SYS_PRODUCT_USER  C  ON B.ID=C.USER_ID
+	  
+	      WHERE A.IDENTIFIER='zdsys.SalesDepartment' AND C.PRODUCT_ID=8 AND A.ID <![CDATA[<>]]> 2222  
+	)
+		and substr(login_name,0,4) ='test'
+	union 
+	select * from sys_user where user_type=#{userType} and status=0 and is_deleted = 0 and substr(login_name,0,4) ='test'
+	<if test="acceptAuditTask !=null">
+		and ACCEPT_AUDIT_TASK=#{acceptAuditTask}
+	</if>
+	union 
+	 select u.* from sys_group_user g 
+     left join sys_user u  on g.user_id=u.id 
+     where g.group_id=30  and substr(u.login_name,0,4) ='test'
+</select>
+<!-- 获取五大营业部的的真实客服门店经理  催收人员 -->
+	<select id="araeAssessorList" parameterType="SysUserVO"  resultMap="sysUserResultMap">
+	
+	select * from  sys_user where user_type in (3,6,2) and area_id in (	SELECT DISTINCT A.ID FROM BASE_AREA A 
+	  
+	          INNER JOIN SYS_USER B ON A.CODE=B.DATA_PERMISSION
+	      
+	          INNER JOIN SYS_PRODUCT_USER  C  ON B.ID=C.USER_ID
+	  
+	      WHERE A.IDENTIFIER='zdsys.SalesDepartment' AND C.PRODUCT_ID=8  
+	)
+		and substr(login_name,0,4) !='test'
+	union 
+	select * from sys_user where user_type=#{userType} and status=0 and is_deleted = 0 and substr(login_name,0,4) !='test'
+	<if test="acceptAuditTask !=null">
+		and ACCEPT_AUDIT_TASK=#{acceptAuditTask}
+	</if>
+	union 
+	 select u.* from sys_group_user g 
+     left join sys_user u  on g.user_id=u.id 
+     where g.group_id=30  and substr(u.login_name,0,4) !='test'
+</select>
+
+	<select id="araeCustomerServiceList" parameterType="SysUserVO"  resultMap="sysUserResultMap">
+	
+	select * from  sys_user where user_type in (3,6,2) and area_id in (	SELECT DISTINCT A.ID FROM BASE_AREA A 
+	  
+	          INNER JOIN SYS_USER B ON A.CODE=B.DATA_PERMISSION
+	      
+	          INNER JOIN SYS_PRODUCT_USER  C  ON B.ID=C.USER_ID
+	  
+	      WHERE A.IDENTIFIER='zdsys.SalesDepartment' AND C.PRODUCT_ID=8  
+	)
+		and substr(login_name,0,4) !='test'
+  </select>
+  <select id="araeTestCustomerServiceList" parameterType="SysUserVO"  resultMap="sysUserResultMap">
+	
+	select * from  sys_user where user_type in (3,6,2) and area_id in (	SELECT DISTINCT A.ID FROM BASE_AREA A 
+	  
+	          INNER JOIN SYS_USER B ON A.CODE=B.DATA_PERMISSION
+	      
+	          INNER JOIN SYS_PRODUCT_USER  C  ON B.ID=C.USER_ID
+	  
+	      WHERE A.IDENTIFIER='zdsys.SalesDepartment' AND C.PRODUCT_ID=8  
+	)
+		and substr(login_name,0,4) ='test'
+  </select>
+</mapper>

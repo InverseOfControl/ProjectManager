@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.EduLoanImageMapper">
+	<resultMap id="eduLoanImageResultMap" type="EduLoanImage">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	    <result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="FILEPATH" property="filePath" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="IMAGE_NAME" property="imageName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="IMAGE_TYPE" property="imageType" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="SMALL_ICON" property="smallIcon" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MEMO" property="memo" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	    <result column="OPERATOR_ID" property="operatorId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="CONTRACT_NO" property="contractNo" jdbcType="VARCHAR" javaType="java.lang.String"/>	
+	</resultMap>
+
+	<sql id="eduLoanImageField">
+		ID,VERSION, FILEPATH, IMAGE_NAME, IMAGE_TYPE, LOAN_ID,
+		SMALL_ICON, MEMO, OPERATOR_ID, FILE_NAME, CONTRACT_NO		
+	</sql>	
+	<select id="findByContractNo"  resultMap="eduLoanImageResultMap" parameterType="java.lang.String" >
+		SELECT
+		<include refid="eduLoanImageField" />		
+		FROM LOAN_IMAGES
+		WHERE LOAN_IMAGES.CONTRACT_NO = #{contractNo}
+	</select>
+</mapper>
+

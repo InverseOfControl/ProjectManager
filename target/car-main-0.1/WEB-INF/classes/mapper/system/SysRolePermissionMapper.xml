@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.system.mapper.SysRolePermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.ezendai.credit2.system.model.SysRolePermission" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="ROLE_ID" property="roleId" jdbcType="DECIMAL" />
+    <result column="PERMISSION_ID" property="permissionId" jdbcType="DECIMAL" />
+    <result column="VERSION" property="version" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ROLE_ID, PERMISSION_ID, VERSION
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ROLE_PERMISSION
+    where ID = #{id}
+  </select>
+  <select id="queryMyPermissionList" parameterType="java.lang.Long" resultType="java.lang.Long">
+  	select permission_id from sys_role_permission where role_id = #{roleId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYS_ROLE_PERMISSION
+    where ID = #{id}
+  </delete>
+  	
+	<delete id="deleteByIdList" parameterType="sysRoleVO">
+		DELETE FROM SYS_ROLE_PERMISSION T WHERE T.ROLE_ID = #{id} AND T.PERMISSION_ID IN (
+			<foreach item="guard" index="index"  collection="removePermissionList" separator=",">
+				${guard}
+			</foreach>
+		) 
+	</delete>
+	
+	<delete id="deleteByRoleId" parameterType="java.lang.Long">
+		DELETE FROM SYS_ROLE_PERMISSION T WHERE T.ROLE_ID = #{id}
+	</delete>
+
+  <insert id="insert" parameterType="com.ezendai.credit2.system.model.SysRolePermission" >
+  	<selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
+  			select seq_sys_role_permission_id.nextval as id from dual
+  	</selectKey>
+    insert into SYS_ROLE_PERMISSION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        ID,
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="permissionId != null" >
+        PERMISSION_ID,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="roleId != null" >
+        #{roleId},
+      </if>
+      <if test="permissionId != null" >
+        #{permissionId},
+      </if>
+      <if test="version != null" >
+        #{version},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ezendai.credit2.system.model.SysRolePermission" >
+    update SYS_ROLE_PERMISSION
+    <set >
+      <if test="roleId != null" >
+        ROLE_ID = #{roleId},
+      </if>
+      <if test="permissionId != null" >
+        PERMISSION_ID = #{permissionId},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version},
+      </if>
+    </set>
+    where ID = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ezendai.credit2.system.model.SysRolePermission" >
+    update SYS_ROLE_PERMISSION
+    set ROLE_ID = #{roleId},
+      PERMISSION_ID = #{permissionId},
+      VERSION = #{version}
+    where ID = #{id}
+  </update>
+</mapper>

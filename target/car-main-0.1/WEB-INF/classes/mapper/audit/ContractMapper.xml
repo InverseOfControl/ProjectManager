@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezendai.credit2.audit.mapper.ContractMapper">
+	<resultMap id="contractResultMap" type="com.ezendai.credit2.audit.model.Contract">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result column="CONTRACT_NO" property="contractNo" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="SIGN_DATE" property="signDate" jdbcType="TIMESTAMP"
+			javaType="java.util.Date" />
+		<result column="CONTRACT_NAME" property="contractName"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="TYPE" property="type" jdbcType="NUMERIC"
+			javaType="java.lang.Integer" />
+		<result column="AREA_NAME" property="areaName" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="CITY_NAME" property="cityName" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="PERSON_NAME" property="personName" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="ID_NUM" property="idNum" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="ZIP_CODE" property="zipCode" jdbcType="CHAR"
+			javaType="java.lang.String" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="PAY_AMOUNT" property="payAmount" jdbcType="NUMERIC"
+			javaType="java.math.BigDecimal" />
+		<result column="PURPOSE" property="purpose" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="PACT_MONEY" property="pactMoney" jdbcType="NUMERIC"
+			javaType="java.math.BigDecimal" />
+		<result column="MONTH_INTEREST_AMOUNT" property="monthInterestAmount"
+			jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="TIMES" property="times" jdbcType="NUMERIC"
+			javaType="java.lang.Integer" />
+		<result column="START_REPAY_DATE" property="startRepayDate"
+			jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="END_REPAY_DATE" property="endRepayDate"
+			jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="BANK_ACCOUNT_NAME" property="bankAccountName"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="BANK_ACCOUNT_NUM" property="bankAccountNum"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="OPENING_BANK" property="openingBank" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="ASSESSMENT_FEES" property="assessmentFees"
+			jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="MANAGE_FEES" property="manageFees" jdbcType="NUMERIC"
+			javaType="java.math.BigDecimal" />
+		<result column="TTP_MANAGE_FEES" property="ttpManageFees"
+			jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CONTACT" property="contact" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="MONTH_AMOUNT" property="monthAmount" jdbcType="NUMERIC"
+			javaType="java.math.BigDecimal" />
+		<result column="GUARANTEE_NAME" property="guaranteeName"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="GUARANTEE_ID_NUM" property="guaranteeIdNum"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="LEGAL_GUARANTEE" property="legalGuarantee"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="BUSINESS_COMPANY_NAME" property="businessCompanyName"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PREPARATORY_AMOUNT" property="preparatoryAmount"
+			jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="TELL" property="tell" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="TOTAL_AMOUNT" property="totalAmount" jdbcType="NUMERIC"
+			javaType="java.math.BigDecimal" />
+		<result column="PRINCIPAL_AMOUNT" property="principalAmount"
+			jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="RASK_AMOUNT" property="raskAmount" jdbcType="NUMERIC"
+			javaType="java.math.BigDecimal" />
+		<result column="PLATE_NUMBER" property="plateNumber" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="FRAME_NUMBER" property="frameNumber" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="LENDER" property="lender" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="BANK_BRANCH_NAME" property="bankBranchName"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="IS_MARRIED" property="isMarried" jdbcType="NUMERIC"
+			javaType="java.lang.Integer" />
+		<result column="BUSINESS_ADDRESS" property="businessAddress"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="REPAY_DATE" property="repayDate" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="LOAN_AGREE_NUM" property="loanAgreeNum"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="TERRITORY" property="territory" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="BRAND" property="brand" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP"
+			javaType="java.util.Date" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="MODIFIED_TIME" property="modifiedTime"
+			jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+	    <result column="org_pact_money" property="orgPactMoney" jdbcType="NUMERIC"
+			javaType="java.math.BigDecimal" />
+		<result column="audit_money" property="auditMoney" jdbcType="NUMERIC"
+			javaType="java.math.BigDecimal" />
+	</resultMap>
+
+	<sql id="contractField">
+		ID, LOAN_ID, CONTRACT_NO, SIGN_DATE, CONTRACT_NAME, TYPE, AREA_NAME,
+		CITY_NAME, PERSON_NAME, ID_NUM, ADDRESS, ZIP_CODE, EMAIL, PAY_AMOUNT,
+		PURPOSE, PACT_MONEY, MONTH_INTEREST_AMOUNT, TIMES, START_REPAY_DATE,
+		END_REPAY_DATE, BANK_ACCOUNT_NAME, BANK_ACCOUNT_NUM, OPENING_BANK,
+		ASSESSMENT_FEES, MANAGE_FEES, TTP_MANAGE_FEES, CONTACT, MONTH_AMOUNT,
+		GUARANTEE_NAME, GUARANTEE_ID_NUM, LEGAL_GUARANTEE,
+		BUSINESS_COMPANY_NAME,
+		PREPARATORY_AMOUNT, RASK_AMOUNT, PLATE_NUMBER, FRAME_NUMBER, LENDER, BANK_BRANCH_NAME,
+		IS_MARRIED, BUSINESS_ADDRESS, REPAY_DATE, LOAN_AGREE_NUM, TERRITORY,
+		BRAND,
+		CREATOR_ID, CREATOR, CREATED_TIME, MODIFIER_ID, MODIFIER, MODIFIED_TIME, VERSION,org_pact_money,AUDIT_MONEY
+	</sql>
+
+	<sql id="contractSelective">
+		SELECT
+		<include refid="contractField" />
+		FROM CONTRACT
+	</sql>
+
+	<sql id="contractConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				ID = #{id}
+			</if>
+			<if test="loanId != null">
+				AND LOAN_ID = #{loanId}
+			</if>
+			<if test="contractNo != null and contractNo != ''">
+				AND CONTRACT_NO = #{contractNo}
+			</if>
+			<if test="signDate != null">
+				AND SIGN_DATE = #{signDate}
+			</if>
+			<if test="contractName != null and contractName != ''">
+				AND CONTRACT_NAME = #{contractName}
+			</if>
+			<if test="type != null">
+				AND TYPE = #{type}
+			</if>
+			<if test="areaName != null and areaName != ''">
+				AND AREA_NAME = #{areaName}
+			</if>
+			<if test="cityName != null and cityName != ''">
+				AND CITY_NAME = #{cityName}
+			</if>
+			<if test="personName != null and personName != ''">
+				AND PERSON_NAME = #{personName}
+			</if>
+			<if test="idNum != null and idNum != ''">
+				AND ID_NUM = #{idNum}
+			</if>
+			<if test="address != null and address != ''">
+				AND ADDRESS = #{address}
+			</if>
+			<if test="zipCode != null and zipCode != ''">
+				AND ZIP_CODE = #{zipCode}
+			</if>
+			<if test="email != null and email != ''">
+				AND EMAIL = #{email}
+			</if>
+			<if test="payAmount != null">
+				AND PAY_AMOUNT = #{payAmount}
+			</if>
+			<if test="purpose != null and purpose != ''">
+				AND PURPOSE = #{purpose}
+			</if>
+			<if test="pactMoney != null">
+				AND PACT_MONEY = #{pactMoney}
+			</if>
+			<if test="monthInterestAmount != null">
+				AND MONTH_INTEREST_AMOUNT = #{monthInterestAmount}
+			</if>
+			<if test="times != null">
+				AND TIMES = #{times}
+			</if>
+			<if test="startRepayDate != null">
+				AND START_REPAY_DATE = #{startRepayDate}
+			</if>
+			<if test="endRepayDate != null">
+				AND END_REPAY_DATE = #{endRepayDate}
+			</if>
+			<if test="bankAccountName != null and bankAccountName != ''">
+				AND BANK_ACCOUNT_NAME = #{bankAccountName}
+			</if>
+			<if test="bankAccountNum != null and bankAccountNum != ''">
+				AND BANK_ACCOUNT_NUM = #{bankAccountNum}
+			</if>
+			<if test="openingBank != null and openingBank != ''">
+				AND OPENING_BANK != #{openingBank}
+			</if>
+			<if test="assessmentFees != null">
+				AND ASSESSMENT_FEES = #{assessmentFees}
+			</if>
+			<if test="manageFees != null">
+				AND MANAGE_FEES = #{manageFees}
+			</if>
+			<if test="ttpManageFees != null">
+				AND TTP_MANAGE_FEES = #{ttpManageFees}
+			</if>
+			<if test="contact != null and contact != ''">
+				AND CONTACT = #{contact}
+			</if>
+			<if test="monthAmount != null">
+				AND MONTH_AMOUNT = #{monthAmount}
+			</if>
+			<if test="guaranteeName != null and guaranteeName != ''">
+				AND GUARANTEE_NAME = #{guaranteeName}
+			</if>
+			<if test="guaranteeIdNum ！= null and guaranteeIdNum != ''">
+				AND GUARANTEE_ID_NUM = #{guaranteeIdNum}
+			</if>
+			<if test="legalGuarantee != null and legalGuarantee != ''">
+				AND LEGAL_GUARANTEE = #{legalGuarantee}
+			</if>
+			<if test="businessCompanyName != null and businessCompanyName != ''">
+				AND BUSINESS_COMPANY_NAME = #{businessCompanyName}
+			</if>
+			<if test="preparatoryAmount != null">
+				ABD PREPARATORY_AMOUNT = #{preparatoryAmount}
+			</if>
+			<if test="tell ! and tell != ''">
+				AND TELL = #{tell}
+			</if>
+			<if test="totalAmount != null">
+				AND TOTAL_AMOUNT = #{totalAmount}
+			</if>
+			<if test="orgPactMoney != null">
+				AND org_pact_money = #{orgPactMoney}
+			</if>
+			<if test="auditMoney != null">
+				AND audit_money = #{auditMoney}
+			</if>
+			<if test="principalAmount != null">
+				AND PRINCIPAL_AMOUNT = #{principalAmount}
+			</if>
+			<if test="raskAmount != null">
+				AND RASK_AMOUNT =#{raskAmount}
+			</if>
+			<if test="plateNumber != null and plateNumber != ''">
+				AND PLATE_NUMBER = #{plateNumber}
+			</if>
+			<if test="frameNumber != null and frameNumber != ''">
+				AND FRAME_NUMBER = #{frameNumber}
+			</if>
+			<if test="lender != null and lender != ''">
+				AND LENDER = #{lender}
+			</if>
+			<if test="bankBranchName != null and bankBranchName != ''">
+				AND BANK_BRANCH_NAME = #{bankBranchName}
+			</if>
+			<if test="isMarried != null">
+				AND IS_MARRIED = #{isMarried}
+			</if>
+			<if test="businessAddress != null and businessAddress != ''">
+				AND BUSINESS_ADDRESS = #{businessAddress}
+			</if>
+			<if test="repayDate != null and repayDate != ''">
+				AND REPAY_DATE = #{repayDate}
+			</if>
+			<if test="loanAgreeNum != null and loanAgreeNum != ''">
+				AND LOAN_AGREE_NUM = #{loanAgreeNum}
+			</if>
+			<if test="territory != null and territory != ''">
+				AND TERRITORY = #{territory}
+			</if>
+			<if test="brand != null and brand != ''">
+				AND BRAND = #{brand}
+			</if>
+			<if test="creatorId != null">
+				AND CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null and creator != ''">
+				AND CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				AND MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null and modifier != ''">
+				AND MODIFIER = #{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				AND MODIFIED_TIME = #{modifiedTime}
+			</if>
+			<if test="version != null">
+				AND VERSION = #{version}
+			</if>
+		</trim>
+	</sql>
+
+	<select id="get" resultMap="contractResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="contractField" />
+		FROM CONTRACT
+		WHERE ID = #{id}
+	</select>
+	<!-- 根据合同编号或者借款ID查询合同 -->
+	<select id="getContractByParams" resultMap="contractResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="contractField" />
+		FROM CONTRACT
+			<trim prefix="where" prefixOverrides="and">
+			<if test="loanId != null">
+				AND LOAN_ID = #{loanId}
+			</if>
+			<if test="contractNo != null and contractNo != ''">
+				AND CONTRACT_NO = #{contractNo}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="findListByVo" parameterType="ContractVO" resultMap="contractResultMap"> 
+		<include refid="contractField" />
+		<include refid="contractConditions" />
+	</select>
+	<select id="findWithPG" parameterType="ContractVO" resultMap="contractResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="contractField" />
+		<include refid="contractConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM CONTRACT WHERE ID = #{id}
+	</select>
+
+	<select id="count" parameterType="ContractVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="contractField" />
+		<include refid="contractConditions" />
+		)
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM CONTRACT WHERE ID = #{id}
+	</delete>
+
+	<delete id="deleteByIdList" parameterType="ContractVO"> 
+		DELETE FROM CONTRACT WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+
+	<insert id="insert" parameterType="Contract">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_contract_id.nextval AS id FROM dual
+		</selectKey>
+		insert into contract
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				ID,
+			<if test="loanId != null">
+				LOAN_ID,
+			</if>
+			<if test="contractNo != null">
+				CONTRACT_NO,
+			</if>
+			<if test="signDate != null">
+				SIGN_DATE,
+			</if>
+			<if test="contractName != null">
+				CONTRACT_NAME,
+			</if>
+			<if test="type != null">
+				TYPE,
+			</if>
+			<if test="cityName != null">
+				CITY_NAME,
+			</if>
+			<if test="areaName != null">
+				AREA_NAME,
+			</if>
+			<if test="personName != null">
+				PERSON_NAME,
+			</if>
+			<if test="idNum != null">
+				ID_NUM,
+			</if>
+			<if test="address != null">
+				ADDRESS,
+			</if>
+			<if test="zipCode != null">
+				ZIP_CODE,
+			</if>
+			<if test="email != null">
+				EMAIL,
+			</if>
+			<if test="payAmount != null">
+				PAY_AMOUNT,
+			</if>
+			<if test="purpose != null">
+				PURPOSE,
+			</if>
+			<if test="pactMoney != null">
+				PACT_MONEY,
+			</if>
+			<if test="auditMoney != null">
+				AUDIT_MONEY,
+			</if>
+			<if test="monthInterestAmount != null">
+				MONTH_INTEREST_AMOUNT,
+			</if>
+			<if test="times != null">
+				TIMES,
+			</if>
+			<if test="startRepayDate != null">
+				START_REPAY_DATE,
+			</if>
+			<if test="endRepayDate != null">
+				END_REPAY_DATE,
+			</if>
+			<if test="bankAccountName != null">
+				BANK_ACCOUNT_NAME,
+			</if>
+			<if test="bankAccountNum != null">
+				BANK_ACCOUNT_NUM,
+			</if>
+			<if test="openingBank != null">
+				OPENING_BANK,
+			</if>
+			<if test="assessmentFees != null">
+				ASSESSMENT_FEES,
+			</if>
+			<if test="manageFees != null">
+				MANAGE_FEES,
+			</if>
+			<if test="ttpManageFees != null">
+				TTP_MANAGE_FEES,
+			</if>
+			<if test="contact != null">
+				CONTACT,
+			</if>
+			<if test="monthAmount != null">
+				MONTH_AMOUNT,
+			</if>
+			<if test="guaranteeName != null">
+				GUARANTEE_NAME,
+			</if>
+			<if test="loanAgreeNum != null">
+				LOAN_AGREE_NUM,
+			</if>
+			<if test="guaranteeIdNum != null">
+				GUARANTEE_ID_NUM,
+			</if>
+			<if test="legalGuarantee != null">
+				LEGAL_GUARANTEE,
+			</if>
+			<if test="businessCompanyName != null">
+				BUSINESS_COMPANY_NAME,
+			</if>
+			<if test="preparatoryAmount != null">
+				PREPARATORY_AMOUNT,
+			</if>
+			<if test="tell != null">
+				TELL,
+			</if>
+			<if test="totalAmount != null">
+				TOTAL_AMOUNT,
+			</if>
+			<if test="orgPactMoney != null">
+				org_pact_money ,
+			</if>
+			<if test="principalAmount != null">
+				PRINCIPAL_AMOUNT,
+			</if>
+			<if test="raskAmount != null">
+				RASK_AMOUNT,
+			</if>
+			<if test="territory != null">
+				TERRITORY,
+			</if>
+			<if test="plateNumber != null">
+				PLATE_NUMBER,
+			</if>
+			<if test="frameNumber != null">
+				FRAME_NUMBER,
+			</if>
+			<if test="lender != null">
+				LENDER,
+			</if>
+			<if test="bankBranchName != null">
+				BANK_BRANCH_NAME,
+			</if>
+			<if test="isMarried != null">
+				IS_MARRIED,
+			</if>
+			<if test="businessAddress != null">
+				BUSINESS_ADDRESS,
+			</if>
+			<if test="repayDate != null">
+				REPAY_DATE,
+			</if>
+			<if test="brand != null">
+				BRAND,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="diffRefund !=null">
+			  diffRefund,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			#{id},
+			<if test="loanId != null">
+				#{loanId},
+			</if>
+			<if test="contractNo != null">
+				#{contractNo},
+			</if>
+			<if test="signDate != null">
+				#{signDate},
+			</if>
+			<if test="contractName != null">
+				#{contractName},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="cityName != null">
+				#{cityName},
+			</if>
+			<if test="areaName != null">
+				#{areaName},
+			</if>
+			<if test="personName != null">
+				#{personName},
+			</if>
+			<if test="idNum != null">
+				#{idNum},
+			</if>
+			<if test="address != null">
+				#{address},
+			</if>
+			<if test="zipCode != null">
+				#{zipCode},
+			</if>
+			<if test="email != null">
+				#{email},
+			</if>
+			<if test="payAmount != null">
+				#{payAmount},
+			</if>
+			<if test="purpose != null">
+				#{purpose},
+			</if>
+			<if test="pactMoney != null">
+				#{pactMoney},
+			</if>
+			<if test="auditMoney != null">
+				#{auditMoney},
+			</if>
+			<if test="monthInterestAmount != null">
+				#{monthInterestAmount},
+			</if>
+			<if test="times != null">
+				#{times},
+			</if>
+			<if test="startRepayDate != null">
+				#{startRepayDate},
+			</if>
+			<if test="endRepayDate != null">
+				#{endRepayDate},
+			</if>
+			<if test="bankAccountName != null">
+				#{bankAccountName},
+			</if>
+			<if test="bankAccountNum != null">
+				#{bankAccountNum},
+			</if>
+			<if test="openingBank != null">
+				#{openingBank},
+			</if>
+			<if test="assessmentFees != null">
+				#{assessmentFees},
+			</if>
+			<if test="manageFees != null">
+				#{manageFees},
+			</if>
+			<if test="ttpManageFees != null">
+				#{ttpManageFees},
+			</if>
+			<if test="contact != null">
+				#{contact},
+			</if>
+			<if test="monthAmount != null">
+				#{monthAmount},
+			</if>
+			<if test="guaranteeName != null">
+				#{guaranteeName},
+			</if>
+			<if test="loanAgreeNum != null">
+				#{loanAgreeNum},
+			</if>
+			<if test="guaranteeIdNum != null">
+				#{guaranteeIdNum},
+			</if>
+			<if test="legalGuarantee != null">
+				#{legalGuarantee},
+			</if>
+			<if test="businessCompanyName != null">
+				#{businessCompanyName},
+			</if>
+			<if test="preparatoryAmount != null">
+				#{preparatoryAmount},
+			</if>
+			<if test="tell != null">
+				#{tell},
+			</if>
+			<if test="totalAmount != null">
+				#{totalAmount},
+			</if>
+            <if test="orgPactMoney != null">
+				#{orgPactMoney},
+			</if>			
+			<if test="principalAmount != null">
+				#{principalAmount},
+			</if>
+			<if test="raskAmount != null">
+				#{raskAmount},
+			</if>
+			<if test="territory != null">
+				#{territory},
+			</if>
+			<if test="plateNumber != null">
+				#{plateNumber},
+			</if>
+			<if test="frameNumber != null">
+				#{frameNumber},
+			</if>
+			<if test="lender != null">
+				#{lender},
+			</if>
+			<if test="bankBranchName != null">
+				#{bankBranchName},
+			</if>
+			<if test="isMarried != null">
+				#{isMarried},
+			</if>
+			<if test="businessAddress != null">
+				#{businessAddress},
+			</if>
+			<if test="repayDate != null">
+				#{repayDate},
+			</if>
+			<if test="brand != null">
+				#{brand},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="diffRefund !=null">
+			   #{diffRefund},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="ContractVO">
+	UPDATE CONTRACT
+	<set>
+		<if test="id != null">
+			ID = #{id},
+		</if>
+		<if test="loanId != null">
+			LOAN_ID = #{loanId},
+		</if>
+		<if test="contractNo != null and contractNo != ''">
+			CONTRACT_NO = #{contractNo},
+		</if>
+		<if test="signDate != null">
+			SIGN_DATE = #{signDate},
+		</if>
+		<if test="contractName != null and contractName != ''">
+			CONTRACT_NAME = #{contractName},
+		</if>
+		<if test="type != null">
+			TYPE = #{type},
+		</if>
+		<if test="areaName != null and areaName != ''">
+			AREA_NAME = #{areaName},
+		</if>
+		<if test="cityName != null and cityName != ''">
+			CITY_NAME = #{cityName},
+		</if>
+		<if test="personName != null and personName != ''">
+			PERSON_NAME = #{personName},
+		</if>
+		<if test="idNum != null and idNum != ''">
+			ID_NUM = #{idNum},
+		</if>
+		<if test="address != null and address != ''">
+			ADDRESS = #{address},
+		</if>
+		<if test="zipCode != null and zipCode != ''">
+			ZIP_CODE = #{zipCode},
+		</if>
+		<if test="email != null and email != ''">
+			EMAIL = #{email},
+		</if>
+		<if test="payAmount != null">
+			PAY_AMOUNT = #{payAmount},
+		</if>
+		<if test="purpose != null and purpose != ''">
+			PURPOSE = #{purpose},
+		</if>
+		<if test="pactMoney != null">
+			PACT_MONEY = #{pactMoney},
+		</if>
+		<if test="auditMoney != null">
+			AUDIT_MONEY = #{auditMoney},
+		</if>
+		<if test="monthInterestAmount != null">
+			MONTH_INTEREST_AMOUNT = #{monthInterestAmount},
+		</if>
+		<if test="times != null">
+			TIMES = #{times},
+		</if>
+		<if test="startRepayDate != null">
+			START_REPAY_DATE = #{startRepayDate},
+		</if>
+		<if test="endRepayDate != null">
+			END_REPAY_DATE = #{endRepayDate},
+		</if>
+		<if test="bankAccountName != null and bankAccountName != ''">
+			BANK_ACCOUNT_NAME = #{bankAccountName},
+		</if>
+		<if test="bankAccountNum != null and bankAccountNum != ''">
+			BANK_ACCOUNT_NUM = #{bankAccountNum},
+		</if>
+		<if test="openingBank != null and openingBank != ''">
+			OPENING_BANK != #{openingBank},
+		</if>
+		<if test="assessmentFees != null">
+			ASSESSMENT_FEES = #{assessmentFees},
+		</if>
+		<if test="manageFees != null">
+			MANAGE_FEES = #{manageFees},
+		</if>
+		<if test="ttpManageFees != null">
+			TTP_MANAGE_FEES = #{ttpManageFees},
+		</if>
+		<if test="contact != null and contact != ''">
+			CONTACT = #{contact},
+		</if>
+		<if test="monthAmount != null">
+			MONTH_AMOUNT = #{monthAmount},
+		</if>
+		<if test="guaranteeName != null and guaranteeName != ''">
+			GUARANTEE_NAME = #{guaranteeName},
+		</if>
+		<if test="guaranteeIdNum ！= null and guaranteeIdNum != ''">
+			GUARANTEE_ID_NUM = #{guaranteeIdNum},
+		</if>
+		<if test="legalGuarantee != null and legalGuarantee != ''">
+			LEGAL_GUARANTEE = #{legalGuarantee},
+		</if>
+		<if test="businessCompanyName != null and businessCompanyName != ''">
+			BUSINESS_COMPANY_NAME = #{businessCompanyName},
+		</if>
+		<if test="preparatoryAmount != null">
+			PREPARATORY_AMOUNT = #{preparatoryAmount},
+		</if>
+		<if test="tell ! and tell != ''">
+			TELL = #{tell},
+		</if>
+		<if test="totalAmount != null">
+			TOTAL_AMOUNT = #{totalAmount},
+		</if>
+		<if test="orgPactMoney != null">
+			org_pact_money = #{orgPactMoney},
+		</if>
+		<if test="principalAmount != null">
+			PRINCIPAL_AMOUNT = #{principalAmount},
+		</if>
+		<if test="raskAmount != null">
+			RASK_AMOUNT =#{raskAmount},
+		</if>
+		<if test="plateNumber != null and plateNumber != ''">
+			PLATE_NUMBER = #{plateNumber},
+		</if>
+		<if test="frameNumber != null and frameNumber != ''">
+			FRAME_NUMBER = #{frameNumber},
+		</if>
+		<if test="lender != null and lender != ''">
+			LENDER = #{lender},
+		</if>
+		<if test="bankBranchName != null and bankBranchName != ''">
+			BANK_BRANCH_NAME = #{bankBranchName},
+		</if>
+		<if test="isMarried != null">
+			IS_MARRIED = #{isMarried},
+		</if>
+		<if test="businessAddress != null and businessAddress != ''">
+			BUSINESS_ADDRESS = #{businessAddress},
+		</if>
+		<if test="repayDate != null and repayDate != ''">
+			REPAY_DATE = #{repayDate},
+		</if>
+		<if test="loanAgreeNum != null and loanAgreeNum != ''">
+			LOAN_AGREE_NUM = #{loanAgreeNum},
+		</if>
+		<if test="territory != null and territory != ''">
+			TERRITORY = #{territory},
+		</if>
+		<if test="brand != null and brand != ''">
+			BRAND = #{brand},
+		</if>
+		<if test="creatorId != null">
+			CREATOR_ID = #{creatorId},
+		</if>
+		<if test="creator != null and creator != ''">
+			CREATOR = #{creator},
+		</if>
+		<if test="createdTime != null">
+			CREATED_TIME = #{createdTime},
+		</if>
+		<if test="modifierId != null">
+			MODIFIER_ID = #{modifierId},
+		</if>
+		<if test="modifier != null and modifier != ''">
+			MODIFIER = #{modifier},
+		</if>
+		<if test="modifiedTime != null">
+			MODIFIED_TIME = #{modifiedTime},
+		</if>
+		<if test="version != null">
+			VERSION = #{version},
+		</if>
+	</set>
+	WHERE ID = #{id}
+</update>
+
+	<delete id="deleteContractByLoanId" parameterType="java.lang.Long">
+		DELETE FROM CONTRACT WHERE LOAN_ID = #{loanId}
+	</delete>
+
+</mapper>

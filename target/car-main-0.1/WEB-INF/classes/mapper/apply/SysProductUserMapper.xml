@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.apply.mapper.SysProductUserMapper">
+
+	<resultMap id="sysProductUserResultMap" type="com.ezendai.credit2.apply.model.SysProductUser">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="USER_ID" property="userId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+
+	<sql id="sysProductUserField">
+		ID, PRODUCT_ID, USER_ID, VERSION
+	</sql>
+
+	<sql id="sysProductUserSelective">
+		SELECT
+		<include refid="sysProductUserField" />
+		FROM SYS_PRODUCT_USER
+	</sql>
+
+	<sql id="sysProductUserConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				SYS_PRODUCT_USER.ID = #{id}
+			</if>
+			<if test="productId != null">
+				AND SYS_PRODUCT_USER.PRODUCT_ID = #{productId}
+			</if>
+			<if test="userId != null">
+				AND SYS_PRODUCT_USER.USER_ID = #{userId}
+			</if>
+			<if test="version != null">
+				AND SYS_PRODUCT_USER.VERSION = #{version}
+			</if>
+		</trim>
+	</sql>
+
+	<insert id="insert" parameterType="SysProductUser">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_sys_product_user_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO SYS_PRODUCT_USER
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				ID,
+			<if test="productId != null">
+				PRODUCT_ID,
+			</if>
+			<if test="userId != null">
+				USER_ID,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+				#{id},
+			<if test="productId != null">
+				#{productId},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+		</trim>
+	</insert>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM SYS_PRODUCT_USER WHERE ID = #{id}
+	</delete>
+	
+	<delete id="deleteByIdList" parameterType="SysProductUserVO">
+		DELETE FROM SYS_PRODUCT_USER WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+	
+	<delete id="deleteByProductIdList" parameterType="SysProductUserVO">
+		DELETE FROM SYS_PRODUCT_USER T WHERE T.USER_ID = #{userId} AND T.PRODUCT_ID IN (
+		<foreach item="innerProductId" index="index" collection="removeProductIdList" separator=","> #{innerProductId} </foreach>
+		)
+	</delete>
+	
+	<update id="update" parameterType="SysProductUserVO">
+		UPDATE SYS_PRODUCT_USER
+		<trim prefix="set" suffixOverrides=",">
+			<if test="productId != null">
+				PRODUCT_ID = #{productId},
+			</if>
+			<if test="userId != null">
+				USER_ID = #{userId},
+			</if>
+		</trim>
+		WHERE ID = #{id}
+	</update>
+
+	<select id="get" parameterType="java.lang.Long" resultMap="sysProductUserResultMap">
+		<include refid="sysProductUserSelective" />
+		WHERE SYS_PRODUCT_USER.ID = #{id}
+	</select>
+
+	<select id="findListByVO" parameterType="SysProductUserVO" resultMap="sysProductUserResultMap">
+		<include refid="sysProductUserSelective" />
+		<include refid="sysProductUserConditions" />
+	</select>
+
+	<select id="count" parameterType="SysProductUserVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="sysProductUserSelective" />
+		<include refid="sysProductUserConditions" />
+		)
+	</select>
+
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM SYS_PRODUCT_USER WHERE ID = #{id}
+	</select>
+
+	<select id="findWithPG" parameterType="SysProductUserVO" resultMap="sysProductUserResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="sysProductUserSelective" />
+		<include refid="sysProductUserConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+	<!-- 根据用户ID查找贷款类型 -->
+	<select id="selectByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+		SELECT pro.product_name FROM SYS_PRODUCT_USER sp LEFT JOIN PRODUCT pro ON
+		sp.product_id = pro.product_id
+		WHERE sp.USER_ID = #{userId}
+	</select>
+  
+  <!-- 根据用户ID查找ProductId -->
+  <select id="selectProductIdByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+  		SELECT PRODUCT_ID
+  		FROM SYS_PRODUCT_USER
+  		WHERE USER_ID = #{userId}
+  </select>
+</mapper>

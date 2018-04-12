@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.SyncPreRepaymentInfoMapper">
+	
+	<resultMap id="syncPreRepaymentInfoResultMap"  type="SyncPreRepaymentInfo">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="loanId" column="LOAN_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="companyNo" column="COMPANY_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="contractNo" column="CONTRACT_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="idNum" column="ID_NUM" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="loanType" column="LOAN_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="remark" column="REMARK" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="status" column="STATUS" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="msg" column="MSG" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="buildDate" column="BUILD_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="sendDate" column="SEND_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="returnDate" column="RETURN_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+	</resultMap>
+	
+	<resultMap id="queryPreRepaymentInfoResultMap"  type="SyncPreRepaymentInfo">
+		<result property="loanId" column="LOAN_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="companyNo" column="COMPANY_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="contractNo" column="CONTRACT_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="idNum" column="ID_NUM" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="loanType" column="LOAN_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="remark" column="REMARK" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="tradeTime" column="TRADE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+	</resultMap>
+	
+	<sql id="fields">
+		SYNC_PREREPAYMENT_INFO.ID,
+		SYNC_PREREPAYMENT_INFO.LOAN_ID,
+		SYNC_PREREPAYMENT_INFO.COMPANY_NO,
+		SYNC_PREREPAYMENT_INFO.CONTRACT_NO,
+		SYNC_PREREPAYMENT_INFO.NAME,
+		SYNC_PREREPAYMENT_INFO.ID_NUM,
+		SYNC_PREREPAYMENT_INFO.LOAN_TYPE,
+		SYNC_PREREPAYMENT_INFO.REMARK,
+		SYNC_PREREPAYMENT_INFO.STATUS,
+		SYNC_PREREPAYMENT_INFO.MSG,
+		SYNC_PREREPAYMENT_INFO.BUILD_DATE,
+		SYNC_PREREPAYMENT_INFO.SEND_DATE,
+		SYNC_PREREPAYMENT_INFO.RETURN_DATE
+	</sql>
+	
+	<!-- 单表查询条件 -->
+	<sql id="conditions">
+		<where>
+			<if test="status != null">
+				AND SYNC_PREREPAYMENT_INFO.STATUS = #{status}
+			</if>
+			<if test="name != null and name !=''">
+				AND SYNC_PREREPAYMENT_INFO.NAME = #{name}
+			</if>
+			<if test="idNum != null  and idNum !='' ">
+				and SYNC_PREREPAYMENT_INFO.ID_NUM = #{idNum}
+			</if>
+			<if test="contractNo != null and contractNo !=''">
+				AND SYNC_PREREPAYMENT_INFO.CONTRACT_NO = #{contractNo}
+			</if>
+		     <if test="buildDateStart  != null" >
+				AND SYNC_PREREPAYMENT_INFO.BUILD_DATE <![CDATA[ >= ]]> #{buildDateStart}
+			</if>
+			<if test="buildDateEnd != null">
+				AND SYNC_PREREPAYMENT_INFO.BUILD_DATE <![CDATA[ <= ]]> #{buildDateEnd}
+			</if>
+			<if test="sendDateStart != null">
+				AND SYNC_PREREPAYMENT_INFO.SEND_DATE <![CDATA[ >= ]]> #{sendDateStart}
+			</if>
+			<if test="sendDateEnd != null">
+				AND SYNC_PREREPAYMENT_INFO.SEND_DATE <![CDATA[ <= ]]> #{sendDateEnd}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="findListByVO" parameterType="syncPreRepaymentInfo" resultMap="syncPreRepaymentInfoResultMap">
+		<if test="pager != null ">
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		</if>
+		SELECT
+		<include refid="fields" />
+		FROM SYNC_PREREPAYMENT_INFO
+		<include refid="conditions" />
+		<if test="pager != null ">
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+		</if>
+	</select>
+	
+	<select id="count" parameterType="syncPreRepaymentInfo"  resultType="java.lang.Integer">
+		SELECT count(*) as total FROM (
+			SELECT
+			<include refid="fields" />
+			FROM SYNC_PREREPAYMENT_INFO
+			<include refid="conditions" />
+		)
+	</select>
+	
+	<select id="get" parameterType="java.lang.Long" resultMap="syncPreRepaymentInfoResultMap">
+		SELECT
+		<include refid="fields" />
+		FROM SYNC_PREREPAYMENT_INFO
+		WHERE SYNC_PREREPAYMENT_INFO.ID = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="syncPreRepaymentInfo">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT SEQ_SYNC_PREREPAYMENT_INFO.NEXTVAL AS ID FROM DUAL
+    	</selectKey>
+		INSERT INTO SYNC_PREREPAYMENT_INFO
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+				ID,
+			<if test="loanId != null">
+				LOAN_ID,
+	        </if>  
+			<if test="companyNo != null">
+				COMPANY_NO,
+	        </if>
+	        <if test="contractNo != null">
+				CONTRACT_NO,
+	        </if>
+	        <if test="name != null">
+				NAME,
+	        </if>
+	         <if test="idNum != null">
+				ID_NUM,
+	        </if>
+	        <if test="loanType != null">
+				LOAN_TYPE,
+	        </if>
+	         <if test="remark != null">
+				REMARK,
+	        </if>
+	        <if test="buildDate != null">
+				BUILD_DATE,
+	        </if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">	    
+				#{id},
+			<if test="loanId != null">
+				#{loanId},
+	        </if>  
+			<if test="companyNo != null">
+				#{companyNo},
+	        </if>
+	        <if test="contractNo != null">
+				#{contractNo},
+	        </if>
+	        <if test="name != null">
+				#{name},
+	        </if>
+	         <if test="idNum != null">
+				#{idNum},
+	        </if>
+	        <if test="loanType != null">
+				#{loanType},
+	        </if>
+	         <if test="remark != null">
+				#{remark},
+	        </if>
+	        <if test="buildDate != null">
+				#{buildDate},
+	        </if>
+		</trim>
+	</insert>
+	
+	<select id="queryPreRepayInfo" parameterType="syncPreRepaymentInfo" resultMap="queryPreRepaymentInfoResultMap">
+		--正常提前结清
+		SELECT DISTINCT '002' COMPANY_NO,T1.ID LOAN_ID,T1.CONTRACT_NO,
+		T2.NAME,T2.IDNUM,(CASE T1.PRODUCT_CHANNEL_ID WHEN 1 THEN '同城贷' WHEN 2 THEN '网商贷' ELSE '' END) LOAN_TYPE,'提前结清' REMARK,T3.TRADE_TIME
+		FROM LOAN T1, PERSON T2, REPAY_INFO T3
+		WHERE T3.TRADE_CODE = '3001'
+		AND T1.PERSON_ID = T2.ID
+		AND T1.ID = T3.ACCOUNT_ID
+		AND T1.STATUS = 150
+		AND T1.PRODUCT_CHANNEL_ID in(1,2)
+		<if test="times.length == 0">
+			AND 1 <![CDATA[ <> ]]> 1
+		</if>
+		<if test="times.length == 1">
+			AND TRUNC(T3.TRADE_TIME) = TO_DATE('${times[0]}','YYYY-MM-DD')
+		</if>
+		<if test="times.length == 2">     
+			AND TRUNC(T3.TRADE_TIME) <![CDATA[ >= ]]> TO_DATE('${times[0]}','YYYY-MM-DD')
+			AND TRUNC(T3.TRADE_TIME) <![CDATA[ <= ]]> TO_DATE('${times[1]}','YYYY-MM-DD')
+		</if>
+		UNION
+	    --正常提前结清
+		SELECT DISTINCT '002' COMPANY_NO,T1.ID LOAN_ID,T1.CONTRACT_NO,
+		T2.NAME,T2.IDNUM,'车贷' LOAN_TYPE,'提前结清' REMARK,T3.TRADE_TIME
+		FROM LOAN T1, PERSON T2, REPAY_INFO T3
+		WHERE T3.TRADE_CODE = '3001'
+		AND T1.PERSON_ID = T2.ID
+		AND T1.ID = T3.ACCOUNT_ID
+		AND T1.STATUS = 150
+		AND T1.PRODUCT_TYPE = 2
+		--AND NOT EXISTS(SELECT * FROM SYNC_PREREPAYMENT_INFO TT1 WHERE TT1.LOAN_ID = T1.ID)
+		<if test="times.length == 0">
+			AND 1 <![CDATA[ <> ]]> 1
+		</if>
+		<if test="times.length == 1">
+			AND TRUNC(T3.TRADE_TIME) = TO_DATE('${times[0]}','YYYY-MM-DD')
+		</if>
+		<if test="times.length == 2">     
+			AND TRUNC(T3.TRADE_TIME) <![CDATA[ >= ]]> TO_DATE('${times[0]}','YYYY-MM-DD')
+			AND TRUNC(T3.TRADE_TIME) <![CDATA[ <= ]]> TO_DATE('${times[1]}','YYYY-MM-DD')
+		</if>
+		UNION
+		--展期提前结清
+		SELECT DISTINCT '002' COMPANY_NO,T1.ID LOAN_ID,(T1.CONTRACT_NO || '-' || T1.EXTENSION_TIME) CONTRACT_NO,
+		T2.NAME,T2.IDNUM,'车贷' LOAN_TYPE,'展期借款提前结清' REMARK,T3.TRADE_TIME
+		FROM EXTENSION T1, PERSON T2, REPAY_INFO T3
+		WHERE T3.TRADE_CODE = '3001'
+		AND T1.PERSON_ID = T2.ID
+		AND T1.ID = T3.ACCOUNT_ID
+		AND T1.STATUS = 150
+		AND T1.PRODUCT_TYPE = 2
+		--AND NOT EXISTS(SELECT * FROM SYNC_PREREPAYMENT_INFO TT1 WHERE TT1.LOAN_ID = T1.ID)
+		<if test="times.length == 0">
+			AND 1 <![CDATA[ <> ]]> 1
+		</if>
+		<if test="times.length == 1">
+			AND TRUNC(T3.TRADE_TIME) = TO_DATE('${times[0]}','YYYY-MM-DD')
+		</if>
+		<if test="times.length == 2">     
+			AND TRUNC(T3.TRADE_TIME) <![CDATA[ >= ]]> TO_DATE('${times[0]}','YYYY-MM-DD')
+			AND TRUNC(T3.TRADE_TIME) <![CDATA[ <= ]]> TO_DATE('${times[1]}','YYYY-MM-DD')
+		</if>
+	</select>
+	
+	<select id="isExistsByLoanId" parameterType="syncPreRepaymentInfo" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM SYNC_PREREPAYMENT_INFO T WHERE T.LOAN_ID = #{loanId}
+	</select>
+	
+	<update id="update" parameterType="syncPreRepaymentInfo">
+		UPDATE SYNC_PREREPAYMENT_INFO
+		<trim prefix="set" suffixOverrides="," >
+			SYNC_PREREPAYMENT_INFO.STATUS = #{status},
+			<if test="msg != null">
+				SYNC_PREREPAYMENT_INFO.MSG = #{msg},
+			</if>
+			<if test="sendDate != null">
+				SYNC_PREREPAYMENT_INFO.SEND_DATE = #{sendDate},
+			</if>
+			<if test="returnDate != null">
+				SYNC_PREREPAYMENT_INFO.RETURN_DATE = #{returnDate},
+			</if>
+		</trim>
+		WHERE SYNC_PREREPAYMENT_INFO.ID=#{id}
+	</update>
+
+	
+</mapper>

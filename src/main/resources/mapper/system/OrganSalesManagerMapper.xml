@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.system.mapper.OrganSalesManagerMapper" >
+  <resultMap id="organSalesManagerResultMap" type="OrganSalesManager" >
+    <result column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="ORGAN_ID" property="organId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="USER_ID" property="userId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="SALES_MANAGER" property="salesManager" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="CODE" property="code" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+  </resultMap>
+  
+  <sql id="organSalesManagerField">
+     ORGAN_SALES_MANAGER.ID,ORGAN_SALES_MANAGER.ORGAN_ID,ORGAN_SALES_MANAGER.USER_ID,
+     ORGAN_SALES_MANAGER.SALES_MANAGER,ORGAN_SALES_MANAGER.CODE,ORGAN_SALES_MANAGER.VERSION
+  </sql>
+  
+ 	<sql id="organSalesManagerSelective">
+		SELECT
+		<include refid="organSalesManagerField" />
+		FROM ORGAN_SALES_MANAGER
+	</sql>
+	
+	<sql id="organSalesManagerConditions">
+	  <trim prefix="where" prefixOverrides="and">
+		  <if test="id != null ">
+		   AND ORGAN_SALES_MANAGER.ID= #{id}
+	      </if>
+	      <if test="organId != null ">
+	        AND ORGAN_SALES_MANAGER.ORGAN_ID =  #{organId}
+	      </if>
+	      <if test="userId != null ">
+	        AND ORGAN_SALES_MANAGER.USER_ID =  #{userId}
+	      </if>
+	      <if test="salesManager != null ">
+	        AND ORGAN_SALES_MANAGER.SALES_MANAGER =  #{salesManager}
+	      </if>
+	      <if test="code != null ">
+	        AND ORGAN_SALES_MANAGER.CODE =  #{code}
+	      </if>
+	      <if test="version != null">
+	        AND ORGAN_SALES_MANAGER.VERSION =  #{version}
+	      </if>
+	   </trim>
+	</sql>
+
+  <insert id="insert" parameterType="OrganSalesManager" >
+  		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			SEQ_ORGAN_SALES_MANAGER_ID.nextval AS id FROM dual
+		</selectKey>
+    insert into ORGAN_SALES_MANAGER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="organId != null ">
+        ORGAN_ID,
+      </if>
+      <if test="userId != null ">
+        USER_ID,
+      </if>
+      <if test="salesManager != null ">
+        SALES_MANAGER,
+      </if>
+      <if test="code != null ">
+        CODE, 
+      </if>
+      <if test="version != null" >
+        VERSION
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="organId != null ">
+         #{organId},
+      </if>
+      <if test="userId != null ">
+        #{userId},
+      </if>
+      <if test="salesManager != null ">
+        #{salesManager},
+      </if>
+      <if test="code != null ">
+       #{code},
+      </if>
+      <if test="version != null" >
+        #{version}
+      </if>
+    </trim>
+  </insert>
+  
+   <update id="update" parameterType="OrganSalesManagerVO">
+    update ORGAN_SALES_MANAGER
+    <trim prefix="set" suffixOverrides=",">  
+      <if test="organId != null ">
+         ORGAN_ID= #{organId},
+      </if>
+      <if test="userId != null ">
+        USER_ID = #{userId},
+      </if>
+      <if test="salesManager != null ">
+        SALES_MANAGER = #{salesManager},
+      </if> 
+      <if test="code != null ">
+        CODE = #{code},
+      </if>
+      <if test="version != null and version !=''">
+        VERSION = #{version}
+      </if>  
+       </trim>
+   		WHERE ID = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+  </update>
+  
+	<select id="get" resultMap="organSalesManagerResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="organSalesManagerField" />
+		FROM ORGAN_SALES_MANAGER
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="findListByVO"  resultMap="organSalesManagerResultMap" parameterType="OrganSalesManagerVO" >
+		<include refid="organSalesManagerSelective" />
+		<include refid="organSalesManagerConditions" />	
+	</select>
+	
+	<delete id="delete" parameterType="java.lang.Long"  >
+		DELETE FROM ORGAN_SALES_MANAGER WHERE ID = #{id}
+	</delete>
+	
+	<delete id="deleteListByVo" parameterType="OrganSalesManagerVO">
+		DELETE FROM ORGAN_SALES_MANAGER 
+		<include refid="organSalesManagerConditions" />
+	</delete>
+  
+  	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM ORGAN_SALES_MANAGER WHERE ID = #{ID}
+	</select>
+	
+    <select id="count" parameterType="OrganSalesManagerVO" resultType="java.lang.Integer">
+		SELECT count(*) FROM (
+		<include refid="organSalesManagerSelective" />
+		<include refid="organSalesManagerConditions" />
+		)
+	</select>
+	
+	<select id="findWithPG" parameterType="OrganSalesManagerVO" resultMap="organSalesManagerResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="organSalesManagerSelective" />
+		<include refid="organSalesManagerConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>	
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+</mapper>

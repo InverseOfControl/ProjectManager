@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.BlacklistMapper">
+	<!-- 单表查询结果集 -->
+	<resultMap type="Blacklist" id="blacklistResultMap">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="idnum" column="IDNUM" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="rejectTime" column="REJECT_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="mphone" column="MPHONE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="tel" column="TEL" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="salesDepartmentId" column="SALES_DEPARTMENT_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="loanType" column="LOAN_TYPE" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="limitDays" column="LIMIT_DAYS" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="company" column="COMPANY" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="comeFrom" column="COME_FROM"  jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="creatorId" column="CREATOR_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="creator" column="CREATOR" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="modifierId" column="MODIFIER_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="modifier" column="MODIFIER" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="modifiedTime" column="MODIFIED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="rejectReasonId" column="REJECT_REASON_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="isDeleted" column="IS_DELETED" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result property="version" column="VERSION" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="remark" column="REMARK" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<sql id="blacklistField">
+	    blacklist.ID,
+	    blacklist.NAME,
+	    blacklist.IDNUM,   
+	    blacklist.REJECT_TIME,
+	    blacklist.MPHONE,
+	    blacklist.TEL,
+	    blacklist.SALES_DEPARTMENT_ID,
+	    blacklist.LOAN_TYPE,
+	    blacklist.LIMIT_DAYS,
+	    blacklist.COMPANY,
+	    blacklist.COME_FROM,
+		blacklist.CREATOR_ID,
+	   	blacklist.CREATOR,blacklist.CREATED_TIME,blacklist.MODIFIER_ID,blacklist.MODIFIER,blacklist.MODIFIED_TIME,
+	  	blacklist.REJECT_REASON_ID,blacklist.IS_DELETED,blacklist.VERSION,blacklist.REMARK
+	</sql>
+	<sql id="blacklistSelective">
+		select 
+		<include refid="blacklistField" />
+		from BLACKLIST blacklist
+	</sql>
+	<sql id="blacklistConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="idnum != null">
+				AND blacklist.IDNUM = #{idnum}
+			</if>
+			<if test="loanType != null">
+				AND blacklist.LOAN_TYPE = #{loanType}
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="blacklistOrderByConditions">
+		ORDER BY REJECT_TIME DESC
+	</sql>
+	<insert id="insert" parameterType="Blacklist">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			select
+			SEQ_BLACKLIST_ID.nextval as id from dual
+	    </selectKey>
+		insert into BLACKLIST
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    ID,      
+			<if test="name != null">
+				NAME,
+	        </if>  
+	        <if test="idnum != null">
+				IDNUM,
+	        </if>  
+			<if test="rejectTime != null">
+				REJECT_TIME,
+	        </if>
+	        <if test="mphone != null">
+				MPHONE,
+	        </if>
+	        <if test="tel != null">
+				TEL,
+	        </if>
+	        <if test="salesDepartmentId != null">
+				SALES_DEPARTMENT_ID,
+	        </if>
+	        <if test="loanType != null">
+				LOAN_TYPE,
+	        </if>
+	        <if test="limitDays != null">
+				LIMIT_DAYS,
+	        </if>
+	        <if test="company != null">
+				COMPANY,
+	        </if>
+	        <if test="comeFrom != null">
+				COME_FROM,
+	        </if>
+	    	<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="rejectReasonId != null">
+				REJECT_REASON_ID,
+			</if>
+			<if test="isDeleted != null">
+				IS_DELETED,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffixOverrides="," suffix=")">	    
+			    #{id},
+			<if test="name != null">
+				#{name},
+	        </if>    
+	        <if test="idnum != null">
+				#{idnum},
+	        </if>    
+	        <if test="rejectTime != null">
+				#{rejectTime},
+	        </if>
+	       	 <if test="mphone != null">
+				#{mphone},
+	        </if>
+	         <if test="tel != null">
+				#{tel},
+	        </if>
+	         <if test="salesDepartmentId != null">
+				#{salesDepartmentId},
+	        </if>
+			<if test="loanType != null">
+				#{loanType}, 
+	        </if>
+	        <if test="limitDays != null">
+				#{limitDays},
+	        </if>
+	        <if test="company != null">
+				#{company},
+	        </if>
+	         <if test="comeFrom != null">
+				#{comeFrom},
+	        </if>
+	        <if test="creatorId != null">
+				#{creatorId},
+	        </if>
+	        <if test="creator != null">
+				#{creator},
+	        </if>
+	        <if test="createdTime != null">
+				#{createdTime},
+	        </if>
+	        <if test="modifierId != null">
+				#{modifierId},
+	        </if>
+	        <if test="modifier != null">
+				#{modifier},
+	        </if>
+	        <if test="modifiedTime != null">
+				#{modifiedTime},
+	        </if>
+	        <if test="rejectReasonId != null">
+				#{rejectReasonId},
+			</if>
+	        <if test="isDeleted != null">
+				#{isDeleted},
+	        </if>
+	        <if test="version != null">
+				#{version},
+	        </if>
+	        <if test="remark != null">
+				#{remark},
+	        </if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="BlacklistVO">
+		update BLACKLIST
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null">
+				NAME=#{name},
+	        </if>
+	        <if test="idnum != null">
+				IDNUM=#{idnum},
+	        </if>
+			<if test="rejectTime != null">
+				REJECT_TIME=#{rejectTime},
+	        </if>
+	         <if test="mphone != null">
+				MPHONE=#{mphone},
+	        </if>
+	         <if test="tel != null">
+				TEL=#{tel},
+	        </if>
+	        <if test="salesDepartmentId != null">
+				SALES_DEPARTMENT_ID=#{salesDepartmentId},
+	        </if>
+	        <if test="loanType != null">
+				LOAN_TYPE=#{loanType},
+	        </if>
+	        <if test="limitDays != null">
+				LIMIT_DAYS=#{limitDays},
+	        </if>
+	        <if test="company != null">
+				COMPANY=#{company},
+	        </if>
+	         <if test="comeFrom != null">
+				COME_FROM=#{comeFrom},
+	        </if>
+	        <if test="creatorId != null">
+	            CREATOR_ID = #{creatorId},
+	        </if>
+			<if test="creator != null">
+			    CREATOR = #{creator},
+		    </if>
+			<if test="createdTime != null">
+			    CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+			    MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+			    MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+			    MODIFIED_TIME = #{modifiedTime},
+			</if>
+		    <if test="rejectReasonId != null">
+				REJECT_REASON_ID=#{rejectReasonId},
+	        </if>
+			 <if test="version != null">
+				VERSION=#{version},
+	        </if>
+		</trim>
+		where ID = #{id}
+		 <if test="version != null">
+				AND VERSION = #{version} -1 
+	     </if>  
+	</update>
+	<!-- findListByVO   -->
+	<select id="findListByVO"  resultMap="blacklistResultMap" parameterType="BlacklistVO" >
+		SELECT
+		<include refid="blacklistField" />		
+		FROM BLACKLIST  
+		<include refid="blacklistConditions" />	
+	</select>
+	<delete id="delete" parameterType="java.lang.Integer">
+	   update  BLACKLIST set IS_DELETED = 1 where ID = #{id}
+	</delete>
+		<!-- findListByVO   -->
+	<update id="updateLimitDays"  parameterType="BlacklistVO" >
+		 update  BLACKLIST set LIMIT_DAYS = 0
+		<include refid="blacklistConditions" />	
+	</update>
+	
+</mapper>

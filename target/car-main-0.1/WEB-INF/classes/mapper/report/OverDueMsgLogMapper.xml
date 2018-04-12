@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.report.mapper.OverdueMsgLogMapper" >
+  <sql id="overdueInclude">
+  	 <if test="name!=null and name!=''">	       	      	
+      	and sm.NAME LIKE '%'||#{name}||'%'
+      </if>
+      <if test="idNum!=null and idNum!=''">
+      	and sm.ID_NUM=#{idNum}
+      </if>
+      <if test="buildStartDate!=null and buildStartDate!=''">
+      	
+      	 and sm.BUILD_DATE &gt;=to_date(#{buildStartDate},'yyyy/mm/dd hh24:mi:ss')
+      </if>
+       <if test="buildEndDate!=null and buildEndDate!=''">
+      	
+      	 and sm.BUILD_DATE &lt;=to_date(#{buildEndDate},'yyyy/mm/dd hh24:mi:ss')
+      </if>
+       <if test="sendStartDate!=null and sendStartDate!=''">
+        and sm.SEND_DATE &gt;=to_date(#{sendStartDate},'yyyy/mm/dd hh24:mi:ss')
+
+      </if>
+        <if test="sendEndDate!=null and sendEndDate!=''">
+
+      	and sm.SEND_DATE &lt;=to_date(#{sendEndDate},'yyyy/mm/dd hh24:mi:ss')
+      	
+      </if>
+       <if test="status!=null and status!=''">
+      	and sm.status=#{status}
+      </if>
+  
+  </sql>
+  <select id="findWithPG" parameterType="com.ezendai.credit2.report.vo.OverdueMsgLogVO" 
+  			resultType="com.ezendai.credit2.report.model.OverdueMsgLog">
+  			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+      select
+      sm.LOAN_ID loanId,
+      sm.REPAYMENT_ID repaymentId,
+      sm.NAME name,
+      sm.ID_NUM idNum,
+      sm.MOBILE mobile,
+      sm.TEMPLET_ID templetId,
+      sm.CUR_TIME curTime,
+      sm.STATUS status,
+      sm.BUILD_DATE buildDate,
+      sm.SEND_DATE sendDate,
+      sm.RETURN_DATE returnDate,
+      sm.REPAY_DAY repayDay,
+      sm.SEND_DETAILS sendDetails,
+ 	  sm.product_id productName,
+ 	  sm.product_type productType
+      from SYNC_REPAYMENT_MSG_LOG sm
+      where  sm.type=1
+      <include refid="overdueInclude"/>
+      <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+  </select>
+  
+  <select id="count" parameterType="com.ezendai.credit2.report.vo.OverdueMsgLogVO" resultType="int">
+  	select count(1) from SYNC_REPAYMENT_MSG_LOG sm,product p where p.id=sm.product_id and sm.type=1
+  	<include refid="overdueInclude"/>
+  </select>
+</mapper>

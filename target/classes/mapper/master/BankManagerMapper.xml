@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.BankManagerMapper">
+	<resultMap type="com.ezendai.credit2.master.model.BankManager" id="bankResultMap">
+		<id column="id" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="bankName"     property="bankName"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="bankCode"     property="bankCode"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="tppBankCode"  property="tppBankCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="tppType"      property="tppType"     jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="bankType"     property="bankType"    jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+	
+	<sql id="bankColumn">
+		bank.id as id,
+		bank.bank_name as bankName,
+		bank.bank_code as bankCode,
+		bank.tpp_bank_code as tppBankCode,
+		bank.tpp_type as tppType,
+		bank.bank_type as bankType
+	</sql>
+	
+	<!-- 获取银行列表 -->
+	<select id="getBankList" resultMap="bankResultMap" parameterType="com.ezendai.credit2.master.vo.BankManagerVO">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart"/>
+		select  
+		<include refid="bankColumn"/>
+		from BANK bank
+		where 1=1
+		<if test="bankName != '' and bankName != null">
+			and bank.bank_name = #{bankName}
+		</if>
+		<if test="bankCode !='' and bankCode != null">
+			and bank.bank_code = #{bankCode}
+		</if>
+		<if test="tppBankCode != '' and tppBankCode != null">
+			and bank.tpp_bank_code = #{tppBankCode}
+		</if>
+		<if test="tppType != '' and tppType != null">
+			and bank.tpp_type = #{tppType}
+		</if>
+		<if test="bankType == 10">
+			and bank.bank_type = 0
+		</if>
+		<if test="bankType != '' and bankType != null and bankType != 10">
+			and bank.bank_type = #{bankType}
+		</if>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd"/>
+	</select>
+	
+	<!-- 主键获取银行信息 -->
+	<select id="getBank" resultMap="bankResultMap" parameterType="java.lang.Long">
+		select 
+		<include refid="bankColumn"/>
+		from BANK bank
+		where bank.id = #{id}
+	</select>
+	
+	<!-- 多条件获取银行信息 -->
+	<select id="getBankByConditions" resultMap="bankResultMap" parameterType="com.ezendai.credit2.master.vo.BankManagerVO">
+		select  
+		<include refid="bankColumn"/>
+		from BANK bank
+		where 1=1
+		<if test="bankName != '' and bankName != null">
+			and bank.bank_name = #{bankName}
+		</if>
+		<if test="bankCode !='' and bankCode != null">
+			and bank.bank_code = #{bankCode}
+		</if>
+		<if test="tppBankCode != '' and tppBankCode !=null">
+			and bank.tpp_bank_code = #{tppBankCode}
+		</if>
+		
+	</select>
+	
+	<!-- 获取银行总条数 -->
+	<select id="getBankCount"  resultType="int"  parameterType="com.ezendai.credit2.master.vo.BankManagerVO">
+		select count(*) from BANK bank
+		where 1=1
+		<if test="bankName != '' and bankName != null">
+			and bank.bank_name = #{bankName}
+		</if>
+		<if test="bankCode !='' and bankCode != null">
+			and bank.bank_code = #{bankCode}
+		</if>
+		<if test="tppBankCode != '' and tppBankCode != null">
+			and bank.tpp_bank_code = #{tppBankCode}
+		</if>
+		<if test="tppType != '' and tppType != null">
+			and bank.tpp_type = #{tppType}
+		</if>
+		<if test="bankType == 10">
+			and bank.bank_type = 0
+		</if>
+		<if test="bankType != '' and bankType != null and bankType != 10">
+			and bank.bank_type = #{bankType}
+		</if>
+	</select>
+	
+	<!-- 添加新银行信息 -->
+	<insert id="addBank"  parameterType="com.ezendai.credit2.master.vo.BankManagerVO">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			select SEQ_BANK_ID.nextval as id from dual
+	    </selectKey>
+		insert into BANK 
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    ID,
+			<if test="bankName != null and bankName !=''">
+				BANK_NAME,
+	        </if>  
+			<if test="bankCode != null and bankCode !=''">
+				BANK_CODE,
+	        </if>  
+			<if test="tppBankCode != null and tppBankCode !=''">
+				TPP_BANK_CODE,
+	        </if>  
+			<if test="tppType != null and tppType !=''">
+				TPP_TYPE,
+	        </if>  
+	        <if test="bankType == 10">
+				BANK_TYPE
+			</if>
+			<if test="bankType != null and bankType !='' and bankType !=10">
+				BANK_TYPE
+	        </if>  
+	    </trim>
+		values 
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    #{id},
+			<if test="bankName != null and bankName !=''">
+				#{bankName},
+	        </if>  
+			<if test="bankCode != null and bankCode !=''">
+				#{bankCode},
+	        </if>  
+			<if test="tppBankCode != null and tppBankCode !=''">
+				#{tppBankCode},
+	        </if>  
+			<if test="tppType != null and tppType !=''">
+				#{tppType},
+	        </if>  
+	        <if test="bankType == 10">
+				0,
+			</if>
+			<if test="bankType != null and bankType !='' and bankType != 10">
+				#{bankType}
+	        </if>  
+	    </trim>
+	</insert>
+	
+	
+	<!-- 主键修改银行信息 -->
+	<update id="updateBank"  parameterType="com.ezendai.credit2.master.vo.BankManagerVO">
+		update BANK bank 
+		<trim prefix="set" suffixOverrides="," >
+			<if test="bankName != null and bankName !=''">
+				bank.bank_name = #{bankName},
+			</if>
+			<if test="bankCode != null and bankCode !=''">
+				bank.bank_code = #{bankCode},
+			</if>
+			<if test="tppBankCode != null and tppBankCode !=''">
+				bank.tpp_bank_code = #{tppBankCode},
+			</if>
+			<if test="tppType != null and tppType !=''">
+				bank.tpp_type = #{tppType},
+			</if>
+			<if test="bankType == 10">
+				bank.bank_type = 0,
+			</if>
+			<if test="bankType != null and bankType !='' and bankType != 10">
+				bank.bank_type = #{bankType}
+			</if> 
+		</trim>
+		WHERE bank.id=#{id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="deleteBank" parameterType="java.lang.Long">
+		DELETE FROM BANK WHERE
+		ID=#{id}
+	</delete>
+</mapper>

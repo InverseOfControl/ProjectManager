@@ -1,0 +1,15 @@
+#ff table {
+	font-size: 12px;
+	width: 100%;
+	text-align: right;
+}
+#ff tr {
+	height: 30px
+}
+#ff input {
+	padding: 2px;
+	width: 240px;
+}
+#ff label {
+	margin: 0 10px 0 0;
+}

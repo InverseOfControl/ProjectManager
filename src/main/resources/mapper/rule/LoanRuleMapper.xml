@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.rule.mapper.LoanRuleMapper" >
+	<resultMap id="loanRuleResultMap" type="com.ezendai.credit2.rule.model.LoanRule" >
+		<id column="ID" property="id" jdbcType="NUMERIC"  javaType="java.lang.Long" />
+		<result column="NAME" property="name" jdbcType="VARCHAR"  javaType="java.lang.String" />
+		<result column="RULE_TYPE" property="ruleType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC"  javaType="java.lang.Integer"/>
+		<result column="PRODUCT_SUBTYPE" property="productSubtype" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="CONTRACT_SRC" property="contractSrc" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="REPAYDATE_RULE" property="repaydateRule" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="OVERDUE_DATE" property="overdueDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="IS_EXECUTED" property="isExecuted" jdbcType="NUMERIC"  javaType="java.lang.Integer" />
+		<result column="EXECUTE_TIME" property="executeTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="IS_DELETED" property="isDeleted" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+
+	<sql id="loanRuleField" >
+	ID, NAME, RULE_TYPE, PRODUCT_TYPE, PRODUCT_SUBTYPE, CONTRACT_SRC,
+	REPAYDATE_RULE, OVERDUE_DATE, IS_EXECUTED, EXECUTE_TIME,
+	CREATOR, CREATOR_ID, CREATED_TIME, MODIFIER, MODIFIER_ID, MODIFIED_TIME,
+	IS_DELETED, VERSION, REMARK
+	</sql>
+
+	<sql id="loanRuleSelective">
+		SELECT
+		<include refid="loanRuleField" />
+		FROM LOAN_RULE
+	</sql>
+
+	<sql id="loanRuleConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				LOAN_RULE.ID = #{id}
+			</if>
+			<if test="name != null and name != ''">
+				AND LOAN_RULE.NAME = #{name}
+			</if>
+			<if test="ruleType != null">
+				AND LOAN_RULE.RULE_TYPE = #{ruleType}
+			</if>
+			<if test="productType != null">
+				AND LOAN_RULE.PRODUCT_TYPE = #{productType}
+			</if>
+			<if test="productSubtype != null">
+				AND LOAN_RULE.PRODUCT_SUBTYPE =#{productSubtype}
+			</if>
+			<if test="contractSrc != null">
+				AND LOAN_RULE.CONTRACT_SRC = #{contractSrc}
+			</if>
+			<if test="repaydateRule != null">
+				AND LOAN_RULE.REPAYDATE_RULE = #{repaydateRule}
+			</if>
+			<if test="overdueDate != null">
+				AND LOAN_RULE.OVERDUE_DATE = #{overdueDate}
+			</if>
+			<if test="overdueDateStartDate != null and overdueDateStartDate != ''">
+				AND LOAN_RULE.OVERDUE_DATE <![CDATA[ >= ]]> to_date(#{overdueDateStartDate},'yyyy-MM-dd')
+			</if>
+			<if test="overdueDateEndDate != null and overdueDateEndDate != ''">
+				AND LOAN_RULE.OVERDUE_DATE <![CDATA[ <= ]]> to_date(#{overdueDateEndDate},'yyyy-MM-dd')
+			</if>
+			<if test="isExecuted != null">
+				AND LOAN_RULE.IS_EXECUTED = #{isExecuted}
+			</if>
+			<if test="executeTime != null">
+				AND LOAN_RULE.EXECUTE_TIME = #{executeTime}
+			</if>
+			<if test="creatorId != null">
+				AND LOAN_RULE.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null">
+				AND LOAN_RULE.CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND LOAN_RULE.CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				AND LOAN_RULE.MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null">
+			   AND LOAN_RULE.MODIFIER =#{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				AND LOAN_RULE.MODIFIED_TIME = #{modifiedTime}
+			</if>
+			<if test="isDeleted != null">
+				AND LOAN_RULE.IS_DELETED = #{isDeleted}
+			</if>
+			<if test="version != null">
+				AND LOAN_RULE.VERSION = #{version}
+			</if>
+			<if test="remark != null">
+				AND LOAN_RULE.REMARK = #{remark}
+			</if>
+		</trim>
+	</sql>
+
+	<insert id="insert" parameterType="LoanRule">
+	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+		SELECT seq_loan_rule_id.nextval AS id FROM dual
+	</selectKey>
+	INSERT INTO LOAN_RULE
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="id != null">
+			ID,
+		</if>
+		<if test="name != null">
+			NAME,
+		</if>
+		<if test="ruleType != null">
+			RULE_TYPE,
+		</if>
+		<if test="productType != null">
+			PRODUCT_TYPE,
+		</if>
+		<if test="productSubtypeNull ==true">
+			PRODUCT_SUBTYPE,
+		</if>
+		<if test="productSubtype != null">
+			PRODUCT_SUBTYPE,
+		</if>					
+		<if test="contractSrc != null">
+			CONTRACT_SRC,
+		</if>
+		<if test="repaydateRule != null">
+			REPAYDATE_RULE,
+		</if>
+		<if test="overdueDate != null">
+			OVERDUE_DATE,
+		</if>
+		<if test="isExecuted != null">
+			IS_EXECUTED,
+		</if>
+		<if test="executeTime != null">
+			EXECUTE_TIME,
+		</if>
+		<if test="creator != null">
+			CREATOR,
+		</if>
+		<if test="creatorId != null">
+			CREATOR_ID,
+		</if>
+		<if test="createdTime != null">
+			CREATED_TIME,
+		</if>
+		<if test="modifier != null">
+			MODIFIER,
+		</if>
+		<if test="modifierId != null">
+			MODIFIER_ID,
+		</if>
+		<if test="modifiedTime != null">
+			MODIFIED_TIME,
+		</if>
+		<if test="isDeleted != null">
+			IS_DELETED,
+		</if>
+		<if test="version != null">
+			VERSION,
+		</if>
+		<if test="remark != null">
+			REMARK,
+		</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<if test="id != null">
+			#{id},
+		</if>
+		<if test="name != null">
+			#{name},
+		</if>
+		<if test="ruleType != null">
+			#{ruleType},
+		</if>
+		<if test="productType != null">
+			#{productType},
+		</if>
+		<if test="productSubtypeNull ==true">
+			#{productSubtype,jdbcType=NUMERIC} ,
+		</if>
+		<if test="productSubtype != null">
+			#{productSubtype},
+		</if>
+		<if test="contractSrc != null">
+			#{contractSrc},
+		</if>
+		<if test="repaydateRule != null">
+			#{repaydateRule},
+		</if>
+		<if test="overdueDate != null">
+			#{overdueDate},
+		</if>
+		<if test="executeTime != null">
+			#{executeTime},
+		</if>
+		<if test="isExecuted != null">
+			#{isExecuted},
+		</if>
+		<if test="creator != null">
+			#{creator},
+		</if>
+		<if test="creatorId != null">
+			#{creatorId},
+		</if>
+		<if test="createdTime != null">
+			#{createdTime},
+		</if>
+		<if test="modifier != null">
+			#{modifier},
+		</if>
+		<if test="modifierId != null">
+			#{modifierId},
+		</if>
+		<if test="modifiedTime != null">
+			#{modifiedTime},
+		</if>
+		<if test="isDeleted != null">
+			#{isDeleted},
+		</if>
+		<if test="version != null">
+			#{version},
+		</if>
+		<if test="remark != null">
+			#{remark},
+		</if>
+	</trim>
+</insert>
+
+<delete id="delete"  parameterType="java.lang.Long">
+	DELETE FROM LOAN_RULE WHERE ID = #{id}
+</delete>
+
+<update id="deleteByIdList" parameterType="LoanRuleVO">
+	UPDATE  LOAN_RULE rule set rule.IS_DELETED=1 WHERE rule.ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+</update>
+
+<update id="update" parameterType="LoanRuleVO">
+	UPDATE LOAN_RULE
+	<set>
+		<if test="name != null">
+			NAME = #{name},
+		</if>
+		<if test="ruleType != null">
+			RULE_TYPE = #{ruleType},
+		</if>
+		<if test="productType != null">
+			PRODUCT_TYPE = #{productType},
+		</if>
+		<if test="productSubtypeNull ==true">
+			PRODUCT_SUBTYPE = null,	
+		</if>
+		<if test="productSubtype != null">
+			PRODUCT_SUBTYPE = #{productSubtype},
+		</if>			
+		<if test="contractSrc != null">
+			CONTRACT_SRC = #{contractSrc},
+		</if>
+		<if test="repaydateRule != null">
+			REPAYDATE_RULE = #{repaydateRule},
+		</if>
+		<if test="overdueDate != null">
+			OVERDUE_DATE = #{overdueDate},
+		</if>
+		<if test="isExecuted != null">
+			IS_EXECUTED = #{isExecuted},
+		</if>
+		<if test="executeTime != null">
+			EXECUTE_TIME = #{executeTime},
+		</if>
+		<if test="executeTimeNull == true">
+			EXECUTE_TIME = null,
+		</if>
+		<if test="creator != null">
+			CREATOR = #{creator},
+		</if>
+		<if test="creatorId != null">
+			CREATOR_ID = #{creatorId},
+		</if>
+		<if test="createdTime != null">
+			CREATED_TIME = #{createdTime},
+		</if>
+		<if test="modifier != null">
+			MODIFIER = #{modifier},
+		</if>
+		<if test="modifierId != null">
+			MODIFIER_ID = #{modifierId},
+		</if>
+		<if test="modifiedTime != null">
+			MODIFIED_TIME = #{modifiedTime},
+		</if>
+		<if test="isDeleted != null">
+			IS_DELETED = #{isDeleted},
+		</if>
+		<if test="version != null">
+			VERSION = #{version},
+		</if>
+		<if test="remark != null">
+			REMARK = #{remark},
+		</if>
+	</set>
+	WHERE ID = #{id}
+		 <if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+</update>
+
+<select id="get" resultMap="loanRuleResultMap"  parameterType="java.lang.Long">
+	SELECT
+	<include refid="loanRuleField" />
+	FROM LOAN_RULE
+	WHERE ID = #{id}
+</select>
+
+<select id="findListByVO"  resultMap="loanRuleResultMap" parameterType="LoanRuleVO" >
+	SELECT
+	<include refid="loanRuleField" />		
+	FROM LOAN_RULE  
+	<include refid="loanRuleConditions" />	
+</select>
+
+<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+	SELECT COUNT(*) FROM LOAN_RULE WHERE ID = #{ID}
+</select>
+
+<select id="count" parameterType="LoanRuleVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="loanRuleSelective" />
+		<include refid="loanRuleConditions" />
+		)
+</select>
+
+<select id="ruleCount" parameterType="LoanRuleVO" resultType="java.lang.Integer">
+	SELECT COUNT(*) FROM (
+		<include refid="loanRuleSelective" />
+		WHERE
+				RULE_TYPE = #{ruleType}
+			AND
+				IS_EXECUTED = #{isExecuted}
+			AND
+				OVERDUE_DATE <![CDATA[ < ]]> #{overdueDate}
+		)
+</select>
+
+	<select id="findWithPG" parameterType="LoanRuleVO" resultMap="loanRuleResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="loanRuleSelective" />
+		<include refid="loanRuleConditions" />
+				ORDER BY LOAN_RULE.ID DESC		
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<update id="invalidRule" parameterType="LoanRuleVO">
+		UPDATE LOAN_RULE
+		<set>
+			<if test="isExecuted != null">
+				IS_EXECUTED = 0,
+			</if>
+			<if test="executeTimeNull == true">
+				EXECUTE_TIME = null,
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+		</set>
+		WHERE
+				RULE_TYPE = #{ruleType}
+			AND
+				IS_EXECUTED = #{isExecuted}
+			AND
+				OVERDUE_DATE <![CDATA[ < ]]> #{overdueDate}
+	</update>
+	
+</mapper>

@@ -1,0 +1,2255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.LoanMapper">
+	<resultMap id="loanResultMap" type="Loan">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PERSON_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="VEHICLE_ID" property="vehicleId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="RISK" property="risk" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="PACT_MONEY" property="pactMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="TIME" property="time" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="REQUEST_TIME" property="requestTime" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="SALES_TEAM_ID" property="salesTeamId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="RESIDUAL_PACT_MONEY" property="residualPactMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="MONTH_RATE" property="monthRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="YEAR_RATE" property="yearRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="GRANT_ACCOUNT_ID" property="grantAccountId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_TYPE" property="loanType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="REPAY_ACCOUNT_ID" property="repayAccountId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CURR_NUM" property="currNum" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="GRANT_MONEY" property="grantMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REQUEST_DATE" property="requestDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="SIGN_DATE" property="signDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="AUDIT_DATE" property="auditDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="AUDIT_MONEY" property="auditMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="AUDIT_TIME" property="auditTime" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="GUARANTEE_NAME" property="guaranteeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="REQUEST_MONEY" property="requestMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="RETURN_DATE" property="returnDate" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="START_REPAY_DATE" property="startRepayDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="END_REPAY_DATE" property="endRepayDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="GRANT_DATE" property="grantDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="CUSTOMER_SOURCE" property="customerSource" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="SERVICE_ID" property="serviceId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CRM_ID" property="crmId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="BIZ_DIRECTOR_ID" property="bizDirectorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="ASSESSOR_ID" property="assessorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="SALES_DEPT_ID" property="salesDeptId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PURPOSE" property="purpose" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="STATUS" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="USER_ID" property="userId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CONTRACT_NO" property="contractNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="SUBMIT_DATE" property="submitDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="HAS_HOUSE" property="hasHouse" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="CONTRACT_SRC" property="contractSrc" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="CONTRACT_CONFIRM_DATE" property="contractConfirmDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="CONTRACT_BACK_DATE" property="contractBackDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="NATURAL_GUARANTEE_NAME1" property="naturalGuaranteeName1" jdbcType="VARCHAR" javaType="java.lang.String"/>
+   		<result column="NATURAL_GUARANTEE_NAME2" property="naturalGuaranteeName2" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="LEGAL_GUARANTEE_CNAME1" property="legalGuaranteeCname1" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="LEGAL_GUARANTEE_CNAME2" property="legalGuaranteeCname2" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="CONTRACT_CREATED_TIME" property="contractCreatedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="ASSESSMENT" property="assessment" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CONSULT" property="consult" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="B_MANAGE" property="bManage" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="C_MANAGE" property="cManage" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="FINANCE_AUDIT_TIME" property="financeAuditTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="REPAYMENT_METHOD" property="repaymentMethod" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="RESIDUAL_TIME" property="residualTime" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="MANAGER_ID" property="managerId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="EXTENSION_TIME" property="extensionTime" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="FLAG" property="flag" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="REPAY_SOURCE" property="sourceOfRepay" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="THIRD_FEE" property="thirdFee" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+		<result column="AUDIT_MEMBER_TYPE" property="auditMemberType" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		
+		<result column="ORGAN_ID" property="organID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="SCHEME_ID" property="schemeID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="FIRSTTRIAL_ID" property="firstTrialId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="SERVICE_CHARGES" property="serviceCharges" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="PROPHASE_INTEREST" property="prophaseInterest" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		
+		<result column="plate_number" property="plateNumber" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="mobile_phone_loan" property="mobilePhoneLoan" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="LCB_BORROW_NO" property="lcbBorrowNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="LCB_BORROW_STATUS" property="lcbBorrowStatus" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+
+
+	</resultMap>
+	
+	<resultMap id="loanResultMapExtension" type="Loan" extends="loanResultMap" >
+		<association property="person" column="PERSON_ID" javaType="Person" resultMap="personResultMap"/>
+		<association property="organ" column="ORGAN_ID" javaType="Organ" resultMap="organResultMap"/>
+		<association property="salesTeam" column="SALES_TEAM_ID" javaType="BaseArea" resultMap="salesTeamResultMap"/>
+		<association property="salesDept" column="SALES_DEPT_ID" javaType="BaseArea" resultMap="salesDeptResultMap"/>
+		<association property="service" column="SERVICE_ID" javaType="SysUser" resultMap="serviceResultMap"/>
+		<association property="crm" column="CRM_ID" javaType="SysUser" resultMap="crmResultMap"/>
+		<association property="assessor" column="ASSESSOR_ID" javaType="SysUser" resultMap="assessorResultMap"/>
+		<association property="firstTrial" column="FIRSTTRIAL_ID" javaType="SysUser" resultMap="firstTrialResultMap"/>
+		<association property="user" column="USER_ID" javaType="SysUser" resultMap="userResultMap"/>
+		<association property="bizDirector" column="BIZ_DIRECTOR_ID" javaType="SysUser" resultMap="bizDirectorResultMap"/>
+		<association property="grantAccount" column="GRANT_ACCOUNT_ID" javaType="BankAccount" resultMap="bankAccountResultMap"/>
+		<association property="product" column="PRODUCT_ID" javaType="Product" resultMap="productResultMap"/>
+	</resultMap>
+
+	<resultMap id="personResultMap" type="Person">
+		<id column="PERSON_ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="person_name" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="person_person_no" property="personNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="person_idnum" property="idnum" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="profession_Type" property="professionType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="person_mobile_phone" property="mobilePhone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		
+	</resultMap>
+	<resultMap id="organResultMap" type="Organ">
+		<result column="organ_name" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="productResultMap" type="Product">
+		<result column="PRODUCT_NAME" property="productTypeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="salesTeamResultMap" type="BaseArea">
+		<id property="id" column="SALES_TEAM_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="code" column="salesTeam_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="name" column="salesTeam_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="identifier" column="salesTeam_identifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap id="salesDeptResultMap" type="BaseArea">
+		<id property="id" column="SALES_DEPT_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="code" column="salesDept_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="name" column="salesDept_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="identifier" column="salesDept_identifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap id="serviceResultMap" type="SysUser">
+		<id property="id" column="SERVICE_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="name" column="service_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="userType" column="service_user_type" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+	<!-- 管理客服 -->
+	<resultMap id="manageServiceResultMap"  type="SysUser" >
+		<id property="id" column="MANAGER_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="name" column="manageService_name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="userType" column="manageService_user_type" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+	
+	<resultMap id="crmResultMap" type="SysUser">
+		<id property="id" column="CRM_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="name" column="crm_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="userType" column="USER_TYPE" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="code" column="crm_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="dataPermission" column="crm_dataPermission" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+
+	<resultMap id="assessorResultMap" type="SysUser">
+		<id property="id" column="ASSESSOR_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="name" column="assessor_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="userType" column="assessor_user_type" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+		<resultMap id="firstTrialResultMap" type="SysUser">
+		<id property="id" column="FIRSTTRIAL_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="name" column="firstTrial_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="userType" column="firstTrial_user_type" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+	
+	<resultMap id="userResultMap" type="SysUser">
+		<id property="id" column="USER_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="name" column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="userType" column="user_user_type" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+	
+	<resultMap id="bizDirectorResultMap" type="SysUser">
+		<id property="id" column="BIZ_DIRECTOR_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="name" column="bizDirector_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="code" column="bizDirector_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	
+	
+	<resultMap id="bankAccountResultMap" type="BankAccount">
+		<id property="id" column="GRANT_ACCOUNT_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="account" column="account" jdbcType="VARCHAR"	javaType="java.lang.String" />				
+		<result property="bankName" column="bank_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="branchName" column="branch_name" jdbcType="VARCHAR" javaType="java.lang.String" />		
+	</resultMap>
+	
+	<resultMap id="loanIdResultMap"  type="Loan">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+	<resultMap id="loanRepayTrialResultMapExtension" type="Loan" extends="loanResultMap" >
+	    <association property="person" column="PERSON_ID" javaType="Person" resultMap="personResultMap"/>
+		<association property="grantAccount" column="GRANT_ACCOUNT_ID" javaType="BankAccount" resultMap="bankAccountResultMap"/>
+		<association property="manageService" column="MANAGER_ID" javaType="SysUser" resultMap="manageServiceResultMap"/>
+    </resultMap>  
+    <resultMap id="loanRepayEntryResultMapExtension" type="Loan" extends="loanResultMap" >
+	    <association property="person" column="PERSON_ID" javaType="Person" resultMap="personResultMap"/>
+		<association property="salesDept" column="SALES_DEPT_ID" javaType="BaseArea" resultMap="salesDeptResultMap"/>
+    </resultMap>  
+  <!-- 对公还款领取列表 -->  
+    <resultMap id="businessloanResultMap" type="Loan" extends="loanResultMap">		
+		<association property="person" column="PERSON_ID" javaType="Person" resultMap="personResultMap"/>	
+		<association property="manageService" column="MANAGER_ID" javaType="SysUser" resultMap="manageServiceResultMap"/>
+		<association property="crm" column="CRM_ID" javaType="SysUser" resultMap="crmResultMap"/>	
+	</resultMap>
+
+	<resultMap id="vehicleResultMap" type="Vehicle">
+		<id property="id" column="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="frameNumber" column="FRAME_NUMBER" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<!-- ↓↓↓↓提前还款↓↓↓ -->
+	<resultMap type="Loan" id="specialRepaymentResultMapExtension" extends="loanResultMap">
+		<association property="person" column="PERSON_ID" javaType="Person" resultMap="personResultMap"/>
+		<association property="vehicle" column="FRAME_NUMBER" javaType="Vehicle" resultMap="vehicleResultMap"/>
+	</resultMap>
+	
+	<sql id="loanField">
+		LOAN.ID,
+		LOAN.PERSON_ID,
+		LOAN.VEHICLE_ID,
+		LOAN.PRODUCT_ID,
+		LOAN.RISK,
+		LOAN.PACT_MONEY,
+		LOAN.TIME,
+		LOAN.REQUEST_TIME,
+		LOAN.SALES_TEAM_ID,
+		LOAN.RESIDUAL_PACT_MONEY,
+		LOAN.MONTH_RATE,
+		LOAN.GRANT_ACCOUNT_ID,
+		LOAN.LOAN_TYPE,
+		LOAN.REPAY_ACCOUNT_ID,
+		LOAN.CURR_NUM,
+		LOAN.GRANT_MONEY,
+		LOAN.REQUEST_DATE,
+		LOAN.SIGN_DATE,
+		LOAN.AUDIT_DATE,
+		LOAN.AUDIT_MONEY,
+		LOAN.REQUEST_MONEY,
+		LOAN.RETURN_DATE,
+		LOAN.START_REPAY_DATE,
+		LOAN.END_REPAY_DATE,
+		LOAN.GRANT_DATE,
+		LOAN.CUSTOMER_SOURCE,
+		LOAN.SERVICE_ID,
+		LOAN.CRM_ID,
+		LOAN.BIZ_DIRECTOR_ID,
+		LOAN.ASSESSOR_ID,
+		LOAN.SALES_DEPT_ID,
+		LOAN.PURPOSE,
+		LOAN.STATUS,
+		LOAN.USER_ID,
+		LOAN.CREATOR,
+		LOAN.CREATED_TIME,
+		LOAN.MODIFIER_ID,
+		LOAN.MODIFIER,
+		LOAN.MODIFIED_TIME,
+		LOAN.REMARK,
+		LOAN.CONTRACT_NO,
+		LOAN.AUDIT_TIME,
+		LOAN.GUARANTEE_NAME,
+		LOAN.VERSION,
+		LOAN.SUBMIT_DATE,
+		LOAN.HAS_HOUSE,
+		LOAN.CONTRACT_SRC,
+		LOAN.FINANCE_AUDIT_TIME,
+		LOAN.CONTRACT_CONFIRM_DATE,
+		LOAN.ASSESSMENT,
+		LOAN.CONSULT,
+		LOAN.B_MANAGE,
+		LOAN.C_MANAGE,
+		LOAN.REPAYMENT_METHOD,
+		LOAN.NATURAL_GUARANTEE_NAME1,
+		LOAN.NATURAL_GUARANTEE_NAME2,
+		LOAN.LEGAL_GUARANTEE_CNAME1,
+		LOAN.LEGAL_GUARANTEE_CNAME2,
+		LOAN.MANAGER_ID,
+		LOAN.RESIDUAL_TIME,
+		0 as EXTENSION_TIME,
+		LOAN.ID as LOAN_ID,
+		LOAN.PRODUCT_TYPE,
+		LOAN.THIRD_FEE,
+		LOAN.REPAY_SOURCE,
+		LOAN.AUDIT_MEMBER_TYPE,
+		LOAN.SCHEME_ID,
+		LOAN.ORGAN_ID ,
+		LOAN.FIRSTTRIAL_ID,
+		LOAN.SERVICE_CHARGES,
+		LOAN.PROPHASE_INTEREST,
+
+		LOAN.LCB_BORROW_NO,
+		LOAN.LCB_BORROW_STATUS
+	</sql>
+	
+	<sql id="loanFieldExtension">
+		<include refid="loanField" />
+		,
+		person.NAME as person_name,
+		person.mobile_phone      as mobile_phone_loan,
+		person.PERSON_NO as person_person_no,
+		person.IDNUM as person_idnum,
+		salesTeam.CODE as salesTeam_code,
+		salesTeam.NAME as salesTeam_name,
+		salesTeam.IDENTIFIER as salesTeam_identifier,
+		salesDept.CODE as salesDept_code,
+		salesDept.NAME as salesDept_name,
+		salesDept.IDENTIFIER as salesDept_identifier,
+		service.NAME as service_name,
+		crm.NAME as crm_name,
+		crm.CODE as crm_code,
+		crm.DATA_PERMISSION as crm_dataPermission,
+		service.USER_TYPE as service_user_type,
+		assessor.NAME as assessor_name,
+		assessor.USER_TYPE as assessor_user_type,
+		user_.NAME as user_name,
+		user_.USER_TYPE as user_user_type,
+		bizDirector.NAME as bizDirector_name,
+		bizDirector.CODE as bizDirector_code,
+		grantAccount.BRANCH_NAME as branch_name,
+		grantAccount.BANK_NAME as bank_name,
+		grantAccount.ACCOUNT as account,
+		organ.name as organ_name,
+		firstTrial.NAME as firstTrial_name,
+		firstTrial.USER_TYPE as firstTrial_user_type,
+		product.product_name as product_name,
+		veh.plate_number         as plate_number
+	</sql>
+	
+	<sql id="loanSelectiveExtesnsion">
+		SELECT 
+		<include refid="loanFieldExtension" />
+		FROM LOAN
+		left join PERSON person on LOAN.PERSON_ID = person.ID
+		left join BASE_AREA salesTeam on LOAN.SALES_TEAM_ID = salesTeam.ID 
+		left join BASE_AREA salesDept on LOAN.SALES_DEPT_ID = salesDept.ID 
+		left join SYS_USER service on LOAN.SERVICE_ID = service.id
+		left join SYS_USER crm on LOAN.CRM_ID = crm.id 
+		left join SYS_USER assessor on LOAN.ASSESSOR_ID = assessor.id 
+		left join SYS_USER user_ on LOAN.USER_ID = user_.id
+		left join SYS_USER bizDirector on LOAN.BIZ_DIRECTOR_ID = bizDirector.id
+		left join (      select * from (
+	       SELECT  personBank.Loan_Id,personBank.Bank_Account_Id, personBank.PERSON_ID,    
+          row_number() over (partition by personBank.loan_id order by id desc) rn
+			FROM PERSON_BANK personBank 
+ 		)  WHERE rn   <![CDATA[ <= 1 ]]>) personBank on LOAN.PERSON_ID = personBank.PERSON_ID and LOAN.ID = personBank.LOAN_ID		
+		left join BANK_ACCOUNT grantAccount on personBank.BANK_ACCOUNT_ID = grantAccount.ID
+		left join ORGAN organ on organ.ID = LOAN.ORGAN_ID
+		left join SYS_USER firstTrial on LOAN.FIRSTTRIAL_ID = firstTrial.id 
+		left join PRODUCT product on product.ID = LOAN.PRODUCT_ID
+		left join vehicle veh   on   LOAN.ID = veh.loan_id
+	</sql>
+	<sql id="loanExtensionField">
+		EXTENSION.ID,
+		EXTENSION.PERSON_ID,
+		LOAN.VEHICLE_ID,
+		EXTENSION.PRODUCT_ID,
+		LOAN.RISK,
+		EXTENSION.PACT_MONEY,
+		EXTENSION.TIME,
+		LOAN.REQUEST_TIME,
+		LOAN.SALES_TEAM_ID,
+		EXTENSION.RESIDUAL_PACT_MONEY,
+		EXTENSION.MONTH_RATE,
+		EXTENSION.GRANT_ACCOUNT_ID,
+		EXTENSION.LOAN_TYPE,
+		EXTENSION.REPAY_ACCOUNT_ID,
+		EXTENSION.CURR_NUM,
+		EXTENSION.GRANT_MONEY,
+		EXTENSION.REQUEST_DATE,
+		EXTENSION.SIGN_DATE,
+		EXTENSION.AUDIT_DATE,
+		EXTENSION.AUDIT_MONEY,
+		EXTENSION.REQUEST_MONEY,
+		EXTENSION.RETURN_DATE,
+		EXTENSION.START_REPAY_DATE,
+		EXTENSION.END_REPAY_DATE,
+		EXTENSION.GRANT_DATE,
+		LOAN.CUSTOMER_SOURCE,
+		LOAN.SERVICE_ID,
+		LOAN.CRM_ID,
+		EXTENSION.BIZ_DIRECTOR_ID,
+		LOAN.ASSESSOR_ID,
+		LOAN.SALES_DEPT_ID,
+		LOAN.PURPOSE,
+		EXTENSION.STATUS,
+		LOAN.USER_ID,
+		EXTENSION.CREATOR,
+		EXTENSION.CREATED_TIME,
+		EXTENSION.MODIFIER_ID,
+		EXTENSION.MODIFIER,
+		EXTENSION.MODIFIED_TIME,
+		LOAN.REMARK,
+		EXTENSION.CONTRACT_NO,
+		EXTENSION.AUDIT_TIME,
+		LOAN.GUARANTEE_NAME,
+		EXTENSION.VERSION,
+		EXTENSION.SUBMIT_DATE,
+		LOAN.HAS_HOUSE,
+		EXTENSION.CONTRACT_SRC,
+		LOAN.FINANCE_AUDIT_TIME,
+		EXTENSION.CONTRACT_CONFIRM_DATE,
+		LOAN.ASSESSMENT,
+		LOAN.CONSULT,
+		LOAN.B_MANAGE,
+		LOAN.C_MANAGE,
+		LOAN.REPAYMENT_METHOD,
+		LOAN.NATURAL_GUARANTEE_NAME1,
+		LOAN.NATURAL_GUARANTEE_NAME2,
+		LOAN.LEGAL_GUARANTEE_CNAME1,
+		LOAN.LEGAL_GUARANTEE_CNAME2,
+		EXTENSION.MANAGER_ID,
+		EXTENSION.RESIDUAL_TIME,
+		EXTENSION.EXTENSION_TIME,
+		LOAN.ID as LOAN_ID,
+		EXTENSION.PRODUCT_TYPE,
+		0 AS THIRD_FEE,
+		NULL AS REPAY_SOURCE,
+		0 AS  AUDIT_MEMBER_TYPE,
+		0 AS SCHEME_ID,
+		0 AS ORGAN_ID ,
+		LOAN.FIRSTTRIAL_ID,
+		LOAN.SERVICE_CHARGES,
+		LOAN.PROPHASE_INTEREST,
+
+		LOAN.LCB_BORROW_NO,
+		LOAN.LCB_BORROW_STATUS
+	</sql>
+	<sql id="loanExtensionFieldExtension">
+		<include refid="loanExtensionField" />
+		,
+		person.NAME as person_name,
+		person.mobile_phone      as mobile_phone_loan,
+		person.PERSON_NO as person_person_no,
+		person.IDNUM as person_idnum,
+		salesTeam.CODE as salesTeam_code,
+		salesTeam.NAME as salesTeam_name,
+		salesTeam.IDENTIFIER as salesTeam_identifier,
+		salesDept.CODE as salesDept_code,
+		salesDept.NAME as salesDept_name,
+		salesDept.IDENTIFIER as salesDept_identifier,
+		service.NAME as service_name,
+		crm.NAME as crm_name,
+		crm.CODE as crm_code,
+		crm.DATA_PERMISSION as crm_dataPermission,
+		service.USER_TYPE as service_user_type,
+		assessor.NAME as assessor_name,
+		assessor.USER_TYPE as assessor_user_type,
+		user_.NAME as user_name,
+		user_.USER_TYPE as user_user_type,
+		bizDirector.NAME as bizDirector_name,
+		bizDirector.CODE as bizDirector_code,
+		grantAccount.BRANCH_NAME as branch_name,
+		grantAccount.BANK_NAME as bank_name,
+		grantAccount.ACCOUNT as account,
+		organ.name as organ_name,
+		firstTrial.NAME as firstTrial_name,
+		firstTrial.USER_TYPE as firstTrial_user_type,
+		product.product_name as product_name,
+		 veh.plate_number         as plate_number
+	</sql>
+
+	
+	
+	
+	
+	<sql id="loanExtensionSelectiveExtesnsion">
+	    SELECT 
+	    <include refid="loanExtensionFieldExtension" /> 
+	    FROM EXTENSION
+		left join LOAN_EXTENSION loanExtension on EXTENSION.ID = loanExtension.EXTENSION_ID
+		left join LOAN on loanExtension.LOAN_ID = LOAN.ID
+		left join PERSON person on LOAN.PERSON_ID = person.ID
+		left join BASE_AREA salesTeam on LOAN.SALES_TEAM_ID = salesTeam.ID 
+		left join BASE_AREA salesDept on LOAN.SALES_DEPT_ID = salesDept.ID 
+		left join SYS_USER service on LOAN.SERVICE_ID = service.id
+		left join SYS_USER crm on LOAN.CRM_ID = crm.id 
+		left join SYS_USER assessor on LOAN.ASSESSOR_ID = assessor.id 
+		left join SYS_USER user_ on LOAN.USER_ID = user_.id
+		left join SYS_USER bizDirector on LOAN.BIZ_DIRECTOR_ID = bizDirector.id
+		left join (      select * from (
+	       SELECT  personBank.Loan_Id,personBank.Bank_Account_Id, personBank.PERSON_ID,    
+          row_number() over (partition by personBank.loan_id order by id desc) rn
+			FROM PERSON_BANK personBank 
+ 		)  WHERE rn   <![CDATA[ <= 1 ]]>) personBank on LOAN.PERSON_ID = personBank.PERSON_ID and LOAN.ID = personBank.LOAN_ID		
+		left join BANK_ACCOUNT grantAccount on personBank.BANK_ACCOUNT_ID = grantAccount.ID
+	    left join ORGAN organ on organ.ID = LOAN.ORGAN_ID
+	    left join SYS_USER firstTrial on LOAN.FIRSTTRIAL_ID = firstTrial.id 
+	  	left join PRODUCT product on product.ID = LOAN.PRODUCT_ID
+	  	left join vehicle veh   on LOAN.ID = veh.loan_id
+	</sql>   
+	<sql id="loanRepayTrialSelectiveExtesnsion">
+	    SELECT 
+		<include refid="loanField" />,
+		manageService.NAME as manageService_name,
+		person.NAME as person_name,
+		person.PERSON_NO as person_person_no,
+		person.IDNUM as person_idnum,
+		person.MOBILE_PHONE as person_mobile_phone,
+		grantAccount.BRANCH_NAME as branch_name,
+		grantAccount.BANK_NAME as bank_name,
+		grantAccount.ACCOUNT as account
+		FROM LOAN 
+		<!-- 管理客服 -->
+		left join SYS_USER manageService on LOAN.MANAGER_ID = manageService.id
+		left join PERSON person on LOAN.PERSON_ID = person.ID
+		left join (      select * from (
+	       SELECT  personBank.Loan_Id,personBank.Bank_Account_Id, personBank.PERSON_ID,    
+          row_number() over (partition by personBank.loan_id order by id desc) rn
+			FROM PERSON_BANK personBank 
+ 		)  WHERE rn   <![CDATA[ <= 1 ]]>) personBank on LOAN.PERSON_ID = personBank.PERSON_ID and LOAN.ID = personBank.LOAN_ID		
+		left join BANK_ACCOUNT grantAccount on personBank.BANK_ACCOUNT_ID = grantAccount.ID
+    </sql>   
+    <sql id="extensionLoanRepayTrialSelectiveExtesnsion">
+	    SELECT 
+		<include refid="loanExtensionField" />,
+		manageService.NAME as manageService_name,
+		person.NAME as person_name,
+		person.PERSON_NO as person_person_no,
+		person.IDNUM as person_idnum,
+		person.MOBILE_PHONE as person_mobile_phone,
+		grantAccount.BRANCH_NAME as branch_name,
+		grantAccount.BANK_NAME as bank_name,
+		grantAccount.ACCOUNT as account
+		FROM EXTENSION 
+		left join LOAN_EXTENSION loanExtension on EXTENSION.ID = loanExtension.EXTENSION_ID
+		left join LOAN on loanExtension.LOAN_ID = LOAN.ID
+		<!-- 管理客服 -->
+		left join SYS_USER manageService on EXTENSION.MANAGER_ID = manageService.id
+		left join PERSON person on EXTENSION.PERSON_ID = person.ID
+		left join (      select * from (
+	       SELECT  personBank.Loan_Id,personBank.Bank_Account_Id, personBank.PERSON_ID,    
+          row_number() over (partition by personBank.loan_id order by id desc) rn
+			FROM PERSON_BANK personBank 
+ 		)  WHERE rn   <![CDATA[ <= 1 ]]>) personBank on EXTENSION.PERSON_ID = personBank.PERSON_ID and EXTENSION.ID = personBank.LOAN_ID		
+		left join BANK_ACCOUNT grantAccount on personBank.BANK_ACCOUNT_ID = grantAccount.ID
+    </sql>   
+	
+    <sql id="loanRepayEntrySelectiveExtesnsion">
+	    SELECT 
+		<include refid="loanField" />,
+		salesDept.NAME as salesDept_name,
+		person.NAME as person_name,
+		person.IDNUM as person_idnum
+		FROM LOAN 
+		left join BASE_AREA salesDept on LOAN.SALES_DEPT_ID = salesDept.ID 
+		left join PERSON person on LOAN.PERSON_ID = person.ID	
+    </sql>
+    <sql id="extensionRepayEntrySelectiveExtesnsion">
+    	SELECT
+    	<include refid="loanExtensionField" />,
+    	salesDept.NAME as salesDept_name,
+		person.NAME as person_name,
+		person.IDNUM as person_idnum
+    	FROM EXTENSION
+		left join LOAN_EXTENSION loanExtension on EXTENSION.ID = loanExtension.EXTENSION_ID
+		left join LOAN on loanExtension.LOAN_ID = LOAN.ID
+		left join BASE_AREA salesDept on EXTENSION.SALES_DEPT_ID = salesDept.ID 
+		left join PERSON person on EXTENSION.PERSON_ID = person.ID
+    </sql>   
+	<sql id="loanSelective">
+		SELECT
+		<include refid="loanField" />
+		FROM LOAN
+	</sql>
+
+	<sql id="loanConditions">
+		<where>
+		<if test="id != null">
+			AND LOAN.ID = #{id}
+		</if>
+		<if test="frameNumber != null and frameNumber != ''">
+			AND v.FRAME_NUMBER LIKE '%'||#{frameNumber}||'%'
+		</if>
+		<if test="personId != null">
+			AND LOAN.PERSON_ID = #{personId}
+		</if>
+		<if test="vehicleId != null">
+			AND LOAN.VEHICLE_ID = #{vehicleId}
+		</if>
+		<if test="productId != null">
+			AND LOAN.PRODUCT_ID = #{productId}
+		</if>
+		<if test="risk != null">
+			AND LOAN.RISK = #{risk}
+		</if>
+		<if test="pactMoney != null">
+			AND LOAN.PACT_MONEY = #{pactMoney}
+		</if>
+		<if test="time != null">
+			AND LOAN.TIME = #{time}
+		</if>
+		<if test="requestTime != null">
+			AND LOAN.REQUEST_TIME = #{requestTime}
+		</if>
+		<if test="salesTeamId != null">
+			AND LOAN.SALES_TEAM_ID = #{salesTeamId}
+		</if>
+		<if test="residualPactMoney != null">
+			AND LOAN.RESIDUAL_PACT_MONEY = #{residualPactMoney}
+		</if>
+		<if test="monthRate != null">
+			AND LOAN.MONTH_RATE = #{monthRate}
+		</if>
+		<if test="grantAccountId != null">
+			AND LOAN.GRANT_ACCOUNT_ID = #{grantAccountId}
+		</if>
+		<if test="loanType != null">
+			AND LOAN.LOAN_TYPE = #{loanType}
+		</if>
+		<if test="repayAccountId != null">
+			AND LOAN.REPAY_ACCOUNT_ID = #{repayAccountId}
+		</if>
+		<if test="currNum != null">
+			AND LOAN.CURR_NUM = #{currNum}
+		</if>
+		<if test="grantMoney != null">
+			AND LOAN.GRANT_MONEY = #{grantMoney}
+		</if>
+		<if test="requestDate != null">
+			AND LOAN.REQUEST_DATE = #{requestDate}
+		</if>
+		<if test="signDate != null">
+			AND LOAN.SIGN_DATE = #{signDate}
+		</if>
+		<if test="auditDate != null">
+			AND LOAN.AUDIT_DATE = #{auditDate}
+		</if>
+		<if test="auditMoney != null">
+			AND LOAN.AUDIT_MONEY = #{auditMoney}
+		</if>
+		<if test="auditTime != null">
+			AND LOAN.AUDIT_TIME = #{auditTime}
+		</if>
+		<if test="guaranteeName != null and guaranteeName != ''">
+			AND LOAN.GUARANTEE_NAME = #{guaranteeName}
+		</if>
+		<if test="requestMoney != null">
+			AND LOAN.REQUEST_MONEY = #{requestMoney}
+		</if>
+		<if test="returnDate != null">
+			AND LOAN.RETURN_DATE = #{returnDate}
+		</if>
+		<if test="startRepayDate != null">
+			AND LOAN.START_REPAY_DATE = #{startRepayDate}
+		</if>
+		<if test="endRepayDate != null">
+			AND LOAN.END_REPAY_DATE = #{endRepayDate}
+		</if>
+		<if test="grantDate != null">
+			AND LOAN.GRANT_DATE = #{grantDate}
+		</if>
+		<if test="customerSource != null">
+			AND LOAN.CUSTOMER_SOURCE = #{customerSource}
+		</if>
+		<if test="serviceId != null">
+			AND LOAN.SERVICE_ID = #{serviceId}
+		</if>
+		<if test="managerId != null">
+			AND LOAN.MANAGER_ID = #{managerId}
+		</if>
+		<if test="crmId != null">
+			AND LOAN.CRM_ID = #{crmId}
+		</if>
+		<if test="bizDirectorId != null">
+			AND LOAN.BIZ_DIRECTOR_ID = #{bizDirectorId}
+		</if>
+		<if test="assessorId != null">
+			AND LOAN.ASSESSOR_ID = #{assessorId}
+		</if>
+		<if test="firstTrialId != null">
+			AND LOAN.FIRSTTRIAL_ID = #{firstTrialId}
+		</if>
+		<if test="salesDeptId != null">
+			AND LOAN.SALES_DEPT_ID = #{salesDeptId}
+		</if>
+		<if test="purpose != null">
+			AND LOAN.PURPOSE = #{purpose}
+		</if>
+		<if test="status != null">
+			AND LOAN.STATUS = #{status}
+		</if>
+		<if test="userId != null">
+			AND LOAN.USER_ID = #{userId}
+		</if>
+		<if test="creatorId != null">
+			AND LOAN.CREATOR_ID = #{creatorId}
+		</if>
+		<if test="creator != null">
+			AND LOAN.CREATOR = #{creator}
+		</if>
+		<if test="createdTime != null">
+			AND LOAN.CREATED_TIME = #{createdTime}
+		</if>
+		<if test="modifierId != null">
+			AND LOAN.MODIFIER_ID = #{modifierId}
+		</if>
+		<if test="modifier != null">
+			AND LOAN.MODIFIER = #{modifier}
+		</if>
+		<if test="modifiedTime != null">
+			AND LOAN.MODIFIED_TIME = #{modifiedTime}
+		</if>
+		<if test="idList !=null and idList.size() > 0">
+			AND LOAN.ID IN(
+			<foreach item="guard" index="index" collection="idList"
+				separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="remark != null and remark != ''">
+			AND LOAN.REMARK = #{remark}
+		</if>
+		<if test="contractNo != null and contractNo != ''">
+			AND LOAN.CONTRACT_NO = #{contractNo}
+		</if>
+		<if test="personIdnum != null and personIdnum != ''">
+			AND person.IDNUM = #{personIdnum}
+		</if>
+		<if test="personName != null and personName != ''">
+			AND person.NAME = #{personName}
+		</if>
+		<!-- 姓名模糊查询 -->
+		<if test="personFuzzyName != null and personFuzzyName != ''">
+			AND person.NAME LIKE '%'||#{personFuzzyName}||'%'
+		</if>
+		<if test="personMobilePhone != null and personMobilePhone != ''">
+			AND person.MOBILE_PHONE = #{personMobilePhone}
+		</if>
+		<if test="cityId != null">
+			AND salesDept.CITY_ID = #{cityId}
+		</if>
+		<if test="statusList !=null and statusList.size() > 0">
+			AND LOAN.STATUS IN(
+			<foreach item="guard" index="index" collection="statusList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="productIdList !=null and productIdList.size() > 0">
+			AND LOAN.PRODUCT_ID IN(
+			<foreach item="guard" index="index" collection="productIdList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="selectedProductId != null">
+			AND LOAN.PRODUCT_TYPE = #{selectedProductId}
+		</if>
+		<if test="submitDate != null">
+			AND LOAN.SUBMIT_DATE = #{submitDate}
+		</if>
+		<if test="hasHouse != null">
+			AND LOAN.HAS_HOUSE = #{hasHouse}
+		</if>
+		<if test="requestStartDate !=null">
+			AND LOAN.REQUEST_DATE <![CDATA[ >= ]]> #{requestStartDate}
+	    </if> 
+	    <if test="requestEndDate !=null">
+			AND LOAN.REQUEST_DATE <![CDATA[ <= ]]> #{requestEndDate}
+	    </if> 
+		<if test="auditDateStart !=null">
+			AND LOAN.AUDIT_DATE <![CDATA[ >= ]]> #{auditDateStart}
+	    </if> 
+	    <if test="auditDateEnd !=null">
+			AND LOAN.AUDIT_DATE <![CDATA[ <= ]]> #{auditDateEnd}
+	    </if> 
+	    <if test="signDateStart !=null">
+			AND LOAN.SIGN_DATE <![CDATA[ >= ]]> #{signDateStart}
+	    </if> 
+	    <if test="signDateEnd !=null">
+			AND LOAN.SIGN_DATE <![CDATA[ <= ]]> #{signDateEnd}
+	    </if> 
+	    <if test="contractSrc != null">
+			AND LOAN.CONTRACT_SRC = #{contractSrc}
+		</if>
+		<if test="contractConfirmStartDate != null">
+			AND LOAN.CONTRACT_CONFIRM_DATE<![CDATA[ >= ]]> #{contractConfirmStartDate}			
+        </if>
+        <if test="contractConfirmEndDate!=null">
+			AND LOAN.CONTRACT_CONFIRM_DATE <![CDATA[ <= ]]> #{contractConfirmEndDate}			
+        </if>
+        <if test="financeAuditTimeStart !=null and financeAuditTimeStart != '' ">
+			AND LOAN.FINANCE_AUDIT_TIME <![CDATA[ >= ]]> #{financeAuditTimeStart}
+	    </if> 
+	    <if test="financeAuditTimeEnd !=null and financeAuditTimeEnd != '' ">
+			AND LOAN.FINANCE_AUDIT_TIME <![CDATA[ <= ]]> #{financeAuditTimeEnd}
+	    </if>
+        <if test="financeGrantTimeStart !=null and financeGrantTimeStart != '' ">
+			AND TRUNC(LOAN.GRANT_DATE) <![CDATA[ >= ]]> TRUNC(#{financeGrantTimeStart})
+	    </if> 
+	    <if test="financeGrantTimeEnd !=null and financeGrantTimeEnd != '' ">
+			AND TRUNC(LOAN.GRANT_DATE) <![CDATA[ <= ]]> TRUNC(#{financeGrantTimeEnd})
+	    </if>
+	    <if test="repaymentMethod != null">
+			AND LOAN.REPAYMENT_METHOD = #{repaymentMethod}
+		</if>
+		<if test="residualTime  != null">
+			AND LOAN.RESIDUAL_TIME = #{residualTime}
+		</if>
+		<if test="managerId != null">
+			AND LOAN.MANAGER_ID = #{managerId}
+		</if>
+		<if test="createdTimeStart != null">
+			AND LOAN.CREATED_TIME <![CDATA[ >= ]]> #{createdTimeStart}
+		</if>
+		<if test="startRepayDateStart != null">
+		    AND LOAN.START_REPAY_DATE <![CDATA[ >= ]]> #{startRepayDateStart}
+		</if>
+		<if test="startRepayDateEnd != null">
+		    AND LOAN.START_REPAY_DATE <![CDATA[ <= ]]> #{startRepayDateEnd}
+		</if>
+		<if test="isExtension != null">
+		    AND LOAN.ID = -1
+		</if>
+		<if test="productType != null">
+			AND LOAN.PRODUCT_TYPE = #{productType}
+		</if>
+		<if test="thirdFee != null">
+			AND LOAN.THIRD_FEE = #{thirdFee}
+		</if>
+		<if test="productTypeList !=null and productTypeList.size() > 0">
+			AND LOAN.PRODUCT_TYPE IN(
+			<foreach item="guard" index="index" collection="productTypeList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+			AND LOAN.SALES_DEPT_ID IN(
+			<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="serviceCharges != null">
+			AND LOAN.SERVICE_CHARGES = #{serviceCharges}
+		</if>
+		<if test="organName != null and organName != ''">
+			AND ORGAN.NAME LIKE '%'||#{organName}||'%'
+		</if>
+		
+		<if test="mobilePhoneLoan != null and mobilePhoneLoan != ''">
+			AND person.mobile_phone = #{mobilePhoneLoan}
+		</if>
+		
+		<if test="plateNumber != null and plateNumber != ''">
+			AND veh.plate_number = #{plateNumber}
+		</if>
+		
+		<if test="customerManagerId != null and customerManagerId != ''">
+			AND LOAN.CRM_ID = #{customerManagerId}
+		</if>
+		<if test="repayDay != null and repayDay != ''">
+			AND LOAN.id in (select loan_id from repayment_plan rp inner join LOAN ON LOAN.ID=rp.loan_id where LOAN.STATUS IN(
+			
+				130
+			,
+				140
+			,
+				160
+			
+			) and  rp.repay_day = to_date(#{repayDay},'yyyy-mm-dd'))
+		</if>
+		<!-- <if test="cityId != null">
+			AND salesDept.CITY_ID = #{cityId}
+		</if> -->
+		<if test="pl == 'pl'">
+			AND LOAN.id in (select loan_id from SPECIAL_REPAYMENT SPE
+			 where SPE.PL_FLAG='pl' and SPE.status=10)
+		</if>
+
+		<if test="lcbBorrowNo!=null and lcbBorrowNo!=''">
+			and LOAN.LCB_BORROW_NO = #{lcbBorrowNo}
+		</if>
+		</where>
+	</sql>
+	<sql id="loanExtensionConditions">
+		<where>
+		<if test="id != null">
+			AND EXTENSION.ID = #{id}
+		</if>
+		<if test="frameNumber != null and frameNumber != ''">
+			AND v.FRAME_NUMBER LIKE '%'||#{frameNumber}||'%'
+		</if>			
+		<if test="personId != null">
+			AND EXTENSION.PERSON_ID = #{personId}
+		</if>
+		<if test="productId != null">
+			AND EXTENSION.PRODUCT_ID = #{productId}
+		</if>
+		<if test="selectedProductId != null">
+			AND EXTENSION.PRODUCT_TYPE = #{selectedProductId}
+		</if>
+		<if test="time != null">
+			AND EXTENSION.TIME = #{time}
+		</if>
+		<if test="requestTime != null">
+			AND EXTENSION.REQUEST_TIME = #{requestTime}
+		</if>
+		<if test="salesTeamId != null">
+			AND EXTENSION.SALES_TEAM_ID = #{salesTeamId}
+		</if>
+		
+		<if test="monthRate != null">
+			AND EXTENSION.MONTH_RATE = #{monthRate}
+		</if>
+		<if test="grantAccountId != null">
+			AND EXTENSION.GRANT_ACCOUNT_ID = #{grantAccountId}
+		</if>
+		<if test="loanType != null">
+			AND EXTENSION.LOAN_TYPE = #{loanType}
+		</if>
+		<if test="repayAccountId != null">
+			AND EXTENSION.REPAY_ACCOUNT_ID = #{repayAccountId}
+		</if>
+		<if test="currNum != null">
+			AND EXTENSION.CURR_NUM = #{currNum}
+		</if>
+		<if test="grantMoney != null">
+			AND EXTENSION.GRANT_MONEY = #{grantMoney}
+		</if>
+		<if test="requestDate != null">
+			AND EXTENSION.REQUEST_DATE = #{requestDate}
+		</if>
+		<if test="signDate != null">
+			AND EXTENSION.SIGN_DATE = #{signDate}
+		</if>
+		<if test="auditDate != null">
+			AND EXTENSION.AUDIT_DATE = #{auditDate}
+		</if>
+		<if test="auditMoney != null">
+			AND EXTENSION.AUDIT_MONEY = #{auditMoney}
+		</if>
+		<if test="auditTime != null">
+			AND EXTENSION.AUDIT_TIME = #{auditTime}
+		</if>
+	
+		<if test="requestMoney != null">
+			AND EXTENSION.REQUEST_MONEY = #{requestMoney}
+		</if>
+		<if test="returnDate != null">
+			AND EXTENSION.RETURN_DATE = #{returnDate}
+		</if>
+		<if test="startRepayDate != null">
+			AND EXTENSION.START_REPAY_DATE = #{startRepayDate}
+		</if>
+		<if test="endRepayDate != null">
+			AND EXTENSION.END_REPAY_DATE = #{endRepayDate}
+		</if>
+		<if test="grantDate != null">
+			AND EXTENSION.GRANT_DATE = #{grantDate}
+		</if>
+	
+		<if test="serviceId != null">
+			AND EXTENSION.SERVICE_ID = #{serviceId}
+		</if>
+		
+		<if test="crmId != null">
+			AND EXTENSION.CRM_ID = #{crmId}
+		</if>
+		<if test="bizDirectorId != null">
+			AND EXTENSION.BIZ_DIRECTOR_ID = #{bizDirectorId}
+		</if>
+		
+		<if test="assessorId != null">
+			AND EXTENSION.ASSESSOR_ID = #{assessorId}
+		</if>
+		<if test="salesDeptId != null">
+			AND EXTENSION.SALES_DEPT_ID = #{salesDeptId}
+		</if>
+	
+		<if test="status != null">
+			AND EXTENSION.STATUS = #{status}
+		</if>
+		
+		<if test="creatorId != null">
+			AND EXTENSION.CREATOR_ID = #{creatorId}
+		</if>
+		<if test="creator != null">
+			AND EXTENSION.CREATOR = #{creator}
+		</if>
+		<if test="createdTime != null">
+			AND EXTENSION.CREATED_TIME = #{createdTime}
+		</if>
+		<if test="modifierId != null">
+			AND EXTENSION.MODIFIER_ID = #{modifierId}
+		</if>
+		<if test="modifier != null">
+			AND EXTENSION.MODIFIER = #{modifier}
+		</if>
+		<if test="modifiedTime != null">
+			AND EXTENSION.MODIFIED_TIME = #{modifiedTime}
+		</if>
+		<if test="idList !=null and idList.size() > 0">
+			AND EXTENSION.ID IN(
+			<foreach item="guard" index="index" collection="idList"
+				separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="personIdnum != null and personIdnum != ''">
+			AND person.IDNUM = #{personIdnum}
+		</if>
+		<if test="personName != null and personName != ''">
+			AND person.NAME = #{personName}
+		</if>
+		<!-- 姓名模糊查询 -->
+		<if test="personFuzzyName != null and personFuzzyName != ''">
+			AND person.NAME LIKE '%'||#{personFuzzyName}||'%'
+		</if>
+		<if test="personMobilePhone != null and personMobilePhone != ''">
+			AND person.MOBILE_PHONE = #{personMobilePhone}
+		</if>
+		<if test="cityId != null">
+			AND salesDept.CITY_ID = #{cityId}
+		</if>
+		<if test="statusList !=null and statusList.size() > 0">
+			AND EXTENSION.STATUS IN(
+			<foreach item="guard" index="index" collection="statusList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="productIdList !=null and productIdList.size() > 0">
+			AND EXTENSION.PRODUCT_ID IN(
+			<foreach item="guard" index="index" collection="productIdList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="productType != null">
+			AND EXTENSION.PRODUCT_TYPE = #{productType}
+		</if>
+		<if test="productTypeList !=null and productTypeList.size() > 0">
+			AND EXTENSION.PRODUCT_TYPE IN(
+			<foreach item="guard" index="index" collection="productTypeList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="auditDateStart !=null">
+			AND EXTENSION.AUDIT_DATE <![CDATA[ >= ]]> #{auditDateStart}
+	    </if> 
+	    <if test="auditDateEnd !=null">
+			AND EXTENSION.AUDIT_DATE <![CDATA[ <= ]]> #{auditDateEnd}
+	    </if> 
+	    <if test="signDateStart !=null">
+			AND EXTENSION.SIGN_DATE <![CDATA[ >= ]]> #{signDateStart}
+	    </if> 
+	    <if test="signDateEnd !=null">
+			AND EXTENSION.SIGN_DATE <![CDATA[ <= ]]> #{signDateEnd}
+	    </if> 
+		<if test="contractConfirmStartDate != null">
+			AND EXTENSION.CONTRACT_CONFIRM_DATE<![CDATA[ >= ]]> #{contractConfirmStartDate}			
+        </if>
+        <if test="contractConfirmEndDate!=null">
+			AND EXTENSION.CONTRACT_CONFIRM_DATE <![CDATA[ <= ]]> #{contractConfirmEndDate}			
+        </if>
+       
+		<if test="residualTime  != null">
+			AND EXTENSION.RESIDUAL_TIME = #{residualTime}
+		</if>
+		
+		<if test="createdTimeStart != null">
+			AND EXTENSION.CREATED_TIME <![CDATA[ >= ]]> #{createdTimeStart}
+		</if>
+		<if test="startRepayDateStart != null">
+		    AND EXTENSION.START_REPAY_DATE <![CDATA[ >= ]]> #{startRepayDateStart}
+		</if>
+		<if test="startRepayDateEnd != null">
+		    AND EXTENSION.START_REPAY_DATE <![CDATA[ <= ]]> #{startRepayDateEnd}
+		</if>
+		<if test="extensionTime != null and extensionTime != -1">
+		    AND EXTENSION.EXTENSION_TIME = #{extensionTime}
+		</if>
+		<if test="managerId != null">
+			AND EXTENSION.MANAGER_ID = #{managerId}
+		</if>
+		<if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+			AND EXTENSION.SALES_DEPT_ID IN(
+			<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="organName != null and organName != ''">
+			AND ORGAN.NAME LIKE '%'||#{organName}||'%'
+		</if>
+		
+		<if test="mobilePhoneLoan != null and mobilePhoneLoan != ''">
+			AND person.mobile_phone = #{mobilePhoneLoan}
+		</if>
+		
+		<if test="plateNumber != null and plateNumber != ''">
+			AND veh.plate_number = #{plateNumber}
+		</if>
+		
+		<if test="customerManagerId != null and customerManagerId != ''">
+			AND LOAN.CRM_ID = #{customerManagerId}
+		</if>
+		<if test="repayDay != null and repayDay != ''">
+		<!-- 	AND LOAN.id in (select loan_id from repayment_plan rp inner join LOAN ON LOAN.ID=rp.loan_id where
+			  LOAN.STATUS IN(
+			
+				130
+			,
+				140
+			,
+				160
+			
+			) and  rp.repay_day = to_date(#{repayDay},'yyyy-mm-dd')) -->
+			 	AND LOAN.id in (select le.loan_id from repayment_plan rp inner join loan_extension le ON le.extension_id=rp.loan_id 
+      			inner join extension e on e.id=le.extension_id
+      			where
+       		 	e.STATUS IN(
+      
+        		130
+      			,
+        		140
+      			,
+        		160
+      		) and rp.repay_day = to_date(#{repayDay},'yyyy-mm-dd'))
+		</if>
+		<!-- <if test="cityId != null">
+			AND salesDept.CITY_ID = #{cityId}
+		</if> -->
+		<if test="pl == 'pl'">
+			AND LOAN.id in (select loan_id from SPECIAL_REPAYMENT SPE
+			 where SPE.PL_FLAG='pl' and SPE.status=10)
+		</if>
+		</where>
+	</sql>
+	<select id="get" parameterType="java.lang.Long" resultMap="loanResultMap">
+		<include refid="loanSelective" />
+		WHERE LOAN.ID = #{id}
+	</select>
+	
+	<update id="update" parameterType="loanVO">
+		UPDATE LOAN
+		<trim prefix="set" suffixOverrides=",">
+			<if test="personId != null">
+				PERSON_ID = #{personId},
+			</if>
+			<if test="vehicleId != null">
+				VEHICLE_ID = #{vehicleId},
+			</if>
+			<if test="productId != null">
+				PRODUCT_ID = #{productId},
+			</if>
+			<if test="productType != null">
+				PRODUCT_TYPE = #{productType},
+			</if>
+			<if test="thirdFee != null">
+				THIRD_FEE = #{thirdFee},
+			</if>
+			<if test="risk != null">
+				RISK = #{risk},
+			</if>
+			<if test="pactMoney != null">
+				PACT_MONEY = #{pactMoney},
+			</if>
+			<if test="time != null">
+				TIME = #{time},
+			</if>
+			<if test="requestTime != null">
+				REQUEST_TIME = #{requestTime},
+			</if>
+			<if test="salesTeamId != null">
+				SALES_TEAM_ID = #{salesTeamId},
+			</if>
+			<if test="residualPactMoney != null">
+				RESIDUAL_PACT_MONEY = #{residualPactMoney},
+			</if>
+			<if test="monthRate != null">
+				MONTH_RATE = #{monthRate},
+			</if>
+			<if test="grantAccountId != null">
+				GRANT_ACCOUNT_ID = #{grantAccountId},
+			</if>
+			<if test="loanType != null">
+				LOAN_TYPE = #{loanType},
+			</if>
+			<if test="repayAccountId != null">
+				REPAY_ACCOUNT_ID = #{repayAccountId},
+			</if>
+			<if test="currNum != null">
+				CURR_NUM = #{currNum},
+			</if>
+			<if test="grantMoney != null">
+				GRANT_MONEY = #{grantMoney},
+			</if>
+			<if test="requestDate != null">
+				REQUEST_DATE = #{requestDate},
+			</if>
+			<if test="signDate != null">
+				SIGN_DATE = #{signDate},
+			</if>
+			<if test="auditDate != null">
+				AUDIT_DATE = #{auditDate},
+			</if>
+			<if test="auditMoney != null">
+				AUDIT_MONEY = #{auditMoney},
+			</if>
+			<if test="auditTime != null">
+				AUDIT_TIME = #{auditTime},
+			</if>
+			<if test="guaranteeName != null">
+				GUARANTEE_NAME = #{guaranteeName},
+			</if>
+			<if test="requestMoney != null">
+				REQUEST_MONEY = #{requestMoney},
+			</if>
+			<if test="returnDate != null">
+				RETURN_DATE = #{returnDate},
+			</if>
+			<if test="startRepayDate != null">
+				START_REPAY_DATE = #{startRepayDate},
+			</if>
+			<if test="endRepayDate != null">
+				END_REPAY_DATE = #{endRepayDate},
+			</if>
+			<if test="grantDate != null">
+				GRANT_DATE = #{grantDate},
+			</if>
+			<if test="customerSource != null">
+				CUSTOMER_SOURCE = #{customerSource},
+			</if>
+			<if test="serviceId != null">
+				SERVICE_ID = #{serviceId},
+			</if>
+			<if test="crmId != null">
+				CRM_ID = #{crmId},
+			</if>
+			<if test="bizDirectorId != null">
+				BIZ_DIRECTOR_ID = #{bizDirectorId},
+			</if>
+			<if test="assessorId != null">
+				ASSESSOR_ID = #{assessorId},
+			</if>
+			<if test="salesDeptId != null">
+				SALES_DEPT_ID = #{salesDeptId},
+			</if>
+			<if test="purpose != null">
+				PURPOSE = #{purpose},
+			</if>
+			<if test="status != null">
+				STATUS = #{status},
+			</if>
+			<if test="userId != null">
+				USER_ID = #{userId},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark},
+			</if>
+			<if test="contractNo != null and contractNo != ''">
+				CONTRACT_NO = #{contractNo},
+			</if>
+			<if test="version != null">
+				VERSION=#{version},
+        	</if>
+        	<if test="submitDate != null">
+				SUBMIT_DATE=#{submitDate},
+        	</if>
+        	<if test="hasHouse != null">
+				HAS_HOUSE=#{hasHouse},
+        	</if>
+        	<if test="contractSrc != null">
+				CONTRACT_SRC=#{contractSrc},
+        	</if>
+        	<if test="contractConfirmDate != null">
+				CONTRACT_CONFIRM_DATE=#{contractConfirmDate},
+        	</if>
+        	<if test="contractBackDate != null">
+				CONTRACT_BACK_DATE=#{contractBackDate},
+        	</if>
+        	<if test="contractCreatedTime != null">
+				CONTRACT_CREATED_TIME=#{contractCreatedTime},
+        	</if>
+        	<if test="assessment != null">
+				ASSESSMENT=#{assessment},
+        	</if>
+        	<if test="consult != null">
+				CONSULT=#{consult},
+        	</if>
+        	<if test="bManage != null">
+				B_MANAGE=#{bManage},
+        	</if>
+        	<if test="cManage != null">
+				C_MANAGE=#{cManage},
+        	</if>
+        	<if test="financeAuditTime != null">
+				FINANCE_AUDIT_TIME=#{financeAuditTime},
+        	</if>
+        	<if test="repaymentMethod != null">
+				REPAYMENT_METHOD=#{repaymentMethod},
+        	</if>
+        	<if test="naturalGuaranteeName1 != null">
+				NATURAL_GUARANTEE_NAME1=#{naturalGuaranteeName1},
+        	</if>
+        	<if test="naturalGuaranteeName2 != null">
+				NATURAL_GUARANTEE_NAME2=#{naturalGuaranteeName2},
+        	</if>
+        	<if test="legalGuaranteeCname1 != null">
+				LEGAL_GUARANTEE_CNAME1=#{legalGuaranteeCname1},
+        	</if>
+        	<if test="legalGuaranteeCname2 != null">
+				LEGAL_GUARANTEE_CNAME2=#{legalGuaranteeCname2},
+        	</if>
+        	<if test="residualTime != null">
+        		LOAN.RESIDUAL_TIME = #{residualTime},
+        	</if>
+        	<if test="flag != null">
+        		LOAN.FLAG = #{flag},
+        	</if>
+        	<if test="managerId != null">
+        		LOAN.MANAGER_ID = #{managerId},
+        	</if>
+        	<if test="sourceOfRepay != null">
+        		REPAY_SOURCE = #{sourceOfRepay},
+        	</if>
+			<if test="auditMemberType != null">
+				AUDIT_MEMBER_TYPE = #{auditMemberType},
+        	</if>
+        	
+        	<if test="organID != null">
+				ORGAN_ID = #{organID},
+        	</if>
+        	<if test="schemeID != null">
+				SCHEME_ID = #{schemeID},
+        	</if>
+        	<if test="firstTrialId != null">
+				FIRSTTRIAL_ID = #{firstTrialId},
+			</if>
+			<if test="serviceCharges != null">
+				 SERVICE_CHARGES = #{serviceCharges},
+			</if>
+			<if test="businessCompanyId != null">
+				 BUSINESS_COMPANY_ID = #{businessCompanyId},
+			</if>
+			<if test="recordEmpty != null">
+				 CONTRACT_NO = null,
+			</if>
+			<if test="prophaseInterest != null">
+				 PROPHASE_INTEREST =#{prophaseInterest},
+			</if>
+
+			<if test="lcbBorrowNo != null and lcbBorrowNo != ''">
+				LCB_BORROW_NO = #{lcbBorrowNo},
+			</if>
+			<if test="lcbBorrowStatus != null ">
+				LCB_BORROW_STATUS = #{lcbBorrowStatus},
+			</if>
+		</trim>
+		WHERE ID = #{id}		  
+		 <if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+	</update>
+	<update id="updateByStatus" parameterType="loanVO">
+		UPDATE LOAN
+		<trim prefix="set" suffixOverrides=",">
+			<if test="status != null">
+				STATUS = #{status},
+			</if>			
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>			
+		</trim>
+		WHERE ID = #{id}
+		  <if test="notStatus != null">
+				AND STATUS = #{notStatus}
+		  </if>
+		  <if test="createdTimeStart != null">
+			AND CREATED_TIME <![CDATA[ >= ]]> #{createdTimeStart}
+		  </if>			
+		  <if test="version != null">
+			AND VERSION = #{version} -1 
+     	  </if>
+	</update>
+	<update id="updateByIdList" parameterType="loanVO">
+	UPDATE LOAN
+	<trim prefix="set" suffixOverrides=",">
+		<if test="managerId != null">
+			MANAGER_ID = #{managerId},
+		</if>
+		<if test="modifierId != null">
+			MODIFIER_ID = #{modifierId},
+		</if>
+		<if test="modifier != null">
+			MODIFIER = #{modifier},
+		</if>
+		<if test="modifiedTime != null">
+			MODIFIED_TIME = #{modifiedTime},
+		</if>
+		<if test="assessorId != null">
+			ASSESSOR_ID = #{assessorId},
+		</if>
+		<if test="firstTrialId != null">
+			FIRSTTRIAL_ID = #{firstTrialId},
+		</if>
+		<if test="status != null">
+			STATUS = #{status},
+		</if>
+	</trim>
+		WHERE ID IN
+	<if test="idList !=null and idList.size() > 0">
+		(
+		<foreach item="guard" index="index" collection="idList"
+			separator=",">
+			#{guard}
+		</foreach>
+		)
+	</if>
+</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM LOAN WHERE ID = #{id}
+	</delete>
+
+	<delete id="deleteByIdList" parameterType="loanVO">
+		DELETE FROM LOAN WHERE ID IN (
+		<foreach item="guard" index="index" collection="idList"
+			separator=",">
+			#{guard}
+		</foreach>
+		)
+	</delete>
+
+	<insert id="insert" parameterType="Loan">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_loan_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO LOAN
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="personId != null">
+				PERSON_ID,
+			</if>
+			<if test="vehicleId != null">
+				VEHICLE_ID,
+			</if>
+			<if test="productId != null">
+				PRODUCT_ID,
+			</if>
+			<if test="productType != null">
+				PRODUCT_TYPE,
+			</if>
+			<if test="risk != null">
+				RISK,
+			</if>
+			<if test="pactMoney != null">
+				PACT_MONEY,
+			</if>
+			<if test="time != null">
+				TIME,
+			</if>
+			<if test="requestTime != null">
+				REQUEST_TIME,
+			</if>
+			<if test="salesTeamId != null">
+				SALES_TEAM_ID,
+			</if>
+			<if test="residualPactMoney != null">
+				RESIDUAL_PACT_MONEY,
+			</if>
+			<if test="monthRate != null">
+				MONTH_RATE,
+			</if>
+			<if test="grantAccountId != null">
+				GRANT_ACCOUNT_ID,
+			</if>
+			<if test="loanType != null">
+				LOAN_TYPE,
+			</if>
+			<if test="repayAccountId != null">
+				REPAY_ACCOUNT_ID,
+			</if>
+			<if test="currNum != null">
+				CURR_NUM,
+			</if>
+			<if test="grantMoney != null">
+				GRANT_MONEY,
+			</if>
+			<if test="requestDate != null">
+				REQUEST_DATE,
+			</if>
+			<if test="signDate != null">
+				SIGN_DATE,
+			</if>
+			<if test="auditDate != null">
+				AUDIT_DATE,
+			</if>
+			<if test="auditMoney != null">
+				AUDIT_MONEY,
+			</if>
+			<if test="auditTime != null">
+				AUDIT_TIME,
+			</if>
+			<if test="guaranteeName != null">
+				GUARANTEE_NAME,
+			</if>
+			<if test="requestMoney != null">
+				REQUEST_MONEY,
+			</if>
+			<if test="returnDate != null">
+				RETURN_DATE,
+			</if>
+			<if test="startRepayDate != null">
+				START_REPAY_DATE,
+			</if>
+			<if test="endRepayDate != null">
+				END_REPAY_DATE,
+			</if>
+			<if test="grantDate != null">
+				GRANT_DATE,
+			</if>
+			<if test="customerSource != null">
+				CUSTOMER_SOURCE,
+			</if>
+			<if test="serviceId != null">
+				SERVICE_ID,
+			</if>
+			<if test="crmId != null">
+				CRM_ID,
+			</if>
+			<if test="bizDirectorId != null">
+				BIZ_DIRECTOR_ID,
+			</if>
+			<if test="assessorId != null">
+				ASSESSOR_ID,
+			</if>
+			<if test="salesDeptId != null">
+				SALES_DEPT_ID,
+			</if>
+			<if test="purpose != null">
+				PURPOSE,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="userId != null">
+				USER_ID,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="remark != null and remark != ''">
+				REMARK,
+			</if>
+			<if test="contractNo != null and contractNo != ''">
+				CONTRACT_NO,
+			</if>
+			<if test="submitDate != null">
+				SUBMIT_DATE,
+			</if>
+			<if test="hasHouse != null">
+				HAS_HOUSE,
+			</if>
+			<if test="contractSrc != null">
+				CONTRACT_SRC,
+			</if>
+			<if test="repaymentMethod != null">
+				REPAYMENT_METHOD,
+			</if>
+			<if test="residualTime != null">
+        		RESIDUAL_TIME,
+        	</if>
+			<if test="flag != null">
+        		FLAG,
+        	</if>
+        	<if test="managerId != null">
+        		MANAGER_ID,
+        	</if>
+        	<if test="sourceOfRepay != null">
+        		REPAY_SOURCE,
+        	</if>
+        	<if test="thirdFee != null">
+				THIRD_FEE,
+			</if>
+			<if test="productChannelID != null">
+				PRODUCT_CHANNEL_ID ,
+			</if>
+			<if test="auditMemberType != null">
+				AUDIT_MEMBER_TYPE ,
+			</if>
+			<if test="organID != null">
+				ORGAN_ID,
+			</if>
+			<if test="schemeID != null">
+				SCHEME_ID,
+			</if>
+			<if test="serviceCharges != null">
+				SERVICE_CHARGES,
+			</if>
+			<if test="prophaseInterest != null">
+				PROPHASE_INTEREST,
+			</if>
+
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			#{id},
+			<if test="personId != null">
+				#{personId},
+			</if>
+			<if test="vehicleId != null">
+				#{vehicleId},
+			</if>
+			<if test="productId != null">
+				#{productId},
+			</if>
+			<if test="productType != null">
+				#{productType},
+			</if>
+			<if test="risk != null">
+				#{risk},
+			</if>
+			<if test="pactMoney != null">
+				#{pactMoney},
+			</if>
+			<if test="time != null">
+				#{time},
+			</if>
+			<if test="requestTime != null">
+				#{requestTime},
+			</if>
+			<if test="salesTeamId != null">
+				#{salesTeamId},
+			</if>
+			<if test="residualPactMoney != null">
+				#{residualPactMoney},
+			</if>
+			<if test="monthRate != null">
+				#{monthRate},
+			</if>
+			<if test="grantAccountId != null">
+				#{grantAccountId},
+			</if>
+			<if test="loanType != null">
+				#{loanType},
+			</if>
+			<if test="repayAccountId != null">
+				#{repayAccountId},
+			</if>
+			<if test="currNum != null">
+				#{currNum},
+			</if>
+			<if test="grantMoney != null">
+				#{grantMoney},
+			</if>
+			<if test="requestDate != null">
+				#{requestDate},
+			</if>
+			<if test="signDate != null">
+				#{signDate},
+			</if>
+			<if test="auditDate != null">
+				#{auditDate},
+			</if>
+			<if test="auditMoney != null">
+				#{auditMoney},
+			</if>
+			<if test="auditTime != null">
+				#{auditTime},
+			</if>
+			<if test="guaranteeName != null">
+				#{guaranteeName},
+			</if>
+			<if test="requestMoney != null">
+				#{requestMoney},
+			</if>
+			<if test="returnDate != null">
+				#{returnDate},
+			</if>
+			<if test="startRepayDate != null">
+				#{startRepayDate},
+			</if>
+			<if test="endRepayDate != null">
+				#{endRepayDate},
+			</if>
+			<if test="grantDate != null">
+				#{grantDate},
+			</if>
+			<if test="customerSource != null">
+				#{customerSource},
+			</if>
+			<if test="serviceId != null">
+				#{serviceId},
+			</if>
+			<if test="crmId != null">
+				#{crmId},
+			</if>
+			<if test="bizDirectorId != null">
+				#{bizDirectorId},
+			</if>
+			<if test="assessorId != null">
+				#{assessorId},
+			</if>
+			<if test="salesDeptId != null">
+				#{salesDeptId},
+			</if>
+			<if test="purpose != null">
+				#{purpose},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="remark != null and remark != ''">
+				#{remark},
+			</if>
+			<if test="contractNo != null and contractNo != ''">
+				#{contractNo},
+			</if>
+			<if test="submitDate != null">
+				#{submitDate},
+			</if>
+			<if test="hasHouse != null">
+				#{hasHouse},
+			</if>
+			<if test="contractSrc != null">
+				#{contractSrc},
+			</if>
+			<if test="repaymentMethod != null">
+				#{repaymentMethod},
+			</if>
+			<if test="residualTime != null">
+        		#{residualTime},
+        	</if>
+        	<if test="flag != null">
+        		#{flag},
+        	</if>
+        	<if test="managerId != null">
+        		#{managerId},
+        	</if>
+        	<if test="sourceOfRepay != null">
+        		#{sourceOfRepay},
+        	</if>
+        	<if test="thirdFee != null">
+        		#{thirdFee},
+        	</if>
+        	<if test="productChannelID != null">
+				#{productChannelID},
+			</if>
+			<if test="auditMemberType != null">
+				#{auditMemberType},
+			</if>
+			<if test="organID != null">
+				#{organID},
+			</if>
+			<if test="schemeID != null">
+				#{schemeID},
+			</if>
+			<if test="serviceCharges != null">
+				#{serviceCharges},
+			</if>
+			<if test="prophaseInterest != null">
+				#{prophaseInterest},
+			</if>
+
+		</trim>
+	</insert>
+
+	<select id="findListByVO" parameterType="LoanVO" resultMap="loanResultMap">
+		<include refid="loanSelective" />
+		<include refid="loanConditions" />
+	</select>
+	
+	<select id="findListByVOExtension" parameterType="LoanVO" resultMap="loanResultMapExtension">
+		<include refid="loanSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+	</select>
+	
+	<!--新增特殊查询->生成报盘记录查询  1.约定还款日为当日日期且状态为“正常”的借款;2. 所有逾期的记录-->
+	<select id="findListByVOWithUnion" parameterType="LoanVO" resultType="java.lang.Long">
+	  SELECT ID FROM LOAN
+		 where STATUS = #{status}
+		 AND  RETURN_DATE = #{returnDate}
+		 AND  SALES_DEPT_ID = #{salesDeptId}
+		 AND  CREATED_TIME <![CDATA[ >= ]]> #{createdTimeStart}
+		 UNION
+	  SELECT ID FROM LOAN
+		 where STATUS = #{overdueStatus}
+		 AND  SALES_DEPT_ID = #{salesDeptId}
+		 AND  CREATED_TIME <![CDATA[ >= ]]> #{createdTimeStart}
+	  UNION ALL
+	    SELECT ID FROM EXTENSION
+		 where STATUS = #{status}
+		 AND  RETURN_DATE = #{returnDate}
+		 AND  SALES_DEPT_ID = #{salesDeptId}
+		 UNION
+	  SELECT ID FROM EXTENSION
+		 where STATUS = #{overdueStatus}
+		 AND  SALES_DEPT_ID = #{salesDeptId}
+	</select>
+
+	<select id="exists" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM LOAN WHERE LOAN.ID = #{id}
+	</select>
+
+	<select id="count" parameterType="LoanVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="loanSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		)
+	</select>
+
+	<select id="findWithPG" parameterType="LoanVO" resultMap="loanResultMapExtension">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="loanSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>	
+	<select id="countUnionExtension" parameterType="LoanVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="loanSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union all
+		<include refid="loanExtensionSelectiveExtesnsion" />
+		<include refid="loanExtensionConditions" />
+		)
+	</select>
+	
+	<select id="findListByVOUnionExtension" parameterType="LoanVO" resultMap="loanResultMapExtension">
+		<include refid="loanSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union all
+		<include refid="loanExtensionSelectiveExtesnsion" />
+		<include refid="loanExtensionConditions" />
+	</select>
+	
+	<select id="findWithPGUnionExtension" parameterType="LoanVO" resultMap="loanResultMapExtension">
+	    
+	    <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+	    select * from (
+		<include refid="loanSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union all
+		<include refid="loanExtensionSelectiveExtesnsion" />
+		<include refid="loanExtensionConditions" />
+		) 
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+  </select>  
+  <!-- 批量 -->
+  <sql id="plLoanSelectiveExtesnsion">
+		SELECT 
+		<include refid="loanFieldExtension" />
+		FROM LOAN
+		left join PERSON person on LOAN.PERSON_ID = person.ID
+		left join BASE_AREA salesTeam on LOAN.SALES_TEAM_ID = salesTeam.ID 
+		left join BASE_AREA salesDept on LOAN.SALES_DEPT_ID = salesDept.ID 
+		left join SYS_USER service on LOAN.SERVICE_ID = service.id
+		left join SYS_USER crm on LOAN.CRM_ID = crm.id 
+		left join SYS_USER assessor on LOAN.ASSESSOR_ID = assessor.id 
+		left join SYS_USER user_ on LOAN.USER_ID = user_.id
+		left join SYS_USER bizDirector on LOAN.BIZ_DIRECTOR_ID = bizDirector.id
+		left join (      select * from (
+	       SELECT  personBank.Loan_Id,personBank.Bank_Account_Id, personBank.PERSON_ID,    
+          row_number() over (partition by personBank.loan_id order by id desc) rn
+			FROM PERSON_BANK personBank 
+ 		)  WHERE rn   <![CDATA[ <= 1 ]]>) personBank on LOAN.PERSON_ID = personBank.PERSON_ID and LOAN.ID = personBank.LOAN_ID		
+		left join BANK_ACCOUNT grantAccount on personBank.BANK_ACCOUNT_ID = grantAccount.ID
+		left join ORGAN organ on organ.ID = LOAN.ORGAN_ID
+		left join SYS_USER firstTrial on LOAN.FIRSTTRIAL_ID = firstTrial.id 
+		left join PRODUCT product on product.ID = LOAN.PRODUCT_ID
+		left join vehicle veh   on   LOAN.ID = veh.loan_id
+		left join SPECIAL_REPAYMENT spe on LOAN.ID=spe.loan_id
+		<!-- LEFT JOIN repayment_plan rp ON LOAN.ID=LOAN.ID 
+		left join BASE_AREA salesDept on LOAN.SALES_DEPT_ID = salesDept.ID  -->
+	</sql>
+	<sql id="plLoanExtensionSelectiveExtesnsion">
+	    SELECT 
+	    <include refid="loanExtensionFieldExtension" /> 
+	    FROM EXTENSION
+		left join LOAN_EXTENSION loanExtension on EXTENSION.ID = loanExtension.EXTENSION_ID
+		left join LOAN on loanExtension.LOAN_ID = LOAN.ID
+		left join PERSON person on LOAN.PERSON_ID = person.ID
+		left join BASE_AREA salesTeam on LOAN.SALES_TEAM_ID = salesTeam.ID 
+		left join BASE_AREA salesDept on LOAN.SALES_DEPT_ID = salesDept.ID 
+		left join SYS_USER service on LOAN.SERVICE_ID = service.id
+		left join SYS_USER crm on LOAN.CRM_ID = crm.id 
+		left join SYS_USER assessor on LOAN.ASSESSOR_ID = assessor.id 
+		left join SYS_USER user_ on LOAN.USER_ID = user_.id
+		left join SYS_USER bizDirector on LOAN.BIZ_DIRECTOR_ID = bizDirector.id
+		left join (      select * from (
+	       SELECT  personBank.Loan_Id,personBank.Bank_Account_Id, personBank.PERSON_ID,    
+          row_number() over (partition by personBank.loan_id order by id desc) rn
+			FROM PERSON_BANK personBank 
+ 		)  WHERE rn   <![CDATA[ <= 1 ]]>) personBank on LOAN.PERSON_ID = personBank.PERSON_ID and LOAN.ID = personBank.LOAN_ID		
+		left join BANK_ACCOUNT grantAccount on personBank.BANK_ACCOUNT_ID = grantAccount.ID
+	    left join ORGAN organ on organ.ID = LOAN.ORGAN_ID
+	    left join SYS_USER firstTrial on LOAN.FIRSTTRIAL_ID = firstTrial.id 
+	  	left join PRODUCT product on product.ID = LOAN.PRODUCT_ID
+	  	left join vehicle veh   on LOAN.ID = veh.loan_id
+	  	left join SPECIAL_REPAYMENT spe on LOAN.ID=spe.loan_id
+	   <!-- 	left JOIN repayment_plan rp ON rp.LOAN_ID=LOAN.ID  -->
+		<!--left JOIN BASE_AREA salesDept on LOAN.SALES_DEPT_ID = salesDept.ID  -->
+	</sql>   
+  <select id="plCountUnionExtension" parameterType="LoanVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="plLoanSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union
+		<include refid="plLoanExtensionSelectiveExtesnsion" />
+		<include refid="loanExtensionConditions" />
+		)
+	</select>
+	<select id="plFindWithPGUnionExtension" parameterType="LoanVO" resultMap="loanResultMapExtension">
+	    
+	    <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+	    select * from (
+		<include refid="plLoanSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union
+		<include refid="plLoanExtensionSelectiveExtesnsion" />
+		<include refid="loanExtensionConditions" />
+		) 
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+  </select> 
+<!-- ↓↓↓↓变更管理↓↓↓ -->
+	<resultMap  id="loanManageResultMapExtension" type="Loan" extends="loanResultMap">
+		<association property="person" column="PERSON_ID" javaType="Person" resultMap="personResultMap"/>
+		<association property="service" column="SERVICE_ID" javaType="SysUser" resultMap="serviceResultMap"/>
+		<association property="manageService" column="MANAGER_ID" javaType="SysUser" resultMap="manageServiceResultMap"/>
+	</resultMap>
+
+	<sql id="loanManageFieldExtension">
+		<include refid="loanField"/>
+		,
+		service.NAME AS service_name,
+		manageService.NAME AS manageService_name,
+		person.NAME AS person_name,
+		person.IDNUM AS person_idnum
+	</sql>
+	
+	<sql id="extensionManageFieldExtension">
+		<include refid="loanExtensionField"/>
+		,
+		service.NAME AS service_name,
+		manageService.NAME AS manageService_name,
+		person.NAME AS person_name,
+		person.IDNUM AS person_idnum
+	</sql>
+	
+	
+	<sql id="loanManageSelectiveExtesnsion">
+		SELECT
+		<include refid="loanManageFieldExtension"/>
+		FROM LOAN
+		LEFT JOIN SYS_USER service ON LOAN.SERVICE_ID = service.id
+		LEFT JOIN SYS_USER manageService ON LOAN.MANAGER_ID = manageService.id
+		LEFT JOIN PERSON person ON LOAN.PERSON_ID = person.ID
+	</sql>
+	
+	<sql id="extensionManageSelectiveExtesnsion">
+		SELECT
+		<include refid="extensionManageFieldExtension"/>
+		FROM EXTENSION
+		left join LOAN_EXTENSION loanExtension on EXTENSION.ID = loanExtension.EXTENSION_ID
+		left join LOAN on loanExtension.LOAN_ID = LOAN.ID
+		LEFT JOIN SYS_USER service ON EXTENSION.SERVICE_ID = service.id
+		LEFT JOIN SYS_USER manageService ON EXTENSION.MANAGER_ID = manageService.id
+		LEFT JOIN PERSON person ON EXTENSION.PERSON_ID = person.ID
+	</sql>
+	
+	<select id="changeManageCount" parameterType="LoanVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="loanManageSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union all
+		<include refid="extensionManageSelectiveExtesnsion" />
+		<include refid="loanExtensionConditions" />
+		)
+	</select>
+	
+	<select id="changeManageFindWithPG" parameterType="LoanVO" resultMap="loanManageResultMapExtension">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		select * from (
+		<include refid="loanManageSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union all
+		<include refid="extensionManageSelectiveExtesnsion" />
+		<include refid="loanExtensionConditions" />
+		)
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+<!-- ↑↑↑变更管理↑↑↑ -->
+
+
+	<sql id="specialRepaymentFieldExtension">
+		<include refid="loanField"/>
+		,
+		person.NAME AS person_name,
+		person.IDNUM AS person_idnum,
+		v.FRAME_NUMBER 
+	</sql>
+	
+	<sql id="specialRepaymentSelectiveExtesnsion">
+		SELECT
+		<include refid="specialRepaymentFieldExtension"/>
+		FROM LOAN
+		LEFT JOIN PERSON person ON LOAN.PERSON_ID = person.ID
+		LEFT JOIN VEHICLE v ON LOAN.ID = v.loan_id
+		left join BASE_AREA salesDept on LOAN.SALES_DEPT_ID = salesDept.ID 
+		
+	</sql>
+	
+	<sql id="extensionSpecialRepaymentSelective">
+		SELECT
+		<include refid="loanExtensionField"/>
+		, 
+		person.NAME AS person_name,
+		person.IDNUM AS person_idnum,
+		v.FRAME_NUMBER 
+		FROM EXTENSION
+		left join LOAN_EXTENSION loanExtension on EXTENSION.ID = loanExtension.EXTENSION_ID
+		left join LOAN on loanExtension.LOAN_ID = LOAN.ID
+		left join PERSON person on LOAN.PERSON_ID = person.ID 
+		LEFT JOIN VEHICLE v ON LOAN.ID = v.loan_id
+		left join BASE_AREA salesDept on LOAN.SALES_DEPT_ID = salesDept.ID 
+	</sql>
+	
+	<select id="specialRepaymentCount" parameterType="LoanVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="specialRepaymentSelectiveExtesnsion"/>
+		<include refid="loanConditions"/>
+		union all
+		<include refid="extensionSpecialRepaymentSelective"/>
+		<include refid="loanExtensionConditions"/>
+		)
+	</select>
+	
+	<select id="specialRepaymentFindWithPG" parameterType="LoanVO" resultMap="specialRepaymentResultMapExtension">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="specialRepaymentSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union all
+		<include refid="extensionSpecialRepaymentSelective"/>
+		<include refid="loanExtensionConditions"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+<!-- ↑↑↑提前还款↑↑↑ -->
+
+<!-- ↓↓↓↓还款试算↓↓↓ -->
+	<select id="countRepayTrial" parameterType="LoanVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="loanRepayTrialSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union all
+		<include refid="extensionLoanRepayTrialSelectiveExtesnsion"/>
+		<include refid="loanExtensionConditions"/>
+		
+		)
+	</select>
+	<select id="findRepayTrialWithPG" parameterType="LoanVO" resultMap="loanRepayTrialResultMapExtension">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="loanRepayTrialSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union all
+		<include refid="extensionLoanRepayTrialSelectiveExtesnsion"/>
+		<include refid="loanExtensionConditions"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+<!-- ↑↑↑还款试算↑↑↑ -->	
+
+<!-- ↓↓↓↓还款录入↓↓↓ -->
+	<select id="countRepayEntry" parameterType="LoanVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="loanRepayEntrySelectiveExtesnsion" />
+		<include refid="loanConditions" />
+			union all
+		<include refid="extensionRepayEntrySelectiveExtesnsion"/>
+		<include refid="loanExtensionConditions"/>
+		)
+	</select>
+	<select id="findRepayEntryWithPG" parameterType="LoanVO" resultMap="loanRepayEntryResultMapExtension">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="loanRepayEntrySelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union all
+		<include refid="extensionRepayEntrySelectiveExtesnsion"/>
+		<include refid="loanExtensionConditions"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+<!-- ↑↑↑还款录入↑↑↑ -->
+<!-- 对公还款 ->领取还款记录列表 -->	
+<sql id="businessLoanSelectiveExtesnsion">
+		SELECT 
+		<include refid="loanField" />	
+		,	
+		crm.NAME as crm_name,
+		manageService.NAME as manageService_name,
+		person.NAME as person_name,
+		person.PERSON_NO as person_person_no,
+		person.IDNUM as person_idnum,
+		person.PROFESSION_TYPE as profession_Type		
+		FROM LOAN  	
+		left join PERSON person on LOAN.PERSON_ID = person.ID
+		left join SYS_USER manageService on LOAN.MANAGER_ID = manageService.id		
+		left join SYS_USER crm on LOAN.CRM_ID = crm.ID 	
+	</sql>
+	<sql id="extensionBusinessLoanSelectiveExtesnsion">
+		SELECT 
+		<include refid="loanExtensionField" />	
+		,	
+		crm.NAME as crm_name,
+		manageService.NAME as manageService_name,
+		person.NAME as person_name,
+		person.PERSON_NO as person_person_no,
+		person.IDNUM as person_idnum,
+		person.PROFESSION_TYPE as profession_Type		
+		FROM EXTENSION  	
+		left join LOAN_EXTENSION loanExtension on EXTENSION.ID = loanExtension.EXTENSION_ID
+		left join LOAN on loanExtension.LOAN_ID = LOAN.ID
+		left join PERSON person on LOAN.PERSON_ID = person.ID
+		left join SYS_USER manageService on LOAN.MANAGER_ID = manageService.id		
+		left join SYS_USER crm on LOAN.CRM_ID = crm.ID 	
+	</sql>
+	
+	<select id="businessCount" parameterType="LoanVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="businessLoanSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union all
+		<include refid="extensionBusinessLoanSelectiveExtesnsion"/>
+		<include refid="loanExtensionConditions"/>
+		)
+	</select>
+	<select id="findBusinessLoanWithPG" parameterType="LoanVO" resultMap="businessloanResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="businessLoanSelectiveExtesnsion" />
+		<include refid="loanConditions" />
+		union all
+		<include refid="extensionBusinessLoanSelectiveExtesnsion"/>
+		<include refid="loanExtensionConditions"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+		<!--新增特殊查询->所有最后一期逾期的记录-->
+	<select id="findLastOverdueList" parameterType="LoanVO" resultMap="loanResultMap">
+	 	<include refid="loanSelective" />
+		<include refid="loanConditions" />
+		AND #{queryDate} <![CDATA[ > ]]> END_REPAY_DATE
+	</select>
+	<!-- 初审已处理的单子 -->
+		<select id="alreadyProcessedList" parameterType="LoanVO" resultMap="loanResultMap">
+			SELECT L.FIRSTTRIAL_ID FROM LOAN L 
+		       WHERE L.AUDIT_DATE<![CDATA[ >= ]]> #{auditDateStart}
+		       AND L.AUDIT_DATE <![CDATA[ <= ]]>  #{auditDateEnd}
+		       AND L.STATUS >= #{status}
+		       <!-- 定时任务取消的单子过滤掉 -->
+	           AND L.ID NOT IN
+	            ( SELECT AA.LOAN_ID FROM
+	             (SELECT  ROW_NUMBER() OVER(PARTITION BY BL.LOAN_ID ORDER BY BL.ID DESC) RN,
+	             BL.* FROM BUSINESS_LOG BL WHERE BL.LOAN_ID IN (SELECT L.ID FROM LOAN L WHERE L.STATUS=200 )
+	             ) AA WHERE AA.RN=1 AND AA.FLOW_STATUS = 200
+	           )
+	</select>
+	
+	<!--  -->
+	
+	<!-- 把众安反欺诈的值置为不可用   status=0 不可用         1可用  -->
+	<update id="updatePushLcbReturnFraud" parameterType="java.util.Map">
+		UPDATE PUSH_LCB_RETURN_ZONGAN_FRAUD
+		SET status='0',MODIFY_TIME =sysdate,MODIFY_ID =#{idname},MODIFY_NAME =#{name}
+		WHERE LOAN_ID = #{id}
+	</update>
+
+	<!-- 根据身份证号查找未结清金额 -->
+	<select id="findResidualPactMoney" resultType="java.math.BigDecimal" parameterType="java.util.Map">
+		select sum(sumMoney) as sumMoney from (
+			select SUM(c.cur_remaining_principal) as sumMoney
+			   from loan a, person b, repayment_plan c
+			   where b.id = a.person_id
+			   and a.id = c.loan_id
+			   and a.status not in(61,71,81,130,140,141)
+			   and b.IDNUM =#{idNum}
+			UNION ALL
+			select SUM(c.cur_remaining_principal) as sumMoney
+			   from EXTENSION a, person b, repayment_plan c
+			   where b.id = a.person_id
+			   and a.id = c.loan_id
+			   and a.status not in(61,71,81,130,140,141)
+			   and b.IDNUM =#{idNum}
+		)
+	</select>
+
+</mapper>

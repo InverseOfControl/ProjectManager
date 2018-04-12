@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.CompanyMapper" >
+	<resultMap id="companyResultMap" type="com.ezendai.credit2.apply.model.Company">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="INDUSTRY_INVOLVED" property="industryInvolved" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="LEGAL_REPRESENTATIVE" property="legalRepresentative" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="LEGAL_REPRESENTATIVE_ID" property="legalRepresentativeId" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="INCOME_PER_MONTH" property="incomePerMonth" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="FOUNDED_DATE" property="foundedDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="CATEGORY" property="category" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="AVG_PROFIT_PER_YEAR" property="avgProfitPerYear" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PHONE" property="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="ZIP_CODE" property="zipCode" jdbcType="CHAR" javaType="java.lang.String" />
+		<result column="OPERATION_SITE" property="operationSite" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MAJOR_BUSINESS" property="majorBusiness" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="EMPLOYEES_NUMBER" property="employeesNumber" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="EMPLOYEES_WAGES_PER_MONTH" property="employeesWagesPerMonth" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		
+
+		<result column="CUR_DEBTBALANCE" property="companyDebtBalance" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="POS_CAPITAVOLUME" property="posCapitavolume" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="POS_OPENDATE" property="posOpenDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="POS_ACQUIRER" property="posAcquirer" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MONTH_TURNOVER" property="monthTurnOver" jdbcType="NUMERIC" javaType="java.lang.Long" />
+
+		<result column="WS_PLATFORM" property="platform" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="WS_MEMBERTYPE" property="memberType" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="WS_REGDATE" property="regDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+	</resultMap>
+
+	<sql id="companyFeild">
+		ID, NAME, INDUSTRY_INVOLVED, LEGAL_REPRESENTATIVE,
+		LEGAL_REPRESENTATIVE_ID, INCOME_PER_MONTH,
+		FOUNDED_DATE, CATEGORY, ADDRESS, AVG_PROFIT_PER_YEAR, PHONE, ZIP_CODE,
+		OPERATION_SITE,
+		MAJOR_BUSINESS, EMPLOYEES_NUMBER, EMPLOYEES_WAGES_PER_MONTH, CREATOR_ID, CREATOR,
+		CREATED_TIME, MODIFIER_ID, MODIFIER, MODIFIED_TIME, VERSION,
+		CUR_DEBTBALANCE,POS_CAPITAVOLUME,POS_OPENDATE,POS_ACQUIRER,MONTH_TURNOVER,
+		WS_PLATFORM,WS_MEMBERTYPE,WS_REGDATE
+	</sql>
+
+	<sql id="companySelective">
+		SELECT
+		<include refid="companyFeild" />
+		FROM COMPANY
+	</sql>
+
+	<sql id="companyConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				COMPANY.ID = #{id}
+			</if>
+			<if test="name != null and name != ''">
+				AND COMPANY.NAME = #{name}
+			</if>
+			<if test="industryInvolved != null and industryInvolved != ''">
+				AND COMPANY.INDUSTRY_INVOLVED = #{industryInvolved}
+			</if>
+			<if test="legalRepresentative != null and legalRepresentative != ''">
+				AND COMPANY.LEGAL_REPRESENTATIVE = #{legalRepresentative}
+			</if>
+			<if test="legalRepresentativeId != null and legalRepresentativeId != ''">
+				AND COMPANY.LEGAL_REPRESENTATIVE_ID = #{legalRepresentativeId}
+			</if>
+			<if test="incomePerMonth != null">
+				AND COMPANY.INCOME_PER_MONTH = #{incomePerMonth}
+			</if>
+			<if test="foundedDate != null">
+				AND COMPANY.FOUNDED_DATE = #{foundedDate}
+			</if>
+			<if test="category != null and category != ''">
+				AND COMPANY.CATEGORY = #{category}
+			</if>
+			<if test="address != null and address != ''">
+				AND COMPANY.ADDRESS = #{address}
+			</if>
+			<if test="avgProfitPerYear != null">
+				AND COMPANY.AVG_PROFIT_PER_YEAR = #{avgProfitPerYear}
+			</if>
+			<if test="phone != null and phone != ''">
+				AND COMPANY.PHONE = #{phone}
+			</if>
+			<if test="zipCode != null and zipCode != ''">
+				AND COMPANY.ZIP_CODE = #{zipCode}
+			</if>
+			<if test="operationSite != null and operationSite != ''">
+				AND COMPANY.OPERATION_SITE = #{operationSite}
+			</if>
+			<if test="majorBusiness != null and majorBusiness != ''">
+				AND COMPANY.MAJOR_BUSINESS = #{majorBusiness}
+			</if>
+			<if test="employeesNumber != null">
+				AND COMPANY.EMPLOYEES_NUMBER = #{employeesNumber}
+			</if>
+			<if test="employeesWagesPerMonth != null">
+				AND COMPANY.EMPLOYEES_WAGES_PER_MONTH = #{employeesWagesPerMonth}
+			</if>
+			<if test="creatorId != null">
+				AND COMPANY.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null and creator != ''">
+				AND COMPANY.CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND COMPANY.CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				AND COMPANY.MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null and modifier != ''">
+				AND COMPANY.MODIFIER = #{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				AND COMPANY.MODIFIED_TIME = #{modifiedTime}
+			</if>
+			<if test="version != null">
+				AND COMPANY.VERSION = #{version}
+			</if>
+		</trim>
+	</sql>
+
+	<!-- 根据ID查询 -->
+	<select id="get" resultMap="companyResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="companyFeild" />
+		FROM COMPANY
+		WHERE ID = #{id}
+	</select>
+
+	<select id="findListByVo" parameterType="CompanyVO" resultMap="companyResultMap"> 
+		<include refid="companySelective" /> 
+		<include refid="companyConditions" />
+	</select>
+	<select id="findWithPG" parameterType="CompanyVO" resultMap="companyResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="companySelective" />
+		<include refid="companyConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM COMPANY WHERE ID = #{id}
+	</select>
+
+	<select id="count" parameterType="CompanyVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="companySelective" />
+		<include refid="companyConditions" />
+		)
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM COMPANY WHERE ID = #{id}
+	</delete>
+
+	<delete id="deleteByIdList" parameterType="CompanyVO"> 
+		DELETE FROM COMPANY WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+
+	<insert id="insert" parameterType="Company">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_company_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO COMPANY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="industryInvolved != null">
+				INDUSTRY_INVOLVED,
+			</if>
+			<if test="legalRepresentative != null">
+				LEGAL_REPRESENTATIVE,
+			</if>
+			<if test="legalRepresentativeId != null">
+				LEGAL_REPRESENTATIVE_ID,
+			</if>
+			<if test="incomePerMonth != null">
+				INCOME_PER_MONTH,
+			</if>
+			<if test="foundedDate != null">
+				FOUNDED_DATE,
+			</if>
+			<if test="category != null">
+				CATEGORY,
+			</if>
+			<if test="address != null">
+				ADDRESS,
+			</if>
+			<if test="avgProfitPerYear != null">
+				AVG_PROFIT_PER_YEAR,
+			</if>
+			<if test="phone != null">
+				PHONE,
+			</if>
+			<if test="zipCode != null">
+				ZIP_CODE,
+			</if>
+			<if test="operationSite != null">
+				OPERATION_SITE,
+			</if>
+			<if test="majorBusiness != null">
+				MAJOR_BUSINESS,
+			</if>
+			<if test="employeesNumber != null">
+				EMPLOYEES_NUMBER,
+			</if>
+			<if test="employeesWagesPerMonth != null">
+				EMPLOYEES_WAGES_PER_MONTH,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+
+			<if test="companyDebtBalance != null">
+				CUR_DEBTBALANCE,
+			</if>
+			<if test="posCapitavolume != null">
+				POS_CAPITAVOLUME,
+			</if>
+			<if test="posOpenDate != null">
+				POS_OPENDATE,
+			</if>
+			<if test="posAcquirer != null">
+				POS_ACQUIRER,
+			</if>
+			<if test="monthTurnOver != null">
+				MONTH_TURNOVER,
+			</if>
+
+			<if test="platform != null">
+				WS_PLATFORM,
+			</if>
+			<if test="regDate != null">
+				WS_REGDATE,
+			</if>
+			<if test="memberType != null">
+				WS_MEMBERTYPE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="industryInvolved != null">
+				#{industryInvolved},
+			</if>
+			<if test="legalRepresentative != null">
+				#{legalRepresentative},
+			</if>
+			<if test="legalRepresentativeId != null">
+				#{legalRepresentativeId},
+			</if>
+			<if test="incomePerMonth != null">
+				#{incomePerMonth},
+			</if>
+			<if test="foundedDate != null">
+				#{foundedDate},
+			</if>
+			<if test="category != null">
+				#{category},
+			</if>
+			<if test="address != null">
+				#{address},
+			</if>
+			<if test="avgProfitPerYear != null">
+				#{avgProfitPerYear},
+			</if>
+			<if test="phone != null">
+				#{phone},
+			</if>
+			<if test="zipCode != null">
+				#{zipCode},
+			</if>
+			<if test="operationSite != null">
+				#{operationSite},
+			</if>
+			<if test="majorBusiness != null">
+				#{majorBusiness},
+			</if>
+			<if test="employeesNumber != null">
+				#{employeesNumber},
+			</if>
+			<if test="employeesWagesPerMonth != null">
+				#{employeesWagesPerMonth},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+
+			<if test="companyDebtBalance != null">
+				#{companyDebtBalance},
+			</if>
+			<if test="posCapitavolume != null">
+				#{posCapitavolume},
+			</if>
+			<if test="posOpenDate != null">
+				#{posOpenDate},
+			</if>
+			<if test="posAcquirer != null">
+				#{posAcquirer},
+			</if>
+			<if test="monthTurnOver != null">
+				#{monthTurnOver},
+			</if>
+
+			<if test="platform != null">
+				#{platform},
+			</if>
+			<if test="regDate != null">
+				#{regDate},
+			</if>
+			<if test="memberType != null">
+				#{memberType},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="CompanyVO">
+		UPDATE COMPANY
+		<set>
+			<if test="name != null">
+				NAME = #{name},
+			</if>
+			<if test="industryInvolved != null">
+				INDUSTRY_INVOLVED = #{industryInvolved},
+			</if>
+			<if test="legalRepresentative != null">
+				LEGAL_REPRESENTATIVE = #{legalRepresentative},
+			</if>
+			<if test="legalRepresentativeId != null">
+				LEGAL_REPRESENTATIVE_ID = #{legalRepresentativeId},
+			</if>
+			<if test="incomePerMonth != null">
+				INCOME_PER_MONTH = #{incomePerMonth},
+			</if>
+			<if test="foundedDate != null">
+				FOUNDED_DATE = #{foundedDate},
+			</if>
+			<if test="category != null">
+				CATEGORY = #{category},
+			</if>
+			<if test="address != null">
+				ADDRESS = #{address},
+			</if>
+			<if test="avgProfitPerYear != null">
+				AVG_PROFIT_PER_YEAR = #{avgProfitPerYear},
+			</if>
+			<if test="phone != null">
+				PHONE = #{phone},
+			</if>
+			<if test="zipCode != null">
+				ZIP_CODE = #{zipCode},
+			</if>
+			<if test="operationSite != null">
+				OPERATION_SITE = #{operationSite},
+			</if>
+			<if test="majorBusiness != null">
+				MAJOR_BUSINESS = #{majorBusiness},
+			</if>
+			<if test="employeesNumber != null">
+				EMPLOYEES_NUMBER = #{employeesNumber},
+			</if>
+			<if test="employeesWagesPerMonth != null">
+				EMPLOYEES_WAGES_PER_MONTH = #{employeesWagesPerMonth},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="version != null">
+				VERSION = #{version},
+			</if>
+
+
+			<if test="companyDebtBalance != null">
+				CUR_DEBTBALANCE = #{companyDebtBalance},
+			</if><if test="posCapitavolume != null">
+				POS_CAPITAVOLUME = #{posCapitavolume},
+			</if><if test="posOpenDate != null">
+				POS_OPENDATE = #{posOpenDate},
+			</if><if test="posAcquirer != null">
+				POS_ACQUIRER = #{posAcquirer},
+			</if>
+			<if test="monthTurnOver != null">
+				MONTH_TURNOVER = #{monthTurnOver},
+			</if>
+
+			<if test="platform != null">
+				WS_PLATFORM= #{platform},
+			</if>
+			<if test="regDate != null">
+				WS_REGDATE= #{regDate},
+			</if>
+			<if test="memberType != null">
+				WS_MEMBERTYPE= #{memberType},
+			</if>
+		</set>
+		WHERE ID = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>  
+	</update>
+</mapper>

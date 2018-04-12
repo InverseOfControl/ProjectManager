@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.after.mapper.SpecialRepaymentMapper">
+  <resultMap id="specialRepaymentResultMap" type="SpecialRepayment">
+    <result column="ID" jdbcType="NUMERIC" property="id" javaType="java.lang.Long"/>
+    <result column="LOAN_ID" jdbcType="NUMERIC" property="loanId" javaType="java.lang.Long" />
+    <result column="REQUEST_DATE" jdbcType="DATE" property="requestDate" javaType="java.util.Date"/>
+    <result column="TYPE" jdbcType="NUMERIC" property="type" javaType="java.lang.Integer" />
+    <result column="STATUS" jdbcType="NUMERIC" property="status" javaType="java.lang.Integer"/>
+    <result column="PROPOSER" jdbcType="VARCHAR" property="proposer" javaType="java.lang.String" />
+    <result column="AMOUNT" jdbcType="NUMERIC" property="amount" javaType="java.math.BigDecimal" />
+    <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime"  javaType="java.util.Date"/>
+    <result column="CREATOR_ID" jdbcType="NUMERIC" property="creatorId" javaType="java.lang.Long"/>
+    <result column="CREATOR" jdbcType="VARCHAR" property="creator" javaType="java.lang.String"/>
+    <result column="MODIFIED_TIME" jdbcType="TIMESTAMP" property="modifiedTime" javaType="java.util.Date" />
+    <result column="MODIFIER_ID" jdbcType="NUMERIC" property="modifierId" javaType="java.lang.Long"/>
+    <result column="MODIFIER" jdbcType="VARCHAR" property="modifier" javaType="java.lang.String"/>
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" javaType="java.lang.String"/>
+    <result column="VERSION" jdbcType="NUMERIC" property="version" javaType="java.lang.Long"/>
+    <result column="SALES_DEPT_ID" jdbcType="NUMERIC" property="salesDeptId" javaType="java.lang.Long"/>
+    <result column="NEED_OFFER" jdbcType="NUMERIC" property="needOffer" javaType="java.lang.Integer"/>
+    <result column="EXTENSION_FLAG" jdbcType="NUMERIC" property="extensionFlag" javaType="java.lang.Integer"/>
+    <result column="NAME" jdbcType="VARCHAR" property="name" javaType="java.lang.String"/>
+    <result column="IDNUM" jdbcType="VARCHAR" property="idnum" javaType="java.lang.String"/>
+    <result column="PACT_MONEY" jdbcType="NUMERIC" property="pactMoney" javaType="java.math.BigDecimal"/>
+    <result column="CRM_ID" property="crmId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone" javaType="java.lang.String"/>
+    <result column="TIME" property="time" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="LOANSTATUS" property="loanStatus" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="EXTENSION_TIME" property="extensionTime" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="CURR_NUM" property="currNum" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+  </resultMap>
+  <!-- 车辆信息Map -->
+  <resultMap type="SpecialRepayment" id="specialRepaymentResultMapExtension" extends="specialRepaymentResultMap">
+	<association property="vehicle" column="FRAME_NUMBER" javaType="Vehicle" resultMap="vehicleResultMap"/>
+  </resultMap>
+  <resultMap id="vehicleResultMap" type="Vehicle">
+	<id property="id" column="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	<result property="frameNumber" column="FRAME_NUMBER" jdbcType="VARCHAR" javaType="java.lang.String" />
+  </resultMap>
+	
+  <sql id="specialRepaymentField">
+	SPECIAL_REPAYMENT.ID, SPECIAL_REPAYMENT.LOAN_ID, SPECIAL_REPAYMENT.REQUEST_DATE,
+	SPECIAL_REPAYMENT.TYPE, SPECIAL_REPAYMENT.STATUS,
+	SPECIAL_REPAYMENT.PROPOSER, SPECIAL_REPAYMENT.AMOUNT,
+	SPECIAL_REPAYMENT.CREATED_TIME, SPECIAL_REPAYMENT.CREATOR_ID,
+	SPECIAL_REPAYMENT.CREATOR, SPECIAL_REPAYMENT.MODIFIED_TIME,
+	SPECIAL_REPAYMENT.MODIFIER_ID, SPECIAL_REPAYMENT.MODIFIER,
+	SPECIAL_REPAYMENT.REMARK, SPECIAL_REPAYMENT.VERSION, SPECIAL_REPAYMENT.SALES_DEPT_ID,NEED_OFFER,EXTENSION_FLAG
+  </sql>
+
+  
+  <sql id="specialRepaymentSelective">
+	SELECT
+	<include refid="specialRepaymentField" />
+	FROM SPECIAL_REPAYMENT 
+  </sql>
+  
+  <sql id="specialRepaymentConditions">
+	<trim prefix="where" prefixOverrides="and">
+      <if test="id != null">
+        AND SPECIAL_REPAYMENT.ID = #{id}
+      </if>
+      <if test="loanId != null">
+        AND SPECIAL_REPAYMENT.LOAN_ID = #{loanId}
+      </if>
+      <if test="requestDate != null">
+        AND SPECIAL_REPAYMENT.REQUEST_DATE = #{requestDate}
+      </if>
+       <if test="requestDateStart != null">
+        AND SPECIAL_REPAYMENT.REQUEST_DATE <![CDATA[ >= ]]> #{requestDateStart}
+      </if>
+      <if test="type != null">
+        AND SPECIAL_REPAYMENT.TYPE = #{type}
+      </if>
+      <if test="status != null">
+        AND SPECIAL_REPAYMENT.STATUS = #{status}
+      </if>
+      <if test="proposer != null">
+        AND SPECIAL_REPAYMENT.PROPOSER = #{proposer}
+      </if>
+      <if test="amount != null">
+        AND SPECIAL_REPAYMENT.AMOUNT = #{amount}
+      </if>
+      <if test="createdTime != null">
+        AND SPECIAL_REPAYMENT.CREATED_TIME = #{createdTime}
+      </if>
+      <if test="creatorId != null">
+        AND SPECIAL_REPAYMENT.CREATOR_ID = #{creatorId}
+      </if>
+      <if test="creator != null">
+        AND SPECIAL_REPAYMENT.CREATOR = #{creator}
+      </if>
+      <if test="modifiedTime != null">
+        AND SPECIAL_REPAYMENT.MODIFIED_TIME = #{modifiedTime}
+      </if>
+      <if test="modifierId != null">
+        AND SPECIAL_REPAYMENT.MODIFIER_ID = #{modifierId}
+      </if>
+      <if test="modifier != null">
+        AND SPECIAL_REPAYMENT.MODIFIER = #{modifier}
+      </if>
+      <if test="remark != null">
+        AND SPECIAL_REPAYMENT.REMARK = #{remark}
+      </if>
+      <if test="version != null">
+        AND  SPECIAL_REPAYMENT.VERSION = #{version}
+      </if>
+      <if test="typeList !=null and typeList.size() > 0">
+		AND SPECIAL_REPAYMENT.TYPE IN(
+		<foreach item="guard" index="index" collection="typeList" separator=",">
+			#{guard}
+		</foreach>
+		)
+	  </if>
+      <if test="statusList !=null and statusList.size() > 0">
+		AND SPECIAL_REPAYMENT.STATUS IN(
+		<foreach item="guard" index="index" collection="statusList" separator=",">
+			#{guard}
+		</foreach>
+		)
+	  </if>
+	  <if test="salesDeptId != null">
+	  	AND SPECIAL_REPAYMENT.SALES_DEPT_ID = #{salesDeptId}
+	  </if>
+	  <if test="needOffer != null">
+	  	AND SPECIAL_REPAYMENT.NEED_OFFER = #{needOffer}
+	  </if>
+	  <if test="extensionFlag != null">
+	  	AND SPECIAL_REPAYMENT.EXTENSION_FLAG = #{extensionFlag}
+	  </if>
+	</trim>
+  </sql>    
+
+  <select id="get" resultMap="specialRepaymentResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="specialRepaymentField" />
+		FROM SPECIAL_REPAYMENT
+		WHERE ID = #{id}
+  </select>
+  
+  <insert id="insert" parameterType="SpecialRepayment">
+  	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+		SELECT
+		seq_special_repayment_id.nextval AS id FROM dual
+	</selectKey>
+    INSERT INTO SPECIAL_REPAYMENT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="loanId != null">
+        LOAN_ID,
+      </if>
+      <if test="requestDate != null">
+        REQUEST_DATE,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="proposer != null">
+        PROPOSER,
+      </if>
+      <if test="amount != null">
+        AMOUNT,
+      </if>
+      <if test="createdTime != null">
+        CREATED_TIME,
+      </if>
+      <if test="creatorId != null">
+        CREATOR_ID,
+      </if>
+      <if test="creator != null">
+        CREATOR,
+      </if>
+      <if test="modifiedTime != null">
+        MODIFIED_TIME,
+      </if>
+      <if test="modifierId != null">
+        MODIFIER_ID,
+      </if>
+      <if test="modifier != null">
+        MODIFIER,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="version != null">
+        VERSION,
+      </if>
+      <if test="salesDeptId != null">
+      	SALES_DEPT_ID,
+      </if>
+      <if test="needOffer != null">
+	  	NEED_OFFER,
+	  </if>
+	  <if test="extensionFlag != null">
+	  	EXTENSION_FLAG
+	  </if>
+	   <if test="plFlag != null">
+	  	PL_FLAG
+	  </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="loanId != null">
+        #{loanId},
+      </if>
+      <if test="requestDate != null">
+        #{requestDate},
+      </if>
+      <if test="type != null">
+        #{type},
+      </if>
+      <if test="status != null">
+        #{status},
+      </if>
+      <if test="proposer != null">
+        #{proposer},
+      </if>
+      <if test="amount != null">
+        #{amount},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId},
+      </if>
+      <if test="creator != null">
+        #{creator},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime},
+      </if>
+      <if test="modifierId != null">
+        #{modifierId},
+      </if>
+      <if test="modifier != null">
+        #{modifier},
+      </if>
+      <if test="remark != null">
+        #{remark},
+      </if>
+      <if test="version != null">
+        #{version},
+      </if>
+      <if test="salesDeptId != null">
+      	#{salesDeptId},
+      </if>
+      <if test="needOffer != null">
+        #{needOffer},
+      </if>
+      <if test="extensionFlag != null">
+      	#{extensionFlag}
+      </if>
+       <if test="plFlag != null">
+	  	#{plFlag}
+	  </if>
+    </trim>
+  </insert>
+  
+  <select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM SPECIAL_REPAYMENT WHERE ID = #{ID}
+  </select>
+  
+  <update id="update" parameterType="SpecialRepayment">
+    UPDATE SPECIAL_REPAYMENT
+     <trim prefix="set" suffixOverrides=",">  
+      <if test="loanId != null">
+        LOAN_ID = #{loanId},
+      </if>
+      <if test="requestDate != null">
+        REQUEST_DATE = #{requestDate},
+      </if>
+      <if test="type != null">
+        TYPE = #{type},
+      </if>
+      <if test="status != null">
+        STATUS = #{status},
+      </if>
+      <if test="proposer != null">
+        PROPOSER = #{proposer},
+      </if>
+      <if test="amount != null">
+        AMOUNT = #{amount},
+      </if>
+      <if test="createdTime != null">
+        CREATED_TIME = #{createdTime},
+      </if>
+      <if test="creatorId != null">
+        CREATOR_ID = #{creatorId},
+      </if>
+      <if test="creator != null">
+        CREATOR = #{creator},
+      </if>
+      <if test="modifiedTime != null">
+        MODIFIED_TIME = #{modifiedTime},
+      </if>
+      <if test="modifierId != null">
+        MODIFIER_ID = #{modifierId},
+      </if>
+      <if test="modifier != null">
+        MODIFIER = #{modifier},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark},
+      </if>
+      <if test="version != null">
+        VERSION = #{version},
+      </if>
+      <if test="salesDeptId != null">
+      	SALES_DEPT_ID = #{salesDeptId},
+      </if>
+	  <if test="needOffer != null">
+	  	NEED_OFFER = #{needOffer},
+	  </if>
+	  <if test="extensionFlag != null">
+	  	EXTENSION_FLAG = #{extensionFlag}
+	  </if>
+	   <if test="plFlag != null">
+	  	PL_FLAG=#{plFlag}
+	  </if>
+      </trim>
+       WHERE ID = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+     	<if test="createdTimeStart != null">
+			AND CREATED_TIME <![CDATA[ >= ]]> #{createdTimeStart}
+		</if>
+  </update>
+  
+  <select id="count" parameterType="SpecialRepayment" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="specialRepaymentSelective" />
+		<include refid="specialRepaymentConditions" />
+		)
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long"  >
+	DELETE FROM SPECIAL_REPAYMENT WHERE ID = #{id}
+  </delete>
+
+ <!--通过传入loan的创建时间来关联特殊还款表 -->
+  <select id="findListByParams" parameterType="SpecialRepaymentVO" resultType="java.lang.Long">
+	 SELECT 
+	 SPECIAL_REPAYMENT.LOAN_ID
+	 FROM SPECIAL_REPAYMENT INNER JOIN LOAN loan on SPECIAL_REPAYMENT.LOAN_ID = loan.id 
+	 <include refid="specialRepaymentConditions" />
+	 <if test="createdTimeStart != null">
+		AND loan.created_time <![CDATA[ >= ]]> #{createdTimeStart}
+     </if>
+     <if test="excludeStatusList !=null and excludeStatusList.size() > 0">
+		AND loan.STATUS NOT IN(
+		<foreach item="guard" index="index" collection="excludeStatusList" separator=",">
+			#{guard}
+		</foreach>
+		)
+	 </if>
+	 union all
+	 SELECT 
+	 SPECIAL_REPAYMENT.LOAN_ID
+	 FROM SPECIAL_REPAYMENT INNER JOIN extension ext on SPECIAL_REPAYMENT.LOAN_ID = ext.id 
+	 <include refid="specialRepaymentConditions" />
+     <if test="excludeStatusList !=null and excludeStatusList.size() > 0">
+		AND ext.STATUS NOT IN(
+		<foreach item="guard" index="index" collection="excludeStatusList" separator=",">
+			#{guard}
+		</foreach>
+		)
+	 </if>
+  </select>
+  
+  <select id="findListByVO" parameterType="SpecialRepaymentVO" resultMap="specialRepaymentResultMap">
+	 <include refid="specialRepaymentSelective" />
+	 <include refid="specialRepaymentConditions" />
+  </select>
+
+  <select id="findListByVOWihtUnion" parameterType="SpecialRepaymentVO" resultMap="specialRepaymentResultMap">
+	SELECT
+	<include refid="specialRepaymentField" />
+	FROM SPECIAL_REPAYMENT
+	WHERE SPECIAL_REPAYMENT.STATUS= #{status}
+	AND
+	SPECIAL_REPAYMENT.TYPE= #{type}
+	AND SPECIAL_REPAYMENT.EXTENSION_FLAG=
+	#{extensionFlag}
+	union
+	SELECT
+	<include refid="specialRepaymentField" />
+	FROM SPECIAL_REPAYMENT, LOAN LOAN
+	where SPECIAL_REPAYMENT.LOAN_ID =
+	LOAN.ID AND
+	SPECIAL_REPAYMENT.STATUS= #{status}
+	AND
+	SPECIAL_REPAYMENT.TYPE= #{type}
+	AND LOAN.RETURN_DATE= #{returnDate}
+	union
+	SELECT
+	<include refid="specialRepaymentField" />
+	FROM SPECIAL_REPAYMENT, EXTENSION EXTENSION
+	where
+	SPECIAL_REPAYMENT.LOAN_ID = EXTENSION.ID AND
+	SPECIAL_REPAYMENT.STATUS=#{status}
+	AND SPECIAL_REPAYMENT.TYPE=#{type}
+	AND EXTENSION.RETURN_DATE=#{returnDate} 
+  </select>
+  
+  <update id="updateSpecialRepaymentState" parameterType="SpecialRepaymentVO">
+    UPDATE SPECIAL_REPAYMENT
+     <trim prefix="set" suffixOverrides=",">  
+      <if test="status != null">
+        STATUS = #{status},
+      </if>
+      <if test="modifiedTime != null">
+       MODIFIED_TIME = #{modifiedTime},
+      </if>
+      <if test="modifierId != null">
+        MODIFIER_ID = #{modifierId},
+      </if>
+      <if test="modifier != null">
+        MODIFIER = #{modifier}
+      </if>
+      </trim>
+       WHERE 
+		<if test="loanId != null">
+			LOAN_ID = #{loanId}
+        </if>
+        <if test="type != null">
+			AND TYPE = #{type}
+        </if>
+        <if test="notStatus != null">
+			AND STATUS = #{notStatus}
+        </if>
+  </update>
+  
+  
+  <select id="findListByVOWihtExtend" parameterType="SpecialRepaymentVO" resultMap="specialRepaymentResultMapExtension">
+    	<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="specialRepaymentExtend" />
+		<include refid="specialRepaymentConditionsExtend" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+  </select>
+  
+  <select id="findListByVOWihtBaseExtend" parameterType="SpecialRepaymentVO" resultMap="specialRepaymentResultMap">
+    	<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="specialRepaymentBaseExtend" />
+		<include refid="specialRepaymentConditionsExtend" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+  </select>
+  
+  <select id="countListByVOWihtExtend" parameterType="SpecialRepaymentVO" resultType="java.lang.Integer">
+		select count(*) from (
+		<include refid="specialRepaymentExtend" />
+		<include refid="specialRepaymentConditionsExtend" />
+		)
+  </select>
+  
+  <select id="countListByVOWihtBaseExtend" parameterType="SpecialRepaymentVO" resultType="java.lang.Integer">
+		select count(*) from (
+		<include refid="specialRepaymentBaseExtend" />
+		<include refid="specialRepaymentConditionsExtend" />
+		)
+  </select>
+  
+ <sql id="specialRepaymentExtend">
+				SELECT T.*,F.NAME,F.IDNUM,F.PACT_MONEY,F.PRODUCT_ID,F.PRODUCT_TYPE,F.MOBILE_PHONE,F.CRM_ID,F.TIME,F.LOANSTATUS,F.EXTENSION_TIME,F.CURR_NUM,F.FRAME_NUMBER FROM SPECIAL_REPAYMENT T 
+				LEFT JOIN (
+				SELECT L.ID,P.NAME,P.IDNUM,L.PACT_MONEY,L.PRODUCT_ID,L.PRODUCT_TYPE,P.MOBILE_PHONE,L.CRM_ID,L.TIME,L.STATUS AS LOANSTATUS,0 AS EXTENSION_TIME,L.CURR_NUM,V.FRAME_NUMBER  FROM LOAN L
+				LEFT JOIN PERSON P ON (P.ID=L.PERSON_ID)
+			    LEFT JOIN VEHICLE V ON V.LOAN_ID = L.ID
+				WHERE L.STATUS IN (130,140)
+				UNION
+				SELECT E.ID,EP.NAME,EP.IDNUM,E.PACT_MONEY,E.PRODUCT_ID,E.PRODUCT_TYPE,EP.MOBILE_PHONE,E.CRM_ID,E.TIME,E.STATUS AS LOANSTATUS,E.EXTENSION_TIME AS EXTENSION_TIME,E.CURR_NUM,V2.FRAME_NUMBER  FROM EXTENSION E
+				LEFT JOIN PERSON EP ON (EP.ID=E.PERSON_ID)
+				LEFT JOIN LOAN_EXTENSION LE ON E.ID = LE.EXTENSION_ID
+  				LEFT JOIN LOAN L2 ON L2.ID = LE.LOAN_ID
+  				LEFT JOIN VEHICLE V2 ON V2.LOAN_ID = L2.ID
+				WHERE E.STATUS IN (130,140)
+				) F ON F.ID=T.LOAN_ID
+	</sql>
+	
+	<sql id="specialRepaymentBaseExtend">
+				SELECT T.*,F.NAME,F.IDNUM,F.PACT_MONEY,F.PRODUCT_ID,F.PRODUCT_TYPE,F.MOBILE_PHONE,F.CRM_ID,F.TIME,F.LOANSTATUS,F.EXTENSION_TIME,F.CURR_NUM,F.FRAME_NUMBER FROM SPECIAL_REPAYMENT T 
+				LEFT JOIN (
+				SELECT L.ID,P.NAME,P.IDNUM,L.PACT_MONEY,L.PRODUCT_ID,L.PRODUCT_TYPE,P.MOBILE_PHONE,L.CRM_ID,L.TIME,L.STATUS AS LOANSTATUS,0 AS EXTENSION_TIME,L.CURR_NUM,V.FRAME_NUMBER FROM LOAN L
+				LEFT JOIN PERSON P ON (P.ID=L.PERSON_ID)
+			    LEFT JOIN VEHICLE V ON V.LOAN_ID = L.ID
+				WHERE L.STATUS IN (130,140)
+				UNION
+				SELECT E.ID,EP.NAME,EP.IDNUM,E.PACT_MONEY,E.PRODUCT_ID,E.PRODUCT_TYPE,EP.MOBILE_PHONE,E.CRM_ID,E.TIME,E.STATUS AS LOANSTATUS,E.EXTENSION_TIME AS EXTENSION_TIME,E.CURR_NUM,V2.FRAME_NUMBER  FROM EXTENSION E
+				LEFT JOIN PERSON EP ON (EP.ID=E.PERSON_ID)
+				LEFT JOIN LOAN_EXTENSION LE ON E.ID = LE.EXTENSION_ID
+  				LEFT JOIN LOAN L2 ON L2.ID = LE.LOAN_ID
+  				LEFT JOIN VEHICLE V2 ON V2.LOAN_ID = L2.ID
+				WHERE E.STATUS IN (130,140)
+				) F ON F.ID=T.LOAN_ID
+	</sql>
+	
+    <sql id="specialRepaymentConditionsExtend">
+	<trim prefix="where" prefixOverrides="and">
+      <if test="id != null">
+        AND t.ID = #{id}
+      </if>
+	 <if test="frameNumber != null and frameNumber != ''">
+		AND f.FRAME_NUMBER LIKE '%'||#{frameNumber}||'%'
+	 </if>			
+      <if test="loanId != null">
+        AND t.LOAN_ID = #{loanId}
+      </if>
+      <if test="requestDate != null">
+        AND t.REQUEST_DATE = #{requestDate}
+      </if>
+       <if test="requestDateStart != null">
+        AND t.REQUEST_DATE <![CDATA[ >= ]]> #{requestDateStart}
+      </if>
+      <if test="type != null">
+        AND t.TYPE = #{type}
+      </if>
+      <if test="status != null">
+        AND t.STATUS = #{status}
+      </if>
+      <if test="proposer != null">
+        AND t.PROPOSER = #{proposer}
+      </if>
+      <if test="amount != null">
+        AND t.AMOUNT = #{amount}
+      </if>
+      <if test="createdTime != null">
+        AND t.CREATED_TIME = #{createdTime}
+      </if>
+      <if test="creatorId != null">
+        AND t.CREATOR_ID = #{creatorId}
+      </if>
+      <if test="creator != null">
+        AND t.CREATOR = #{creator}
+      </if>
+      <if test="modifiedTime != null">
+        AND t.MODIFIED_TIME = #{modifiedTime}
+      </if>
+      <if test="modifierId != null">
+        AND t.MODIFIER_ID = #{modifierId}
+      </if>
+      <if test="modifier != null">
+        AND t.MODIFIER = #{modifier}
+      </if>
+      <if test="remark != null">
+        AND t.REMARK = #{remark}
+      </if>
+      <if test="version != null">
+        AND  t.VERSION = #{version}
+      </if>
+      <if test="typeList !=null and typeList.size() > 0">
+		AND t.TYPE IN(
+		<foreach item="guard" index="index" collection="typeList" separator=",">
+			#{guard}
+		</foreach>
+		)
+	  </if>
+      <if test="statusList !=null and statusList.size() > 0">
+		AND t.STATUS IN(
+		<foreach item="guard" index="index" collection="statusList" separator=",">
+			#{guard}
+		</foreach>
+		)
+	  </if>
+	  <if test="salesDeptId != null">
+	  	AND t.SALES_DEPT_ID = #{salesDeptId}
+	  </if>
+	  <if test="needOffer != null">
+	  	AND t.NEED_OFFER = #{needOffer}
+	  </if>
+	  <if test="extensionFlag != null">
+	  	AND t.EXTENSION_FLAG = #{extensionFlag}
+	  </if>
+	  <if test="name != null and name != ''">
+	  	AND f.NAME = #{name}
+	  </if>
+	  <if test="mobilePhone != null and mobilePhone!=''">
+	  	AND f.MOBILE_PHONE = #{mobilePhone}
+	  </if>
+	  <if test="idnum != null and idnum != ''">
+	  	AND f.IDNUM = #{idnum}
+	  </if>
+	  <if test="crmId != null">
+	  	AND f.CRM_ID = #{crmId}
+	  </if>
+	</trim>
+  </sql>  
+  <select id="isCheck" parameterType="int" resultType="int">
+  		select count(1) from SPECIAL_REPAYMENT SR
+  		<!-- LEFT JOIN OFFER O ON SR.LOAN_ID=O.LOAN_ID -->
+  		where SR.LOAN_ID=#{loanId} <!-- AND O.STATUS IN(10,20) --> and SR.PL_FLAG='pl'
+  </select>
+</mapper>

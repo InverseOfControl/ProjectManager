@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.ChannelPlanMapper" >
+  <resultMap id="channelPlanResultMap" type="ChannelPlan" >
+    <id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="APPROVER_ID" property="approverId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="CODE" property="code" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result column="MARGIN" property="margin" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="MEMO" property="memo" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="OPERATOR_ID" property="operatorId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="ORG_REPAY_TERM" property="orgRepayTerm" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="ORGANIZATION_ID" property="organizationId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="PACT_MONEY" property="pactMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="PLAN_STATE" property="planState" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="PLAN_TYPE" property="planType" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="RATE_SUM" property="rateSum" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="REQUEST_MONEY" property="requestMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="RETURNETERM1" property="returneterm1" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="RETURNETERM2" property="returneterm2" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="SEND_BACK_MEMO" property="sendBackMemo" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result column="TIME" property="time" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="TO_TERM1" property="toTerm1" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="TO_TERM2" property="toTerm2" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="ACTUAL_RATE" property="actualRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+	<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+	<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+	<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+	<result column="ORG_FEE_STATE" property="orgFeeState" jdbcType="VARCHAR" javaType="java.lang.String" />
+	<result column="RETURN_TYPE" property="returnType" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result column="IS_DELETED" property="isDeleted" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result column="ORGANNAME" property="organname" jdbcType="VARCHAR" javaType="java.lang.String" />
+  </resultMap>
+    <sql id="channelPlanField" >
+    channelPlan.ID, channelPlan.VERSION, channelPlan.APPROVER_ID, channelPlan.CODE, channelPlan.END_DATE, 
+    channelPlan.MARGIN, channelPlan.MEMO, channelPlan.NAME, channelPlan.OPERATOR_ID,
+    channelPlan.ORG_REPAY_TERM, channelPlan.ORGANIZATION_ID, 
+    channelPlan.PACT_MONEY, channelPlan.PLAN_STATE, channelPlan.PLAN_TYPE, channelPlan.RATE_SUM,
+    channelPlan.REQUEST_MONEY, channelPlan.RETURNETERM1, channelPlan.RETURNETERM2, 
+    channelPlan.SEND_BACK_MEMO, channelPlan.START_DATE, channelPlan.TIME, channelPlan.TO_TERM1, channelPlan.TO_TERM2, 
+    channelPlan.ACTUAL_RATE, channelPlan.CREATOR, channelPlan.CREATED_TIME, 
+    channelPlan.CREATOR_ID, channelPlan.MODIFIER_ID, channelPlan.MODIFIER, 
+    channelPlan.MODIFIED_TIME,channelPlan.ORG_FEE_STATE,channelPlan.RETURN_TYPE,channelPlan.IS_DELETED
+  </sql>
+  
+ 	<!-- Ivan -->
+	<select id="findListWithPGByVO" parameterType="ChannelPlanVO"  resultMap="channelPlanResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="channelPlanListSelective" />
+		<include refid="channelPlanListConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<sql id="channelPlanSelective">
+	select 
+	<include refid="organField" />
+	<include refid="channelPlanField" />
+	from CHANNEL_PLAN channelPlan
+	</sql>
+	
+	<sql id="leftJoinOrgan">
+		left join Organ organ on (channelPlan.ORGANIZATION_ID = organ.id)
+	</sql>
+	
+	<sql id="organField">
+		organ.NAME as ORGANNAME,
+	</sql>
+	
+	<sql id="channelPlanListSelective">
+		select 
+		<include refid="channelPlanField" />
+		from CHANNEL_PLAN channelPlan
+		WHERE 1=1
+	</sql>
+	
+	<select id="get" parameterType="java.lang.Long" resultMap="channelPlanResultMap">
+		<include refid="channelPlanSelective" />
+		<include refid="leftJoinOrgan" />
+		where channelPlan.id = #{id}
+	</select>
+	
+	<sql id="channelPlanListConditions">
+		AND is_deleted NOT IN (1)
+			<if test="name != null and name != ''">
+				AND channelPlan.NAME = #{name}
+	        </if>
+	        <if test="code != null and code != ''">
+				AND channelPlan.CODE = #{code}
+	        </if>
+	        <if test="organizationId != null and organizationId != ''">
+				AND channelPlan.ORGANIZATION_ID = #{organizationId}
+	        </if>
+	</sql> 
+	
+	<select id="count" parameterType="ChannelPlanVO"  resultType="java.lang.Integer"> 
+	  SELECT count(*) as total FROM (
+			<include refid="channelPlanListSelective" />
+			<include refid="channelPlanListConditions" />
+			) 
+	</select>
+  
+  <insert id="insert" parameterType="ChannelPlan" >
+  	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+		select
+		SEQ_CHANNEL_PLAN_ID.nextval as id from dual
+    </selectKey>
+    insert into CHANNEL_PLAN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="approverId != null" >
+        APPROVER_ID,
+      </if>
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="margin != null" >
+        MARGIN,
+      </if>
+      <if test="memo != null" >
+        MEMO,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="orgRepayTerm != null" >
+        ORG_REPAY_TERM,
+      </if>
+      <if test="organizationId != null" >
+        ORGANIZATION_ID,
+      </if>
+      <if test="pactMoney != null" >
+        PACT_MONEY,
+      </if>
+      <if test="planState != null" >
+        PLAN_STATE,
+      </if>
+      <if test="planType != null" >
+        PLAN_TYPE,
+      </if>
+      <if test="rateSum != null" >
+        RATE_SUM,
+      </if>
+      <if test="requestMoney != null" >
+        REQUEST_MONEY,
+      </if>
+      <if test="returneterm1 != null" >
+        RETURNETERM1,
+      </if>
+      <if test="returneterm2 != null" >
+        RETURNETERM2,
+      </if>
+      <if test="sendBackMemo != null" >
+        SEND_BACK_MEMO,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+      <if test="toTerm1 != null" >
+        TO_TERM1,
+      </if>
+      <if test="toTerm2 != null" >
+        TO_TERM2,
+      </if>
+      <if test="actualRate != null" >
+        ACTUAL_RATE,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID,
+      </if>
+      <if test="modifier != null" >
+        MODIFIER,
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME,
+      </if>
+      <if test="orgFeeState != null" >
+        ORG_FEE_STATE,
+      </if>
+      <if test="returnType != null" >
+        RETURN_TYPE,
+      </if>
+      <if test="isDeleted != null" >
+        IS_DELETED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="version != null" >
+        #{version},
+      </if>
+      <if test="approverId != null" >
+        #{approverId},
+      </if>
+      <if test="code != null" >
+        #{code},
+      </if>
+      <if test="endDate != null" >
+        #{endDate},
+      </if>
+      <if test="margin != null" >
+        #{margin},
+      </if>
+       <if test="memo != null" >
+        #{memo},
+      </if>
+      <if test="name != null" >
+        #{name},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId},
+      </if>
+      <if test="orgRepayTerm != null" >
+        #{orgRepayTerm},
+      </if>
+      <if test="organizationId != null" >
+        #{organizationId},
+      </if>
+      <if test="pactMoney != null" >
+        #{pactMoney},
+      </if>
+      <if test="planState != null" >
+        #{planState},
+      </if>
+      <if test="planType != null" >
+        #{planType},
+      </if>
+      <if test="rateSum != null" >
+        #{rateSum},
+      </if>
+      <if test="requestMoney != null" >
+        #{requestMoney},
+      </if>
+      <if test="returneterm1 != null" >
+        #{returneterm1},
+      </if>
+      <if test="returneterm2 != null" >
+        #{returneterm2},
+      </if>
+      <if test="sendBackMemo != null" >
+        #{sendBackMemo},
+      </if>
+      <if test="startDate != null" >
+        #{startDate},
+      </if>
+      <if test="time != null" >
+        #{time},
+      </if>
+      <if test="toTerm1 != null" >
+        #{toTerm1},
+      </if>
+      <if test="toTerm2 != null" >
+        #{toTerm2},
+      </if>
+      <if test="actualRate != null" >
+        #{actualRate},
+      </if>
+      <if test="creator != null" >
+        #{creator},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId},
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime},
+      </if>
+      <if test="orgFeeState != null" >
+        #{orgFeeState},
+      </if>
+      <if test="returnType != null" >
+        #{returnType},
+      </if>
+       <if test="isDeleted != null" >
+        #{isDeleted},
+      </if>     
+    </trim>
+  </insert>
+   <update id="update" parameterType="ChannelPlanVO" >
+    update CHANNEL_PLAN
+    <set >
+      <if test="approverId != null" >
+        APPROVER_ID = #{approverId,jdbcType=NUMERIC},
+      </if>
+      <if test="code != null" >
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate},
+      </if>
+      <if test="margin != null" >
+        MARGIN = #{margin,jdbcType=NUMERIC},
+      </if>
+      <if test="memo != null" >
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID = #{operatorId,jdbcType=NUMERIC},
+      </if>
+      <if test="orgRepayTerm != null" >
+        ORG_REPAY_TERM = #{orgRepayTerm,jdbcType=NUMERIC},
+      </if>
+      <if test="organizationId != null" >
+        ORGANIZATION_ID = #{organizationId,jdbcType=NUMERIC},
+      </if>
+      <if test="pactMoney != null" >
+        PACT_MONEY = #{pactMoney,jdbcType=NUMERIC},
+      </if>
+      <if test="planState != null" >
+        PLAN_STATE = #{planState,jdbcType=NUMERIC},
+      </if>
+      <if test="planType != null" >
+        PLAN_TYPE = #{planType,jdbcType=NUMERIC},
+      </if>
+      <if test="rateSum != null" >
+        RATE_SUM = #{rateSum,jdbcType=NUMERIC},
+      </if>
+      <if test="requestMoney != null" >
+        REQUEST_MONEY = #{requestMoney,jdbcType=NUMERIC},
+      </if>
+      <if test="returneterm1 != null" >
+        RETURNETERM1 = #{returneterm1,jdbcType=NUMERIC},
+      </if>
+      <if test="returneterm2 != null" >
+        RETURNETERM2 = #{returneterm2,jdbcType=NUMERIC},
+      </if>
+      <if test="sendBackMemo != null" >
+        SEND_BACK_MEMO = #{sendBackMemo ,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        START_DATE = #{startDate},
+      </if>
+      <if test="time != null" >
+        TIME = #{time,jdbcType=NUMERIC},
+      </if>
+      <if test="toTerm1 != null" >
+        TO_TERM1 = #{toTerm1,jdbcType=NUMERIC},
+      </if>
+      <if test="toTerm2 != null" >
+        TO_TERM2 = #{toTerm2,jdbcType=NUMERIC},
+      </if>
+      <if test="actualRate != null" >
+        ACTUAL_RATE = #{actualRate,jdbcType=NUMERIC},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME = #{createdTime},
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID = #{creatorId,jdbcType=NUMERIC},
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID = #{modifierId,jdbcType=NUMERIC},
+      </if>
+      <if test="modifier != null" >
+        MODIFIER = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME = #{modifiedTime},
+      </if>
+      <if test="orgFeeState != null" >
+        ORG_FEE_STATE = #{orgFeeState,jdbcType=VARCHAR},
+      </if>
+      <if test="returnType != null" >
+        RETURN_TYPE = #{returnType,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where ID = #{id}
+    <if test="version != null">
+			AND VERSION = #{version,jdbcType=NUMERIC} -1 
+     </if> 
+  </update>
+  <update id="deletePlan" parameterType="java.lang.Integer">
+   update  CHANNEL_PLAN set is_deleted = 1 where id = #{id}
+</update>
+</mapper>

@@ -1,0 +1,904 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.ExtensionMapper">
+<resultMap id="ExtensionResultMap" type="Extension">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PERSON_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="PACT_MONEY" property="pactMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="TIME" property="time" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="CURR_NUM" property="currNum" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="GRANT_MONEY" property="grantMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REQUEST_DATE" property="requestDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="CONTRACT_NO" property="contractNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="SIGN_DATE" property="signDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="AUDIT_DATE" property="auditDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="AUDIT_MONEY" property="auditMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REQUEST_MONEY" property="requestMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="RETURN_DATE" property="returnDate" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="START_REPAY_DATE" property="startRepayDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="END_REPAY_DATE" property="endRepayDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="SERVICE_ID" property="serviceId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CRM_ID" property="crmId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="BIZ_DIRECTOR_ID" property="bizDirectorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="ASSESSOR_ID" property="assessorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="RESIDUAL_PACT_MONEY" property="residualPactMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="RESIDUAL_TIME" property="residualTime" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="GRANT_DATE" property="grantDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="CONTRACT_CONFIRM_DATE" property="contractConfirmDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="CONTRACT_BACK_DATE" property="contractBackDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="SUBMIT_DATE" property="submitDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="CONTRACT_CREATED_TIME" property="contractCreatedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="STATUS" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="AUDIT_TIME" property="auditTime" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="EXTENSION_TIME" property="extensionTime" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="GRANT_ACCOUNT_ID" property="grantAccountId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="REPAY_ACCOUNT_ID" property="repayAccountId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_TYPE" property="loanType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="SALES_DEPT_ID" property="salesDeptId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="YEAR_RATE" property="yearRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="MONTH_RATE" property="monthRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CONTRACT_SRC" property="contractSrc" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="ASSESSMENT" property="assessment" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CONSULT" property="consult" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="B_MANAGE" property="bManage" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="C_MANAGE" property="cManage" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="RISK" property="risk" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="MANAGER_ID" property="managerId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="SALES_TEAM_ID" property="salesTeamId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	</resultMap>
+	
+	<sql id="extensionField">
+		EXTENSION.ID,
+		EXTENSION.PERSON_ID,
+		EXTENSION.VERSION,
+		EXTENSION.PACT_MONEY,
+		EXTENSION.TIME,
+		EXTENSION.CURR_NUM,
+		EXTENSION.GRANT_MONEY,
+		EXTENSION.REQUEST_DATE,
+		EXTENSION.CONTRACT_NO,
+		EXTENSION.SIGN_DATE,
+		EXTENSION.AUDIT_DATE,
+		EXTENSION.AUDIT_MONEY,
+		EXTENSION.REQUEST_MONEY,
+		EXTENSION.RETURN_DATE,
+		EXTENSION.START_REPAY_DATE,
+		EXTENSION.END_REPAY_DATE,
+		EXTENSION.SERVICE_ID,
+		EXTENSION.CRM_ID,
+		EXTENSION.BIZ_DIRECTOR_ID,
+		EXTENSION.ASSESSOR_ID,
+		EXTENSION.RESIDUAL_PACT_MONEY,
+		EXTENSION.RESIDUAL_TIME,
+		EXTENSION.GRANT_DATE,
+		EXTENSION.CONTRACT_CONFIRM_DATE,
+		EXTENSION.CONTRACT_BACK_DATE,
+		EXTENSION.SUBMIT_DATE,
+		EXTENSION.CONTRACT_CREATED_TIME,
+		EXTENSION.STATUS,
+		EXTENSION.REMARK,
+		EXTENSION.CREATOR,
+		EXTENSION.CREATOR_ID,
+		EXTENSION.CREATED_TIME,
+		EXTENSION.MODIFIER,
+		EXTENSION.MODIFIER_ID,
+		EXTENSION.MODIFIED_TIME,
+		EXTENSION.AUDIT_TIME,
+		EXTENSION.EXTENSION_TIME,
+		EXTENSION.GRANT_ACCOUNT_ID,
+		EXTENSION.REPAY_ACCOUNT_ID,
+		EXTENSION.PRODUCT_ID,
+		EXTENSION.LOAN_TYPE,
+		EXTENSION.SALES_DEPT_ID,
+		EXTENSION.CONTRACT_SRC,
+		EXTENSION.ASSESSMENT,
+		EXTENSION.CONSULT,
+		EXTENSION.B_MANAGE,
+		EXTENSION.C_MANAGE,
+		EXTENSION.RISK,
+		EXTENSION.MANAGER_ID,
+		EXTENSION.PRODUCT_TYPE,
+		EXTENSION.SALES_TEAM_ID
+	</sql>
+	
+	<sql id="extensionSelective">
+		SELECT
+		<include refid="extensionField" />
+		FROM EXTENSION
+	</sql>
+	
+	<sql id="extensionConditions">
+		<where>
+			<if test="id != null">
+				AND EXTENSION.ID = #{ID}
+			</if>
+			<if test="personId != null">
+				AND EXTENSION.PERSON_ID = #{personId}
+			</if>
+			<if test="pactMoney != null">
+				AND EXTENSION.PACT_MONEY = #{pactMoney}
+			</if>
+			<if test="version != null">
+				AND EXTENSION.VERSION = #{version}
+			</if>
+			<if test="time != null">
+				AND EXTENSION.TIME = #{time}
+			</if>
+			<if test="currNum != null">
+				AND EXTENSION.CURR_NUM = #{currNum}
+			</if>
+			<if test="grantMoney != null">
+				AND EXTENSION.GRANT_MONEY = #{grantMoney}
+			</if>
+			<if test="requestDate != null">
+				AND EXTENSION.REQUEST_DATE = #{requestDate}
+			</if>
+			<if test="contractNo != null">
+				AND EXTENSION.CONTRACT_NO = #{contractNo}
+			</if>
+			<if test="signDate != null">
+				AND EXTENSION.SIGN_DATE = #{signDate}
+			</if>
+			<if test="auditDate != null">
+				AND EXTENSION.AUDIT_DATE = #{auditDate}
+			</if>
+			<if test="auditMoney != null">
+				AND EXTENSION.AUDIT_MONEY = #{auditMoney}
+			</if>
+			<if test="requestMoney != null">
+				AND EXTENSION.REQUEST_MONEY = #{requestMoney}
+			</if>
+			<if test="returnDate != null">
+				AND EXTENSION.RETURN_DATE = #{returnDate}
+			</if>
+			<if test="startRepayDate != null">
+				AND EXTENSION.START_REPAY_DATE = #{startRepayDate}
+			</if>
+			<if test="endRepayDate != null">
+				AND EXTENSION.END_REPAY_DATE = #{endRepayDate}
+			</if>
+			<if test="serviceId != null">
+				AND EXTENSION.SERVICE_ID = #{serviceId}
+			</if>
+			<if test="crmId != null">
+				AND EXTENSION.CRM_ID = #{crmId}
+			</if>
+			<if test="bizDirectorId != null">
+				AND EXTENSION.BIZ_DIRECTOR_ID = #{bizDirectorId}
+			</if>
+			<if test="assessorId != null">
+				AND EXTENSION.ASSESSOR_ID = #{assessorId}
+			</if>
+			<if test="residualPactMoney != null">
+				AND EXTENSION.RESIDUAL_PACT_MONEY = #{residualPactMoney}
+			</if>
+			<if test="residualTime != null">
+				AND EXTENSION.RESIDUAL_TIME = #{residualTime}
+			</if>
+			<if test="grantDate != null">
+				AND EXTENSION.GRANT_DATE = #{grantDate}
+			</if>
+			<if test="contractConfirmDate != null">
+				AND EXTENSION.CONTRACT_CONFIRM_DATE = #{contractConfirmDate}
+			</if>
+			<if test="contractBackDate != null">
+				AND EXTENSION.CONTRACT_BACK_DATE = #{contractBackDate}
+			</if>
+			<if test="submitDate != null">
+				AND EXTENSION.SUBMIT_DATE = #{submitDate}
+			</if>
+			<if test="contractCreatedTime != null">
+				AND EXTENSION.CONTRACT_CREATED_TIME = #{contractCreatedTime}
+			</if>
+			<if test="status != null">
+				AND EXTENSION.STATUS = #{status}
+			</if>
+			<if test="remark != null">
+				AND EXTENSION.REMARK = #{remark}
+			</if>
+			<if test="creatorId != null">
+				AND EXTENSION.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null">
+				AND EXTENSION.CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND EXTENSION.CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				AND EXTENSION.MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null">
+				AND EXTENSION.MODIFIER = #{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				AND EXTENSION.MODIFIED_TIME = #{modifiedTime}
+			</if>
+			<if test="auditTime != null">
+				AND EXTENSION.AUDIT_TIME = #{auditTime}
+			</if>
+			<if test="extensionTime != null">
+				AND EXTENSION.EXTENSION_TIME = #{extensionTime}
+			</if>
+			<if test="grantAccountId != null">
+				AND EXTENSION.GRANT_ACCOUNT_ID = #{grantAccountId}
+			</if>
+			<if test="repayAccountId != null">
+				AND EXTENSION.REPAY_ACCOUNT_ID = #{repayAccountId}
+			</if>
+			<if test="productId != null">
+				AND EXTENSION.PRODUCT_ID = #{productId}
+			</if>
+			<if test="loanType != null">
+				AND EXTENSION.LOAN_TYPE = #{loanType}
+			</if>
+			<if test="salesDeptId != null">
+				AND EXTENSION.SALES_DEPT_ID = #{salesDeptId}
+			</if>
+			<if test="salesTeamId != null">
+				AND EXTENSION.SALES_TEAM_ID = #{salesTeamId}
+			</if>
+			<if test="contractSrc != null">
+				AND EXTENSION.CONTRACT_SRC = #{contractSrc}
+			</if>
+			<if test="assessment != null">
+				AND EXTENSION.ASSESSMENT = #{assessment}
+			</if>
+			<if test="consult != null">
+				AND EXTENSION.CONSULT = #{consult}
+			</if>
+			<if test="bManage != null">
+				AND EXTENSION.B_MANAGE = #{bManage}
+			</if>
+			<if test="cManage != null">
+				AND EXTENSION.C_MANAGE = #{cManage}
+			</if>
+			<if test="risk != null">
+				AND EXTENSION.RISK = #{risk}
+			</if>
+			<if test="statusList !=null ">
+				AND EXTENSION.STATUS in (
+				<foreach item="guard" index="index" collection="statusList"
+					separator=",">
+					#{guard}
+				 </foreach>
+				)
+			</if>
+			<if test="managerId != null">
+				AND EXTENSION.MANAGER_ID = #{managerId}
+			</if>
+			<if test="productType != null">
+				AND EXTENSION.PRODUCT_TYPE = #{productType}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="get" resultMap="ExtensionResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="extensionField" />
+		FROM EXTENSION
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="getExtensionByLoanId" resultMap="ExtensionResultMap" parameterType="ExtensionVO">
+		SELECT * FROM (
+			SELECT
+			<include refid="extensionField" />		
+			FROM EXTENSION	 LEFT JOIN LOAN_EXTENSION 
+			ON EXTENSION.ID = LOAN_EXTENSION.EXTENSION_ID
+			WHERE LOAN_EXTENSION.LOAN_ID = #{loanId}
+			<if test="extensionTime != null">
+				AND EXTENSION.EXTENSION_TIME <![CDATA[ > ]]> #{extensionTime}
+			</if>
+			AND EXTENSION.STATUS NOT IN (
+			<foreach item="guard" index="index" collection="statusList" separator=",">
+				#{guard}
+			</foreach>
+			)
+			ORDER BY EXTENSION.EXTENSION_TIME
+		) result WHERE ROWNUM <![CDATA[ <= ]]> 1
+	</select>
+	
+	<select id="findListByVO"  resultMap="ExtensionResultMap" parameterType="ExtensionVO" >
+		SELECT
+		<include refid="extensionField" />		
+		FROM EXTENSION  
+		<include refid="extensionConditions" />	
+	</select>
+	
+	<select id="findWithPG" parameterType="ExtensionVO" resultMap="ExtensionResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="extensionSelective" />
+		<include refid="extensionConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<delete id="delete" parameterType="java.lang.Long"  >
+		DELETE FROM EXTENSION WHERE ID = #{id}
+	</delete>
+	
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM EXTENSION WHERE ID = #{ID}
+	</select>
+	
+	<insert id="insert" parameterType="com.ezendai.credit2.apply.model.Extension">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT seq_loan_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO EXTENSION
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="personId != null">
+				PERSON_ID,
+			</if>
+			<if test="pactMoney != null">
+				PACT_MONEY,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+			<if test="time != null">
+				TIME,
+			</if>
+			<if test="currNum != null">
+				CURR_NUM,
+			</if>
+			<if test="grantMoney != null">
+				GRANT_MONEY,
+			</if>
+			<if test="requestDate != null">
+				REQUEST_DATE,
+			</if>
+			<if test="contractNo != null">
+				CONTRACT_NO,
+			</if>
+			<if test="signDate != null">
+				SIGN_DATE,
+			</if>
+			<if test="auditDate != null">
+				AUDIT_DATE,
+			</if>
+			<if test="auditMoney != null">
+				AUDIT_MONEY,
+			</if>
+			<if test="requestMoney != null">
+				REQUEST_MONEY,
+			</if>
+			<if test="returnDate != null">
+				RETURN_DATE,
+			</if>
+			<if test="startRepayDate != null">
+				START_REPAY_DATE,
+			</if>
+			<if test="endRepayDate != null">
+				END_REPAY_DATE,
+			</if>
+			<if test="serviceId != null">
+				SERVICE_ID,
+			</if>
+			<if test="crmId != null">
+				CRM_ID,
+			</if>
+			<if test="bizDirectorId != null">
+				BIZ_DIRECTOR_ID,
+			</if>
+			<if test="assessorId != null">
+				ASSESSOR_ID,
+			</if>
+			<if test="residualPactMoney != null">
+				RESIDUAL_PACT_MONEY,
+			</if>
+			<if test="residualTime != null">
+				RESIDUAL_TIME,
+			</if>
+			<if test="grantDate != null">
+				GRANT_DATE,
+			</if>
+			<if test="contractConfirmDate != null">
+				CONTRACT_CONFIRM_DATE,
+			</if>
+			<if test="contractBackDate != null">
+				CONTRACT_BACK_DATE,
+			</if>
+			<if test="submitDate != null">
+				SUBMIT_DATE,
+			</if>
+			<if test="contractCreatedTime != null">
+				CONTRACT_CREATED_TIME,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="auditTime != null">
+				AUDIT_TIME,
+			</if>
+			<if test="extensionTime != null">
+				EXTENSION_TIME,
+			</if>
+			<if test="grantAccountId != null">
+				GRANT_ACCOUNT_ID,
+			</if>
+			<if test="repayAccountId != null">
+				REPAY_ACCOUNT_ID,
+			</if>
+			<if test="productId != null">
+				PRODUCT_ID,
+			</if>
+			<if test="loanType != null">
+				LOAN_TYPE,
+			</if>
+			<if test="salesDeptId != null">
+				SALES_DEPT_ID,
+			</if>
+			<if test="salesTeamId != null">
+				SALES_TEAM_ID ,
+			</if>
+			<if test="yearRate != null">
+				YEAR_RATE,
+			</if>
+			<if test="monthRate != null">
+				MONTH_RATE,
+			</if>
+			<if test="contractSrc != null">
+				CONTRACT_SRC,
+			</if>
+			<if test="assessment != null">
+				ASSESSMENT,
+			</if>
+			<if test="consult != null">
+				CONSULT,
+			</if>
+			<if test="bManage != null">
+				B_MANAGE,
+			</if>
+			<if test="cManage != null">
+				C_MANAGE,
+			</if>
+			<if test="risk != null">
+				RISK,
+			</if>
+			<if test="managerId != null">
+				MANAGER_ID,
+			</if>
+			<if test="productType != null">
+				PRODUCT_TYPE,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			#{id},
+			<if test="personId != null">
+				#{personId},
+			</if>
+			<if test="pactMoney != null">
+				#{pactMoney},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="time != null">
+				#{time},
+			</if>
+			<if test="currNum != null">
+				#{currNum},
+			</if>
+			<if test="grantMoney != null">
+				#{grantMoney},
+			</if>
+			<if test="requestDate != null">
+				#{requestDate},
+			</if>
+			<if test="contractNo != null">
+				#{contractNo},
+			</if>
+			<if test="signDate != null">
+				#{signDate},
+			</if>
+			<if test="auditDate != null">
+				#{auditDate},
+			</if>
+			<if test="auditMoney != null">
+				#{auditMoney},
+			</if>
+			<if test="requestMoney != null">
+				#{requestMoney},
+			</if>
+			<if test="returnDate != null">
+				#{returnDate},
+			</if>
+			<if test="startRepayDate != null">
+				#{startRepayDate},
+			</if>
+			<if test="endRepayDate != null">
+				#{endRepayDate},
+			</if>
+			<if test="serviceId != null">
+				#{serviceId},
+			</if>
+			<if test="crmId != null">
+				#{crmId},
+			</if>
+			<if test="bizDirectorId != null">
+				#{bizDirectorId},
+			</if>
+			<if test="assessorId != null">
+				#{assessorId},
+			</if>
+			<if test="residualPactMoney != null">
+				#{residualPactMoney},
+			</if>
+			<if test="residualTime != null">
+				#{residualTime},
+			</if>
+			<if test="grantDate != null">
+				#{grantDate},
+			</if>
+			<if test="contractConfirmDate != null">
+				#{contractConfirmDate},
+			</if>
+			<if test="contractBackDate != null">
+				#{contractBackDate},
+			</if>
+			<if test="submitDate != null">
+				#{submitDate},
+			</if>
+			<if test="contractCreatedTime != null">
+				#{contractCreatedTime},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="remark != null">
+				#{remark},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="auditTime != null">
+				#{auditTime},
+			</if>
+			<if test="extensionTime != null">
+				#{extensionTime},
+			</if>
+			<if test="grantAccountId != null">
+				#{grantAccountId},
+			</if>
+			<if test="repayAccountId != null">
+				#{repayAccountId},
+			</if>
+			<if test="productId != null">
+				#{productId},
+			</if>
+			<if test="loanType != null">
+				#{loanType},
+			</if>
+			<if test="salesDeptId != null">
+				#{salesDeptId},
+			</if>
+			<if test="salesTeamId != null">
+				#{salesTeamId},
+			</if>
+			<if test="yearRate != null">
+				#{yearRate},
+			</if>
+			<if test="monthRate != null">
+				#{monthRate},
+			</if>
+			<if test="contractSrc != null">
+				#{contractSrc},
+			</if>
+			<if test="assessment != null">
+				#{assessment},
+			</if>
+			<if test="consult != null">
+				#{consult},
+			</if>
+			<if test="bManage != null">
+				#{bManage},
+			</if>
+			<if test="cManage != null">
+				#{cManage},
+			</if>
+			<if test="risk != null">
+				#{risk},
+			</if>
+			<if test="managerId != null">
+				#{managerId},
+			</if>
+			<if test="productType != null">
+				#{productType},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="ExtensionVO">
+		UPDATE EXTENSION
+		<trim prefix="set" suffixOverrides=",">
+			<if test="personId != null">
+				PERSON_ID = #{personId},
+			</if>
+			<if test="pactMoney != null">
+				PACT_MONEY = #{pactMoney},
+			</if>
+			<if test="time != null">
+				TIME = #{time},
+			</if>
+			<if test="currNum != null">
+				CURR_NUM = #{currNum},
+			</if>
+			<if test="grantMoney != null">
+				GRANT_MONEY = #{grantMoney},
+			</if>
+			<if test="requestDate != null">
+				REQUEST_DATE = #{requestDate},
+			</if>
+			<if test="contractNo != null">
+				CONTRACT_NO = #{contractNo},
+			</if>
+			<if test="signDate != null">
+				SIGN_DATE = #{signDate},
+			</if>
+			<if test="auditDate != null">
+				AUDIT_DATE = #{auditDate},
+			</if>
+			<if test="auditMoney != null">
+				AUDIT_MONEY = #{auditMoney},
+			</if>
+			<if test="requestMoney != null">
+				REQUEST_MONEY = #{requestMoney},
+			</if>
+			<if test="returnDate != null">
+				RETURN_DATE = #{returnDate},
+			</if>
+			<if test="startRepayDate != null">
+				START_REPAY_DATE = #{startRepayDate},
+			</if>
+			<if test="endRepayDate != null">
+				END_REPAY_DATE = #{endRepayDate},
+			</if>
+			<if test="serviceId != null">
+				SERVICE_ID = #{serviceId},
+			</if>
+			<if test="crmId != null">
+				CRM_ID = #{crmId},
+			</if>
+			<if test="bizDirectorId != null">
+				BIZ_DIRECTOR_ID = #{bizDirectorId},
+			</if>
+			<if test="assessorId != null">
+				ASSESSOR_ID = #{assessorId},
+			</if>
+			<if test="residualPactMoney != null">
+				RESIDUAL_PACT_MONEY = #{residualPactMoney},
+			</if>
+			<if test="residualTime != null">
+				RESIDUAL_TIME = #{residualTime},
+			</if>
+			<if test="grantDate != null">
+				GRANT_DATE = #{grantDate},
+			</if>
+			<if test="contractConfirmDate != null">
+				CONTRACT_CONFIRM_DATE = #{contractConfirmDate},
+			</if>
+			<if test="contractBackDate != null">
+				CONTRACT_BACK_DATE = #{contractBackDate},
+			</if>
+			<if test="submitDate != null">
+				SUBMIT_DATE = #{submitDate},
+			</if>
+			<if test="contractCreatedTime != null">
+				CONTRACT_CREATED_TIME = #{contractCreatedTime},
+			</if>
+			<if test="status != null">
+				STATUS = #{status},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="auditTime != null">
+				AUDIT_TIME = #{auditTime},
+			</if>
+			<if test="extensionTime != null">
+				EXTENSION_TIME = #{extensionTime},
+			</if>
+			<if test="grantAccountId != null">
+				GRANT_ACCOUNT_ID = #{grantAccountId},
+			</if>
+			<if test="repayAccountId != null">
+				REPAY_ACCOUNT_ID = #{repayAccountId},
+			</if>
+			<if test="productId != null">
+				PRODUCT_ID = #{productId},
+			</if>
+			<if test="loanType != null">
+				LOAN_TYPE = #{loanType},
+			</if>
+			<if test="salesDeptId != null">
+				SALES_DEPT_ID = #{salesDeptId},
+			</if>
+			<if test="salesTeamId != null">
+				SALES_TEAM_ID = #{salesTeamId},
+			</if>
+			<if test="yearRate != null">
+				YEAR_RATE = #{yearRate},
+			</if>
+			<if test="monthRate != null">
+				MONTH_RATE = #{monthRate},
+			</if>
+			<if test="contractSrc != null">
+				CONTRACT_SRC = #{contractSrc},
+			</if>
+			<if test="assessment != null">
+				ASSESSMENT = #{assessment},
+			</if>
+			<if test="consult != null">
+				CONSULT = #{consult},
+			</if>
+			<if test="bManage != null">
+				B_MANAGE = #{bManage},
+			</if>
+			<if test="cManage != null">
+				C_MANAGE = #{cManage},
+			</if>
+			<if test="risk != null">
+				RISK = #{risk},
+			</if>
+			<if test="managerId != null">
+				MANAGER_ID = #{managerId},
+			</if>
+			<if test="productType != null">
+				PRODUCT_TYPE = #{productType},
+			</if>
+		</trim>
+		WHERE ID = #{id}		  
+		 <if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+     </update>
+     
+     <update id="updateByIdList" parameterType="ExtensionVO">
+	UPDATE EXTENSION
+	<trim prefix="set" suffixOverrides=",">
+		<if test="managerId != null">
+			MANAGER_ID = #{managerId},
+		</if>
+		<if test="modifierId != null">
+			MODIFIER_ID = #{modifierId},
+		</if>
+		<if test="modifier != null">
+			MODIFIER = #{modifier},
+		</if>
+		<if test="modifiedTime != null">
+			MODIFIED_TIME = #{modifiedTime},
+		</if>
+	</trim>
+		WHERE ID IN
+	<if test="idList !=null and idList.size() > 0">
+		(
+		<foreach item="guard" index="index" collection="idList"
+			separator=",">
+			#{guard}
+		</foreach>
+		)
+	</if>
+</update>
+		
+	<delete id="deleteByIdList" parameterType="ExtensionVO">
+		DELETE FROM EXTENSION WHERE ID IN (
+	<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+	
+	<select id="count" parameterType="ExtensionVO" resultType="java.lang.Integer">
+		SELECT count(*) FROM (
+		<include refid="extensionSelective" />
+		<include refid="extensionConditions" />
+		)
+	</select>
+	
+	<update id="updateByStatus" parameterType="ExtensionVO">
+		UPDATE EXTENSION
+		<trim prefix="set" suffixOverrides=",">
+			<if test="status != null">
+				STATUS = #{status},
+			</if>			
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>			
+		</trim>
+		WHERE ID = #{id}
+		  <if test="notStatus != null">
+				AND STATUS = #{notStatus}
+		  </if>	
+		  <if test="version != null">
+			AND VERSION = #{version} -1 
+     	  </if>
+	</update>
+	<!--新增特殊查询->所有最后一期逾期的展期记录-->
+	<select id="findLastOverdueList" parameterType="ExtensionVO" resultMap="ExtensionResultMap">
+	 	<include refid="extensionSelective" />
+		<include refid="extensionConditions" />
+		AND #{queryDate} <![CDATA[ > ]]> END_REPAY_DATE
+	</select>
+	
+	
+	
+	<!-- 根据条件查询出展期数据（现用于申请展期唯一性判断） -->
+	<select id="findExtensionByCondition" parameterType="ExtensionVO" resultMap="ExtensionResultMap">
+		SELECT * FROM EXTENSION WHERE ID IN 
+      (SELECT A.EXTENSION_ID FROM LOAN_EXTENSION A WHERE A.LOAN_ID=#{id} ) 
+       AND STATUS IN(11)
+     	
+	</select>
+</mapper>

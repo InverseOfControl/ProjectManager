@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-3.1.xsd
+			http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+			http://www.springframework.org/schema/util
+			http://www.springframework.org/schema/util/spring-util-3.1.xsd
+			http://www.springframework.org/schema/tx
+			http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+			http://www.springframework.org/schema/jdbc
+			http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+			http://www.springframework.org/schema/aop
+			http://www.springframework.org/schema/aop/spring-aop-3.1.xsd ">
+			
+ 
+ 	<context:component-scan base-package="com.ezendai.credit2">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>file:${global.config.path}/jdbc.properties</value>
+				<value>file:${global.config.path}/credit2.properties</value>
+				<value>classpath:codeversion.properties</value>
+				<value>file:${global.config.path}/mail.properties</value>
+				<value>file:${global.config.path}/zookeeper.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="credit2Properties" class="com.ezendai.credit2.system.Credit2Properties">
+		<property name="webUrl" value="${web_url}" />
+		<property name="uploadPath" value="${upload.path}" />
+		<property name="downloadPath" value="${download.path}" />
+		<property name="creditServiceUrl" value="${credit_service_url}" />
+		<property name="creditUnifiedServiceUrl" value="${credit_unified_service_url}" />
+		<property name="webReportUrl" value="${web_report_url}" />
+		<property name="contextReportPath" value="${context_report_path}" />
+		<property name="honorUrl" value="${honor_url}" />
+		<property name="webJobUrl" value="${web_job_url}" />
+	</bean>
+	<!-- 邮件相关配置 -->
+	<bean id="mailProperties" class="com.ezendai.credit2.common.mail.MailProperties">
+		<property name="mailFlag" value="${MAIL_FLAG}" />
+		<property name="toMail" value="${TO_MAIL}" />
+		<property name="ccMail" value="${CC_MAIL}" />
+		<property name="mailTitle" value="${MAIL_TITLE}" />
+		<property name="fromMail" value="${FROM_MAIL}" />
+	</bean>
+	<bean id="codeVersionProperties" class="com.ezendai.credit2.system.CodeVersionProperties">
+		<property name="tagVersion" value="${tagVersion}" />
+	</bean>
+	<!-- 配置DataSource数据源 -->
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="driver">
+			<value>${jdbc.driver}</value>
+		</property>
+		<property name="driverUrl">
+			<value>${jdbc.driverUrl}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+		<property name="alias">
+			<value>${jdbc.alias}</value>
+		</property>
+		<property name="prototypeCount">
+			<value>${jdbc.prototypeCount}</value>
+		</property>
+		<property name="maximumConnectionCount">
+			<value>${jdbc.maximumConnectionCount}</value>
+		</property>
+		<property name="minimumConnectionCount">
+			<value>${jdbc.minimumConnectionCount}</value>
+		</property>
+		<property name="maximumActiveTime">
+			<value>${jdbc.maximumActiveTime}</value>
+		</property>
+		<property name="trace">
+			<value>${jdbc.trace}</value>
+		</property>
+		<property name="verbose">
+			<value>${jdbc.verbose}</value>
+		</property>
+		<property name="testBeforeUse">
+			<value>${jdbc.testBeforeUse}</value>
+		</property>			
+		<property name="houseKeepingTestSql">
+			<value>${jdbc.houseKeepingTestSql}</value>
+		</property>		
+	</bean>
+	
+	
+	<context:annotation-config />
+
+	<!-- enable transaction demarcation with annotations -->
+	<tx:annotation-driven />
+	
+	<!-- 配置SqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage" value="com.ezendai.credit2.framework.model,com.ezendai.credit2.apply.model,com.ezendai.credit2.apply.vo,com.ezendai.credit2.audit.model,com.ezendai.credit2.audit.vo,com.ezendai.credit2.master.model,com.ezendai.credit2.master.vo,com.ezendai.credit2.system.model,com.ezendai.credit2.system.vo,com.ezendai.credit2.finance.model,com.ezendai.credit2.finance.vo,com.ezendai.credit2.rule.model,com.ezendai.credit2.rule.vo,com.ezendai.credit2.finance.model,com.ezendai.credit2.finance.vo,com.ezendai.credit2.after.model,com.ezendai.credit2.after.vo,com.ezendai.credit2.report.model,com.ezendai.credit2.report.vo" />
+		<!-- mapper和resultmap配置路径 -->
+		<property name="mapperLocations">
+			<list>
+				<!-- 表示在mapper包所有目录中，以-Mapper.xml结尾所有文件 -->
+				<value>classpath:/mapper/*/*Mapper.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置事务管理器，注意这里的dataSource和SqlSessionFactoryBean的dataSource要一致，不然事务就没有作用了 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.ezendai.credit2.*.mapper" />
+	</bean>
+	 <bean id="multipartResolver"     
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
+          <property name="defaultEncoding" value="UTF-8" />  	
+          <property name="maxUploadSize">
+			<value>5242880</value>
+		  </property>
+		  <property name="maxInMemorySize">
+			<value>4096</value>
+		  </property>
+	</bean>
+		<!-- mail sender -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.smtp.host}" />
+		<property name="username" value="${mail.smtp.username}" />
+		<property name="password" value="${mail.smtp.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+				<prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="mailSenderService" class="com.ezendai.credit2.common.mail.service.impl.MailSenderServiceImpl" />
+	
+</beans>

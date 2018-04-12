@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.after.mapper.SMSConfigrationMapper">
+
+	<select id="getCitys" resultType="com.ezendai.credit2.after.model.SMSConfigration">
+		select 
+			c.name cityName,
+			c.ID cityId
+		  from base_area c  where c.identifier='zdsys.City' and c.IS_DELETED=0
+	</select>
+
+
+	<select id="findWithPG" parameterType="com.ezendai.credit2.after.vo.SMSConfigrationVO" resultType="com.ezendai.credit2.after.model.SMSConfigration">	
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		select 
+      		distinct c.name cityName,
+      		c.ID cityId,
+      		p.SERVICE_PHONE servicePhone
+       		from base_area c
+       		left join city_phone p on p.CITY_ID=c.ID
+      		where c.identifier='zdsys.City'  and c.IS_DELETED=0
+      		<if test="cityId!=null and cityId!=''">
+      			and c.ID=#{cityId}
+      		</if>
+      		<if test="servicePhone!=null and servicePhone!=''">
+      			and p.SERVICE_PHONE=#{servicePhone}
+      		</if>
+      		
+      		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+	<select id="count" parameterType="com.ezendai.credit2.after.vo.SMSConfigrationVO" resultType="int">
+	    select 
+          count(distinct c.name)    
+          from base_area c
+          left join city_phone p on p.CITY_ID=c.ID
+          where c.identifier='zdsys.City'  and c.IS_DELETED=0
+      		<if test="cityId!=null and cityId!=''">
+      			and c.ID=#{cityId}
+      		</if>
+      		<if test="servicePhone!=null and servicePhone!=''">
+      			and p.SERVICE_PHONE=#{servicePhone}
+      		</if>
+	</select>
+
+	<update id="plUpdCityPhone" parameterType="Map">
+		update city_phone
+			<set>
+				SERVICE_PHONE=#{servicePhone}
+			</set>
+			<where>
+				CITY_ID in (${cityId})
+			</where>
+	</update>
+
+	<insert id="addCityPhone" parameterType="Map">
+		insert into city_phone(ID,city_id,service_phone)
+		
+		values 
+		(city_phone_seq.NEXTVAL,
+		#{cityId},
+		#{servicePhone}
+		)
+	</insert>
+	
+	
+	<select id="checkPhoneIsExit" parameterType="int" resultType="int">
+		select count(1) from city_phone where CITY_ID=#{cityId}
+	</select>
+	
+	<select id="overdueMsgfindWithPG" parameterType="com.ezendai.credit2.report.vo.OverdueMsgLogVO" 
+  			resultType="com.ezendai.credit2.report.model.OverdueMsgLog">
+  			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+      select
+      sm.LOAN_ID loanId,
+      sm.REPAYMENT_ID repaymentId,
+      sm.NAME name,
+      sm.ID_NUM idNum,
+      sm.MOBILE mobile,
+      sm.TEMPLET_ID templetId,
+      sm.CUR_TIME curTime,
+      sm.STATUS status,
+      sm.BUILD_DATE buildDate,
+      sm.SEND_DATE sendDate,
+      sm.RETURN_DATE returnDate,
+      sm.REPAY_DAY repayDay,
+      p.product_name productName,
+      p.product_type_name productType
+      from SYNC_REPAYMENT_MSG_LOG sm,product p
+      where p.id=sm.product_id and sm.type=1
+      <if test="name!=null and name!=''">
+      	and sm.NAME=#{name}
+      </if>
+      <if test="idNum!=null and idNum!=''">
+      	and sm.ID_NUM=#{idNum}
+      </if>
+      <if test="buildStartDate!=null and buildStartDate!=''">
+      	and sm.BUILD_DATE &gt;=#{buildStartDate}
+      </if>
+       <if test="buildEndDate!=null and buildEndDate!=''">
+      	and sm.BUILD_DATE &lt;=#{buildEndDate}
+      </if>
+       <if test="sendStartDate!=null and sendStartDate!=''">
+      	and sm.SEND_DATE &gt;=#{sendStartDate}
+      </if>
+        <if test="sendEndDate!=null and sendEndDate!=''">
+      	and sm.SEND_DATE &lt;=#{sendStartDate}
+      </if>
+       <if test="status!=null and status!=''">
+      	and sm.status &lt;=#{status}
+      </if>
+      <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+  </select>
+  
+  <select id="overdueMsgCount" parameterType="com.ezendai.credit2.report.vo.OverdueMsgLogVO" resultType="int">
+  	select count(1) from SYNC_REPAYMENT_MSG_LOG sm,product p where p.id=sm.product_id and sm.type=1
+  	
+      <if test="name!=null and name!=''">
+      	and sm.NAME=#{name}
+      </if>
+      <if test="idNum!=null and idNum!=''">
+      	and sm.ID_NUM=#{idNum}
+      </if>
+      <if test="buildStartDate!=null and buildStartDate!=''">
+      	and sm.BUILD_DATE &gt;=#{buildStartDate}
+      </if>
+       <if test="buildEndDate!=null and buildEndDate!=''">
+      	and sm.BUILD_DATE &lt;=#{buildEndDate}
+      </if>
+       <if test="sendStartDate!=null and sendStartDate!=''">
+      	and sm.SEND_DATE &gt;=#{sendStartDate}
+      </if>
+        <if test="sendEndDate!=null and sendEndDate!=''">
+      	and sm.SEND_DATE &lt;=#{sendStartDate}
+      </if>
+       <if test="status!=null and status!=''">
+      	and sm.status &lt;=#{status}
+      </if>  
+  </select>
+</mapper>

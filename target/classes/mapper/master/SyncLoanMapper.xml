@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.SyncLoanMapper">
+	
+	<resultMap id="syncLoanResultMap" type="SyncLoan">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="loanId" column="LOAN_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="companyNo" column="COMPANY_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="companyName" column="COMPANY_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="contractNo" column="CONTRACT_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="idNum" column="ID_NUM" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="professionType" column="PROFESSION_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="loanType" column="LOAN_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="pactMoney" column="PACT_MONEY" jdbcType="NUMERIC" javaType="java.lang.Double" />
+		<result property="pactTime" column="PACT_TIME" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="endRepayDate" column="END_REPAY_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="signDate" column="SIGN_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="purpose" column="PURPOSE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="maxRepayAmount" column="MAX_REPAY_AMOUNT" jdbcType="NUMERIC" javaType="java.lang.Double" />
+		<result property="status" column="STATUS" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="msg" column="MSG" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="buildDate" column="BUILD_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="sendDate" column="SEND_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="returnDate" column="RETURN_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+	</resultMap>
+	
+	<sql id="fields">
+		SYNC_LOAN.ID,
+		SYNC_LOAN.LOAN_ID,
+		SYNC_LOAN.COMPANY_NO,
+		SYNC_LOAN.COMPANY_NAME,
+		SYNC_LOAN.CONTRACT_NO,
+		SYNC_LOAN.NAME,
+		SYNC_LOAN.ID_NUM,
+		SYNC_LOAN.PROFESSION_TYPE,
+		SYNC_LOAN.LOAN_TYPE,
+		SYNC_LOAN.PACT_MONEY,
+		SYNC_LOAN.PACT_TIME,
+		SYNC_LOAN.END_REPAY_DATE,
+		SYNC_LOAN.SIGN_DATE,
+		SYNC_LOAN.PURPOSE,
+		SYNC_LOAN.MAX_REPAY_AMOUNT,
+		SYNC_LOAN.STATUS,
+		SYNC_LOAN.MSG,
+		SYNC_LOAN.BUILD_DATE,
+		SYNC_LOAN.SEND_DATE,
+		SYNC_LOAN.RETURN_DATE
+	</sql>
+	
+	<!-- 单表查询条件 -->
+	<sql id="conditions">
+		<trim prefix="where" prefixOverrides="AND">
+			<if test="status != null">
+				AND SYNC_LOAN.STATUS = #{status}
+			</if>
+			<if test="name != null and name !=''">
+				AND SYNC_LOAN.NAME = #{name}
+			</if>
+			<if test="idNum != null  and idNum !='' ">
+				AND SYNC_LOAN.ID_NUM = #{idNum}
+			</if>
+			<if test="contractNo != null  and contractNo !='' ">
+				AND SYNC_LOAN.CONTRACT_NO = #{contractNo}
+			</if>
+			<if test="loanType != null  and loanType !='' ">
+				AND SYNC_LOAN.LOAN_TYPE = #{loanType}
+			</if>
+		    <if test="buildDateStart!=null">
+				AND SYNC_LOAN.BUILD_DATE <![CDATA[ >= ]]> #{buildDateStart}
+			</if>
+			<if test="buildDateEnd!=null">
+				AND SYNC_LOAN.BUILD_DATE <![CDATA[ <= ]]> #{buildDateEnd}
+			</if>
+			<if test="sendDateStart!=null">
+				AND SYNC_LOAN.SEND_DATE <![CDATA[ >= ]]> #{sendDateStart}
+			</if>
+			<if test="sendDateEnd!=null">
+				AND SYNC_LOAN.SEND_DATE <![CDATA[ <= ]]> #{sendDateEnd}
+			</if> 
+		</trim>
+	</sql>
+	
+	<select id="getListBySyncLoanVO" parameterType="SyncLoanVO" resultMap="syncLoanResultMap">
+		SELECT
+			<include refid="fields" />
+			FROM SYNC_LOAN
+			<include refid="conditions" />
+	</select>
+	
+	<select id="findListByVO" parameterType="SyncLoanVO" resultMap="syncLoanResultMap">
+		<if test="pager != null ">
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		</if>
+		SELECT
+		<include refid="fields" />
+		FROM SYNC_LOAN
+		<include refid="conditions" />
+		<if test="pager != null ">
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+		</if>
+	</select>
+	
+	<select id="count" parameterType="SyncLoanVO"  resultType="java.lang.Integer">
+		SELECT count(*) as total FROM (
+			SELECT
+			<include refid="fields" />
+			FROM SYNC_LOAN
+			<include refid="conditions" />
+		)
+	</select>
+	
+	<select id="get" parameterType="java.lang.Long" resultMap="syncLoanResultMap">
+		SELECT
+		<include refid="fields" />
+		FROM SYNC_LOAN
+		WHERE SYNC_LOAN.ID = #{id}
+	</select>
+	<select id="findSyncLoanByLoanId" parameterType="java.lang.Long" resultMap="syncLoanResultMap">
+		SELECT
+		<include refid="fields" />
+		FROM SYNC_LOAN
+		WHERE SYNC_LOAN.LOAN_ID = #{id}
+	</select>
+	<select id="isExistsByLoanId" parameterType="syncLoan" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM SYNC_LOAN T WHERE T.LOAN_ID = #{loanId}
+	</select>
+	
+	<insert id="insert" parameterType="SyncLoan">
+	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+		select SEQ_SYNC_LOAN.nextval as id from dual
+    </selectKey>
+	insert into SYNC_LOAN
+	<trim prefix="(" suffixOverrides="," suffix=")">        
+		    ID,
+		<if test="loanId != null">
+			LOAN_ID,
+        </if>  
+		<if test="companyNo != null">
+			COMPANY_NO,
+        </if>
+        <if test="companyName != null">
+			COMPANY_NAME,
+        </if>
+        <if test="contractNo != null">
+			CONTRACT_NO,
+        </if>
+        <if test="name != null">
+			NAME,
+        </if>
+         <if test="idNum != null">
+			ID_NUM,
+        </if>
+        <if test="professionType != null">
+			PROFESSION_TYPE,
+        </if>
+         <if test="loanType != null">
+			LOAN_TYPE,
+        </if>
+        <if test="pactMoney != null">
+			PACT_MONEY,
+        </if>
+        <if test="pactTime != null">
+			PACT_TIME,
+        </if>
+		<if test="endRepayDate != null">
+			END_REPAY_DATE, 
+        </if>
+		<if test="signDate != null">
+			SIGN_DATE,
+        </if>
+        <if test="purpose != null">
+			PURPOSE,
+        </if>
+        <if test="maxRepayAmount != null">
+			MAX_REPAY_AMOUNT,
+        </if>
+	</trim>
+	values
+	<trim prefix="(" suffixOverrides="," suffix=")">	    
+			#{id},
+		<if test="loanId != null">
+			#{loanId},
+        </if>  
+		<if test="companyNo != null">
+			#{companyNo},
+        </if>
+        <if test="companyName != null">
+			#{companyName},
+        </if>
+        <if test="contractNo != null">
+			#{contractNo},
+        </if>
+        <if test="name != null">
+			#{name},
+        </if>
+         <if test="idNum != null">
+			#{idNum},
+        </if>
+        <if test="professionType != null">
+			#{professionType},
+        </if>
+         <if test="loanType != null">
+			#{loanType},
+        </if>
+        <if test="pactMoney != null">
+			#{pactMoney},
+        </if>
+        <if test="pactTime != null">
+			#{pactTime},
+        </if>
+		<if test="endRepayDate != null">
+			#{endRepayDate}, 
+        </if>
+		<if test="signDate != null">
+			#{signDate},
+        </if>
+        <if test="purpose != null">
+			#{purpose},
+        </if>
+        <if test="maxRepayAmount != null">
+			#{maxRepayAmount},
+        </if>
+	</trim>
+</insert>
+	
+	<!-- 获取正常借款及展期借款数据 -->
+	<select id="getSyncLoanData" parameterType="SyncLoan" resultMap="syncLoanResultMap">
+	    --小企业贷正常借款
+		SELECT T1.ID LOAN_ID,T1.CONTRACT_NO,T3.NAME,T3.IDNUM,'自营' T3.PROFESSION_TYPE
+		,(CASE T1.PRODUCT_CHANNEL_ID WHEN 1 THEN '同城贷' WHEN 2 THEN '网商贷' ELSE '' END) LOAN_TYPE
+		,T1.PACT_MONEY,T1.TIME PACT_TIME,T1.END_REPAY_DATE,T1.SIGN_DATE,T1.PURPOSE,T3.MAX_REPAY_AMOUNT
+		FROM LOAN T1,REPAY_INFO T2,PERSON T3
+		WHERE T1.ID = T2.ACCOUNT_ID AND T1.PERSON_ID = T3.ID
+		AND T2.TRADE_CODE = '${tradeCode}'  AND T1.PRODUCT_CHANNEL_ID in(1,2)  AND T1.FLAG != ${notEqFlag}
+		<if test="times.length == 0">
+			AND 1 <![CDATA[ <> ]]> 1
+		</if>
+		<if test="times.length == 1">
+			AND TRUNC(T2.TRADE_TIME) = TO_DATE('${times[0]}','YYYY-MM-DD')
+		</if>
+		<if test="times.length == 2">     
+			AND TRUNC(T2.TRADE_TIME) <![CDATA[ >= ]]> TO_DATE('${times[0]}','YYYY-MM-DD')
+			AND TRUNC(T2.TRADE_TIME) <![CDATA[ <= ]]> TO_DATE('${times[1]}','YYYY-MM-DD')
+		</if>
+		UNION
+		--正常借款
+		SELECT T1.ID LOAN_ID,T1.CONTRACT_NO,T3.NAME,T3.IDNUM,T3.PROFESSION_TYPE
+		,(CASE T1.PRODUCT_TYPE WHEN 2 THEN '车贷' ELSE '' END) LOAN_TYPE
+		,T1.PACT_MONEY,T1.TIME PACT_TIME,T1.END_REPAY_DATE,T1.SIGN_DATE,T1.PURPOSE,T3.MAX_REPAY_AMOUNT
+		FROM LOAN T1,REPAY_INFO T2,PERSON T3
+		WHERE T1.ID = T2.ACCOUNT_ID AND T1.PERSON_ID = T3.ID
+		AND T2.TRADE_CODE = '${tradeCode}' AND T1.PRODUCT_TYPE = 2 AND T1.FLAG != ${notEqFlag}
+		<if test="times.length == 0">
+			AND 1 <![CDATA[ <> ]]> 1
+		</if>
+		<if test="times.length == 1">
+			AND TRUNC(T2.TRADE_TIME) = TO_DATE('${times[0]}','YYYY-MM-DD')
+		</if>
+		<if test="times.length == 2">     
+			AND TRUNC(T2.TRADE_TIME) <![CDATA[ >= ]]> TO_DATE('${times[0]}','YYYY-MM-DD')
+			AND TRUNC(T2.TRADE_TIME) <![CDATA[ <= ]]> TO_DATE('${times[1]}','YYYY-MM-DD')
+		</if>
+		UNION
+		--展期借款
+		SELECT T1.ID LOAN_ID, (T1.CONTRACT_NO || '-' || T1.EXTENSION_TIME) CONTRACT_NO,T3.NAME,T3.IDNUM,T3.PROFESSION_TYPE
+		,(CASE T1.PRODUCT_TYPE WHEN 2 THEN '车贷' ELSE '' END) LOAN_TYPE
+		,T1.PACT_MONEY,T1.TIME PACT_TIME,T1.END_REPAY_DATE,ADD_MONTHS(T1.START_REPAY_DATE,-1) SIGN_DATE,'老借款',T3.MAX_REPAY_AMOUNT
+		FROM EXTENSION T1,PERSON T3
+		WHERE T1.PERSON_ID = T3.ID
+		<if test="times.length == 0">
+			AND 1 <![CDATA[ <> ]]> 1
+		</if>
+		<if test="times.length == 1">
+			AND ADD_MONTHS(TRUNC(T1.START_REPAY_DATE) ,-1) <![CDATA[ <= ]]> TO_DATE('${times[0]}','YYYY-MM-DD') 
+			AND TRUNC(T1.START_REPAY_DATE) <![CDATA[ >= ]]> TO_DATE('${times[0]}','YYYY-MM-DD')
+			--展期的合同确认时间在2015年6月19日（含）之后才推送到外债系统
+			AND TRUNC(T1.CONTRACT_CONFIRM_DATE) <![CDATA[ >= ]]> TO_DATE('2015-06-19','YYYY-MM-DD')
+		</if>
+		<if test="times.length == 2">
+			--展期暂时不提供补某时间区间内的数据
+			AND 1 <![CDATA[ <> ]]> 1
+		</if>
+	</select>
+
+	<update id="update" parameterType="SyncLoan">
+		UPDATE SYNC_LOAN
+		<trim prefix="set" suffixOverrides="," >
+			SYNC_LOAN.STATUS = #{status},
+			<if test="msg != null">
+				SYNC_LOAN.MSG = #{msg},
+			</if>
+			<if test="sendDate != null">
+				SYNC_LOAN.SEND_DATE = #{sendDate},
+			</if>
+			<if test="returnDate != null">
+				SYNC_LOAN.RETURN_DATE = #{returnDate},
+			</if>
+		</trim>
+		WHERE SYNC_LOAN.ID=#{id}
+	</update>
+</mapper>

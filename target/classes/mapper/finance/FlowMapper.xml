@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.finance.mapper.FlowMapper" >
+  <resultMap id="flowResultMap" type="Flow" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="ACCOUNT_ID" property="accountId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="D_OR_C" property="dOrC" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="ACCOUNT_TITLE" property="accountTitle" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="TRADE_TIME" property="tradeTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result column="TRADE_CODE" property="tradeCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="TRADE_AMOUNT" property="tradeAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="BALANCE" property="balance" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+    <result column="TRADE_TYPE" property="tradeType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+    <result column="TRADE_KIND" property="tradeKind" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+    <result column="TRADE_NO" property="tradeNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="REVERSED_NO" property="reversedNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="TELLER" property="teller" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="AUTHORIZED_TELLER" property="authorizedTeller" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="SALESDEPARTMENT_ID" property="salesdepartmentId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="OPP_ACCOUNT" property="oppAccount" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="OPP_ACCOUNT_TITLE" property="oppAccountTitle" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="OPP_D_OR_C" property="oppDOrC" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="TERM" property="term" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+    <result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+  </resultMap>
+  <sql id="flowField" >
+    ID, ACCOUNT_ID, D_OR_C, ACCOUNT_TITLE, TRADE_TIME, TRADE_CODE, TRADE_AMOUNT, BALANCE, 
+    TRADE_TYPE, TRADE_KIND, TRADE_NO, REVERSED_NO, TELLER, AUTHORIZED_TELLER, SALESDEPARTMENT_ID, 
+    OPP_ACCOUNT, OPP_ACCOUNT_TITLE, OPP_D_OR_C, TERM, VERSION, CREATOR_ID, CREATOR, CREATED_TIME, 
+    MODIFIER_ID, MODIFIER, MODIFIED_TIME, REMARK
+  </sql>
+ 
+  <sql id="flowConditions">
+		<where>
+			<if test="id != null">
+				FLOW.ID = #{id}
+			</if>
+			<if test="accountId != null" >
+		        AND FLOW.ACCOUNT_ID = #{accountId}
+		    </if>
+		    <if test="dOrC != null" >
+		    	AND FLOW.D_OR_C = #{dOrC}
+		    </if>
+		    <if test="accountTitle != null" >
+		    	AND FLOW.ACCOUNT_TITLE = #{accountTitle}
+		    </if>
+		    <if test="tradeTime != null" >
+		    	AND FLOW.TRADE_TIME = #{tradeTime}
+		    </if>
+		    <if test="tradeCode != null" >
+		    	AND FLOW.TRADE_CODE = #{tradeCode}
+		    </if>
+		    <if test="tradeAmount != null" >
+		    	AND FLOW.TRADE_AMOUNT = #{tradeAmount}
+		    </if>
+		    <if test="balance != null" >
+		    	AND FLOW.BALANCE = #{balance}
+		    </if>
+		    <if test="tradeType != null" >
+		    	AND FLOW.TRADE_TYPE = #{tradeType}
+		    </if>
+		    <if test="tradeKind != null" >
+		    	AND FLOW.TRADE_KIND = #{tradeKind}
+		    </if>
+		    <if test="tradeNo != null" >
+		    	AND FLOW.TRADE_NO = #{tradeNo}
+		    </if>
+		    <if test="reversedNo != null" >
+		    	AND FLOW.REVERSED_NO = #{reversedNo}
+		    </if>
+		    <if test="teller != null" >
+		    	AND FLOW.TELLER = #{teller}
+		    </if>
+		    <if test="authorizedTeller != null" >
+		    	AND FLOW.AUTHORIZED_TELLER = #{authorizedTeller}
+		    </if>
+		    <if test="salesdepartmentId != null" >
+		    	AND FLOW.SALESDEPARTMENT_ID = #{salesdepartmentId}
+		    </if>
+		    <if test="oppAccount != null" >
+		    	AND FLOW.OPP_ACCOUNT = #{oppAccount}
+		    </if>
+		    <if test="oppAccountTitle != null" >
+		    	AND FLOW.OPP_ACCOUNT_TITLE = #{oppAccountTitle}
+		    </if>
+		    <if test="oppDOrC != null" >
+		    	AND FLOW.OPP_D_OR_C = #{oppDOrC}
+		    </if>
+		    <if test="term != null" >
+		    	AND FLOW.TERM = #{term}
+		    </if>
+		    <if test="version != null" >
+		    	AND FLOW.VERSION = #{version}
+		    </if>
+		    <if test="creatorId != null" >
+		    	AND FLOW.CREATOR_ID = #{creatorId}
+		    </if>
+		    <if test="creator != null" >
+		    	AND FLOW.CREATOR = #{creator}
+		    </if>
+		    <if test="createdTime != null" >
+		    	AND FLOW.CREATED_TIME = #{createdTime}
+		    </if>
+		    <if test="modifierId != null" >
+		    	AND FLOW.MODIFIER_ID = #{modifierId}
+		    </if>
+		    <if test="modifier != null" >
+		    	AND FLOW.MODIFIER = #{modifier}
+		    </if>
+		    <if test="modifiedTime != null" >
+		    	AND FLOW.MODIFIED_TIME = #{modifiedTime}
+		    </if>
+		    <if test="remark != null" >
+		    	AND FLOW.REMARK = #{remark}
+		    </if>
+		</where>
+  </sql>
+
+  <sql id="flowSelective">
+    select 
+    <include refid="flowField" />
+    from FLOW
+  </sql>
+   
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from FLOW
+    where ID = #{id}
+  </delete>
+
+  <insert id="insert" parameterType="Flow" >
+  <selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_flow_id.nextval AS id FROM dual
+  </selectKey>
+    insert into FLOW
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        ID,
+      <if test="accountId != null" >
+        ACCOUNT_ID,
+      </if>
+      <if test="dOrC != null" >
+        D_OR_C,
+      </if>
+      <if test="accountTitle != null" >
+        ACCOUNT_TITLE,
+      </if>
+      <if test="tradeTime != null" >
+        TRADE_TIME,
+      </if>
+      <if test="tradeCode != null" >
+        TRADE_CODE,
+      </if>
+      <if test="tradeAmount != null" >
+        TRADE_AMOUNT,
+      </if>
+      <if test="balance != null" >
+        BALANCE,
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE,
+      </if>
+      <if test="tradeKind != null" >
+        TRADE_KIND,
+      </if>
+      <if test="tradeNo != null" >
+        TRADE_NO,
+      </if>
+      <if test="reversedNo != null" >
+        REVERSED_NO,
+      </if>
+      <if test="teller != null" >
+        TELLER,
+      </if>
+      <if test="authorizedTeller != null" >
+        AUTHORIZED_TELLER,
+      </if>
+      <if test="salesdepartmentId != null" >
+        SALESDEPARTMENT_ID,
+      </if>
+      <if test="oppAccount != null" >
+        OPP_ACCOUNT,
+      </if>
+      <if test="oppAccountTitle != null" >
+        OPP_ACCOUNT_TITLE,
+      </if>
+      <if test="oppDOrC != null" >
+        OPP_D_OR_C,
+      </if>
+      <if test="term != null" >
+        TERM,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME,
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID,
+      </if>
+      <if test="modifier != null" >
+        MODIFIER,
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="accountId != null" >
+        #{accountId},
+      </if>
+      <if test="dOrC != null" >
+        #{dOrC},
+      </if>
+      <if test="accountTitle != null" >
+        #{accountTitle},
+      </if>
+      <if test="tradeTime != null" >
+        #{tradeTime},
+      </if>
+      <if test="tradeCode != null" >
+        #{tradeCode},
+      </if>
+      <if test="tradeAmount != null" >
+        #{tradeAmount},
+      </if>
+      <if test="balance != null" >
+        #{balance},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType},
+      </if>
+      <if test="tradeKind != null" >
+        #{tradeKind},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo},
+      </if>
+      <if test="reversedNo != null" >
+        #{reversedNo},
+      </if>
+      <if test="teller != null" >
+        #{teller},
+      </if>
+      <if test="authorizedTeller != null" >
+        #{authorizedTeller},
+      </if>
+      <if test="salesdepartmentId != null" >
+        #{salesdepartmentId},
+      </if>
+      <if test="oppAccount != null" >
+        #{oppAccount},
+      </if>
+      <if test="oppAccountTitle != null" >
+        #{oppAccountTitle},
+      </if>
+      <if test="oppDOrC != null" >
+        #{oppDOrC},
+      </if>
+      <if test="term != null" >
+        #{term},
+      </if>
+      <if test="version != null" >
+        #{version},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId},
+      </if>
+      <if test="creator != null" >
+        #{creator},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime},
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime},
+      </if>
+      <if test="remark != null" >
+        #{remark},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="Flow" >
+    update FLOW
+    <set >
+      <if test="accountId != null" >
+        ACCOUNT_ID = #{accountId},
+      </if>
+      <if test="dOrC != null" >
+        D_OR_C = #{dOrC},
+      </if>
+      <if test="accountTitle != null" >
+        ACCOUNT_TITLE = #{accountTitle},
+      </if>
+      <if test="tradeTime != null" >
+        TRADE_TIME = #{tradeTime},
+      </if>
+      <if test="tradeCode != null" >
+        TRADE_CODE = #{tradeCode},
+      </if>
+      <if test="tradeAmount != null" >
+        TRADE_AMOUNT = #{tradeAmount},
+      </if>
+      <if test="balance != null" >
+        BALANCE = #{balance},
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE = #{tradeType},
+      </if>
+      <if test="tradeKind != null" >
+        TRADE_KIND = #{tradeKind},
+      </if>
+      <if test="tradeNo != null" >
+        TRADE_NO = #{tradeNo},
+      </if>
+      <if test="reversedNo != null" >
+        REVERSED_NO = #{reversedNo},
+      </if>
+      <if test="teller != null" >
+        TELLER = #{teller},
+      </if>
+      <if test="authorizedTeller != null" >
+        AUTHORIZED_TELLER = #{authorizedTeller},
+      </if>
+      <if test="salesdepartmentId != null" >
+        SALESDEPARTMENT_ID = #{salesdepartmentId},
+      </if>
+      <if test="oppAccount != null" >
+        OPP_ACCOUNT = #{oppAccount},
+      </if>
+      <if test="oppAccountTitle != null" >
+        OPP_ACCOUNT_TITLE = #{oppAccountTitle},
+      </if>
+      <if test="oppDOrC != null" >
+        OPP_D_OR_C = #{oppDOrC},
+      </if>
+      <if test="term != null" >
+        TERM = #{term},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version},
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID = #{creatorId},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator},
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME = #{createdTime},
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID = #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        MODIFIER = #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME = #{modifiedTime},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark},
+      </if>
+    </set>
+    where ID = #{id}
+  </update>
+
+	<select id="getByVO" parameterType="FlowVO"  resultMap="flowResultMap">
+		<include refid="flowSelective" />
+		<include refid="flowConditions" />
+	</select>
+	<select id="getListFlowByVO" parameterType="FlowVO"  resultMap="flowResultMap">
+		<include refid="flowSelective" />
+		<include refid="flowConditions" />
+	</select>
+	<select id="findListByVO" parameterType="FlowVO"  resultMap="flowResultMap">
+		<include refid="flowSelective" />
+		<include refid="flowConditions" />
+	</select>
+	<delete id="deleteById" parameterType="java.lang.Long">
+   		delete from FLOW where id = #{id}
+	</delete>
+	
+</mapper>

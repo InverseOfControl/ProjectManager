@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.master.mapper.SpecBusinessLogMapper">
+	<resultMap id="specBusinessLogResultMap" type="SpecBusinessLog">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="KEY_ID" property="keyId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="KEY_TYPE" property="keyType" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="MESSAGE" property="message" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="FLOW_STATUS" property="flowStatus" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    	<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    	<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	</resultMap>
+	
+	<sql id="specBusinessLogField">
+		SPEC_BUSINESS_LOG.ID,
+		SPEC_BUSINESS_LOG.KEY_ID,
+		SPEC_BUSINESS_LOG.KEY_TYPE,
+		SPEC_BUSINESS_LOG.MESSAGE,
+		SPEC_BUSINESS_LOG.FLOW_STATUS,
+		SPEC_BUSINESS_LOG.CREATOR_ID,
+		SPEC_BUSINESS_LOG.CREATOR,
+		SPEC_BUSINESS_LOG.CREATED_TIME,
+		SPEC_BUSINESS_LOG.VERSION
+	</sql>
+	
+	<sql id="specBusinessLogSelective">
+		SELECT
+		<include refid="specBusinessLogField"/>
+		FROM SPEC_BUSINESS_LOG
+	</sql>
+	
+	<sql id="specBusinessLogConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+		   		AND SPEC_BUSINESS_LOG.ID = #{id}
+	      	</if>
+	      	<if test="keyId != null">
+	      		AND SPEC_BUSINESS_LOG.KEY_ID = #{keyId}
+	      	</if>
+	      	<if test="keyType != null">
+	      		AND SPEC_BUSINESS_LOG.KEY_TYPE = #{keyType}
+	      	</if>
+	      	<if test="message != null and message != ''">
+	      		AND SPEC_BUSINESS_LOG.MESSAGE = #{message}
+	      	</if>
+	      	<if test="flowStatus != null">
+	      		AND SPEC_BUSINESS_LOG.FLOW_STATUS = #{flowStatus}
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		AND  SPEC_BUSINESS_LOG.CREATOR_ID = #{creatorId}
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		AND  SPEC_BUSINESS_LOG.CREATOR  =  #{creator}
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	AND SPEC_BUSINESS_LOG.CREATED_TIME = #{createdTime}
+	      	</if>
+	      	<if test="version != null and version != ''">
+	        	AND  SPEC_BUSINESS_LOG.VERSION =  #{version}
+	      	</if>
+	    </trim>
+	</sql>
+	
+	<insert id="insert"  parameterType="SpecBusinessLog">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			SEQ_SPEC_BUSINESS_LOG_ID.NEXTVAL AS id FROM dual
+		</selectKey>
+		INSERT INTO SPEC_BUSINESS_LOG
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="keyId != null">
+	      		KEY_ID,
+	      	</if>
+	      	<if test="keyType != null">
+	      		KEY_TYPE,
+	      	</if>
+	      	<if test="message != null and message != ''">
+	      		MESSAGE,
+	      	</if>
+	      	<if test="flowStatus != null">
+	      		FLOW_STATUS,
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		CREATOR_ID,
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		CREATOR,
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	CREATED_TIME,
+	        </if>
+	      	<if test="version != null and version != ''">
+	        	VERSION,
+	      	</if>
+		</trim>
+			VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+		 	<if test="id != null" >
+				#{id},
+			</if>
+			<if test="keyId != null">
+	      		#{keyId},
+	      	</if>
+	      	<if test="keyType != null">
+	      		#{keyType},
+	      	</if>
+	      	<if test="message != null and message != ''">
+	      		#{message},
+	      	</if>
+	      	<if test="flowStatus != null">
+	      		#{flowStatus},
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		#{creatorId},
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		#{creator},
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	#{createdTime},
+	      	</if>
+	      	<if test="version != null and version != ''">
+	        	#{version},
+	      	</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="SpecBusinessLogVO">
+		UPDATE SPEC_BUSINESS_LOG
+		<trim prefix="set" suffixOverrides=",">
+			<if test="keyId != null">
+	      		KEY_ID = #{keyId},
+	      	</if>
+	      	<if test="keyType != null">
+	      		KEY_TYPE = #{keyType},
+	      	</if>
+	      	<if test="message != null and message != ''">
+	      		MESSAGE = #{message},
+	      	</if>
+	      	<if test="flowStatus != null">
+	      		FLOW_STATUS = #{flowStatus},
+	      	</if>
+	      	<if test="creatorId != null  and creatorId != ''">
+	       		CREATOR_ID = #{creatorId},
+	      	</if>
+	      	<if test="creator != null and creator != ''">
+	       		CREATOR  =  #{creator},
+	      	</if>
+	      	<if test="createdTime != null ">
+	        	CREATED_TIME = #{createdTime},
+	      	</if>
+	      	<if test="version != null and version != ''">
+	        	VERSION =  #{version},
+	      	</if>
+		</trim>
+			WHERE ID = #{id}		  
+		 <if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM SPEC_BUSINESS_LOG WHERE ID = #{id}
+	</delete>
+	
+	<delete id="deleteByIdList" parameterType="SpecBusinessLogVO">
+		DELETE FROM SPEC_BUSINESS_LOG WHERE ID IN (
+		<foreach item="guard" index="index" collection="idList"
+			separator=",">
+			#{guard}
+		</foreach>
+		)
+	</delete>
+	
+	<select id="get" parameterType="java.lang.Long" resultMap="specBusinessLogResultMap">
+		<include refid="specBusinessLogSelective" />
+		WHERE SPEC_BUSINESS_LOG.ID = #{id}
+	</select>
+	
+	<select id="findListByVO" parameterType="SpecBusinessLogVO" resultMap="specBusinessLogResultMap">
+		<include refid="specBusinessLogSelective" />
+		<include refid="specBusinessLogConditions" />
+	</select>
+	
+	<select id="findWithPG" parameterType="SpecBusinessLogVO" resultMap="specBusinessLogResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="specBusinessLogSelective" />
+		<include refid="specBusinessLogConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<select id="exists" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM SPEC_BUSINESS_LOG WHERE SPEC_BUSINESS_LOG.ID = #{id}
+	</select>
+
+	<select id="count" parameterType="SpecBusinessLogVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="specBusinessLogSelective" />
+		<include refid="specBusinessLogConditions" />
+		)
+	</select>
+</mapper>

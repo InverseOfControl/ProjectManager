@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.report.mapper.RpDetailMapper">
+	<resultMap id="rpDetailResultMap" type="com.ezendai.credit2.report.model.RpDetail">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="loanId" column="LOAN_ID"  jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="curNum" column="CUR_NUM" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="repayDay" column="REPAY_DAY" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="repayAmount" column="REPAY_AMOUNT"  jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result property="oneTimeRepaymentAmount" column="ONE_TIME_REPAYMENT_AMOUNT"  jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result property="interestAmt" column="INTEREST_AMT"  jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+	</resultMap>
+
+	<!-- 表中公用抽取的列 -->
+	<sql id="columns">
+	ID,LOAN_ID,CUR_NUM,REPAY_DAY,REPAY_AMOUNT,ONE_TIME_REPAYMENT_AMOUNT,INTEREST_AMT
+	</sql>
+
+	<select id="getListByLoanId"  parameterType="java.lang.Long"   resultMap = "rpDetailResultMap">
+		SELECT <include refid="columns"/> FROM REPAYMENT_PLAN 
+		where   LOAN_ID = #{loanId}  order by ID
+	</select>
+</mapper>
+

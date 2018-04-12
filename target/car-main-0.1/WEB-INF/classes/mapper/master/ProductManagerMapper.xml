@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.ProductManagerMapper">
+	<!-- 单表查询结果集 -->
+	<resultMap type="com.ezendai.credit2.master.model.ProductManager" id="productManagerResultMap">
+		<id property="id" column="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="productCode"         column="productCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="productName"         column="productName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="consultingFeeRate"   column="consultingFeeRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="managePartRate"      column="managePartRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="manageFeeRate"       column="manageFeeRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="overdueInterestRate" column="overdueInterestRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="riskRate"            column="riskRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="assessmentFeeRate"   column="assessmentFeeRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="rate"                column="rate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="status"              column="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="remark"              column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="version"             column="version" jdbcType="NUMERIC" javaType="java.lang.Long" />		
+		<result property="productType"         column="productType" jdbcType="VARCHAR" javaType="java.lang.Integer" />
+		<result property="productTypeName"     column="productTypeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="thirdFeeRate"        column="thirdFeeRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="monthRate"           column="monthRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="penaltyRate"         column="penaltyRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="productChannelId"    column="productChannelId" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="productChannelName"  column="productChannelName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="yearRate"            column="yearRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+	</resultMap>
+	
+	<resultMap type="com.ezendai.credit2.master.model.ProductTypes" id="productTypeResultMap">
+		<result property="productType"         column="productType" jdbcType="VARCHAR" javaType="java.lang.Integer" />
+		<result property="productTypeName"     column="productTypeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	<sql id="productColums">
+	   product.id                    as id,
+       product.product_code          as productCode,
+       product.product_name          as productName,
+       product.consulting_fee_rate   as consultingFeeRate,
+       product.manage_part_rate      as managePartRate,
+       product.manage_fee_rate       as manageFeeRate,
+       product.overdue_interest_rate as overdueInterestRate,
+       product.risk_rate             as riskRate,
+       product.assessment_fee_rate   as assessmentFeeRate,
+       product.rate                  as rate,
+       product.status                as status,
+       product.remark                as remark,
+       product.version               as version,
+       product.product_type          as productType,
+       product.product_type_name     as productTypeName,
+       product.third_fee_rate        as thirdFeeRate,
+       product.month_rate            as monthRate,
+       product.penalty_rate          as penaltyRate,
+       product.product_channel_id    as productChannelId,
+       product.product_channel_name  as productChannelName,
+       product.year_rate             as yearRate
+	</sql>
+	
+	<sql id="productConditions">
+		<if test="productCode != '' and productCode != null">
+			and product.product_code = #{productCode}
+		</if>
+		<if test="productName != '' and productName != null">
+			and product.product_name = #{productName}
+		</if>
+	</sql>
+	
+	<select id="getProductManagerPage" resultMap="productManagerResultMap" parameterType="com.ezendai.credit2.master.vo.ProductManagerVO">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart"/>
+		select  
+			<include refid="productColums"/>
+		from PRODUCT product
+		where 1=1
+			<include refid="productConditions"/>
+		order by product.id
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd"/>
+	</select>
+	<!-- 主键获取系统参数信息 -->
+	<select id="getProductManager" resultMap="productManagerResultMap" parameterType="java.lang.Long">
+		select 
+			<include refid="productColums"/>
+		from PRODUCT product
+		where product.id = #{id}
+	</select>
+	
+	<!-- 多条件获取系统参数信息 -->
+	<select id="getProductManagerByConditions" resultMap="productManagerResultMap" parameterType="com.ezendai.credit2.master.vo.ProductManagerVO">
+		select  
+			<include refid="productColums"/>
+		from PRODUCT product
+		where 1=1
+			<include refid="productConditions"/>
+		order by product.id
+	</select>
+	
+	<!-- 获取系统参数总条数 -->
+	<select id="getProductManagerCount"  resultType="int"  parameterType="com.ezendai.credit2.master.vo.ProductManagerVO">
+		select count(*) from PRODUCT product
+		where 1=1
+			<include refid="productConditions"/>
+		
+	</select>
+	
+	<!-- 添加系统参数信息 -->
+	<insert id="addProductManager"  parameterType="com.ezendai.credit2.master.vo.ProductManagerVO">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			select SEQ_PRODUCT_ID.Nextval as id from dual
+	    </selectKey>
+		insert into PRODUCT product
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    ID,
+			<if test="productCode != null and productCode !=''">
+				PRODUCT_CODE,
+	        </if>  
+			<if test="productName != null and productName !=''">
+				PRODUCT_NAME,
+	        </if>  
+			<if test="consultingFeeRate != null ">
+				CONSULTING_FEE_RATE,
+	        </if>  
+			<if test="managePartRate != null ">
+				MANAGE_PART_RATE,
+	        </if>  
+			<if test="manageFeeRate != null ">
+				MANAGE_FEE_RATE,
+	        </if>  
+			 
+			<if test="overdueInterestRate != null ">
+				OVERDUE_INTEREST_RATE,
+	        </if>  
+			<if test="riskRate != null ">
+				RISK_RATE,
+	        </if>  
+			<if test="assessmentFeeRate != null ">
+				ASSESSMENT_FEE_RATE,
+	        </if>  
+			<if test="rate != null ">
+				RATE,
+	        </if>  
+			<if test="status != null ">
+				STATUS,
+	        </if>  
+			<if test="remark != null and remark !=''">
+				REMARK,
+	        </if>  
+			<if test="version != null ">
+				VERSION,
+	        </if>  
+			<if test="productType != null ">
+				PRODUCT_TYPE,
+	        </if>  
+			<if test="productTypeName != null and productTypeName !=''">
+				PRODUCT_TYPE_NAME,
+	        </if>  
+			<if test="thirdFeeRate != null ">
+				THIRD_FEE_RATE,
+	        </if>  
+			<if test="monthRate != null ">
+				MONTH_RATE,
+	        </if>  
+			<if test="penaltyRate != null ">
+				PENALTY_RATE,
+	        </if>  
+			<if test="productChannelId != null ">
+				PRODUCT_CHANNEL_ID,
+	        </if>  
+			<if test="productChannelName != null and productChannelName !=''">
+				PRODUCT_CHANNEL_NAME,
+	        </if>  
+			<if test="yearRate != null ">
+				YEAR_RATE
+	        </if>  
+			
+	    </trim>
+		values 
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    #{id},
+			<if test="productCode != null and productCode !=''">
+				#{productCode},
+	        </if>  
+			<if test="productName != null and productName !=''">
+				#{productName},
+	        </if>  
+			<if test="consultingFeeRate != null ">
+				#{consultingFeeRate},
+	        </if>  
+			<if test="managePartRate != null ">
+				#{managePartRate},
+	        </if>  
+			<if test="manageFeeRate != null ">
+				#{manageFeeRate},
+	        </if>  
+			 
+			<if test="overdueInterestRate != null ">
+				#{overdueInterestRate},
+	        </if>  
+			<if test="riskRate != null ">
+				#{riskRate},
+	        </if>  
+			<if test="assessmentFeeRate != null ">
+				#{assessmentFeeRate},
+	        </if>  
+			<if test="rate != null ">
+				#{rate},
+	        </if>  
+			<if test="status != null ">
+				#{status},
+	        </if>  
+			<if test="remark != null and remark !=''">
+				#{remark},
+	        </if>  
+			<if test="version != null ">
+				#{version},
+	        </if>  
+			<if test="productType != null ">
+				#{productType},
+	        </if>  
+			<if test="productTypeName != null and productTypeName !=''">
+				#{productTypeName},
+	        </if>  
+			<if test="thirdFeeRate != null ">
+				#{thirdFeeRate},
+	        </if>  
+			<if test="monthRate != null ">
+				#{monthRate},
+	        </if>  
+			<if test="penaltyRate != null ">
+				#{penaltyRate},
+	        </if>  
+			<if test="productChannelId != null ">
+				#{productChannelId},
+	        </if>  
+			<if test="productChannelName != null and productChannelName !=''">
+				#{productChannelName},
+	        </if>  
+			<if test="yearRate != null ">
+				#{yearRate}
+	        </if>  
+	    </trim>
+	</insert>
+	
+	
+	<!-- 主键修改系统参数信息 -->
+	<update id="updateProductManager"  parameterType="com.ezendai.credit2.master.vo.ProductManagerVO">
+		update PRODUCT product 
+		<trim prefix="set" suffixOverrides="," >
+			<if test="productCode != null and productCode !=''">
+				product.product_code = #{productCode},
+	        </if>  
+			<if test="productName != null and productName !=''">
+				product.product_name = #{productName},
+	        </if>  
+			<if test="consultingFeeRate != null ">
+				product.consulting_fee_rate = #{consultingFeeRate},
+	        </if>  
+			<if test="managePartRate != null ">
+				product.manage_part_rate = #{managePartRate},
+	        </if>  
+			<if test="manageFeeRate != null ">
+				product.manage_fee_rate = #{manageFeeRate},
+	        </if>  
+			 
+			<if test="overdueInterestRate != null ">
+				product.overdue_interest_rate = #{overdueInterestRate},
+	        </if>  
+			<if test="riskRate != null">
+				product.risk_rate = #{riskRate},
+	        </if>  
+			<if test="assessmentFeeRate != null ">
+				product.assessment_fee_rate = #{assessmentFeeRate},
+	        </if>  
+			<if test="rate != null ">
+				product.rate = #{rate},
+	        </if>  
+			<if test="status != null ">
+				product.status = #{status},
+	        </if>  
+			<if test="remark != null and remark !=''">
+				product.remark = #{remark},
+	        </if>  
+			<if test="version != null ">
+				product.version = #{version},
+	        </if>  
+			<if test="productType != null ">
+				product.product_type = #{productType},
+	        </if>  
+			<if test="productTypeName != null and productTypeName !=''">
+				product.product_type_name = #{productTypeName},
+	        </if>  
+			<if test="thirdFeeRate != null ">
+				product.third_fee_rate = #{thirdFeeRate},
+	        </if>  
+			<if test="monthRate != null ">
+				product.month_rate = #{monthRate},
+	        </if>  
+			<if test="penaltyRate != null ">
+				product.penalty_rate = #{penaltyRate},
+	        </if>  
+			<if test="productChannelId != null ">
+				product.product_channel_id = #{productChannelId},
+	        </if>  
+			<if test="productChannelName != null and productChannelName !=''">
+				product.product_channel_name = #{productChannelName},
+	        </if>  
+			<if test="yearRate != null ">
+				product.year_rate = #{yearRate}
+	        </if>  
+		</trim>
+		where product.id=#{id}
+	</update>
+	
+	<select id="selectProductsByUserId" parameterType="java.lang.Long" resultMap="productTypeResultMap">
+		select 
+		distinct product.product_type as productType,
+		product.product_type_name as productTypeName 
+		from PRODUCT product
+ 		where product.id in
+       (select p.product_id from SYS_PRODUCT_USER p where p.user_id = #{userid})
+   		and product.status = 1
+	</select>
+	
+</mapper>

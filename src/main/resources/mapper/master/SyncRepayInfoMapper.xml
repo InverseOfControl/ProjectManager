@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.SyncRepayInfoMapper">
+	
+	<resultMap id="syncRepayInfoResultMap" type="SyncRepayInfo">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="loanId" column="LOAN_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="companyNo" column="COMPANY_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="contractNo" column="CONTRACT_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="curNum" column="CUR_NUM" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="totalAmount" column="TOTAL_AMOUNT" jdbcType="NUMERIC" javaType="java.lang.Double" />
+		<result property="payType" column="PAY_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="remark" column="REMARK" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="status" column="STATUS" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="msg" column="MSG" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="buildDate" column="BUILD_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="sendDate" column="SEND_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="returnDate" column="RETURN_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+	</resultMap>
+	
+	<resultMap id="syncRepayInfoStepResultMap" type="SyncRepayInfo">
+		<result property="loanId" column="LOAN_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="contractNo" column="CONTRACT_NO" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="curNum" column="CUR_NUM" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="principalAmt" column="PRINCIPAL_AMT" jdbcType="NUMERIC" javaType="java.lang.Double" />
+		<result property="interestAmt" column="INTEREST_AMT" jdbcType="NUMERIC" javaType="java.lang.Double" />
+		<result property="oneTimeRepaymentAmount" column="ONE_TIME_REPAYMENT_AMOUNT" jdbcType="NUMERIC" javaType="java.lang.Double" />
+		<result property="remainingPrincipal" column="REMAINING_PRINCIPAL" jdbcType="NUMERIC" javaType="java.lang.Double" />
+	</resultMap>
+	
+	<sql id="fields">
+		SYNC_REPAY_INFO.ID,
+		SYNC_REPAY_INFO.LOAN_ID,
+		SYNC_REPAY_INFO.COMPANY_NO,
+		SYNC_REPAY_INFO.CONTRACT_NO,
+		SYNC_REPAY_INFO.CUR_NUM,
+		SYNC_REPAY_INFO.TOTAL_AMOUNT,
+		SYNC_REPAY_INFO.PAY_TYPE,
+		SYNC_REPAY_INFO.REMARK,
+		SYNC_REPAY_INFO.STATUS,
+		SYNC_REPAY_INFO.MSG,
+		SYNC_REPAY_INFO.BUILD_DATE,
+		SYNC_REPAY_INFO.SEND_DATE,
+		SYNC_REPAY_INFO.RETURN_DATE
+	</sql>
+	
+	<!-- 单表查询条件 -->
+	<sql id="conditions">
+		<where>
+			<if test="status != null">
+				AND SYNC_REPAY_INFO.STATUS = #{status}
+			</if>
+			<if test="contractNo != null  and contractNo !='' ">
+				AND SYNC_REPAY_INFO.CONTRACT_NO = #{contractNo}
+			</if>
+		  	<if test="buildDateStart  != null" >
+				AND SYNC_REPAY_INFO.BUILD_DATE <![CDATA[ >= ]]> #{buildDateStart}
+			</if>
+			<if test="buildDateEnd != null">
+				AND SYNC_REPAY_INFO.BUILD_DATE <![CDATA[ <= ]]> #{buildDateEnd}
+			</if>
+			<if test="sendDateStart != null">
+				AND SYNC_REPAY_INFO.SEND_DATE <![CDATA[ >= ]]> #{sendDateStart}
+			</if>
+			<if test="sendDateEnd != null">
+				AND SYNC_REPAY_INFO.SEND_DATE <![CDATA[ <= ]]> #{sendDateEnd}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="findListByVO" parameterType="SyncRepayInfo" resultMap="syncRepayInfoResultMap">
+		<if test="pager != null ">
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		</if>
+		SELECT
+		<include refid="fields" />
+		FROM SYNC_REPAY_INFO
+		<include refid="conditions" />
+		<if test="pager != null ">
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+		</if>
+	</select>
+	
+	<select id="count" parameterType="SyncRepayInfo"  resultType="java.lang.Integer">
+		SELECT count(*) as total FROM (
+			SELECT
+			<include refid="fields" />
+			FROM SYNC_REPAY_INFO
+			<include refid="conditions" />
+		)
+	</select>
+	
+	<select id="get" parameterType="java.lang.Long" resultMap="syncRepayInfoResultMap">
+		SELECT
+		<include refid="fields" />
+		FROM SYNC_REPAY_INFO
+		WHERE SYNC_REPAY_INFO.ID = #{id}
+	</select>
+	
+	
+	<insert id="insert" parameterType="SyncRepayInfo">
+	<selectKey keyProperty="id" resultType="long" order="BEFORE">
+		SELECT SEQ_SYNC_REPAY_INFO.NEXTVAL AS ID FROM DUAL
+    </selectKey>
+	INSERT INTO SYNC_REPAY_INFO
+	<trim prefix="(" suffixOverrides="," suffix=")">        
+		    ID,
+		<if test="loanId != null">
+			LOAN_ID,
+        </if>  
+		<if test="companyNo != null">
+			COMPANY_NO,
+        </if>
+        <if test="contractNo != null">
+			CONTRACT_NO,
+        </if>
+        <if test="curNum != null">
+			CUR_NUM,
+        </if>
+         <if test="totalAmount != null">
+			TOTAL_AMOUNT,
+        </if>
+        <if test="payType != null">
+			PAY_TYPE,
+        </if>
+         <if test="remark != null">
+			REMARK,
+        </if>
+	</trim>
+	values
+	<trim prefix="(" suffixOverrides="," suffix=")">	    
+			#{id},
+		<if test="loanId != null">
+			#{loanId},
+        </if>  
+		<if test="companyNo != null">
+			#{companyNo},
+        </if>
+        <if test="contractNo != null">
+			#{contractNo},
+        </if>
+        <if test="curNum != null">
+			#{curNum},
+        </if>
+         <if test="totalAmount != null">
+			#{totalAmount},
+        </if>
+        <if test="payType != null">
+			#{payType},
+        </if>
+         <if test="remark != null">
+			#{remark},
+        </if>
+	</trim>
+</insert>
+	
+	
+	<!-- 查询正常还款的数据 -->
+	<select id="queryNormalRepayInfo" parameterType="RepayInfo"  resultMap="syncRepayInfoStepResultMap">
+		SELECT T2.LOAN_ID,T2.CUR_NUM,
+		T2.PRINCIPAL_AMT,T2.INTEREST_AMT,T2.ONE_TIME_REPAYMENT_AMOUNT
+		,T2.REMAINING_PRINCIPAL 
+		FROM REPAYMENT_PLAN T2 WHERE T2.LOAN_ID = #{accountId} 
+		AND T2.STATUS = 60 AND TRUNC(T2.FACT_RETURNDATE) = TRUNC(#{tradeTime})
+		ORDER BY T2.CUR_NUM
+	</select>
+	
+	<!-- 查询一次性（提前）还款数据 存在逾期一次性还款，结果为集合 -->
+	<select id="queryPreRepayInfo" parameterType="RepayInfo"  resultMap="syncRepayInfoStepResultMap">
+		SELECT T2.LOAN_ID,T2.CUR_NUM,
+		T2.PRINCIPAL_AMT,T2.INTEREST_AMT,T2.ONE_TIME_REPAYMENT_AMOUNT
+		,T2.REMAINING_PRINCIPAL 
+		FROM REPAYMENT_PLAN T2 WHERE T2.LOAN_ID = #{accountId} 
+		AND T2.STATUS = 60 AND TRUNC(T2.FACT_RETURNDATE) = TRUNC(#{tradeTime})
+		AND T2.CUR_NUM <![CDATA[ <= ]]> #{term}
+		ORDER BY T2.CUR_NUM
+	</select>
+	
+	<!-- 查询第X期做的提前一次性还清操作 -->
+	<select id="queryEqCurNum" parameterType="RepayInfo"  resultType="java.lang.Integer">
+		SELECT CUR_NUM FROM (
+		SELECT * FROM REPAYMENT_PLAN TT WHERE TT.LOAN_ID = #{accountId}
+		AND TT.REPAY_DAY >= TRUNC(#{tradeTime})
+		ORDER BY TT.CUR_NUM) WHERE ROWNUM = 1
+	</select>
+	
+	<select id="exists" parameterType="SyncRepayInfo"  resultType="java.lang.Integer"> 
+		SELECT COUNT(*) FROM SYNC_REPAY_INFO 	
+			<where>
+				<if test="id != null">
+					AND SYNC_REPAY_INFO.ID = #{id}
+				</if>
+				<if test="loanId != null">
+					AND SYNC_REPAY_INFO.LOAN_ID = #{loanId}
+				</if>
+				<if test="curNum != null">
+					AND SYNC_REPAY_INFO.CUR_NUM = #{curNum}
+				</if>
+			</where>
+	</select>
+
+	<update id="update" parameterType="RepayInfo">
+		UPDATE SYNC_REPAY_INFO
+		<trim prefix="set" suffixOverrides="," >
+			SYNC_REPAY_INFO.STATUS = #{status},
+			<if test="msg != null">
+				SYNC_REPAY_INFO.MSG = #{msg},
+			</if>
+			<if test="sendDate != null">
+				SYNC_REPAY_INFO.SEND_DATE = #{sendDate},
+			</if>
+			<if test="returnDate != null">
+				SYNC_REPAY_INFO.RETURN_DATE = #{returnDate},
+			</if>
+		</trim>
+		WHERE SYNC_REPAY_INFO.ID=#{id}
+	</update>
+
+	
+</mapper>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.apply.mapper.AttachmentDetailMapper">
+  <resultMap id="BaseResultMap" type="AttachmentDetail">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ATTACHMENT_ID"  property="attachmentId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="ORIGINAL_NAME"  property="originalName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="NAME"  property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="FILE_SIZE"  property="fileSize" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="SUFFIX"  property="suffix" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="CREATOR_ID"  property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="CREATOR"  property="creator" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="CREATED_TIME"  property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result column="MODIFIER_ID"  property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="MODIFIER"  property="modifier"  jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="MODIFIED_TIME"  property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    <result column="REMARK"  property="remark" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="IS_DELETED" property="isDeleted" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+  </resultMap>
+  <sql id="attachmentDetailFeild">
+    ID, ATTACHMENT_ID, ORIGINAL_NAME, NAME, FILE_SIZE,
+    SUFFIX, CREATOR_ID, CREATOR, CREATED_TIME, 
+    MODIFIER_ID, MODIFIER, MODIFIED_TIME, REMARK, VERSION,
+    IS_DELETED
+  </sql>
+   <sql id="attachmentDetailConditions">
+   	 where ATTACHMENT_DETAIL.IS_DELETED = 0 	 
+  	   <if test="id != null">
+       AND  ATTACHMENT_DETAIL.ID = #{id}
+      </if>
+      <if test="attachmentId != null">
+        AND  ATTACHMENT_DETAIL.ATTACHMENT_ID = #{attachmentId}
+      </if>
+      <if test="originalName != null">
+         AND  ATTACHMENT_DETAIL.ORIGINAL_NAME = #{originalName}
+      </if>
+      <if test="name != null">
+         AND  ATTACHMENT_DETAIL.NAME = #{name}
+      </if>
+      <if test="fileSize != null">
+         AND  ATTACHMENT_DETAIL.FILE_SIZE = #{fileSize}
+      </if>
+      <if test="suffix != null">
+        AND   ATTACHMENT_DETAIL.SUFFIX = #{suffix}
+      </if>
+      <if test="creatorId != null">
+        AND  ATTACHMENT_DETAIL. CREATOR_ID = #{creatorId}
+      </if>
+      <if test="creator != null">
+         AND  ATTACHMENT_DETAIL.CREATOR = #{creator}
+      </if>
+      <if test="createdTime != null">
+         AND  ATTACHMENT_DETAIL.CREATED_TIME = #{createdTime}
+      </if>
+      <if test="modifierId != null">
+         AND  ATTACHMENT_DETAIL.MODIFIER_ID = #{modifierId}
+      </if>
+      <if test="modifier != null">
+         AND  ATTACHMENT_DETAIL.MODIFIER = #{modifier}
+      </if>
+      <if test="modifiedTime != null">
+         AND  ATTACHMENT_DETAIL.MODIFIED_TIME = #{modifiedTime}
+      </if>
+      <if test="remark != null">
+         AND  ATTACHMENT_DETAIL.REMARK = #{remark}
+      </if>     
+	
+  </sql>
+  <sql id="attachmentDetailSelective">
+		SELECT
+		<include refid="attachmentDetailFeild" />
+		FROM ATTACHMENT_DETAIL
+	</sql>
+  <select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="attachmentDetailFeild" />
+    from ATTACHMENT_DETAIL
+    	where ID = #{id}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long">   
+     update ATTACHMENT_DETAIL set IS_DELETED=1   
+   		WHERE ID = #{id}	
+  </delete>
+  <delete id="deleteByIdList" parameterType="AttachmentDetailVO">
+		DELETE FROM ATTACHMENT_DETAIL WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+  
+  <insert id="insert" parameterType="AttachmentDetail">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_attachment_detail_id.nextval AS id FROM dual
+		</selectKey>
+    insert into ATTACHMENT_DETAIL
+    <trim prefix="(" suffixOverrides="," suffix=")">
+				ID,
+      <if test="attachmentId != null">
+        ATTACHMENT_ID,
+      </if>
+      <if test="originalName != null">
+        ORIGINAL_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="fileSize != null">
+        FILE_SIZE,
+      </if>
+      <if test="suffix != null">
+        SUFFIX,
+      </if>
+      <if test="creatorId != null">
+        CREATOR_ID,
+      </if>
+      <if test="creator != null">
+        CREATOR,
+      </if>
+      <if test="createdTime != null">
+        CREATED_TIME,
+      </if>
+      <if test="modifierId != null">
+        MODIFIER_ID,
+      </if>
+      <if test="modifier != null">
+        MODIFIER,
+      </if>
+      <if test="modifiedTime != null">
+        MODIFIED_TIME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="version != null">
+        VERSION,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+    </trim>
+    VALUES
+   <trim prefix="(" suffixOverrides="," suffix=")">
+				#{id},
+      <if test="attachmentId != null">
+        #{attachmentId},
+      </if>
+      <if test="originalName != null">
+        #{originalName},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="fileSize != null">
+        #{fileSize},
+      </if>
+      <if test="suffix != null">
+        #{suffix},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId},
+      </if>
+      <if test="creator != null">
+        #{creator},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime},
+      </if>
+      <if test="modifierId != null">
+        #{modifierId},
+      </if>
+      <if test="modifier != null">
+        #{modifier},
+      </if>
+      <if test="modifiedTime != null">
+        #{modifiedTime},
+      </if>
+      <if test="remark != null">
+        #{remark},
+      </if>
+      <if test="version != null">
+        #{version},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="AttachmentDetailVO">
+    update ATTACHMENT_DETAIL
+   	<trim prefix="set" suffixOverrides=",">
+      <if test="attachmentId != null">
+        ATTACHMENT_ID = #{attachmentId},
+      </if>
+      <if test="originalName != null">
+        ORIGINAL_NAME = #{originalName},
+      </if>
+      <if test="name != null">
+        NAME = #{name},
+      </if>
+      <if test="fileSize != null">
+        FILE_SIZE = #{fileSize},
+      </if>
+      <if test="suffix != null">
+        SUFFIX = #{suffix},
+      </if>
+      <if test="creatorId != null">
+        CREATOR_ID = #{creatorId},
+      </if>
+      <if test="creator != null">
+        CREATOR = #{creator},
+      </if>
+      <if test="createdTime != null">
+        CREATED_TIME = #{createdTime},
+      </if>
+      <if test="modifierId != null">
+        MODIFIER_ID = #{modifierId},
+      </if>
+      <if test="modifier != null">
+        MODIFIER = #{modifier},
+      </if>
+      <if test="modifiedTime != null">
+        MODIFIED_TIME = #{modifiedTime},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark},
+      </if>
+      <if test="version != null">
+        VERSION = #{version},
+      </if>
+       <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted},
+      </if>
+    </trim>
+   		WHERE ID = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+  </update>
+  <select id="findListByVO" parameterType="AttachmentDetailVO" resultMap="BaseResultMap">
+		<include refid="attachmentDetailSelective" />
+		<include refid="attachmentDetailConditions" />
+		ORDER BY ATTACHMENT_DETAIL.ORIGINAL_NAME
+	</select>
+
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM ATTACHMENT_DETAIL WHERE ID = #{id}
+	</select>
+
+	<select id="count" parameterType="AttachmentDetailVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="attachmentDetailSelective" />
+		<include refid="attachmentDetailConditions" />
+		)
+	</select>
+
+	<select id="findWithPG" parameterType="AttachmentDetailVO" resultMap="BaseResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="attachmentDetailSelective" />
+		<include refid="attachmentDetailConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+</mapper>

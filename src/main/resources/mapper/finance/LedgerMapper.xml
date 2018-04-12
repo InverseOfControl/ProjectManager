@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.finance.mapper.LedgerMapper" >
+  <resultMap id="LedgerResultMap" type="Ledger" >
+    <id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="ACCOUNT_ID" property="accountId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="TYPE" property="type" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+    <result column="CASH" property="cash" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="INTEREST_RECEIVABLE" property="interestReceivable" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="FINE_RECEIVABLE" property="fineReceivable" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="OTHER_RECEIVABLE" property="otherReceivable" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="LOAN_AMOUNT" property="loanAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="INTEREST_PAYABLE" property="interestPayable" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="FINE_PAYABLE" property="finePayable" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="OTHER_PAYABLE" property="otherPayable" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="OVERDUE_INTEREST_INCOME" property="overdueInterestIncome" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="CONSULT_INCOME" property="consultIncome" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="MANAGE_INCOME" property="manageIncome" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="ASSESSMENT_FEE_INCOME" property="assessmentFeeIncome" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="PENALTY_INCOME" property="penaltyIncome" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="OTHER_INCOME" property="otherIncome" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="NONBUSINESS_INCOME" property="nonbusinessIncome" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="INTEREST_EXPENSE" property="interestExpense" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="OVERDUE_INTEREST_EXPENSE" property="overdueInterestExpense" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="CONSULT_EXPENSE" property="consultExpense" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="ASSESSMENT_FEE_EXPENSE" property="assessmentFeeExpense" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="MANAGE_EXPENSE" property="manageExpense" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="PENALTY_EXPENSE" property="penaltyExpense" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="OTHER_EXPENSE" property="otherExpense" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="NONBUSINESS_EXPENSE" property="nonbusinessExpense" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+    <result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    <result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+    <result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    <result column="INTEREST_INCOME" property="interestIncome" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+  </resultMap>
+  <sql id="ledgerField" >
+    ID, VERSION, ACCOUNT_ID, TYPE, CASH, INTEREST_RECEIVABLE, FINE_RECEIVABLE, OTHER_RECEIVALE, 
+    LOAN_AMOUNT, INTEREST_PAYABLE, FINE_PAYABLE, OTHER_PAYABLE, OVERDUE_INTEREST_INCOME, 
+    CONSULT_INCOME, MANAGE_INCOME, ASSESSMENT_FEE_INCOME, PENALTY_INCOME, OTHER_INCOME, 
+    NONBUSINESS_INCOME, INTEREST_EXPENSE, OVERDUE_INTEREST_EXPENSE, CONSULT_EXPENSE, ASSESSMENT_FEE_EXPENSE, 
+    MANAGE_EXPENSE, PENALTY_EXPENSE, OTHER_EXPENSE, NONBUSINESS_EXPENSE, CREATOR_ID, 
+    CREATOR, CREATED_TIME, MODIFIER_ID, MODIFIER, MODIFIED_TIME, REMARK,INTEREST_INCOME
+  </sql>
+  
+  <sql id="ledgerConditions">
+		<trim prefix="WHERE" prefixOverrides="AND">
+	  <if test="id != null" >
+        AND ledger.ID = #{id}
+      </if>
+      <if test="version != null" >
+        AND ledger.VERSION = #{version}
+      </if>
+      <if test="accountId != null" >
+        AND ledger.ACCOUNT_ID = #{accountId}
+      </if>
+      <if test="type != null" >
+        AND ledger.TYPE = #{type}
+      </if>
+      <if test="cash != null" >
+        AND ledger.CASH = #{cash}
+      </if>
+      <if test="interestReceivable != null" >
+        AND ledger.INTEREST_RECEIVABLE = #{interestReceivable}
+      </if>
+      <if test="fineReceivable != null" >
+        AND ledger.FINE_RECEIVABLE = #{fineReceivable}
+      </if>
+      <if test="otherReceivable != null" >
+        AND ledger.OTHER_RECEIVABLE = #{otherReceivable}
+      </if>
+      <if test="loanAmount != null" >
+        AND ledger.LOAN_AMOUNT = #{loanAmount}
+      </if>
+      <if test="interestPayable != null" >
+        AND ledger.INTEREST_PAYABLE = #{interestPayable}
+      </if>
+      <if test="finePayable != null" >
+        AND ledger.FINE_PAYABLE = #{finePayable}
+      </if>
+      <if test="otherPayable != null" >
+        AND ledger.OTHER_PAYABLE = #{otherPayable}
+      </if>
+      <if test="overdueInterestIncome != null" >
+        AND ledger.OVERDUE_INTEREST_INCOME = #{overdueInterestIncome}
+      </if>
+      <if test="consultIncome != null" >
+        AND ledger.CONSULT_INCOME = #{consultIncome}
+      </if>
+      <if test="manageIncome != null" >
+        AND ledger.MANAGE_INCOME = #{manageIncome}
+      </if>
+      <if test="assessmentFeeIncome != null" >
+        AND ledger.ASSESSMENT_FEE_INCOME = #{assessmentFeeIncome}
+      </if>
+      <if test="penaltyIncome != null" >
+        AND ledger.PENALTY_INCOME = #{penaltyIncome}
+      </if>
+      <if test="otherIncome != null" >
+        AND ledger.OTHER_INCOME = #{otherIncome}
+      </if>
+      <if test="nonbusinessIncome != null" >
+        AND ledger.NONBUSINESS_INCOME = #{nonbusinessIncome}
+      </if>
+      <if test="interestExpense != null" >
+        AND ledger.INTEREST_EXPENSE = #{interestExpense}
+      </if>
+      <if test="overdueInterestExpense != null" >
+        AND ledger.OVERDUE_INTEREST_EXPENSE = #{overdueInterestExpense}
+      </if>
+      <if test="consultExpense != null" >
+        AND ledger.CONSULT_EXPENSE = #{consultExpense}
+      </if>
+      <if test="assessmentFeeExpense != null" >
+        AND ledger.ASSESSMENT_FEE_EXPENSE = #{assessmentFeeExpense}
+      </if>
+      <if test="manageExpense != null" >
+        AND ledger.MANAGE_EXPENSE = #{manageExpense}
+      </if>
+      <if test="penaltyExpense != null" >
+        AND ledger.PENALTY_EXPENSE = #{penaltyExpense}
+      </if>
+      <if test="otherExpense != null" >
+        AND ledger.OTHER_EXPENSE = #{otherExpense}
+      </if>
+      <if test="nonbusinessExpense != null" >
+        AND ledger.NONBUSINESS_EXPENSE = #{nonbusinessExpense}
+      </if>
+      <if test="creatorId != null" >
+        AND ledger.CREATOR_ID = #{creatorId}
+      </if>
+      <if test="creator != null" >
+        AND ledger.CREATOR = #{creator}
+      </if>
+      <if test="createdTime != null" >
+        AND ledger.CREATED_TIME = #{createdTime}
+      </if>
+      <if test="modifierId != null" >
+        AND ledger.MODIFIER_ID = #{modifierId}
+      </if>
+      <if test="modifier != null" >
+        AND ledger.MODIFIER = #{modifier}
+      </if>
+      <if test="modifiedTime != null" >
+        AND ledger.MODIFIED_TIME = #{modifiedTime}
+      </if>
+      <if test="remark != null" >
+        AND ledger.REMARK = #{remark}
+      </if>
+       <if test="interestIncome != null" >
+        AND ledger.INTEREST_INCOME = #{interestIncome}
+      </if>
+      <if test="accountList !=null and accountList.size() > 0">
+				AND ledger.ACCOUNT_ID IN(
+				<foreach item="guard" index="index" collection="accountList" separator=",">
+					#{guard}
+				</foreach>
+				)
+		</if>	
+		</trim>
+	</sql>
+  	<sql id="ledgerSelective">
+		select 
+		<include refid="ledgerField"/>
+		from LEDGER ledger
+	</sql>
+  
+  
+  <select id="findListByVO" parameterType="LedgerVO" resultMap="LedgerResultMap">
+		<include refid="ledgerSelective"/>
+		<include refid="ledgerConditions"/>
+	</select>
+  
+  <select id="select" resultMap="LedgerResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="ledgerField" />
+    from LEDGER
+    where ID = #{id}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from LEDGER
+    where ID = #{id}
+  </delete>
+
+  <insert id="insert" parameterType="Ledger" >
+  <selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_ledger_id.nextval AS id FROM dual
+  </selectKey>
+    insert into LEDGER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        ID,
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="cash != null" >
+        CASH,
+      </if>
+      <if test="interestReceivable != null" >
+        INTEREST_RECEIVABLE,
+      </if>
+      <if test="fineReceivable != null" >
+        FINE_RECEIVABLE,
+      </if>
+      <if test="otherReceivable != null" >
+        OTHER_RECEIVABLE,
+      </if>
+      <if test="loanAmount != null" >
+        LOAN_AMOUNT,
+      </if>
+      <if test="interestPayable != null" >
+        INTEREST_PAYABLE,
+      </if>
+      <if test="finePayable != null" >
+        FINE_PAYABLE,
+      </if>
+      <if test="otherPayable != null" >
+        OTHER_PAYABLE,
+      </if>
+      <if test="overdueInterestIncome != null" >
+        OVERDUE_INTEREST_INCOME,
+      </if>
+      <if test="consultIncome != null" >
+        CONSULT_INCOME,
+      </if>
+      <if test="manageIncome != null" >
+        MANAGE_INCOME,
+      </if>
+      <if test="assessmentFeeIncome != null" >
+        ASSESSMENT_FEE_INCOME,
+      </if>
+      <if test="penaltyIncome != null" >
+        PENALTY_INCOME,
+      </if>
+      <if test="otherIncome != null" >
+        OTHER_INCOME,
+      </if>
+      <if test="nonbusinessIncome != null" >
+        NONBUSINESS_INCOME,
+      </if>
+      <if test="interestExpense != null" >
+        INTEREST_EXPENSE,
+      </if>
+      <if test="overdueInterestExpense != null" >
+        OVERDUE_INTEREST_EXPENSE,
+      </if>
+      <if test="consultExpense != null" >
+        CONSULT_EXPENSE,
+      </if>
+      <if test="assessmentFeeExpense != null" >
+        ASSESSMENT_FEE_EXPENSE,
+      </if>
+      <if test="manageExpense != null" >
+        MANAGE_EXPENSE,
+      </if>
+      <if test="penaltyExpense != null" >
+        PENALTY_EXPENSE,
+      </if>
+      <if test="otherExpense != null" >
+        OTHER_EXPENSE,
+      </if>
+      <if test="nonbusinessExpense != null" >
+        NONBUSINESS_EXPENSE,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME,
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID,
+      </if>
+      <if test="modifier != null" >
+        MODIFIER,
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+       <if test="interestIncome != null" >
+        INTEREST_INCOME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="version != null" >
+        #{version},
+      </if>
+      <if test="accountId != null" >
+        #{accountId},
+      </if>
+      <if test="type != null" >
+        #{type},
+      </if>
+      <if test="cash != null" >
+        #{cash},
+      </if>
+      <if test="interestReceivable != null" >
+        #{interestReceivable},
+      </if>
+      <if test="fineReceivable != null" >
+        #{fineReceivable},
+      </if>
+      <if test="otherReceivable != null" >
+        #{otherReceivable},
+      </if>
+      <if test="loanAmount != null" >
+        #{loanAmount},
+      </if>
+      <if test="interestPayable != null" >
+        #{interestPayable},
+      </if>
+      <if test="finePayable != null" >
+        #{finePayable},
+      </if>
+      <if test="otherPayable != null" >
+        #{otherPayable},
+      </if>
+      <if test="overdueInterestIncome != null" >
+        #{overdueInterestIncome},
+      </if>
+      <if test="consultIncome != null" >
+        #{consultIncome},
+      </if>
+      <if test="manageIncome != null" >
+        #{manageIncome},
+      </if>
+      <if test="assessmentFeeIncome != null" >
+        #{assessmentFeeIncome},
+      </if>
+      <if test="penaltyIncome != null" >
+        #{penaltyIncome},
+      </if>
+      <if test="otherIncome != null" >
+        #{otherIncome},
+      </if>
+      <if test="nonbusinessIncome != null" >
+        #{nonbusinessIncome},
+      </if>
+      <if test="interestExpense != null" >
+        #{interestExpense},
+      </if>
+      <if test="overdueInterestExpense != null" >
+        #{overdueInterestExpense},
+      </if>
+      <if test="consultExpense != null" >
+        #{consultExpense},
+      </if>
+      <if test="assessmentFeeExpense != null" >
+        #{assessmentFeeExpense},
+      </if>
+      <if test="manageExpense != null" >
+        #{manageExpense},
+      </if>
+      <if test="penaltyExpense != null" >
+        #{penaltyExpense},
+      </if>
+      <if test="otherExpense != null" >
+        #{otherExpense},
+      </if>
+      <if test="nonbusinessExpense != null" >
+        #{nonbusinessExpense},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId},
+      </if>
+      <if test="creator != null" >
+        #{creator},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime},
+      </if>
+      <if test="modifierId != null" >
+        #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime},
+      </if>
+      <if test="remark != null" >
+        #{remark},
+      </if>
+      <if test="interestIncome != null" >
+        #{interestIncome},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="Ledger" >
+    update LEDGER
+    <set >
+      <if test="version != null" >
+        VERSION = #{version},
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID = #{accountId},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type},
+      </if>
+      <if test="cash != null" >
+        CASH = #{cash},
+      </if>
+      <if test="interestReceivable != null" >
+        INTEREST_RECEIVABLE = #{interestReceivable},
+      </if>
+      <if test="fineReceivable != null" >
+        FINE_RECEIVABLE = #{fineReceivable},
+      </if>
+      <if test="otherReceivable != null" >
+        OTHER_RECEIVABLE = #{otherReceivable},
+      </if>
+      <if test="loanAmount != null" >
+        LOAN_AMOUNT = #{loanAmount},
+      </if>
+      <if test="interestPayable != null" >
+        INTEREST_PAYABLE = #{interestPayable},
+      </if>
+      <if test="finePayable != null" >
+        FINE_PAYABLE = #{finePayable},
+      </if>
+      <if test="otherPayable != null" >
+        OTHER_PAYABLE = #{otherPayable},
+      </if>
+      <if test="overdueInterestIncome != null" >
+        OVERDUE_INTEREST_INCOME = #{overdueInterestIncome},
+      </if>
+      <if test="consultIncome != null" >
+        CONSULT_INCOME = #{consultIncome},
+      </if>
+      <if test="manageIncome != null" >
+        MANAGE_INCOME = #{manageIncome},
+      </if>
+      <if test="assessmentFeeIncome != null" >
+        ASSESSMENT_FEE_INCOME = #{assessmentFeeIncome},
+      </if>
+      <if test="penaltyIncome != null" >
+        PENALTY_INCOME = #{penaltyIncome},
+      </if>
+      <if test="otherIncome != null" >
+        OTHER_INCOME = #{otherIncome},
+      </if>
+      <if test="nonbusinessIncome != null" >
+        NONBUSINESS_INCOME = #{nonbusinessIncome},
+      </if>
+      <if test="interestExpense != null" >
+        INTEREST_EXPENSE = #{interestExpense},
+      </if>
+      <if test="overdueInterestExpense != null" >
+        OVERDUE_INTEREST_EXPENSE = #{overdueInterestExpense},
+      </if>
+      <if test="consultExpense != null" >
+        CONSULT_EXPENSE = #{consultExpense},
+      </if>
+      <if test="assessmentFeeExpense != null" >
+        ASSESSMENT_FEE_EXPENSE = #{assessmentFeeExpense},
+      </if>
+      <if test="manageExpense != null" >
+        MANAGE_EXPENSE = #{manageExpense},
+      </if>
+      <if test="penaltyExpense != null" >
+        PENALTY_EXPENSE = #{penaltyExpense},
+      </if>
+      <if test="otherExpense != null" >
+        OTHER_EXPENSE = #{otherExpense},
+      </if>
+      <if test="nonbusinessExpense != null" >
+        NONBUSINESS_EXPENSE = #{nonbusinessExpense},
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID = #{creatorId},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator},
+      </if>
+      <if test="createdTime != null" >
+        CREATED_TIME = #{createdTime},
+      </if>
+      <if test="modifierId != null" >
+        MODIFIER_ID = #{modifierId},
+      </if>
+      <if test="modifier != null" >
+        MODIFIER = #{modifier},
+      </if>
+      <if test="modifiedTime != null" >
+        MODIFIED_TIME = #{modifiedTime},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark},
+      </if>
+      <if test="interestIncome != null" >
+        INTEREST_INCOME = #{interestIncome},
+      </if>
+    </set>
+    where ID = #{id}
+    <if test="version != null">
+			AND VERSION = #{version} - 1
+	</if>
+  </update>
+  
+  <!-- 查询指定字段是否有重复 -->
+	<select id="exists" parameterType="java.util.Map"  resultType="java.lang.Integer"> 
+		SELECT count(*) from LEDGER ledger 	
+		<where>
+			<if test="id != null">
+				AND ledger.ID = #{id}
+			</if>
+			<if test="accountId != null">
+				AND ledger.ACCOUNT_ID = #{accountId}
+			</if>
+			<if test="type != null">
+				AND ledger.TYPE = #{type}
+			</if>
+		</where>
+	</select>
+	
+	<select id="get" resultMap="LedgerResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="ledgerField" />
+		FROM LEDGER
+		WHERE ID = #{id}
+	</select>
+	<!-- 根据约定还款日获取挂账金额大于0的借款ID和展期借款ID -->
+	<select id="getAccountByReturnDate" resultType="java.lang.Long" parameterType="java.lang.Integer">
+ 	    select l.account_id    from Ledger l   left join loan lo on l.account_id = lo.id where 
+ 	     l.cash>0
+       and l.type=2 
+       and lo.return_date = #{returnDate}		
+        union all
+        select l.account_id    from Ledger l   left join extension ex on l.account_id = ex.id where 
+        l.cash>0
+       and l.type=2 
+       and ex.return_date = #{returnDate}	
+	</select>
+	<select id="findLedgerByAccountId" parameterType="java.lang.Long" resultMap="LedgerResultMap">
+		 SELECT 		
+		 <include refid="ledgerField" />
+	     FROM LEDGER
+	  	 WHERE ACCOUNT_ID = #{accountId}
+	</select>
+</mapper>

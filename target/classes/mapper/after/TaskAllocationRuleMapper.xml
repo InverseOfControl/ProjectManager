@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.after.mapper.TaskAllocationRuleMapper" >
+  <resultMap id="taskAllocationRuleMap" type="com.ezendai.credit2.after.model.TaskAllocationRule" >
+  <id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="user_login_name" property="userLoginName"  />
+    <result column="user_name" property="userName"    />
+    <result column="num" property="num"   />
+    <result column="sales_dept_id" property="salesDeptId"   />
+    <result column="sales_dept_name" property="salesDeptName"   />
+    <result column="rule_id" property="ruleId"   />
+    <result column="status" property="status"   />
+  </resultMap> 
+  <resultMap id="lateDetailsMap" type="com.ezendai.credit2.after.model.LateDetails" >
+  	<result column="id" property="loanId"    />
+  	<result column="task_id" property="taskId"    />
+    <result column="deptname" property="salesDept" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="product_name" property="productName"    />
+    <result column="person_name" property="personName"   />
+    <result column="manager_code" property="managerCode"    />
+    <result column="manager_name" property="managerName"    />
+    <result column="director_name" property="directorName" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="director_code" property="directorCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="idnum" property="idNum"  />
+    <result column="sign_date" property="signDate"  />
+    <result column="return_date" property="returnDate"  />
+    <result column="pact_money" property="pactMoney"     />  
+    <result column="overdue_start_date" property="overdueStartDate"   />
+    <result column="late_cur_num" property="lateCurNum"   /> 
+    <result column="overdue" property="overdue"   />    
+    <result column="RESIDUAL_PACT_MONEY" property="residualPactMoney"   />    
+    <result column="overdue_interest_amt" property="overdueInterestAmt"   />  
+     <result column="overdue_principal" property="overduePrincipal"   />  
+    <result column="penalty_date" property="penaltyDate"   />   
+    <result column="repay_interest" property="repayInterest"   />   
+    <result column="total_amount" property="totalAmount"   />   
+    <result column="last_FACT_RETURNDATE" property="lastFactReturnDate"   /> 
+    <result column="last_REPAY_AMOUNT" property="lastRepayAmount"   /> 
+    <result column="sb_date" property="lastTime"   /> 
+     <result column="end_repay_date" property="endRepayDate"   />
+     <result column="manager_name" property="managerName"   />
+     <result column="firsttirial_name" property="firstTirialName"   />
+     <result column="finaltirial_name" property="finstTirialName"   />
+     <result column="service_name" property="serviceName"   />
+     <result column="organ_name" property="organName" jdbcType="VARCHAR" javaType="java.lang.String" />
+ 	 <result column="CONTRACT_SRC" property="contractSrc"   />
+     <result column="profession_type" property="professionType"   />
+     <result column="loan_number" property="loanNumber"   />
+     <result column="single_loan_numbers" property="singleLoanNumber"   />
+      <result column="over_day" property="overDay"   />
+      <result column="overdue_type" property="overdueType"   />
+  </resultMap> 
+  <select id="taskAllocationRuleWithPG"  resultMap="taskAllocationRuleMap" parameterType="com.ezendai.credit2.after.vo.TaskAllocationRuleVO" >
+ 	<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+ 			Select su.id,su.area_id as sales_dept_id,su.name as user_name,su.login_name as user_login_name,ba.name as sales_dept_name,tr.id as rule_id,tr.num,tr.status  from sys_user  su
+              left join  OVERDUE_TASK_ALLOCATION_RULE tr on su.login_name=tr.user_login_name
+              left join  base_area ba on ba.id =su.area_id
+		where 1=1 and su.is_deleted = 0 and su.user_type=6
+			<if test="name != null and name != ''">
+	      		AND su.name = #{name}
+	      	</if>
+ 			 
+	      	 <if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+				AND su.area_id IN(
+				<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+					#{guard}
+				</foreach>
+				)
+			</if> 
+		
+	<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+  </select>
+   
+
+   <select id="taskAllocationRuleCount"  resultType="integer" parameterType="com.ezendai.credit2.after.vo.TaskAllocationRuleVO" >
+    		select count(*) from(Select su.area_id as sales_dept_id,su.name ,su.login_name as user_login_name,ba.name as sales_dept_name,tr.id as rule_id,tr.num from sys_user  su
+              left join  OVERDUE_TASK_ALLOCATION_RULE tr on su.login_name=tr.user_login_name
+              left join  base_area ba on ba.id =su.area_id
+		where 1=1  and su.is_deleted = 0 and su.user_type=6
+		 <if test="name != null and name != ''">
+	      		AND su.name = #{name}
+	      	</if>
+	      <if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+				AND su.area_id IN(
+				<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+					#{guard}
+				</foreach>
+				)
+			</if> 
+    		)
+    
+  </select>
+  
+   <select id="getTaskAllocationRuleBySalesDeptId"  resultMap="taskAllocationRuleMap" parameterType="com.ezendai.credit2.after.vo.TaskAllocationRuleVO" >
+ 		Select * from OVERDUE_TASK_ALLOCATION_RULE   
+			where   num !=0    and status = 1
+	      	 <if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+				AND SALES_DEPT_ID IN(
+				<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+					#{guard}
+				</foreach>
+				)
+			 </if> 
+ 
+   </select>
+   <select id="getCollectorsBySalesDeptId"  resultMap="taskAllocationRuleMap" parameterType="com.ezendai.credit2.after.vo.TaskAllocationRuleVO" >
+ 		Select * from OVERDUE_TASK_ALLOCATION_RULE   
+			where     status = 1
+	      	 <if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+				AND SALES_DEPT_ID IN(
+				<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+					#{guard}
+				</foreach>
+				)
+			 </if> 
+ 
+   </select>
+    <select id="getAllEffectiveBySalesDeptId"  resultMap="taskAllocationRuleMap" parameterType="com.ezendai.credit2.after.vo.TaskAllocationRuleVO" >
+ 		Select * from OVERDUE_TASK_ALLOCATION_RULE   
+			where     num =0    and  status = 1
+	      	 <if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+				AND SALES_DEPT_ID IN(
+				<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+					#{guard}
+				</foreach>
+				)
+			 </if> 
+ 
+   </select>
+  
+   <insert id="insertTaskAllocationRule" parameterType="com.ezendai.credit2.after.model.TaskAllocationRule"   >
+		 		insert into OVERDUE_TASK_ALLOCATION_RULE(id,user_login_name,user_name,sales_dept_id ,num,status)
+		 				values(SEQ_ALLOCATION_RULE_ID.nextval,#{userLoginName,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{salesDeptId},#{num,jdbcType=NUMERIC},#{status})
+  </insert>
+   <update id="updateTaskAllocationRule" parameterType="com.ezendai.credit2.after.model.TaskAllocationRule"   >
+		 		update OVERDUE_TASK_ALLOCATION_RULE set
+		 			   <if test="num != null ">
+	      				 num=#{num} 
+	   				   </if>
+		 			 <if test="status != null ">
+	      				 status=#{status} 
+	   				   	</if>
+		 			 
+		 			 where id=#{ruleId}
+   </update>
+  
+  
+
+  <select id="getLateDetailsList"  resultMap="lateDetailsMap" parameterType="com.ezendai.credit2.after.vo.TaskAllocationRuleVO" >
+
+  select overdue.* , 'M1' as overdue_type
+        , (case when single_loan_number is null then 1 else single_loan_number   end) as single_loan_numbers  from (
+SELECT l.id,
+  l.task_id,
+  ladata.ovdurNum as late_cur_num,
+  ladata.overdue_start_date,
+  floor( ladata .overdue) as overdue, 
+  ladata.CUR_REMAINING_PRINCIPAL,
+  ladata.overdue_principal,
+  ladata.overdue_interest_amt,
+  l.SIGN_DATE,
+  l.RESIDUAL_PACT_MONEY,
+  p.overdue_interest_rate,
+  l.END_REPAY_DATE,
+  last_rp.last_REPAY_AMOUNT,
+  last_rp.last_FACT_RETURNDATE,
+  sb_date,
+   loan_number,  
+  single_loan_number,
+  ba.name as deptName,
+  p.product_name,
+  per.name as person_name,
+  su2.code as manager_code,
+  su2.name as manager_name,
+  su2.id as manager_id,
+  su.code as director_code,
+  su.name as director_name,
+  per.idnum,
+  l.RETURN_DATE,
+  l.SALES_DEPT_ID,
+  l.pact_money,
+  l.LOAN_TYPE,
+   l.PRODUCT_TYPE,
+   p.id as pid,
+   su3.name as firsttirial_name,
+   su4.name as service_name,
+   og.name as organ_name,
+   se.enum_value as CONTRACT_SRC，
+   per.PROFESSION_TYPE,
+   zs.finaltirial_name,
+   fx.trade_time  as penalty_date
+  FROM 	( select  t.id as task_id, l.PRODUCT_ID,l.id,l.PERSON_ID,l.sales_dept_id,l.CRM_ID,l.BIZ_DIRECTOR_ID,l.FIRSTTRIAL_ID,l.SERVICE_ID,l.ORGAN_ID,l.CONTRACT_SRC,l.STATUS,
+     l.SIGN_DATE,  l.END_REPAY_DATE,l.RETURN_DATE,    l.pact_money,  l.LOAN_TYPE,   l.PRODUCT_TYPE,  l.RESIDUAL_PACT_MONEY
+      from  OVERDUE_RECEIVABLES_TASK t
+			   left join  overdue_receivables_case o   on t.CASE_ID=o.ID
+         left join  loan l  on l.id=LOAN_ID
+		 	where  o.CASE_STATE=1 
+		 	 <if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+				AND   l.SALES_DEPT_ID  IN(
+				<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+					#{guard}
+				</foreach>
+				)
+			</if> 
+		 		 	 
+         and l.product_type=1 ) l
+          inner join   (
+  select ovderV.id, (sysdate-rp2.penalty_date) as overdue,( rp2.REPAY_DAY) as overdue_start_date ,( rp2.REPAY_DAY+2) as PENALTY_DATE ,ovdurNum,overdue_interest_amt,overdue_principal ,ovderV.CUR_REMAINING_PRINCIPAL,ovderV.minCumNum from repayment_plan rp2
+      inner join （select l.id  ,count(rp.CUR_NUM) as ovdurNum, min(rp.CUR_NUM) as minCumNum, sum(rp.CUR_REMAINING_PRINCIPAL) as overdue_principal,sum(rp.CUR_REMAINING_INTEREST_AMT) as overdue_interest_amt ,sum(rp.CUR_REMAINING_PRINCIPAL) as CUR_REMAINING_PRINCIPAL
+                   from loan l left join  repayment_plan rp on rp.loan_id=l.id    where l.status=140  and  <![CDATA[  repay_day<sysdate ]]>   and FACT_RETURNDATE is null group by l.id）    ovderV
+         on rp2.loan_id=ovderV.id and rp2.CUR_NUM =ovderV.minCumNum
+
+        ) ladata on ladata.id =l.id
+  left join PRODUCT p on l.PRODUCT_ID=p.id
+ left join  ( select PERSON_ID , count（1） as loan_number from loan where status in (140,130,150,141,160)  group by PERSON_ID )  ln on ln.PERSON_ID=l.PERSON_ID    
+  left join 
+            ( 
+    select * from (
+	       SELECT  ri2.id,ri2.ACCOUNT_ID, 
+          ri2.TRADE_TIME   AS last_FACT_RETURNDATE ,
+				  ri2.TRADE_AMOUNT AS last_repay_amount,
+          row_number() over (partition by ri2.account_id order by id desc) rn
+			FROM repay_info ri2
+  where  ri2.PAY_TYPE not in(5,6)
+order by ri2.TRADE_TIME desc
+ )  WHERE rn  <![CDATA[ <= 1 ]]> 
+ 
+            )  last_rp on last_rp.ACCOUNT_ID=l.id  
+ 	left join 	(  select  distinct  zh.person_id, zh.sb_date, hk.REPAY_AMOUNT  from ( select l.person_id,max(rp.FACT_RETURNDATE) as sb_date from loan l left join REPAYMENT_PLAN rp on l.id= rp.loan_id 
+        				where  l.RESIDUAL_TIME=0  and l.status =150  and rp.FACT_RETURNDATE is not null    
+       					 group by l.person_id )  zh
+  left join     (select distinct  l.person_id, ri.trade_time,rp.REPAY_AMOUNT  from loan l left join REPAYMENT_PLAN rp on l.id= rp.loan_id 
+                                                                   left join REPAY_INFO ri on rp.loan_id = ri.account_id    and ri.TERM =rp.cur_num  
+        				where  l.RESIDUAL_TIME=0  and l.status =150     and rp.FACT_RETURNDATE is not null  )  hk  on zh.person_id=hk.person_id and zh.sb_date=TRUNC(hk.trade_time)
+                )  sb on sb.PERSON_ID=l.PERSON_ID 
+  
+         
+   left join (select loan_id ,(count(*)+1) as single_loan_number from  BUSINESS_LOG  where flow_status=45 group by loan_id) sln on sln.loan_id=l.id
+   left join ( select distinct OPERATOR as finaltirial_name ,loan_id from  ( select loan_id, OPERATOR,row_number() over (partition by loan_id order by id desc) rn
+                      from BUSINESS_LOG     where flow_status in (32,35,38,39,20))  where rn <![CDATA[ <= 1 ]]>   ) zs on zs.loan_id=l.id
+   left join base_area ba on  l.sales_dept_id=ba.id   
+   left join PERSON per on l.PERSON_ID=per.id
+   left join sys_user su2 on l.CRM_ID=su2.id
+   left join sys_user su on su.ID =l.BIZ_DIRECTOR_ID 
+   left join sys_user su3 on su3.ID =l.FIRSTTRIAL_ID 
+   left join sys_user su4 on l.SERVICE_ID=su4.id
+   left join organ og on og.id=l.ORGAN_ID     
+   left join sys_enumerate se on l.CONTRACT_SRC=se.enum_code and se.enum_type='CONTRACT_SRC'
+    left join ( select * from （ 
+SELECT  account_id , trade_time,TERM,
+    row_number() over (partition by account_id order by trade_time desc) rn
+  FROM flow
+  WHERE account_title     =452
+  AND ( TRUNC(trade_time) <![CDATA[ < ]]>  to_date(#{startDate},'yyyy-MM-dd'))  
+  ORDER BY trade_time DESC
+） where rn      <![CDATA[ <= ]]>  1   
+      )  fx on fx.account_id=ladata.id and  fx.TERM=ladata.minCumNum
+ 
+) overdue where 1=1 
+	 
+</select>
+  <select id="getLateDetailsListCount"  resultType="integer" parameterType="com.ezendai.credit2.after.vo.TaskAllocationRuleVO" >
+
+  select count(*) from (
+SELECT l.id,
+  l.task_id,
+  ladata.ovdurNum as late_cur_num,
+  ladata.overdue_start_date,
+  floor( ladata .overdue) as overdue, 
+  ladata.CUR_REMAINING_PRINCIPAL,
+  ladata.overdue_principal,
+  ladata.overdue_interest_amt,
+  l.SIGN_DATE,
+  l.RESIDUAL_PACT_MONEY,
+  p.overdue_interest_rate,
+  l.END_REPAY_DATE,
+  last_rp.last_REPAY_AMOUNT,
+  last_rp.last_FACT_RETURNDATE,
+  sb_date,
+  single_loan_number,
+  ba.name as deptName,
+  p.product_name,
+  per.name as person_name,
+  su2.code as manager_code,
+  su2.name as manager_name,
+  su2.id as manager_id,
+  su.code as director_code,
+  su.name as director_name,
+  per.idnum,
+  l.RETURN_DATE,
+  l.SALES_DEPT_ID,
+  l.pact_money,
+  l.LOAN_TYPE,
+   l.PRODUCT_TYPE,
+   p.id as pid,
+   su3.name as firsttirial_name,
+   su4.name as service_name,
+   og.name as organ_name,
+   se.enum_value as CONTRACT_SRC，
+   per.PROFESSION_TYPE,
+   zs.finaltirial_name,
+   fx.trade_time  as penalty_date
+  FROM 	( select  t.id as task_id, l.PRODUCT_ID,l.id,l.PERSON_ID,l.sales_dept_id,l.CRM_ID,l.BIZ_DIRECTOR_ID,l.FIRSTTRIAL_ID,l.SERVICE_ID,l.ORGAN_ID,l.CONTRACT_SRC,l.STATUS,
+     l.SIGN_DATE,  l.END_REPAY_DATE,l.RETURN_DATE,    l.pact_money,  l.LOAN_TYPE,   l.PRODUCT_TYPE,  l.RESIDUAL_PACT_MONEY
+      from  OVERDUE_RECEIVABLES_TASK t
+			   left join  overdue_receivables_case o   on t.CASE_ID=o.ID
+         left join  loan l  on l.id=LOAN_ID
+		 	where  o.CASE_STATE=1 
+		 	 <if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+				AND   l.SALES_DEPT_ID  IN(
+				<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+					#{guard}
+				</foreach>
+				)
+			</if> 
+		 		 	 
+         and l.product_type=1 ) l
+          inner join   (
+  select ovderV.id, (sysdate-rp2.penalty_date) as overdue,( rp2.REPAY_DAY) as overdue_start_date ,( rp2.REPAY_DAY+2) as PENALTY_DATE ,ovdurNum,overdue_interest_amt,overdue_principal ,ovderV.CUR_REMAINING_PRINCIPAL,ovderV.minCumNum from repayment_plan rp2
+      inner join （select l.id  ,count(rp.CUR_NUM) as ovdurNum, min(rp.CUR_NUM) as minCumNum, sum(rp.CUR_REMAINING_PRINCIPAL) as overdue_principal,sum(rp.CUR_REMAINING_INTEREST_AMT) as overdue_interest_amt ,sum(rp.CUR_REMAINING_PRINCIPAL) as CUR_REMAINING_PRINCIPAL
+                   from loan l left join  repayment_plan rp on rp.loan_id=l.id    where l.status=140  and  <![CDATA[  repay_day<sysdate ]]>   and FACT_RETURNDATE is null group by l.id）    ovderV
+         on rp2.loan_id=ovderV.id and rp2.CUR_NUM =ovderV.minCumNum
+
+        ) ladata on ladata.id =l.id
+  left join PRODUCT p on l.PRODUCT_ID=p.id
+
+  left join 
+            ( 
+    select * from (
+	       SELECT  ri2.id,ri2.ACCOUNT_ID, 
+          ri2.TRADE_TIME   AS last_FACT_RETURNDATE ,
+				  ri2.TRADE_AMOUNT AS last_repay_amount,
+          row_number() over (partition by ri2.account_id order by id desc) rn
+			FROM repay_info ri2
+  where  ri2.PAY_TYPE not in(5,6)
+order by ri2.TRADE_TIME desc
+ )  WHERE rn  <![CDATA[ <= 1 ]]> 
+ 
+            )  last_rp on last_rp.ACCOUNT_ID=l.id  
+ 	left join 	(  select  distinct  zh.person_id, zh.sb_date, hk.REPAY_AMOUNT  from ( select l.person_id,max(rp.FACT_RETURNDATE) as sb_date from loan l left join REPAYMENT_PLAN rp on l.id= rp.loan_id 
+        				where  l.RESIDUAL_TIME=0  and l.status =150  and rp.FACT_RETURNDATE is not null    
+       					 group by l.person_id )  zh
+  left join     (select distinct  l.person_id, ri.trade_time,rp.REPAY_AMOUNT  from loan l left join REPAYMENT_PLAN rp on l.id= rp.loan_id 
+                                                                   left join REPAY_INFO ri on rp.loan_id = ri.account_id    and ri.TERM =rp.cur_num  
+        				where  l.RESIDUAL_TIME=0  and l.status =150     and rp.FACT_RETURNDATE is not null  )  hk  on zh.person_id=hk.person_id and zh.sb_date=TRUNC(hk.trade_time)
+                )  sb on sb.PERSON_ID=l.PERSON_ID 
+  
+         
+   left join (select loan_id ,(count(*)+1) as single_loan_number from  BUSINESS_LOG  where flow_status=45 group by loan_id) sln on sln.loan_id=l.id
+   left join ( select distinct OPERATOR as finaltirial_name ,loan_id from  ( select loan_id, OPERATOR,row_number() over (partition by loan_id order by id desc) rn
+                      from BUSINESS_LOG     where flow_status in (32,35,38,39,20))  where rn <![CDATA[ <= 1 ]]>   ) zs on zs.loan_id=l.id
+   left join base_area ba on  l.sales_dept_id=ba.id   
+   left join PERSON per on l.PERSON_ID=per.id
+   left join sys_user su2 on l.CRM_ID=su2.id
+   left join sys_user su on su.ID =l.BIZ_DIRECTOR_ID 
+   left join sys_user su3 on su3.ID =l.FIRSTTRIAL_ID 
+   left join sys_user su4 on l.SERVICE_ID=su4.id
+   left join organ og on og.id=l.ORGAN_ID     
+   left join sys_enumerate se on l.CONTRACT_SRC=se.enum_code and se.enum_type='CONTRACT_SRC'
+    left join ( select * from （ 
+SELECT  account_id , trade_time,TERM,
+    row_number() over (partition by account_id order by trade_time desc) rn
+  FROM flow
+  WHERE account_title     =452
+  AND ( TRUNC(trade_time) <![CDATA[ < ]]>  to_date(#{startDate},'yyyy-MM-dd'))  
+  ORDER BY trade_time DESC
+） where rn      <![CDATA[ <= ]]>  1   
+      )  fx on fx.account_id=ladata.id and  fx.TERM=ladata.minCumNum
+ 
+) overdue where 1=1 
+	 
+</select>
+  
+  
+</mapper>

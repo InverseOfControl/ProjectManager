@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.audit.mapper.FirstApproveMapper">
+	<resultMap id="firstApproveMap" type="com.ezendai.credit2.audit.model.FirstApprove">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PERSON_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="VEHICLE_ID" property="vehicleId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="RISK" property="risk" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="PACT_MONEY" property="pactMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="TIME" property="time" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="REQUEST_TIME" property="requestTime" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="SALES_TEAM_ID" property="salesTeamId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="RESIDUAL_PACT_MONEY" property="residualPactMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="MONTH_RATE" property="monthRate" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="GRANT_ACCOUNT_ID" property="grantAccountId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_TYPE" property="loanType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="REPAY_ACCOUNT_ID" property="repayAccountId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CURR_NUM" property="currNum" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="GRANT_MONEY" property="grantMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="REQUEST_DATE" property="requestDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="SIGN_DATE" property="signDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="AUDIT_DATE" property="auditDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="AUDIT_MONEY" property="auditMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="AUDIT_TIME" property="auditTime" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="GUARANTEE_NAME" property="guaranteeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="REQUEST_MONEY" property="requestMoney" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="RETURN_DATE" property="returnDate" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="START_REPAY_DATE" property="startRepayDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="END_REPAY_DATE" property="endRepayDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="GRANT_DATE" property="grantDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="CUSTOMER_SOURCE" property="customerSource" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="SERVICE_ID" property="serviceId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CRM_ID" property="crmId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="BIZ_DIRECTOR_ID" property="bizDirectorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="ASSESSOR_ID" property="assessorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="SALES_DEPT_ID" property="salesDeptId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PURPOSE" property="purpose" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="STATUS" property="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="USER_ID" property="userId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CONTRACT_NO" property="contractNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="SUBMIT_DATE" property="submitDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="HAS_HOUSE" property="hasHouse" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="CONTRACT_SRC" property="contractSrc" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="CONTRACT_CONFIRM_DATE" property="contractConfirmDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="CONTRACT_BACK_DATE" property="contractBackDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="NATURAL_GUARANTEE_NAME1" property="naturalGuaranteeName1" jdbcType="VARCHAR" javaType="java.lang.String"/>
+   		<result column="NATURAL_GUARANTEE_NAME2" property="naturalGuaranteeName2" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="LEGAL_GUARANTEE_CNAME1" property="legalGuaranteeCname1" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="LEGAL_GUARANTEE_CNAME2" property="legalGuaranteeCname2" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="CONTRACT_CREATED_TIME" property="contractCreatedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="ASSESSMENT" property="assessment" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="CONSULT" property="consult" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="B_MANAGE" property="bManage" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="C_MANAGE" property="cManage" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="FINANCE_AUDIT_TIME" property="financeAuditTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="REPAYMENT_METHOD" property="repaymentMethod" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="RESIDUAL_TIME" property="residualTime" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="MANAGER_ID" property="managerId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="EXTENSION_TIME" property="extensionTime" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="FLAG" property="flag" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="REPAY_SOURCE" property="sourceOfRepay" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="THIRD_FEE" property="thirdFee" jdbcType="NUMERIC" javaType="java.math.BigDecimal"/>
+		<result column="AUDIT_MEMBER_TYPE" property="auditMemberType" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result column="PERSON_NAME" property="personName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="IDNUM" property="idNum" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		
+	</resultMap>
+	
+	<sql id="loanField">
+		l.ID,
+		l.PERSON_ID,
+		l.VEHICLE_ID,
+		l.PRODUCT_ID,
+		l.RISK,
+		l.PACT_MONEY,
+		l.TIME,
+		l.REQUEST_TIME,
+		l.SALES_TEAM_ID,
+		l.RESIDUAL_PACT_MONEY,
+		l.MONTH_RATE,
+		l.GRANT_ACCOUNT_ID,
+		l.LOAN_TYPE,
+		l.REPAY_ACCOUNT_ID,
+		l.CURR_NUM,
+		l.GRANT_MONEY,
+		l.REQUEST_DATE,
+		l.SIGN_DATE,
+		l.AUDIT_DATE,
+		l.AUDIT_MONEY,
+		l.REQUEST_MONEY,
+		l.RETURN_DATE,
+		l.START_REPAY_DATE,
+		l.END_REPAY_DATE,
+		l.GRANT_DATE,
+		l.CUSTOMER_SOURCE,
+		l.SERVICE_ID,
+		l.CRM_ID,
+		l.BIZ_DIRECTOR_ID,
+		l.ASSESSOR_ID,
+		l.SALES_DEPT_ID,
+		l.PURPOSE,
+		l.STATUS,
+		l.USER_ID,
+		l.CREATOR,
+		l.CREATED_TIME,
+		l.MODIFIER_ID,
+		l.MODIFIER,
+		l.MODIFIED_TIME,
+		l.REMARK,
+		l.CONTRACT_NO,
+		l.AUDIT_TIME,
+		l.GUARANTEE_NAME,
+		l.VERSION,
+		l.SUBMIT_DATE,
+		l.HAS_HOUSE,
+		l.CONTRACT_SRC,
+		l.FINANCE_AUDIT_TIME,
+		l.CONTRACT_CONFIRM_DATE,
+		l.ASSESSMENT,
+		l.CONSULT,
+		l.B_MANAGE,
+		l.C_MANAGE,
+		l.REPAYMENT_METHOD,
+		l.NATURAL_GUARANTEE_NAME1,
+		l.NATURAL_GUARANTEE_NAME2,
+		l.LEGAL_GUARANTEE_CNAME1,
+		l.LEGAL_GUARANTEE_CNAME2,
+		l.MANAGER_ID,
+		l.RESIDUAL_TIME,
+		0 as EXTENSION_TIME,
+		l.ID as LOAN_ID,
+		l.PRODUCT_TYPE,
+		l.THIRD_FEE,
+		l.REPAY_SOURCE,
+		l.AUDIT_MEMBER_TYPE,
+		b.NAME AS AREA_NAME,
+		p.NAME AS PERSON_NAME ,
+		p.IDNUM AS IDNUM ,
+		pro.PRODUCT_NAME
+	</sql>
+	
+	<select id="findFirstApproveWithPG"  resultMap="firstApproveMap" parameterType="com.ezendai.credit2.audit.vo.FirstApproveVO" >
+		 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		 select <include refid="loanField"></include> from loan  l left join BASE_AREA b on b.id=l.sales_dept_id left join PERSON p on p.id=l.person_id
+		 						 left join product pro on  l.PRODUCT_ID = pro.id   
+		 	where 1=1  <include refid="loanConditions" /> 
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+		 ORDER BY request_date asc
+	</select>
+	<select  id="firsApproveCount" resultType="integer" parameterType="com.ezendai.credit2.audit.vo.FirstApproveVO" >
+   	 select 
+   			count(l.id)
+   		    from loan  l left join BASE_AREA b on b.id=l.sales_dept_id left join PERSON p on p.id=l.person_id  
+   		    				left join product pro on  l.PRODUCT_ID = pro.id  
+    				where 1=1  <include refid="loanConditions" />
+  	</select>
+	<sql id="loanConditions">
+		and	 l.PRODUCT_ID=#{productId}
+		<if test="id != null">
+			AND l.ID = #{id}
+		</if>
+		<if test="personId != null">
+			AND l.PERSON_ID = #{personId}
+		</if>
+		<if test="vehicleId != null">
+			AND l.VEHICLE_ID = #{vehicleId}
+		</if>
+		<if test="productId != null">
+			AND l.PRODUCT_ID = #{productId}
+		</if>
+		<if test="risk != null">
+			AND l.RISK = #{risk}
+		</if>
+		<if test="pactMoney != null">
+			AND l.PACT_MONEY = #{pactMoney}
+		</if>
+		<if test="time != null">
+			AND l.TIME = #{time}
+		</if>
+		<if test="requestTime != null">
+			AND l.REQUEST_TIME = #{requestTime}
+		</if>
+		<if test="salesTeamId != null">
+			AND l.SALES_TEAM_ID = #{salesTeamId}
+		</if>
+		<if test="residualPactMoney != null">
+			AND l.RESIDUAL_PACT_MONEY = #{residualPactMoney}
+		</if>
+		<if test="monthRate != null">
+			AND l.MONTH_RATE = #{monthRate}
+		</if>
+		<if test="grantAccountId != null">
+			AND l.GRANT_ACCOUNT_ID = #{grantAccountId}
+		</if>
+		<if test="loanType != null">
+			AND l.LOAN_TYPE = #{loanType}
+		</if>
+		<if test="repayAccountId != null">
+			AND l.REPAY_ACCOUNT_ID = #{repayAccountId}
+		</if>
+		<if test="currNum != null">
+			AND l.CURR_NUM = #{currNum}
+		</if>
+		<if test="grantMoney != null">
+			AND l.GRANT_MONEY = #{grantMoney}
+		</if>
+		<if test="requestDate != null">
+			AND l.REQUEST_DATE = #{requestDate}
+		</if>
+		<if test="signDate != null">
+			AND l.SIGN_DATE = #{signDate}
+		</if>
+		<if test="auditDate != null">
+			AND l.AUDIT_DATE = #{auditDate}
+		</if>
+		<if test="auditMoney != null">
+			AND l.AUDIT_MONEY = #{auditMoney}
+		</if>
+		<if test="auditTime != null">
+			AND l.AUDIT_TIME = #{auditTime}
+		</if>
+		<if test="guaranteeName != null and guaranteeName != ''">
+			AND l.GUARANTEE_NAME = #{guaranteeName}
+		</if>
+		<if test="requestMoney != null">
+			AND l.REQUEST_MONEY = #{requestMoney}
+		</if>
+		<if test="returnDate != null">
+			AND l.RETURN_DATE = #{returnDate}
+		</if>
+		<if test="startRepayDate != null">
+			AND l.START_REPAY_DATE = #{startRepayDate}
+		</if>
+		<if test="endRepayDate != null">
+			AND l.END_REPAY_DATE = #{endRepayDate}
+		</if>
+		<if test="grantDate != null">
+			AND l.GRANT_DATE = #{grantDate}
+		</if>
+		<if test="customerSource != null">
+			AND l.CUSTOMER_SOURCE = #{customerSource}
+		</if>
+		<if test="serviceId != null">
+			AND l.SERVICE_ID = #{serviceId}
+		</if>
+		<if test="managerId != null">
+			AND l.MANAGER_ID = #{managerId}
+		</if>
+		<if test="crmId != null">
+			AND l.CRM_ID = #{crmId}
+		</if>
+		<if test="bizDirectorId != null">
+			AND l.BIZ_DIRECTOR_ID = #{bizDirectorId}
+		</if>
+		<if test="assessorId != null">
+			AND l.ASSESSOR_ID = #{assessorId}
+		</if>
+		<if test="salesDeptId != null">
+			AND l.SALES_DEPT_ID = #{salesDeptId}
+		</if>
+		<if test="purpose != null">
+			AND l.PURPOSE = #{purpose}
+		</if>
+		<if test="userId != null">
+			AND l.USER_ID = #{userId}
+		</if>
+		<if test="creatorId != null">
+			AND l.CREATOR_ID = #{creatorId}
+		</if>
+		<if test="creator != null">
+			AND l.CREATOR = #{creator}
+		</if>
+		<if test="createdTime != null">
+			AND l.CREATED_TIME = #{createdTime}
+		</if>
+		<if test="modifierId != null">
+			AND l.MODIFIER_ID = #{modifierId}
+		</if>
+		<if test="modifier != null">
+			AND l.MODIFIER = #{modifier}
+		</if>
+		<if test="modifiedTime != null">
+			AND l.MODIFIED_TIME = #{modifiedTime}
+		</if>
+		<if test="idList !=null and idList.size() > 0">
+			AND l.ID IN(
+			<foreach item="guard" index="index" collection="idList"
+				separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="remark != null and remark != ''">
+			AND l.REMARK = #{remark}
+		</if>
+		<if test="contractNo != null and contractNo != ''">
+			AND l.CONTRACT_NO = #{contractNo}
+		</if>
+		<if test="personIdnum != null and personIdnum != ''">
+			AND p.IDNUM = #{personIdnum}
+		</if>
+		 
+		<!-- 姓名模糊查询 -->
+		<if test="personFuzzyName != null and personFuzzyName != ''">
+			AND  LIKE '%'||#{personFuzzyName}||'%'
+		</if>
+		<if test="personMobilePhone != null and personMobilePhone != ''">
+			AND person.MOBILE_PHONE = #{personMobilePhone}
+		</if>
+		<if test="cityId != null">
+			AND salesDept.CITY_ID = #{cityId}
+		</if>
+		<if test="statusList !=null and statusList.size() > 0">
+			AND l.STATUS IN(
+			<foreach item="guard" index="index" collection="statusList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="productIdList !=null and productIdList.size() > 0">
+			AND l.PRODUCT_ID IN(
+			<foreach item="guard" index="index" collection="productIdList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="selectedProductId != null">
+			AND l.PRODUCT_TYPE = #{selectedProductId}
+		</if>
+		<if test="submitDate != null">
+			AND l.SUBMIT_DATE = #{submitDate}
+		</if>
+		<if test="hasHouse != null">
+			AND l.HAS_HOUSE = #{hasHouse}
+		</if>
+		<if test="auditDateStart !=null">
+			AND l.AUDIT_DATE <![CDATA[ >= ]]> #{auditDateStart}
+	    </if> 
+	    <if test="auditDateEnd !=null">
+			AND l.AUDIT_DATE <![CDATA[ <= ]]> #{auditDateEnd}
+	    </if> 
+	    <if test="auditDateStartEdu !=null">
+			AND l.AUDIT_DATE <![CDATA[ >= ]]> #{auditDateStartEdu}
+	    </if> 
+	    <if test="auditDateEndEdu !=null">
+			AND l.AUDIT_DATE <![CDATA[ <= ]]> #{auditDateEndEdu}
+	    </if> 
+	    
+	    
+	    <if test="signDateStart !=null">
+			AND l.SIGN_DATE <![CDATA[ >= ]]> #{signDateStart}
+	    </if> 
+	    <if test="signDateEnd !=null">
+			AND l.SIGN_DATE <![CDATA[ <= ]]> #{signDateEnd}
+	    </if> 
+	    <if test="contractSrc != null">
+			AND l.CONTRACT_SRC = #{contractSrc}
+		</if>
+		<if test="contractConfirmStartDate != null">
+			AND l.CONTRACT_CONFIRM_DATE<![CDATA[ >= ]]> #{contractConfirmStartDate}			
+        </if>
+        <if test="contractConfirmEndDate!=null">
+			AND l.CONTRACT_CONFIRM_DATE <![CDATA[ <= ]]> #{contractConfirmEndDate}			
+        </if>
+        <if test="financeAuditTimeStart !=null and financeAuditTimeStart != '' ">
+			AND l.FINANCE_AUDIT_TIME <![CDATA[ >= ]]> #{financeAuditTimeStart}
+	    </if> 
+	    <if test="financeAuditTimeEnd !=null and financeAuditTimeEnd != '' ">
+			AND l.FINANCE_AUDIT_TIME <![CDATA[ <= ]]> #{financeAuditTimeEnd}
+	    </if>
+	    <if test="repaymentMethod != null">
+			AND l.REPAYMENT_METHOD = #{repaymentMethod}
+		</if>
+		<if test="residualTime  != null">
+			AND l.RESIDUAL_TIME = #{residualTime}
+		</if>
+		<if test="managerId != null">
+			AND l.MANAGER_ID = #{managerId}
+		</if>
+		<if test="createdTimeStart != null">
+			AND l.CREATED_TIME <![CDATA[ >= ]]> #{createdTimeStart}
+		</if>
+		<if test="startRepayDateStart != null">
+		    AND l.START_REPAY_DATE <![CDATA[ >= ]]> #{startRepayDateStart}
+		</if>
+		<if test="startRepayDateEnd != null">
+		    AND l.START_REPAY_DATE <![CDATA[ <= ]]> #{startRepayDateEnd}
+		</if>
+		<if test="isExtension != null">
+		    AND l.ID = -1
+		</if>
+		<if test="productType != null">
+			AND l.PRODUCT_TYPE = #{productType}
+		</if>
+		<if test="thirdFee != null">
+			AND l.THIRD_FEE = #{thirdFee}
+		</if>
+		<if test="productTypeList !=null and productTypeList.size() > 0">
+			AND l.PRODUCT_TYPE IN(
+			<foreach item="guard" index="index" collection="productTypeList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+		<if test="salesDeptIdList !=null and salesDeptIdList.size() > 0">
+			AND l.SALES_DEPT_ID IN(
+			<foreach item="guard" index="index" collection="salesDeptIdList" separator=",">
+				#{guard}
+			</foreach>
+			)
+		</if>
+	 <if test="personName != null and personName!=''">
+			AND p.NAME = #{personName} 
+	</if>
+	 <if test="firsttrialId != null and firsttrialId !=''">
+			AND l.FIRSTTRIAL_ID = #{firsttrialId}
+	</if>
+	 <if test="personPhone != null and personPhone !=''">
+			AND p.MOBILE_PHONE = #{personPhone}
+	</if>
+	<if test="startDate != null and startDate != ''">
+				    	and l.REQUEST_DATE >= to_date(#{startDate},'yyyy-mm-dd hh24:mi:ss') 
+	</if>
+	<if test="endDate != null and endDate != ''">
+				    	and l.REQUEST_DATE  <![CDATA[<=]]>  to_date(#{endDate},'yyyy-mm-dd hh24:mi:ss') 
+	</if>
+	 
+	</sql>
+	 
+	 <select id="getAcceptAudit" resultType="java.lang.String">
+	 	select ACCEPT_AUDIT_TASK from sys_user where id=#{id}
+	 </select>
+	 <update id="updateAcceptAudit" parameterType="java.util.HashMap">
+	 		update  sys_user set ACCEPT_AUDIT_TASK = #{acceptAudit}   where id=#{id}
+	 </update>
+	 <select id="selectSysUserCount"  resultType="integer"> 
+		select count(*) from sys_user where  code=#{code}
+	 </select>
+</mapper>
+ 

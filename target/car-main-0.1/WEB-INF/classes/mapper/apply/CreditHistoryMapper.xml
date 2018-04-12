@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.CreditHistoryMapper">
+	<resultMap id="creditHistoryResultMap" type="CreditHistory">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PERSON_ID" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="HAS_CREDIT_CARD" property="hasCreditCard" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CARD_NUM" property="cardNum" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="TOTAL_AMOUNT" property="totalAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="OVERDRAW_AMOUNT" property="overdrawAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		
+		<result column="CREDIT_CHANNEL" property="historyLoanChannel" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="AMOUNT" property="historyAmount" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="GRANT_DATE" property="historyGrantDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MONTHLY_PAYMENTS" property="historyMonPay" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="OVERDUE_INFO" property="historyOverdue" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+
+	<sql id="creditHistoryField">
+		ID, PERSON_ID, HAS_CREDIT_CARD, CARD_NUM, TOTAL_AMOUNT, OVERDRAW_AMOUNT,
+		VERSION, CREATOR_ID, CREATOR, CREATED_TIME, MODIFIER_ID, MODIFIER, MODIFIED_TIME,LOAN_ID,
+		CREDIT_CHANNEL,AMOUNT,GRANT_DATE,MONTHLY_PAYMENTS,OVERDUE_INFO
+		
+	</sql>
+	
+	<sql id="creditHistorySelective">
+		SELECT
+		<include refid="creditHistoryField"/>
+		FROM CREDIT_HISTORY
+	</sql>
+	
+	<sql id="creditHistoryConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				CREDIT_HISTORY.ID = #{id}
+			</if>
+			<if test="personId != null">
+				AND CREDIT_HISTORY.PERSON_ID = #{personId}
+			</if>
+			<if test="hasCreditCard != null">
+				AND CREDIT_HISTORY.HAS_CREDIT_CARD = #{hasCreditCard}
+			</if>
+			<if test="cardNum != null">
+				AND CREDIT_HISTORY.CARD_NUM = #{cardNum}
+			</if>
+			<if test="totalAmount != null">
+				AND CREDIT_HISTORY.TOTAL_AMOUNT = #{totalAmount}
+			</if>
+			<if test="overdrawAmount != null">
+				AND CREDIT_HISTORY.OVERDRAW_AMOUNT = #{overdrawAmount}
+			</if>
+			<if test="creatorId != null">
+				AND CREDIT_HISTORY.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null and creator != ''">
+				AND CREDIT_HISTORY.CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND CREDIT_HISTORY.CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				AND CREDIT_HISTORY.MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null and modifier != ''">
+				AND CREDIT_HISTORY.MODIFIER = #{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				AND CREDIT_HISTORY.MODIFIED_TIME = #{modifiedTime}
+			</if>
+			<if test="version != null">
+				AND CREDIT_HISTORY.VERSION = #{version}
+			</if>
+			<if test="loanId != null">
+				AND CREDIT_HISTORY.LOAN_ID = #{loanId}
+			</if>
+		</trim>
+	</sql>
+
+	<select id="get" resultMap="creditHistoryResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="creditHistoryField" />
+		FROM CREDIT_HISTORY
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="findListByVO" parameterType="CreditHistoryVO" resultMap="creditHistoryResultMap">
+		<include refid="creditHistorySelective"/>
+		<include refid="creditHistoryConditions"/>
+	</select>
+	
+	<select id="findWithPG" parameterType="CreditHistoryVO" resultMap="creditHistoryResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="creditHistorySelective" />
+		<include refid="creditHistoryConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM CREDIT_HISTORY WHERE ID = #{id}
+	</select>
+	
+	<select id="count" parameterType="CreditHistoryVO" resultType="java.lang.Integer">
+		SELECT	COUNT(*) FROM (
+		<include refid="creditHistorySelective"/>
+		<include refid="creditHistoryConditions"/>
+		)
+	</select>
+
+	<select id="getCreditHistoryByPersonId" resultMap="creditHistoryResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="creditHistoryField" />
+		FROM CREDIT_HISTORY
+		WHERE PERSON_ID = #{personId}
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM CREDIT_HISTORY WHERE ID = #{id}
+	</delete>
+	
+	<delete id="deleteByIdList" parameterType="CreditHistoryVO"> 
+		DELETE FROM CREDIT_HISTORY WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+
+	<insert id="insert" parameterType="CreditHistory">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT seq_credit_history.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO CREDIT_HISTORY
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="personId != null">
+				PERSON_ID,
+			</if>
+			<if test="hasCreditCard != null">
+				HAS_CREDIT_CARD,
+			</if>
+			<if test="cardNum != null">
+				CARD_NUM,
+			</if>
+			<if test="totalAmount != null">
+				TOTAL_AMOUNT,
+			</if>
+			<if test="overdrawAmount != null">
+				OVERDRAW_AMOUNT,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="loanId != null">
+				LOAN_ID,
+			</if>
+			<if test="historyLoanChannel != null">
+				CREDIT_CHANNEL,
+			</if>
+			<if test="historyAmount != null">
+				AMOUNT,
+			</if>
+			<if test="historyGrantDate != null">
+				GRANT_DATE,
+			</if>
+			<if test="historyMonPay != null">
+				MONTHLY_PAYMENTS,
+			</if>
+			<if test="historyOverdue != null">
+				OVERDUE_INFO,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			#{id},
+			<if test="personId != null">
+				#{personId},
+			</if>
+			<if test="hasCreditCard != null">
+				#{hasCreditCard},
+			</if>
+			<if test="cardNum != null">
+				#{cardNum},
+			</if>
+			<if test="totalAmount != null">
+				#{totalAmount},
+			</if>
+			<if test="overdrawAmount != null">
+				#{overdrawAmount},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="loanId != null">
+				#{loanId},
+			</if>
+			<if test="historyLoanChannel != null">
+				#{historyLoanChannel},
+			</if>
+			<if test="historyAmount != null">
+				#{historyAmount},
+			</if>
+			<if test="historyGrantDate != null">
+				#{historyGrantDate},
+			</if>
+			<if test="historyMonPay != null">
+				#{historyMonPay},
+			</if>
+			<if test="historyOverdue != null">
+				#{historyOverdue},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="CreditHistoryVO">
+		UPDATE CREDIT_HISTORY
+		<set>
+			<if test="personId != null">
+				PERSON_ID = #{personId},
+			</if>
+			<if test="hasCreditCard != null">
+				HAS_CREDIT_CARD = #{hasCreditCard},
+			</if>
+			<if test="cardNum != null">
+				CARD_NUM = #{cardNum},
+			</if>
+			<if test="totalAmount != null">
+				TOTAL_AMOUNT = #{totalAmount},
+			</if>
+			<if test="overdrawAmount != null">
+				OVERDRAW_AMOUNT = #{overdrawAmount},
+			</if>
+			<if test="version != null">
+				VERSION = #{version},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="loanId != null">
+				LOAN_ID = #{loanId},
+			</if>
+			<if test="historyLoanChannel != null">
+				CREDIT_CHANNEL= #{historyLoanChannel},
+			</if>
+			<if test="historyAmount != null">
+				AMOUNT= #{historyAmount},
+			</if>
+			<if test="historyGrantDate != null">
+				GRANT_DATE= #{historyGrantDate},
+			</if>
+			<if test="historyMonPay != null">
+				MONTHLY_PAYMENTS= #{historyMonPay},
+			</if>
+			<if test="historyOverdue != null">
+				OVERDUE_INFO= #{historyOverdue},
+			</if>
+		</set>
+		WHERE ID = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>  
+	</update>
+
+	<update id="updateCreditHistoryByPersonId" parameterType="CreditHistory">
+		UPDATE CREDIT_HISTORY
+		<set>
+			<if test="personId != null">
+				PERSON_ID = #{personId},
+			</if>
+			<if test="hasCreditCard != null">
+				HAS_CREDIT_CARD = #{hasCreditCard},
+			</if>
+			<if test="cardNum != null">
+				CARD_NUM = #{cardNum},
+			</if>
+			<if test="totalAmount != null">
+				TOTAL_AMOUNT = #{totalAmount},
+			</if>
+			<if test="overdrawAmount != null">
+				OVERDRAW_AMOUNT = #{overdrawAmount},
+			</if>
+			<if test="version != null">
+				VERSION = #{version},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			
+			
+			<if test="historyLoanChannel != null">
+				CREDIT_CHANNEL = #{historyLoanChannel},
+			</if>
+			<if test="historyAmount != null">
+				AMOUNT = #{historyAmount},
+			</if>
+			<if test="historyGrantDate != null">
+				GRANT_DATE = #{historyGrantDate},
+			</if>
+			<if test="historyMonPay != null">
+				MONTHLY_PAYMENTS = #{historyMonPay},
+			</if>
+			<if test="historyOverdue != null">
+				OVERDUE_INFO = #{historyOverdue},
+			</if>
+			
+		</set>
+		WHERE PERSON_ID = #{personId} AND LOAN_ID = #{loanId}
+	</update>
+</mapper>

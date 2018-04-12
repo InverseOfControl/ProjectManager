@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.system.mapper.BaseAreaProductMapper">
+	<resultMap id="baseAreaProductResultMap" type="BaseAreaProduct" >
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="AREA_ID" property="areaId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PRODUCT_ID" property="productId" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+
+	<sql id="baseAreaProductField">
+		ID, AREA_ID, PRODUCT_ID, CREATOR_ID, CREATOR, CREATED_TIME, VERSION
+	</sql>
+	
+	<sql id="baseAreaProductSelective">
+		SELECT
+		<include refid="baseAreaProductField" />
+		FROM BASE_AREA_PRODUCT
+	</sql>
+	
+	<sql id="baseAreaProductConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				ID = #{ID}
+			</if>
+			<if test="areaId != null">
+				AND AREA_ID = #{areaId}
+			</if>
+			<if test="productId != null">
+				AND PRODUCT_ID = #{productId}
+			</if>
+			<if test="creatorId != null">
+				AND CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null">
+				AND CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND CREATED_TIME = #{createdTime}
+			</if>
+			<if test="version != null">
+				AND VERSION = #{version}
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM from BASE_AREA_PRODUCT WHERE ID = #{id}
+	</select>
+	
+	<select id="count" parameterType="BaseAreaProductVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="baseAreaProductSelective" />
+		<include refid="baseAreaProductConditions" />
+		)
+	</select>
+	
+	<select id="findWithPG" parameterType="BaseAreaProductVO" resultMap="baseAreaProductResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="baseAreaProductSelective" />
+		<include refid="baseAreaProductConditions" />
+		ORDER BY BASE_AREA_PRODUCT.ID DESC
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+	<select id="findListByVO" parameterType="BaseAreaProductVO" resultMap="baseAreaProductResultMap">
+		<include refid="baseAreaProductSelective" />
+		<include refid="baseAreaProductConditions" />
+	</select>
+	
+	<insert id="insert" parameterType="BaseAreaProduct">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_base_area_product_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO BASE_AREA_PRODUCT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="areaId != null">
+				AREA_ID,
+			</if>
+			<if test="productId != null">
+				PRODUCT_ID,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="areaId != null">
+				#{areaId},
+			</if>
+			<if test="productId != null">
+				#{productId},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="version != null and version != ''">
+				#{version},
+			</if>
+		</trim>
+	</insert>
+	
+	<delete id="deleteByProductId" parameterType="java.lang.Long">
+		DELETE FROM BASE_AREA_PRODUCT where PRODUCT_ID = #{productId}
+	</delete>	
+</mapper>

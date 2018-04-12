@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.audit.mapper.ApproveResultMapper" >
+	<resultMap id="approveResultResultMap" type="com.ezendai.credit2.audit.model.ApproveResult">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="REASON" property="reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="REASON1" property="reason1" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="REASON2" property="reason2" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CERTIFICATES1" property="certificates1" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CERTIFICATES2" property="certificates2" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CERTIFICATES3" property="certificates3" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="REQUEST_MONEY" property="requestMoney" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="TERM" property="term" jdbcType="NUMERIC" javaType="java.lang.Integer" />		
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CONTRACT_MATTERS" property="contractMatters" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="STATE" property="state" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="AUDIT_MEMBER_TYPE" property="auditMemberType" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	</resultMap>
+	
+	<sql id="approveResultField">
+		ID, LOAN_ID, STATUS, REASON, REASON1, REASON2, CERTIFICATES1, CERTIFICATES2, CERTIFICATES3,
+		REQUEST_MONEY,TERM,
+		CREATOR_ID, CREATOR, CREATED_TIME, MODIFIER_ID, MODIFIER, MODIFIED_TIME, VERSION, CONTRACT_MATTERS,STATE,
+		AUDIT_MEMBER_TYPE
+	</sql>
+
+	<sql id="approveResultSelective">
+		SELECT
+		<include refid="approveResultField" />
+		FROM APPROVE_RESULT
+	</sql>
+
+	<sql id="approveResultConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				APPROVE_RESULT.ID = #{id}
+			</if>
+			<if test="loanId != null">
+				AND APPROVE_RESULT.LOAN_ID = #{loanId}
+			</if>
+			<if test="status != null and status != ''">
+				AND APPROVE_RESULT.STATUS = #{status}
+			</if>
+			<if test="reason != null and reason != ''">
+				AND APPROVE_RESULT.REASON = #{reason}
+			</if>
+			<if test="reason1 != null and reason1 != ''">
+				AND APPROVE_RESULT.REASON1 = #{reason1}
+			</if>
+			<if test="reason2 != null and reason2 != ''">
+				AND APPROVE_RESULT.REASON2 = #{reason2}
+			</if>
+			<if test="certificates1 != null and certificates1 != ''">
+				AND APPROVE_RESULT.CERTIFICATES1 = #{certificates1}
+			</if>
+			<if test="certificates2 != null and certificates2 != ''">
+				AND APPROVE_RESULT.CERTIFICATES2 = #{certificates2}
+			</if>
+			<if test="certificates3 != null and certificates3 != ''">
+				AND APPROVE_RESULT.CERTIFICATES3 = #{certificates3}
+			</if>
+			<if test="creatorId != null">
+				AND APPROVE_RESULT.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null and creator != ''">
+				AND APPROVE_RESULT.CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND APPROVE_RESULT.CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				AND APPROVE_RESULT.MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null and modifier != ''">
+				AND APPROVE_RESULT.MODIFIER = #{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				AND APPROVE_RESULT.MODIFIED_TIME = #{modifiedTime}
+			</if>
+			<if test="version != null">
+				AND APPROVE_RESULT.VERSION = #{version}
+			</if>
+			<if test="contractMatters != null">
+				AND APPROVE_RESULT.CONTRACT_MATTERS = #{contractMatters}
+			</if>
+			<if test="state != null">
+				AND APPROVE_RESULT.STATE = #{state}
+			</if>
+			<if test="statusList !=null and statusList.size() > 0">
+				AND APPROVE_RESULT.STATE IN(
+				<foreach item="guard" index="index" collection="statusList" separator=",">
+				#{guard}
+				</foreach>
+			)
+		</if>
+		</trim>
+	</sql>
+
+	<select id="get" parameterType="java.lang.Long" resultMap="approveResultResultMap">
+		<include refid="approveResultSelective" />
+		WHERE ID = #{id}
+	</select>
+
+	<select id="findListByVO" parameterType="ApproveResultVO" resultMap="approveResultResultMap"> 
+		<include refid="approveResultSelective" /> 
+		<include refid="approveResultConditions" />
+	</select>
+	
+	<select id="findWithPG" parameterType="ApproveResultVO" resultMap="approveResultResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="approveResultSelective" />
+		<include refid="approveResultConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM APPROVE_RESULT WHERE ID = #{id}
+	</select>
+	
+	<select id="count" parameterType="ApproveResultVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="approveResultSelective" />
+		<include refid="approveResultConditions" />
+		)
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM APPROVE_RESULT
+		WHERE ID=#{id}
+	</delete>
+	
+	<delete id="deleteByIdList" parameterType="ApproveResultVO"> 
+		DELETE FROM APPROVE_RESULT WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+
+	<update id="update" parameterType="ApproveResultVO">
+		UPDATE APPROVE_RESULT
+		<set>
+			<if test="loanId != null">
+				LOAN_ID = #{loanId},
+			</if>
+			<if test="status != null">
+				STATUS = #{status},
+			</if>
+			<if test="reason != null">
+				REASON = #{reason},
+			</if>
+			<if test="reason1 != null">
+				REASON1 = #{reason1},
+			</if>
+			<if test="reason2 != null">
+				REASON2 = #{reason2},
+			</if>
+			<if test="certificates1 != null">
+				CERTIFICATES1 = #{certificates1},
+			</if>
+			<if test="certificates2 != null">
+				CERTIFICATES2 = #{certificates2},
+			</if>
+			<if test="certificates3 != null">
+				CERTIFICATES3 = #{certificates3},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="version != null">
+				VERSION = #{version},
+			</if>
+			<if test="contractMatters != null">
+				CONTRACT_MATTERS = #{contractMatters},
+			</if>
+			<if test="state != null">
+				STATE = #{state},
+			</if>
+		</set>
+		WHERE ID = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>  
+	</update>
+
+	<insert id="insert" parameterType="ApproveResult">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_approve_result_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO APPROVE_RESULT
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="loanId != null">
+				LOAN_ID,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="reason != null">
+				REASON,
+			</if>
+			<if test="reason1 != null">
+				REASON1,
+			</if>
+			<if test="reason2 != null">
+				REASON2,
+			</if>
+			<if test="certificates1 != null">
+				CERTIFICATES1,
+			</if>
+			<if test="certificates2 != null">
+				CERTIFICATES2,
+			</if>
+			<if test="certificates3 != null">
+				CERTIFICATES3,
+			</if>
+			<if test="requestMoney != null">
+				REQUEST_MONEY,
+			</if>
+			<if test="term != null">
+				TERM,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+			<if test="contractMatters != null">
+				CONTRACT_MATTERS,
+			</if>
+			<if test="state != null">
+				STATE,
+			</if>
+			<if test="auditMemberType != null">
+				AUDIT_MEMBER_TYPE,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			#{id},
+			<if test="loanId != null">
+				#{loanId},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="reason != null">
+				#{reason},
+			</if>
+			<if test="reason1 != null">
+				#{reason1},
+			</if>
+			<if test="reason2 != null">
+				#{reason2},
+			</if>
+			<if test="certificates1 != null">
+				#{certificates1},
+			</if>
+			<if test="certificates2 != null">
+				#{certificates2},
+			</if>
+			<if test="certificates3 != null">
+				#{certificates3},
+			</if>
+			<if test="requestMoney != null">
+				#{requestMoney},
+			</if>
+			<if test="term != null">
+				#{term},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="contractMatters != null">
+				#{contractMatters},
+			</if>
+			<if test="state != null">
+				#{state},
+			</if>
+			<if test="auditMemberType != null">
+				#{auditMemberType},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 根据贷款ID查询审计结果 -->
+	<select id="selectListByloanId" resultMap="approveResultResultMap"
+		parameterType="java.lang.Long">
+		SELECT
+		<include refid="approveResultField" />
+		FROM APPROVE_RESULT
+		WHERE APPROVE_RESULT.LOAN_ID = #{loanId}
+	</select>
+
+</mapper>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.SysEnumerateManagerMapper">
+
+	<resultMap type="com.ezendai.credit2.master.model.SysEnumerateManager" id="SysEnumerateResultMap">
+		<id column="id" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="enumType"  property="enumType"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="enumCode"  property="enumCode"    jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="enumValue" property="enumValue"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="version"   property="enumversion"    jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+	
+	<sql id="SysEnumerateColumn">
+		sysEnum.id as id,
+		sysEnum.ENUM_TYPE as enumType,  
+		sysEnum.ENUM_CODE as enumCode,
+		sysEnum.ENUM_VALUE as enumValue,
+		sysEnum.VERSION as version
+	</sql>
+	
+	<!-- 获取系统参数列表 -->
+	<select id="getSysEnumerateList" resultMap="SysEnumerateResultMap" parameterType="com.ezendai.credit2.master.vo.SysEnumerateManagerVO">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart"/>
+		select 
+			<include refid="SysEnumerateColumn"/>
+		from SYS_ENUMERATE sysEnum
+		where 1=1
+		<if test="enumType != null and enumType != ''">
+			and sysEnum.ENUM_TYPE = #{enumType}
+		</if>
+		<if test="enumCode != null ">
+			and sysEnum.ENUM_CODE = #{enumCode}
+		</if>
+		<if test="enumValue != null and enumValue !=''">
+			and sysEnum.ENUM_VALUE = #{enumValue}
+		</if>
+		
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd"/>
+	</select>
+	
+	<!-- 主键获取系统参数信息 -->
+	<select id="getSysEnumerate" resultMap="SysEnumerateResultMap" parameterType="java.lang.Long">
+		select 
+			<include refid="SysEnumerateColumn"/>
+		from SYS_ENUMERATE sysEnum
+		where sysEnum.id = #{id}
+	</select>
+	
+	<!-- 多条件获取系统参数信息 -->
+	<select id="getSysEnumerateByConditions" resultMap="SysEnumerateResultMap" parameterType="com.ezendai.credit2.master.vo.SysEnumerateManagerVO">
+		select 
+			<include refid="SysEnumerateColumn"/>
+		from SYS_ENUMERATE sysEnum
+		where 1=1
+		<if test="enumType != null and enumType != ''">
+			and sysEnum.ENUM_TYPE = #{enumType}
+		</if>
+		<if test="enumCode != null ">
+			and sysEnum.ENUM_CODE = #{enumCode}
+		</if>
+		<if test="enumValue != null and enumValue !=''">
+			and sysEnum.ENUM_VALUE = #{enumValue}
+		</if>
+	</select>
+	
+	<!-- 获取系统参数总条数 -->
+	<select id="getSysEnumerateCount"  resultType="int"  parameterType="com.ezendai.credit2.master.vo.SysEnumerateManagerVO">
+		select count(*)
+		from SYS_ENUMERATE sysEnum
+		where 1=1
+		<if test="enumType != null and enumType != ''">
+			and sysEnum.ENUM_TYPE = #{enumType}
+		</if>
+		<if test="enumCode != null ">
+			and sysEnum.ENUM_CODE = #{enumCode}
+		</if>
+		<if test="enumValue != null and enumValue !=''">
+			and sysEnum.ENUM_VALUE = #{enumValue}
+		</if>
+	</select>
+	
+	<!-- 添加系统参数信息 -->
+	<insert id="addSysEnumerate"  parameterType="com.ezendai.credit2.master.vo.SysEnumerateManagerVO">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			select SEQ_SYS_ENUMERATE_ID.nextval as id from dual
+	    </selectKey>
+		insert into SYS_ENUMERATE sysEnum
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    ID,
+			<if test="enumType != null and enumType !=''">
+				ENUM_TYPE，
+	        </if>  
+			<if test="enumCode != null and enumCode !=''">
+				ENUM_CODE，
+	        </if>  
+			<if test="enumValue != null and enumValue !=''">
+				ENUM_VALUE，
+	        </if>  
+			<if test="enumversion != null and enumversion !=''">
+				VERSION
+	        </if>  
+			
+	    </trim>
+		values 
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    #{id},
+			<if test="enumType != null and enumType !=''">
+				#{enumType}，
+	        </if>  
+			<if test="enumCode != null and enumCode !=''">
+				#{enumCode}，
+	        </if>  
+			<if test="enumValue != null and enumValue !=''">
+				#{enumValue}，
+	        </if>  
+			<if test="enumversion != null and enumversion !=''">
+				#{enumversion}
+	        </if>  
+			
+	    </trim>
+	</insert>
+	
+	
+	<!-- 主键修改系统参数信息 -->
+	<update id="updateSysEnumerate"  parameterType="com.ezendai.credit2.master.vo.SysEnumerateManagerVO">
+		update SYS_ENUMERATE sysEnum
+		<trim prefix="set" suffixOverrides="," >
+			<if test="enumType != null and enumType != ''">
+				 sysEnum.ENUM_TYPE = #{enumType},
+			</if>
+			<if test="enumCode != null ">
+				sysEnum.ENUM_CODE = #{enumCode},
+			</if>
+			<if test="enumValue != null and enumValue !=''">
+				 sysEnum.ENUM_VALUE = #{enumValue},
+			</if> 
+			<if test="enumversion != null ">
+				 sysEnum.VERSION = #{enumversion}
+			</if> 
+		</trim>
+		where sysEnum.id = #{id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="deleteSysEnumerate" parameterType="java.lang.Long">
+		DELETE FROM SYS_ENUMERATE WHERE
+		ID=#{id}
+	</delete>
+</mapper>

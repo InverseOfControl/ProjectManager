@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezendai.credit2.apply.mapper.BusinessLogMapper">
+	<resultMap id="businessLogResultMap" type="BusinessLog">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="message" column="MESSAGE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="loanId" column="LOAN_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="operator" column="OPERATOR" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="flowStatus" column="FLOW_STATUS" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+
+	<sql id="businessLogField">
+		ID, LOAN_ID, OPERATOR, FLOW_STATUS,
+		CREATE_DATE, MESSAGE
+	</sql>
+
+	<sql id="businessLogSelective">
+		SELECT
+		<include refid="businessLogField" />
+		FROM BUSINESS_LOG
+	</sql>
+
+	<sql id="businessLogConditions">
+		<where>
+			<if test="loanId != null">
+				LOAN_ID = #{loanId}
+			</if>
+			<if test="operator != null">
+				AND OPERATOR = #{operator}
+			</if>
+			<if test="flowStatus != null">
+				AND FLOW_STATUS = #{flowStatus}
+			</if>
+			<if test="createDate != null">
+				AND CREATE_DATE = #{createDate}
+			</if>
+			<if test="message != null">
+				AND MESSAGE = #{message}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="businessLogOrderByConditions">
+		ORDER BY ID
+	</sql>
+
+	<insert id="insert" parameterType="BusinessLog">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_business_log_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO BUSINESS_LOG
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="message != null">
+				MESSAGE,
+			</if>
+			<if test="loanId != null">
+				LOAN_ID,
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE,
+			</if>
+			<if test="operator != null">
+				OPERATOR,
+			</if>
+			<if test="flowStatus != null">
+				FLOW_STATUS,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			#{id},
+			<if test="message != null">
+				#{message},
+			</if>
+			<if test="loanId != null">
+				#{loanId},
+			</if>
+			<if test="createDate != null">
+				#{createDate},
+			</if>
+			<if test="operator != null">
+				#{operator},
+			</if>
+			<if test="flowStatus != null">
+				#{flowStatus},
+			</if>
+		</trim>
+	</insert>
+	
+	<select id="get" parameterType="java.lang.Long" resultMap="businessLogResultMap">
+		<include refid="businessLogSelective" />
+		WHERE BUSINESS_LOG.ID = #{id}
+	</select>
+	
+	<update id="update" parameterType="BusinessLogVO">
+		UPDATE BUSINESS_LOG
+		<trim prefix="set" suffixOverrides=",">
+			<if test="loanId != null">
+				LOAN_ID = #{loanId},
+			</if>
+			<if test="message != null and message != ''">
+				MESSAGE = #{message},
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE = #{createDate},
+			</if>
+			<if test="operator != null and operator !- ''">
+				OPERATOR = #{operator},
+			</if>
+			<if test="flowStatus != null">
+				FLOW_STATUS = #{flowStatus},
+			</if>
+			<if test="version != null">
+				VERSION = #{version},
+			</if>
+		</trim>
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM BUSINESS_LOG WHERE ID = #{id}
+	</delete>
+	
+	<delete id="deleteByIdList" parameterType="BusinessLogVO">
+		DELETE FROM BUSINESS_LOG WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+	
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM BUSINESS_LOG WHERE ID = #{id}
+	</select>
+	
+	<select id="count" parameterType="BusinessLogVo" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="businessLogSelective" />
+		<include refid="businessLogConditions" />
+		)
+	</select>
+	
+	<select id="findListByVO" parameterType="BusinessLogVo" resultMap="businessLogResultMap">
+		<include refid="businessLogSelective"/>
+		<include refid="businessLogConditions"/>
+		ORDER BY ID DESC
+	</select>
+	
+	<select id="findWithPG" parameterType="BusinessLogVo" resultMap="businessLogResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="businessLogSelective" />
+		<include refid="businessLogConditions" />
+		<include refid="businessLogOrderByConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<select id="getLogByVO" parameterType="BusinessLogVo" resultMap="businessLogResultMap">
+		SELECT * FROM (
+		<include refid="businessLogSelective"/>
+		<include refid="businessLogConditions"/>
+		ORDER BY ID DESC
+		) WHERE ROWNUM=1
+	</select>
+</mapper>

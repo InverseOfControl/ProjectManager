@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.system.mapper.OrganSalesDepartmentMapper" >
+  <resultMap id="organSalesDepartmentResultMap" type="OrganSalesDepartment" >
+    <result column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="ORGAN_ID" property="organId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="SALES_DEPT_ID" property="salesDeptId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+  </resultMap>
+  
+  <resultMap id="baseAreaResultMap" type="BaseArea" >
+    <result column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    <result property="name" column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+  </resultMap>
+  
+	  <sql id="organSalesDepartmentField">
+		ORGAN_SALES_DEPARTMENT.ID ,ORGAN_SALES_DEPARTMENT.ORGAN_ID ,ORGAN_SALES_DEPARTMENT.SALES_DEPT_ID ,ORGAN_SALES_DEPARTMENT.VERSION
+	  </sql>
+  
+      <sql id="baseAreaSelective">
+	    SELECT BASE_AREA.ID, 
+	    BASE_AREA.NAME
+		FROM ORGAN_SALES_DEPARTMENT INNER JOIN BASE_AREA ON ORGAN_SALES_DEPARTMENT.SALES_DEPT_ID = BASE_AREA.ID  
+	</sql>
+	
+	<select id="findSalesDeptListByVo"  resultMap="baseAreaResultMap" parameterType="OrganSalesDepartment" >
+		<include refid="baseAreaSelective" />
+		<include refid="organSalesDepartmentConditions" />	
+	</select>
+	
+ 	<sql id="organSalesDepartmentSelective">
+		SELECT
+		<include refid="organSalesDepartmentField" />
+		FROM ORGAN_SALES_DEPARTMENT
+	</sql>
+	
+	<sql id="organSalesDepartmentConditions">
+	  <trim prefix="where" prefixOverrides="and">
+		  <if test="id != null ">
+		   AND ORGAN_SALES_DEPARTMENT.ID= #{id}
+	      </if>
+	      <if test="organId != null ">
+	        AND ORGAN_SALES_DEPARTMENT.ORGAN_ID =  #{organId}
+	      </if>
+	      <if test="salesDeptId != null ">
+	       AND  ORGAN_SALES_DEPARTMENT.SALES_DEPT_ID = #{salesDeptId}
+	      </if>
+	      <if test="version != null">
+	        AND ORGAN_SALES_DEPARTMENT.VERSION =  #{version}
+	      </if>
+	   </trim>
+	</sql>
+
+  <insert id="insert" parameterType="OrganSalesDepartment" >
+  		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			SEQ_ORGAN_SALES_DEPARTMENT_ID.nextval AS id FROM dual
+		</selectKey>
+    insert into ORGAN_SALES_DEPARTMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="organId != null ">
+        ORGAN_ID, 
+      </if>
+      <if test="salesDeptId != null ">
+       SALES_DEPT_ID,
+      </if>
+      <if test="version != null" >
+        VERSION
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+         #{id},
+      </if>
+      <if test="organId != null ">
+         #{organId}, 
+      </if>
+      <if test="salesDeptId != null ">
+         #{salesDeptId},
+      </if>
+      <if test="version != null" >
+         #{version}
+      </if>
+    </trim>
+  </insert>
+  
+   <update id="update" parameterType="OrganSalesDepartmentVO">
+    update ORGAN
+    <trim prefix="set" suffixOverrides=",">        
+      <if test="organId != null ">
+       ORGAN_ID = #{organId},
+      </if>
+      <if test="salesDeptId != null ">
+       SALES_DEPT_ID = #{salesDeptId},
+      </if>
+      <if test="version != null and version !=''">
+        VERSION = #{version}
+      </if>  
+       </trim>
+   		WHERE ID = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>
+  </update>
+  
+  <sql id="organSalesDepartmentOrderByConditions">
+		ORDER BY ORGAN.CREATED_TIME
+  </sql>
+  	
+	<select id="get" resultMap="organSalesDepartmentResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="organSalesDepartmentField" />
+		FROM ORGAN_SALES_DEPARTMENT
+		WHERE ID = #{id}
+	</select>
+	
+	<select id="findListByVO"  resultMap="organSalesDepartmentResultMap" parameterType="OrganSalesDepartmentVO" >
+		<include refid="organSalesDepartmentSelective" />
+		<include refid="organSalesDepartmentConditions" />	
+	</select>
+	
+	<delete id="delete" parameterType="java.lang.Long"  >
+		DELETE FROM ORGAN_SALES_DEPARTMENT WHERE ID = #{id}
+	</delete>
+	
+	<delete id="deleteListByVo" parameterType="OrganSalesDepartmentVO"  >
+		DELETE FROM ORGAN_SALES_DEPARTMENT 
+		<include refid="organSalesDepartmentConditions" />	
+	</delete>
+  
+  	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM ORGAN_SALES_DEPARTMENT WHERE ID = #{ID}
+	</select>
+	
+    <select id="count" parameterType="OrganSalesDepartmentVO" resultType="java.lang.Integer">
+		SELECT count(*) FROM (
+		<include refid="organSalesDepartmentSelective" />
+		<include refid="organSalesDepartmentConditions" />
+		)
+	</select>
+	
+	<select id="findWithPG" parameterType="OrganSalesDepartmentVO" resultMap="organSalesDepartmentResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="organSalesDepartmentSelective" />
+		<include refid="organSalesDepartmentConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>	
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+</mapper>

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezendai.credit2.system.mapper.SysPermissionMapper">
+
+<resultMap  id="sysPermissionResultMap" type="SysPermission">
+	<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="code" column="CODE" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="name" column="NAME" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="levels" column="LEVELS" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result property="levelOrder" column="LEVEL_ORDER" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result property="type" column="TYPE" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result property="parentId" column="PARENT_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="status" column="STATUS" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result property="isDeleted" column="IS_DELETED" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result property="status" column="STATUS" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	<result property="creatorId" column="CREATOR_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="creator" column="CREATOR" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result property="modifierId" column="MODIFIER_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="modifier" column="MODIFIER" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="modifiedTime" column="MODIFIED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result property="version" column="VERSION" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	
+</resultMap>
+
+<sql id="sysPermissionField">
+	sysPermission.ID           ,
+	sysPermission.CODE         ,
+	sysPermission.NAME         ,
+	sysPermission.LEVELS       ,
+	sysPermission.LEVEL_ORDER  ,
+	sysPermission.TYPE         ,
+	sysPermission.PARENT_ID    ,
+	sysPermission.STATUS       ,
+	sysPermission.URL          ,
+	sysPermission.CREATOR_ID   ,
+	sysPermission.CREATOR      ,
+	sysPermission.CREATED_TIME ,
+	sysPermission.MODIFIER_ID  ,
+	sysPermission.MODIFIER     ,
+	sysPermission.MODIFIED_TIME,
+	sysPermission.IS_DELETED   ,
+	sysPermission.VERSION      
+</sql>
+
+	<sql id="sysPermissionSelective">
+		select 
+		<include refid="sysPermissionField" />
+		from  SYS_PERMISSION sysPermission
+	</sql>
+
+	<sql id="sysPermissionConditions">
+			where
+				1=1
+	  		  AND sysPermission.IS_DELETED = 0
+
+			<if test="id != null">
+				AND sysPermission.ID = #{id}
+	        </if>
+	        <if test="code != null and code != ''">
+				AND sysPermission.CODE = #{code}
+	        </if>
+			<if test="name != null and name != ''">
+				AND sysPermission.NAME like  '%' || '${name}' || '%'
+	        </if>
+	        <if test="levels != null">
+				AND sysPermission.LEVELS = #{levels}
+	        </if>
+	        <if test="levelOrder != null">
+				AND sysPermission.LEVEL_ORDER = #{levelOrder}
+	        </if>
+	        <if test="type != null">
+				AND sysPermission.TYPE = #{type}
+	        </if>
+	        <if test="parentId != null">
+				AND sysPermission.PARENT_ID = #{parentId}
+	        </if>
+	        <if test="url != null">
+				AND sysPermission.URL = #{url}
+	        </if>
+	        <if test="isDeleted != null">
+				AND sysPermission.IS_DELETED = #{isDeleted}
+	        </if>
+	</sql>
+
+	<delete id="deleteByIdList" parameterType="SyspermissionVO">
+	   update SYS_PERMISSION set IS_DELETED = #{isDeleted}
+	   WHERE ID in(
+					<foreach item="guard" index="index"  collection="idList" separator=",">
+						${guard}
+		    		</foreach>
+	    		)
+	</delete>
+
+	<select id="selectPermissionId"  resultType="long">
+			select
+			SEQ_SYS_PERMISSION_ID.nextval as id from dual
+	</select>
+
+	<insert id="insert" parameterType="Syspermission">
+			<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			SEQ_SYS_PERMISSION_ID.NEXTVAL AS ID FROM DUAL
+		</selectKey>
+		insert into SYS_PERMISSION
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    ID,      
+	        <if test="name != null">
+				NAME,
+	        </if>
+	        <if test="levels != null">
+				LEVELS,
+	        </if>
+	         <if test="levelOrder != null">
+				LEVEL_ORDER,
+	        </if>
+	        <if test="code != null">
+				CODE,
+	        </if>
+	         <if test="type != null">
+				TYPE,
+	        </if>
+	        <if test="parentId != null">
+				PARENT_ID,
+	        </if>
+	        <if test="url != null">
+				URL,
+	        </if>
+			<if test="isDeleted != null">
+				IS_DELETED,
+	        </if>
+			<if test="status != null">
+				STATUS,
+	        </if>
+	        <if test="creatorId != null">
+				creator_Id,
+	        </if>
+	        <if test="creator != null">
+				creator,
+	        </if>
+	        <if test="createdTime != null">
+				CREATED_TIME,
+	        </if>
+	        <if test="modifierId != null">
+				modifier_Id,
+	        </if>
+	        <if test="modifier != null">
+				modifier,
+	        </if>
+	        <if test="modifiedTime != null">
+				modified_Time,
+	        </if>
+	        <if test="version != null">
+				VERSION,
+	        </if>
+	
+		</trim>
+		values
+		<trim prefix="(" suffixOverrides="," suffix=")">	    
+			    #{id},
+				        <if test="name != null">
+				#{name},
+	        </if>
+	        <if test="levels != null">
+				#{levels},
+	        </if>
+	         <if test="levelOrder != null">
+				#{levelOrder},
+	        </if>
+	        <if test="code != null">
+				#{code},
+	        </if>
+	         <if test="type != null">
+				#{type},
+	        </if>
+	        <if test="parentId != null">
+				#{parentId},
+	        </if>
+	        <if test="url != null">
+				#{url},
+	        </if>
+			<if test="isDeleted != null">
+				#{isDeleted},
+	        </if>
+			<if test="status != null">
+				#{status},
+	        </if>
+	        <if test="creatorId != null">
+				#{creatorId},
+	        </if>
+	        <if test="creator != null">
+				#{creator},
+	        </if>
+	        <if test="createdTime != null">
+				#{createdTime},
+	        </if>
+	        <if test="modifierId != null">
+				#{modifierId},
+	        </if>
+	        <if test="modifier != null">
+				#{modifier},
+	        </if>
+	        <if test="modifiedTime != null">
+				#{modifiedTime},
+	        </if>
+	        <if test="version != null">
+				#{version}
+	        </if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="SyspermissionVO">
+		update SYS_PERMISSION
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null">
+				NAME = #{name},
+	        </if>
+	        <if test="levels != null">
+				LEVELS = #{levels},
+	        </if>
+	         <if test="levelOrder != null">
+				LEVEL_ORDER = #{levelOrder},
+	        </if>
+	        <if test="code != null">
+				CODE = #{code},
+	        </if>
+	         <if test="type != null">
+				TYPE = #{type},
+	        </if>
+	        <if test="parentId != null">
+				PARENT_ID = #{parentId},
+	        </if>
+	        <if test="url != null">
+				URL = #{url},
+	        </if>
+			<if test="isDeleted != null">
+				IS_DELETED = #{isDeleted},
+	        </if>
+			<if test="status != null">
+				STATUS = #{status},
+	        </if>
+	        <if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+	        </if>
+	        <if test="creator != null">
+				 CREATOR = #{creator},
+	        </if>
+	        <if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+	        </if>
+	        <if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+	        </if>
+	        <if test="modifier != null">
+				MODIFIER = #{modifier},
+	        </if>
+	        <if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+	        </if>
+	        <if test="version != null">
+				VERSION =#{version}
+	        </if>
+		</trim>
+		where id = #{id}
+ 
+	</update>
+	<delete id="delete" parameterType="java.lang.Long">
+		   UPDATE  SYS_PERMISSION SET IS_DELETED = 1 WHERE ID = #{ID}
+	</delete>
+
+		<select id="get" parameterType="java.lang.Long" resultMap="sysPermissionResultMap">
+			<include refid="sysPermissionSelective" />
+			where sysPermission.id = #{id}
+		</select>
+		
+		<!-- CM-2747 zhangds begin -->
+		<!-- CM-2747：在查询中添加了添加排序   -->
+		<select id="findListByVO" parameterType="SyspermissionVO"  resultMap="sysPermissionResultMap">
+			<include refid="sysPermissionSelective" />
+			<include refid="sysPermissionConditions" />
+			ORDER BY sysPermission.LEVELS,sysPermission.LEVEL_ORDER
+		</select>
+		
+		<!-- CM-2747：新建查询方法   -->
+		<select id="findListByRoleId" parameterType="java.lang.Long" resultMap="sysPermissionResultMap">
+			<include refid="sysPermissionSelective" />
+			inner join sys_role_permission srp on srp.permission_id = sysPermission.id and role_id = #{roleId}
+			ORDER BY sysPermission.LEVELS,sysPermission.LEVEL_ORDER
+		</select>
+		
+		<!-- CM-2747 zhangds end -->
+		
+		<select id="count" parameterType="SyspermissionVO"  resultType="java.lang.Integer"> 
+		  SELECT count(*) as total FROM (
+		  
+				<include refid="sysPermissionSelective" />
+				<include refid="sysPermissionConditions" />
+				) 
+		</select>
+		
+		<!-- 查询指定字段是否有重复 -->
+		<select id="exists" parameterType="java.util.Map"  resultType="java.lang.Integer"> 
+			select count(*) from SYS_USER sysPermission 	
+			<where>
+				<if test="name != null">
+					sysPermission.name = #{name}
+				</if>	
+			</where>
+		</select>
+
+		<select id="findWithPG" parameterType="SyspermissionVO"  resultMap="sysPermissionResultMap">
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+			<include refid="sysPermissionSelective" />
+			<include refid="sysPermissionConditions" />
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy"/>
+			<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+		</select>
+</mapper>

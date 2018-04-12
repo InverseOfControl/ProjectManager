@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.ProductDetailManagerMapper">
+	<!-- 单表查询结果集 -->
+	<resultMap type="com.ezendai.credit2.master.model.ProductDetailManager" id="ProductDetailManagerResultMap">
+		<id property="id" column="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="productId"         column="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="productName"       column="productName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="carProductType"    column="carProductType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="productTypeName"    column="productTypeName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="sumRate"           column="sumRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="term"              column="term" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="lowerLimit"        column="lowerLimit"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="upperLimit"        column="upperLimit"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="status"            column="status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="remark"            column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="version"           column="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="yearRate"          column="yearRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="memberType"        column="memberType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="riskRate"          column="riskRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="monthRate"         column="monthRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+		<result property="thirdFeeRate"      column="thirdFeeRate"      jdbcType="NUMERIC" javaType="java.math.BigDecimal"  />
+	</resultMap>
+	
+	<sql id="productDetailColums">
+	   productDetail.id as id,
+	   product.id as productId,
+       product.product_name as productName,
+       productDetail.car_Product_Type as carProductType,
+       product.product_type_name as productTypeName,
+       productDetail.sum_rate as sumRate,
+       productDetail.term as term,
+       productDetail.lower_limit as lowerLimit,
+       productDetail.upper_limit as upperLimit,
+       productDetail.status as status,
+       productDetail.remark as remark,
+       productDetail.version as version,
+       productDetail.year_rate as yearRate,
+       productDetail.member_type as memberType,
+       productDetail.risk_rate as riskRate,
+       productDetail.month_rate as monthRate,
+       productDetail.third_fee_Rate as thirdFeeRate
+	</sql> 
+	
+	<sql id="productDetailConditions">
+		<if test="productId != '' and productId != null">
+			and productDetail.product_id = #{productId}
+		</if>
+		<if test="carProductType != null">
+			and productDetail.car_product_type = #{carProductType}
+		</if>
+	</sql>
+	<!-- page -->
+	<select id="getProductDetailManagerPage" resultMap="ProductDetailManagerResultMap" parameterType="com.ezendai.credit2.master.vo.ProductDetailManagerVO">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart"/>
+		select  
+			<include refid="productDetailColums"/>
+		from PRODUCT_DETAIL productDetail
+		left join PRODUCT product on product.id = productDetail.product_id
+		where 1=1
+			<include refid="productDetailConditions"/>
+		order by productDetail.id
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd"/>
+	</select>
+	<!-- 主键获取系统参数信息 -->
+	<select id="getProductDetailManager" resultMap="ProductDetailManagerResultMap" parameterType="java.lang.Long">
+		select 
+			<include refid="productDetailColums"/>
+		from PRODUCT_DETAIL productDetail
+		left join PRODUCT product on product.id = productDetail.product_id
+		where productDetail.id = #{id}
+	</select>
+	
+	<!-- 多条件获取系统参数信息 -->
+	<select id="getProductDetailManagerByConditions" resultMap="ProductDetailManagerResultMap" parameterType="com.ezendai.credit2.master.vo.ProductDetailManagerVO">
+		select  
+			<include refid="productDetailColums"/>
+		from PRODUCT_DETAIL productDetail
+		left join PRODUCT product on product.id = productDetail.product_id
+		where 1=1
+			<include refid="productDetailConditions"/>
+		order by product.id
+	</select>
+	
+	<!-- 获取系统参数总条数 -->
+	<select id="getProductDetailManagerCount"  resultType="int"  parameterType="com.ezendai.credit2.master.vo.ProductDetailManagerVO">
+		select count(*) from PRODUCT_DETAIL productDetail
+		left join PRODUCT product on product.id = productDetail.product_id
+		where 1=1
+			<include refid="productDetailConditions"/>
+		
+	</select>
+	
+	
+	<!-- 添加系统参数信息 -->
+	<insert id="insert"  parameterType="com.ezendai.credit2.master.model.ProductDetailManager">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			select SEQ_PRODUCT_DETAIL_ID.Nextval as id from dual
+	    </selectKey>
+		INSERT INTO PRODUCT_DETAIL 
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    ID,
+			<if test="productId != null and productId !=''">
+				PRODUCT_ID,
+	        </if> 
+			<if test="carProductType != null ">
+				CAR_PRODUCT_TYPE,
+	        </if>  
+			<if test="sumRate != null ">
+				SUM_RATE,
+	        </if>  
+			<if test="term != null ">
+				TERM,
+	        </if>  
+			<if test="lowerLimit != null ">
+				lower_Limit,
+	        </if>  
+			<if test="upperLimit != null ">
+				UPPER_LIMIT,
+	        </if>  
+			<if test="status != null ">
+				STATUS,
+	        </if>  
+			<if test="remark != null and remark !=''">
+				REMARK,
+	        </if>  
+			<if test="version != null ">
+				VERSION,
+	        </if>  
+	        <if test="yearRate != null ">
+				YEAR_RATE,
+	        </if>  
+			<if test="memberType != null ">
+				MEMBER_TYPE,
+	        </if>  
+			<if test="monthRate != null ">
+				MONTH_RATE,
+	        </if>  
+			<if test="thirdFeeRate != null ">
+				THIRD_FEE_RATE,
+	        </if>  
+			<if test="riskRate != null ">
+				RISK_RATE,
+	        </if>  
+			
+	    </trim>
+		values 
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    #{id},
+			<if test="productId != null and productId !=''">
+				#{productId},
+	        </if>  
+			<if test="carProductType != null ">
+				#{carProductType},
+	        </if>  
+			<if test="sumRate != null ">
+				#{sumRate},
+	        </if>  
+			<if test="term != null ">
+				#{term},
+	        </if>  
+			<if test="lowerLimit != null ">
+				#{lowerLimit},
+	        </if>  
+			<if test="upperLimit != null ">
+				#{upperLimit},
+	        </if>  
+			<if test="status != null ">
+				#{status},
+	        </if>  
+			<if test="remark != null and remark !=''">
+				#{remark},
+	        </if>  
+			<if test="version != null ">
+				#{version},
+	        </if>  
+			<if test="yearRate != null ">
+				#{yearRate},
+	        </if>  
+			<if test="memberType != null">
+				#{memberType},
+	        </if>  
+			<if test="thirdFeeRate != null ">
+				#{thirdFeeRate},
+	        </if>  
+			<if test="monthRate != null ">
+				#{monthRate},
+	        </if>  
+			<if test="riskRate != null ">
+				#{riskRate}
+	        </if>  
+	    </trim>
+	</insert>
+	
+	<!-- 主键修改系统参数信息 -->
+	<update id="updateProductDetailManager"  parameterType="com.ezendai.credit2.master.vo.ProductDetailManagerVO">
+		update PRODUCT_DETAIL productDetail 
+		<trim prefix="set" suffixOverrides="," >
+			<if test="productId != null and productId !=''">
+				productDetail.product_Id = #{productId},
+	        </if>  
+			<if test="carProductType != null ">
+				productDetail.car_Product_Type = #{carProductType},
+	        </if>  
+			<if test="sumRate != null ">
+				productDetail.sum_Rate = #{sumRate},
+	        </if>  
+			<if test="term != null ">
+				productDetail.term = #{term},
+	        </if>  
+			<if test="lowerLimit != null ">
+				productDetail.lower_Limit = #{lowerLimit},
+	        </if>  
+			<if test="upperLimit != null ">
+				productDetail.upper_Limit = #{upperLimit},
+	        </if>  
+			<if test="status != null ">
+				productDetail.status = #{status},
+	        </if>  
+			<if test="remark != null and remark !=''">
+				productDetail.remark = #{remark},
+	        </if>  
+			<if test="version != null ">
+				productDetail.version = #{version},
+	        </if>  
+			<if test="yearRate != null ">
+				productDetail.year_Rate = #{yearRate},
+	        </if>  
+			<if test="memberType != null">
+				productDetail.member_Type = #{memberType},
+	        </if>  
+			<if test="thirdFeeRate != null ">
+				productDetail.third_Fee_Rate = #{thirdFeeRate},
+	        </if>  
+			<if test="monthRate != null ">
+				productDetail.month_Rate = #{monthRate},
+	        </if>  
+			<if test="riskRate != null ">
+				productDetail.risk_Rate = #{riskRate}
+	        </if>  
+		</trim>
+		where productDetail.id=#{id}
+	</update>
+	
+</mapper>

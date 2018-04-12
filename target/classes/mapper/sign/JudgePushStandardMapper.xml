@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.LoanManageMapper">
+
+  
+  <select id="findLonaById" resultType="java.util.Map" parameterType="java.util.Map">
+		select ID as id,LCB_BORROW_NO as lcb_borrow_no,LCB_BORROW_STATUS as lcb_borrow_status from loan where id=#{id}
+  </select>
+</mapper>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.system.mapper.SysJobLogMapper">
+	<resultMap id="sysJobLogResultMap" type="SysJobLog" >
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="RUN_IP" property="runIP" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="RESULT_STATE" property="resultState" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="HANDLE_NUM" property="handleNum" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="SUCCESS_NUM" property="successNum" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="ERROR_MESSAGE" property="errorMessage" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+	</resultMap>
+
+	<sql id="sysJobLogField">
+		ID, NAME, RUN_IP, START_TIME, END_TIME, RESULT_STATE, HANDLE_NUM, SUCCESS_NUM, ERROR_MESSAGE, 
+		REMARK, CREATOR_ID, CREATOR, CREATED_TIME, VERSION
+	</sql>
+	
+	<sql id="sysJobLogSelective">
+		SELECT
+		<include refid="sysJobLogField" />
+		FROM SYS_JOB_LOG
+	</sql>
+	
+	<sql id="sysJobLogConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				ID = #{ID}
+			</if>
+			<if test="name != null and name != ''">
+				AND NAME = #{name}
+			</if>
+			<if test="runIP != null and runIP != ''">
+				AND RUN_IP = #{runIP}
+			</if>
+			<if test="startTime != null">
+				AND START_TIME = #{startTime}
+			</if>
+			<if test="endTime != null">
+				AND END_TIME = #{endTime}
+			</if>
+			<if test="resultState != null">
+				AND RESULT_STATE = #{resultState}
+			</if>
+			<if test="handleNum != null">
+				AND HANDLE_NUM = #{handleNum}
+			</if>
+			<if test="successNum != null">
+				AND SUCCESS_NUM = #{successNum}
+			</if>
+			<if test="errorMessage != null and errorMessage != ''">
+				AND ERROR_MESSAGE = #{errorMessage}
+			</if>
+			<if test="remark != null and remark != ''">
+				AND REMARK = #{remark}
+			</if>
+			<if test="creatorId != null">
+				AND CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null">
+				AND CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND CREATED_TIME = #{createdTime}
+			</if>
+			<if test="version != null">
+				AND VERSION = #{version}
+			</if>
+			<if test="invalidState != null and invalidState != ''">
+				AND 1 = 1
+			</if>
+			<if test="effectiveState != null and effectiveState != ''">
+				AND RESULT_STATE in (${effectiveState})
+			</if>
+		</trim>
+	</sql>
+	
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM from SYS_JOB_LOG WHERE ID = #{id}
+	</select>
+	
+	<select id="count" parameterType="SysJobLogVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="sysJobLogSelective" />
+		<include refid="sysJobLogConditions" />
+		)
+	</select>
+	
+	<select id="findWithPG" parameterType="SysJobLogVO" resultMap="sysJobLogResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="sysJobLogSelective" />
+		<include refid="sysJobLogConditions" />
+		ORDER BY SYS_JOB_LOG.ID DESC
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+	<select id="findListByVO" parameterType="SysJobLogVO" resultMap="sysJobLogResultMap">
+		<include refid="sysJobLogSelective" />
+		<include refid="sysJobLogConditions" />
+	</select>
+	
+	<insert id="insert" parameterType="SysJobLog">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_sys_job_log_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO SYS_JOB_LOG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="name != null and name != ''">
+				NAME,
+			</if>
+			<if test="runIP != null and runIP != ''">
+				RUN_IP,
+			</if>
+			<if test="startTime != null">
+				START_TIME,
+			</if>
+			<if test="endTime != null">
+				END_TIME,
+			</if>
+			<if test="resultState != null">
+				RESULT_STATE,
+			</if>
+			<if test="handleNum != null">
+				HANDLE_NUM,
+			</if>
+			<if test="successNum != null">
+				SUCCESS_NUM,
+			</if>
+			<if test="errorMessage != null and errorMessage != ''">
+				ERROR_MESSAGE,
+			</if>
+			<if test="remark != null and remark != ''">
+				REMARK,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="version != null and version != ''">
+				VERSION,
+			</if>
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="name != null and name != ''">
+				#{name},
+			</if>
+			<if test="runIP != null and runIP != ''">
+				#{runIP},
+			</if>
+			<if test="startTime != null">
+				#{startTime},
+			</if>
+			<if test="endTime != null">
+				#{endTime},
+			</if>
+			<if test="resultState != null">
+				#{resultState},
+			</if>
+			<if test="handleNum != null">
+				#{handleNum},
+			</if>
+			<if test="successNum != null">
+				#{successNum},
+			</if>
+			<if test="errorMessage != null and errorMessage != ''">
+				#{errorMessage},
+			</if>
+			<if test="remark != null and remark != ''">
+				#{remark},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="version != null and version != ''">
+				#{version},
+			</if>
+		</trim>
+	</insert>
+</mapper>

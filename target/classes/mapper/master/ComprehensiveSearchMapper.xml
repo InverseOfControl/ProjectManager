@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.master.mapper.ComprehensiveSearchMapper" >
+  <resultMap id="comprehensiveMap" type="com.ezendai.credit2.master.model.ComprehensiveSearch" >
+  	<result column="id" property="loanId"    />
+  	<result column="exten_id" property="extenId"    />
+    <result column="person_id" property="personId"  />
+    <result column="person_name" property="personName"    />
+    <result column="product_id" property="productId"   />
+    <result column="product_type" property="productType"    />
+    <result column="product_name" property="productName"    />
+    <result column="crm_name" property="crmName" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="idnum" property="idNum"  />
+    <result column="crm_id" property="crmId"  />
+    <result column="service_id" property="serviceId"  />
+    <result column="service_name" property="serviceName"     />  
+    <result column="profession_type" property="professionType"   />
+    <result column="purpose" property="purpose"   /> 
+    <result column="AUDIT_MONEY" property="auditMoney"   />    
+    <result column="PACT_MONEY" property="pactMoney"   />    
+    <result column="audit_time" property="time"   />  
+    <result column="status" property="status"   />  
+    <result column="status_str" property="statusStr"   /> 
+    <result column="EXTENSION_TIME" property="extensionTime"   /> 
+  </resultMap> 
+  <select id="getComprehensiveSearchList"  resultMap="comprehensiveMap" parameterType="com.ezendai.credit2.master.vo.ComprehensiveSearchVO" >
+    <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+  	  select * from(select * from (  	select l.id,per.id as person_id ,pro.id as product_id,l.product_type,per.name as person_name,pro.product_name,crm.name as crm_name,service.name as service_name,per.idnum,per.profession_type,l.purpose,l.pact_money,l.audit_money,l.audit_time,l.status ,se.enum_value as status_str
+  	  				,	0 as EXTENSION_TIME , null as exten_id,l.contract_confirm_date,l.GRANT_DATE from  loan l  
+        left join person per on per.id=l.person_id
+        left join product pro on pro.id=l.product_id
+        left join sys_user crm on crm.id=l.crm_id
+        left join sys_user service on service.id=l.service_id
+        left join sys_enumerate se on se.enum_code = l.status
+  		 <include refid="loanConditions" />
+		union all
+			   SELECT
+		 		   l.id,per.id as person_id ,pro.id as product_id,EXTENSION.product_type,per.name as person_name,pro.product_name,crm.name as crm_name,service.name as service_name,per.idnum,per.profession_type,l.purpose,EXTENSION.pact_money,EXTENSION.audit_money,EXTENSION.audit_time,EXTENSION.status ,se.enum_value as status_str
+							,EXTENSION.EXTENSION_TIME, EXTENSION.id as exten_id,EXTENSION.contract_confirm_date,EXTENSION.GRANT_DATE
+		FROM EXTENSION 
+		left join LOAN_EXTENSION loanExtension on EXTENSION.ID = loanExtension.EXTENSION_ID
+		left join LOAN  l on loanExtension.LOAN_ID = l.ID
+      	left join person per on per.id=l.person_id
+        left join product pro on pro.id=l.product_id
+        left join sys_user crm on crm.id=l.crm_id
+        left join sys_user service on service.id=l.service_id
+        left join sys_enumerate se on se.enum_code = EXTENSION.status
+		  <include refid="loanConditionsExtensionTime" />	  
+       ))b order by b.GRANT_DATE asc,b.contract_confirm_date asc
+	 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+  </select>
+  <select id="getComprehensiveSearchCount"  resultType="integer" parameterType="com.ezendai.credit2.master.vo.ComprehensiveSearchVO" >
+		 select count(*) from (  	select l.id,per.id as person_id ,pro.id as product_id,l.product_type,per.name as person_name,pro.product_name,crm.name as crm_name,service.name as service_name,per.idnum,per.profession_type,l.purpose,l.pact_money,l.audit_money,l.audit_time,l.status ,se.enum_value as status_str from  loan l  
+        left join person per on per.id=l.person_id
+        left join product pro on pro.id=l.product_id
+        left join sys_user crm on crm.id=l.crm_id
+        left join sys_user service on service.id=l.service_id
+        left join sys_enumerate se on se.enum_code = l.status
+  		 <include refid="loanConditions" />
+		union all
+			   SELECT
+		 		  l.id,per.id as person_id ,pro.id as product_id,EXTENSION.product_type,per.name as person_name,pro.product_name,crm.name as crm_name,service.name as service_name,per.idnum,per.profession_type,l.purpose,EXTENSION.pact_money,EXTENSION.audit_money,EXTENSION.audit_time,EXTENSION.status ,se.enum_value as status_str
+		 	FROM EXTENSION 
+		left join LOAN_EXTENSION loanExtension on EXTENSION.ID = loanExtension.EXTENSION_ID
+		left join LOAN  l on loanExtension.LOAN_ID = l.ID
+      	left join person per on per.id=l.person_id
+        left join product pro on pro.id=l.product_id
+        left join sys_user crm on crm.id=l.crm_id
+        left join sys_user service on service.id=l.service_id
+        left join sys_enumerate se on se.enum_code = EXTENSION.status
+		  <include refid="loanConditionsExtensionTime" />
+       )
+  </select>
+  
+  <sql id="loanConditions">
+		<where>
+		 se.enum_type='LOAN_STATUS'
+ 		<if test="idNum != null and idNum != ''">
+			AND per.IDNUM = #{idNum}
+		</if>
+		<if test="personName != null and personName != ''">
+			AND per.NAME = #{personName}
+		</if>
+		<if test="tel != null and tel != ''">
+			AND per.MOBILE_PHONE = #{tel}
+		</if>
+		 	
+		 <if test=" salesDeptId != null and salesDeptId != ''">
+			and  l.SALES_DEPT_ID =#{salesDeptId}
+		 </if>	
+		
+	 	 <if test="status != null and status != 0">  
+		 	and l.status = #{status}
+		 </if>
+	 	 <if test="crmId != null and crmId != 0">  
+		 	and  crm.id = #{crmId}
+		 </if>
+		 <if test="productType  != '' and  productType !=null">
+	 	 	  and  pro.id= #{productType}
+	 	 </if>
+	 	  <if test="extensionTime  != '' and  extensionTime !=null and extensionTime != '-2' and extensionTime != '-1'">
+	 	 	  and  per.id = -1
+	 	 </if>
+		</where>
+	</sql>
+	
+	 <sql id="loanConditionsExtensionTime">
+		<where>
+		 se.enum_type='LOAN_STATUS'
+ 		<if test="idNum != null and idNum != ''">
+			AND per.IDNUM = #{idNum}
+		</if>
+		<if test="personName != null and personName != ''">
+			AND per.NAME = #{personName}
+		</if>
+		<if test="tel != null and tel != ''">
+			AND per.MOBILE_PHONE = #{tel}
+		</if>
+		 	
+		 <if test=" salesDeptId != null and salesDeptId != ''">
+			and  l.SALES_DEPT_ID =#{salesDeptId}
+		 </if>	
+		
+	 	 <if test="status != null and status != 0">  
+		 	and l.status = #{status}
+		 </if>
+	 	 <if test="crmId != null and crmId != 0">  
+		 	and  crm.id = #{crmId}
+		 </if>
+		 <if test="productType  != '' and  productType !=null">
+	 	 	  and  pro.id= #{productType}
+	 	 </if>
+	 	 <if test="extensionTime  != '' and  extensionTime !=null and extensionTime != '-1' and extensionTime != '-2'">
+	 	 	  and  EXTENSION.EXTENSION_TIME= #{extensionTime}
+	 	 </if>
+	 	 <if test="extensionTime == '-2' ">
+	 	      and  per.id = -1
+	 	 </if>
+		</where>
+	</sql>
+</mapper>

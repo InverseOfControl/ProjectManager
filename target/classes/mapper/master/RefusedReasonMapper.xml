@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.RefusedReasonMapper">
+	<!-- 单表查询结果集 -->
+	<resultMap type="RefusedReason" id="refusedReasonResultMap">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="reason" column="REASON" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="explain" column="EXPLAIN" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="type" column="TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="parentId" column="PARENT_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="levelOrder" column="LEVEL_ORDER" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="loanType" column="LOAN_TYPE" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="toAllProduct" column="TO_ALL_PRODUCT" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="canRequestDays" column="CAN_REQUEST_DAYS" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="creatorId" column="CREATOR_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="creator" column="CREATOR" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="modifierId" column="MODIFIER_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="modifier" column="MODIFIER" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="modifiedTime" column="MODIFIED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="isDeleted" column="IS_DELETED" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result property="version" column="VERSION" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="remark" column="REMARK" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="parentReason" column="parentReason" jdbcType="VARCHAR" javaType="java.lang.String" />
+		
+	 	<association property="parent" column="PARENT_ID" javaType="RejectReason" resultMap="parentResultMap"/>
+	</resultMap>
+	<!-- 1对1关系 -->
+	<resultMap type="RefusedReason" id="parentResultMap">
+		<id property="id" column="PARENT_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="reason" column="PARENT_REASON" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	
+	<sql id="refusedReasonField">
+	    rejectReason.ID,
+	    rejectReason.REASON,
+	    rejectReason.EXPLAIN,   
+	    rejectReason.TYPE,
+	    (select reason from REJECT_REASON where id = rejectReason.PARENT_ID) as parentReason,
+	    rejectReason.LEVEL_ORDER,
+	    rejectReason.LOAN_TYPE,
+	    rejectReason.TO_ALL_PRODUCT,
+	    rejectReason.CAN_REQUEST_DAYS,
+		rejectReason.CREATOR_ID,
+	   	rejectReason.CREATOR,rejectReason.CREATED_TIME,rejectReason.MODIFIER_ID,rejectReason.MODIFIER,rejectReason.MODIFIED_TIME,
+	  	rejectReason.IS_DELETED,rejectReason.VERSION,rejectReason.REMARK
+	</sql>
+
+	<!-- 分页获取决绝原因信息 -->
+	<select id="getReasonList" resultMap="refusedReasonResultMap" parameterType="com.ezendai.credit2.master.vo.RefusedReasonVO">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart"/>
+		select 
+		<include refid="refusedReasonField" />
+		from REJECT_REASON rejectReason
+		<include refid="refusedReasonConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd"/>
+	</select>	
+	
+	<!-- 获取拒绝原因总条数 -->
+	<select id="getReasonCount"  resultType="int"  parameterType="com.ezendai.credit2.master.vo.RefusedReasonVO">
+		select count(*) from REJECT_REASON rejectReason
+		<include refid="refusedReasonConditions" />
+	</select>
+	
+	<!-- 拼接查询条件 -->
+	<sql id="refusedReasonConditions">
+	   where 1=1
+		<if test="reason != null and reason != ''">
+			AND REASON like '%${reason}%'
+        </if>
+	</sql>
+	
+	<!-- 查询所有的父原因 -->
+	<select id="findAllParentReasonList" resultMap="refusedReasonResultMap" >
+		select r.ID,r.REASON FROM REJECT_REASON r WHERE r.PARENT_ID IS NULL  AND r.IS_DELETED = 0 order by level_order
+	</select>
+	
+	<!-- 添加新拒绝原因信息 -->
+	<insert id="addReason"  parameterType="com.ezendai.credit2.master.vo.RefusedReasonVO">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			select SEQ_REJECT_REASON_ID.nextval as id from dual
+	    </selectKey>
+		insert into REJECT_REASON 
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    ID,
+			<if test="reason != null and reason !=''">
+				REASON,
+	        </if>
+	        <if test="type != null and type !=''">
+				TYPE,
+	        </if>  
+			<if test="parentId != null and parentId !=''">
+				PARENT_ID,
+	        </if>  
+			<if test="levelOrder != null and levelOrder !=''">
+				LEVEL_ORDER,
+	        </if>  
+			<if test="canRequestDays != null and canRequestDays !=''">
+				CAN_REQUEST_DAYS,
+	        </if>
+	        <if test="remark != null and remark != ''">
+				REMARK,
+			</if>
+			<if test="creatorId != null and creatorId != ''">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null and creator != ''">
+				CREATOR,
+			</if>
+			<if test="loanType != null and loanType != ''">
+				LOAN_TYPE,
+			</if>
+			<if test="createdTime != null and createdTime != ''">
+				CREATED_TIME,
+			</if>
+				IS_DELETED,
+			<if test="version != null and version != ''">
+				VERSION,
+			</if>
+	    </trim>
+		values 
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    #{id},
+			<if test="reason != null and reason !=''">
+				#{reason},
+	        </if>
+			<if test="type != null and type !=''">
+				#{type},
+	        </if>
+			<if test="parentId != null and parentId !=''">
+				#{parentId},
+	        </if>
+			<if test="levelOrder != null and levelOrder !=''">
+				#{levelOrder},
+	        </if>
+			<if test="canRequestDays != null and canRequestDays !=''">
+				#{canRequestDays},
+	        </if>
+			<if test="remark != null and remark !=''">
+				#{remark},
+	        </if>
+			<if test="creatorId != null and creatorId !=''">
+				#{creatorId},
+	        </if>
+			<if test="creator != null and creator !=''">
+				#{creator},
+	        </if>
+	        <if test="loanType != null and loanType != ''">
+				#{loanType},
+			</if>
+			<if test="createdTime != null and createdTime !=''">
+				#{createdTime},
+	        </if>
+	        0, 
+			<if test="version != null and version !=''">
+				#{version},
+	        </if>
+	    </trim>
+	</insert>
+	
+	<!-- 主键获取单个拒绝原因信息 -->
+	<select id="getReasonById" resultMap="refusedReasonResultMap" parameterType="java.lang.Long">
+		select 
+		<include refid="refusedReasonField"/>
+		,rejectReason.PARENT_ID
+		from REJECT_REASON rejectReason
+		where rejectReason.id = #{id}
+	</select>
+	
+	<!-- 禁用/启用 -->
+	<update id="disableReason"  parameterType="com.ezendai.credit2.master.vo.RefusedReasonVO">
+		update REJECT_REASON reason 
+			set IS_DELETED = #{isDeleted}
+		WHERE reason.id=#{id}
+	</update>
+	
+	<!-- 主键修改拒绝原因信息 -->
+	<update id="updateReason"  parameterType="com.ezendai.credit2.master.vo.RefusedReasonVO">
+		update REJECT_REASON reason 
+		<trim prefix="set" suffixOverrides="," >
+			<if test="reason != null and reason !=''">
+				reason.reason = #{reason},
+			</if>
+			<if test="parentId == null">
+				reason.PARENT_ID = null,
+			</if>
+			<if test="parentId != null and parentId !=''">
+				reason.PARENT_ID = #{parentId},
+			</if>
+			<if test="levelOrder == null">
+				reason.LEVEL_ORDER = null,
+			</if>
+			<if test="levelOrder != null and levelOrder !=''">
+				reason.LEVEL_ORDER = #{levelOrder},
+			</if>
+			<if test="remark == null">
+				reason.REMARK = null,
+			</if>
+			<if test="remark == ''">
+				reason.REMARK = null,
+			</if>
+			<if test="remark != null and remark !=''">
+				reason.REMARK = #{remark},
+			</if>
+			<if test="canRequestDays != null and canRequestDays !=''">
+				reason.CAN_REQUEST_DAYS = #{canRequestDays},
+			</if>
+			<if test="version != null and version !=''">
+				reason.VERSION = #{version},
+			</if>
+			<if test="modifier != null and modifier !=''">
+				reason.MODIFIER = #{modifier},
+			</if>
+			<if test="modifierId != null and modifierId !=''">
+				reason.MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifiedTime != null and modifiedTime !=''">
+				reason.MODIFIED_TIME = #{modifiedTime},
+			</if>
+				reason.TYPE = #{type},
+		</trim>
+		WHERE reason.id=#{id}
+	</update>
+</mapper>

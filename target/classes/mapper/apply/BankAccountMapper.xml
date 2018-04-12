@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezendai.credit2.apply.mapper.BankAccountMapper">
+	<resultMap id="bankAccountResultMap" type="BankAccount">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="account" column="ACCOUNT" jdbcType="VARCHAR"	javaType="java.lang.String" />
+		<result property="accountName" column="ACCOUNT_NAME" jdbcType="VARCHAR"	javaType="java.lang.String" />
+		<result property="bankName" column="BANK_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="branchName" column="BRANCH_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="status" column="STATUS" jdbcType="NUMERIC"  javaType="java.lang.Integer" />
+		<result property="cardType" column="CARD_TYPE" jdbcType="NUMERIC"  javaType="java.lang.Integer" />
+		<result property="version" column="VERSION" jdbcType="NUMERIC"	javaType="java.lang.Long" />
+		<result property="creatorId" column="CREATOR_ID" jdbcType="NUMERIC"	javaType="java.lang.Long" />
+		<result property="creator" column="CREATOR" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="modifierId" column="MODIFIER_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="modifier" column="MODIFIER" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="modifiedTime" column="MODIFIED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="accountAuthType" column="ACCOUNT_AUTH_TYPE" jdbcType="NUMERIC"  javaType="java.lang.Integer" />
+		<result property="bankId" column="BANK_ID" jdbcType="NUMERIC"  javaType="java.lang.Long" />
+		<association property="bank" column="BANK_ID" jdbcType="NUMERIC" javaType="Bank" resultMap="bankResultMap" />
+	</resultMap>
+	<resultMap type="Bank" id="bankResultMap">
+		<id property="id" column="BANK_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<id property="tppType" column="TPP_TYPE" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	</resultMap>
+
+	<sql id="bankAccountField">
+		BANK_ACCOUNT.ID,
+		BANK_ACCOUNT.ACCOUNT,
+		BANK_ACCOUNT.ACCOUNT_NAME,
+		BANK_ACCOUNT.BANK_NAME,
+		BANK_ACCOUNT.BRANCH_NAME,
+		BANK_ACCOUNT.STATUS,
+		BANK_ACCOUNT.BANK_ID,
+		BANK_ACCOUNT.VERSION,
+		BANK_ACCOUNT.CREATOR_ID,
+		BANK_ACCOUNT.CREATOR,
+		BANK_ACCOUNT.CREATED_TIME,
+		BANK_ACCOUNT.MODIFIER_ID,
+		BANK_ACCOUNT.MODIFIER,
+		BANK_ACCOUNT.MODIFIED_TIME,
+		BANK_ACCOUNT.ACCOUNT_AUTH_TYPE,
+		BANK_ACCOUNT.CARD_TYPE
+	</sql>
+
+	<sql id="bankAccountSelective">
+		SELECT
+		<include refid="bankAccountField" />
+		FROM BANK_ACCOUNT
+	</sql>
+	
+	<sql id="bankAccountSelectiveExtesnsion">
+	    SELECT
+		<include refid="bankAccountField" />
+		, BANK.TPP_TYPE
+		FROM BANK_ACCOUNT INNER JOIN BANK ON BANK_ACCOUNT.BANK_ID = BANK.ID  
+	</sql>
+	
+	<sql id="bankAccountSelectiveDetailsExtesnsion">
+	    SELECT
+		<include refid="bankAccountField" />
+		, BANK.TPP_TYPE
+		FROM BANK_ACCOUNT LEFT JOIN BANK ON BANK_ACCOUNT.BANK_ID = BANK.ID  
+	</sql>
+
+	<sql id="bankAccountOrderByConditions">
+		ORDER BY ID DESC
+	</sql>
+
+	<sql id="bankAccountConditions">
+		<where>
+			<if test="id != null">
+				BANK_ACCOUNT.ID = #{id}
+			</if>
+			<if test="account != null">
+				AND BANK_ACCOUNT.ACCOUNT = #{account}
+			</if>
+			<if test="accountName != null">
+				AND BANK_ACCOUNT.ACCOUNT_NAME = #{accountName}
+			</if>
+			<if test="bankName != null">
+				AND BANK_ACCOUNT.BANK_NAME = #{bankName}
+			</if>
+			<if test="branchName != null">
+				AND BANK_ACCOUNT.BRANCH_NAME = #{branchName}
+			</if>
+			<if test="version != null">
+				AND BANK_ACCOUNT.VERSION = #{version}
+			</if>
+			<if test="bank != null">
+				AND BANK_ACCOUNT.BANK_ID = #{bank.id}
+			</if>
+			<if test="accountAuthType != null">
+				AND BANK_ACCOUNT.ACCOUNT_AUTH_TYPE = #{accountAuthType}
+			</if>			
+		</where>
+	</sql>
+
+	<insert id="insert" parameterType="BankAccount">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT
+			seq_bank_account_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO BANK_ACCOUNT
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="account != null">
+				ACCOUNT,
+			</if>
+			<if test="accountName != null">
+				ACCOUNT_NAME,
+			</if>
+			<if test="bankName != null">
+				BANK_NAME,
+			</if>
+			<if test="branchName != null">
+				BRANCH_NAME,
+			</if>
+			<if test="bank != null"> <!-- TODO -->
+				BANK_ID,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="cardType != null">
+				CARD_TYPE,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="accountAuthType != null">
+				ACCOUNT_AUTH_TYPE,
+			</if>
+			
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			#{id},
+			<if test="account != null">
+				trim(#{account}),
+			</if>
+			<if test="accountName != null">
+				#{accountName},
+			</if>
+			<if test="bankName != null">
+				#{bankName},
+			</if>
+			<if test="branchName != null">
+				#{branchName},
+			</if>
+			<if test="bank != null"> <!-- TODO -->
+				#{bank.id},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="cardType != null">
+				#{cardType},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="accountAuthType != null">
+				#{accountAuthType},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="BankAccountVO">
+		UPDATE BANK_ACCOUNT
+		<trim prefix="set" suffixOverrides=",">
+			<if test="account != null">
+				ACCOUNT = trim(#{account}),
+			</if>
+			<if test="accountName != null">
+				ACCOUNT_NAME = #{accountName},
+			</if>
+			<if test="bankName != null">
+				BANK_NAME = #{bankName},
+			</if>
+			<if test="branchName != null">
+				BRANCH_NAME = #{branchName},
+			</if>
+			<if test="bank != null"> <!-- TODO -->
+				BANK_ID = #{bank.id},
+			</if>
+			<if test="status != null">
+				STATUS = #{status},
+			</if>
+			<if test="cardType != null">
+				CARD_TYPE = #{cardType},
+			</if>
+			<if test="version != null">
+				VERSION = #{version},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="accountAuthType != null">
+				ACCOUNT_AUTH_TYPE= #{accountAuthType},
+			</if>
+		</trim>
+		WHERE ID=#{id}
+		 <if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>  
+	</update>
+	
+	<update id="updateByIdList" parameterType="BankAccountVO">
+	UPDATE BANK_ACCOUNT
+		<trim prefix="set" suffixOverrides=",">
+			<if test="account != null">
+				ACCOUNT = trim(#{account}),
+			</if>
+			<if test="bankName != null">
+				BANK_NAME = #{bankName},
+			</if>
+			<if test="branchName != null">
+				BRANCH_NAME = #{branchName},
+			</if>
+			<if test="bank != null"> <!-- TODO -->
+				BANK_ID = #{bank.id},
+			</if>
+			<if test="status != null">
+				STATUS = #{status},
+			</if>
+			<if test="cardType != null">
+				CARD_TYPE = #{cardType},
+			</if>
+			<if test="version != null">
+				VERSION = #{version},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID = #{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME = #{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME = #{modifiedTime},
+			</if>
+			<if test="accountAuthType != null">
+				ACCOUNT_AUTH_TYPE = #{accountAuthType},
+			</if>
+		</trim>
+		WHERE ID IN(
+		<foreach item="id" index="index" collection="idList"
+			separator=",">
+			#{id}
+		</foreach>
+		)
+		 <if test="version != null">
+			AND VERSION = #{version} -1 
+     	</if>  
+	</update>
+
+	<select id="get" parameterType="java.lang.Long" resultMap="bankAccountResultMap">
+		<include refid="bankAccountSelective" />
+		WHERE BANK_ACCOUNT.ID = #{id}
+	</select>
+	<!--extension: retrieve the bank-tpptype  -->
+	<select id="getBankAccount" parameterType="java.lang.Long" resultMap="bankAccountResultMap">
+		<include refid="bankAccountSelectiveExtesnsion" />
+		WHERE BANK_ACCOUNT.ID = #{id}
+	</select>
+
+	<!--extension: retrieve the bankList  -->
+	<select id="getBankAccountDetails" parameterType="java.lang.Long" resultMap="bankAccountResultMap">
+		<include refid="bankAccountSelectiveDetailsExtesnsion" />
+		WHERE BANK_ACCOUNT.ID = #{id}
+	</select>
+
+	<select id="findListByVO" parameterType="BankAccountVO" resultMap="bankAccountResultMap">
+		<include refid="bankAccountSelective" />
+		<include refid="bankAccountConditions" />
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM BANK_ACCOUNT WHERE ID = #{id}
+	</delete>
+
+	<delete id="deleteByIdList" parameterType="BankAccountVO">
+		DELETE FROM BANK_ACCOUNT
+		WHERE ID IN(
+		<foreach item="id" index="index" collection="idList"
+			separator=",">
+			#{id}
+		</foreach>
+		)
+	</delete>
+
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM BANK_ACCOUNT
+		<where>
+			<if test="account != null">
+				AND BANK_ACCOUNT.ACCOUNT = #{account}
+			</if>
+			<if test="accountName != null">
+				AND BANK_ACCOUNT.ACCOUNT_NAME = #{accountName}
+			</if>
+			<if test="bankName != null">
+				AND BANK_ACCOUNT.BANK_NAME = #{bankName}
+			</if>
+			<if test="branchName != null">
+				AND BANK_ACCOUNT.BRANCH_NAME = #{branchName}
+			</if>
+		</where>
+	</select>
+
+	<select id="count" parameterType="BankAccountVO" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM (
+		<include refid="bankAccountSelective" />
+		<include refid="bankAccountConditions" />
+		) AS total
+	</select>
+
+	<select id="findWithPG" parameterType="BankAccountVO" resultMap="bankResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="bankAccountSelective" />
+		<include refid="bankAccountConditions" />
+		<include refid="bankAccountOrderByConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+	
+	<!-- 银行账户表,不改变原来的SQL自己再写一个分页SQL语句 -->
+	<select id="countExtension" parameterType="BankAccountVO" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM (
+		<include refid="bankAccountSelective" />
+		<include refid="bankAccountConditions" />
+		) total
+	</select>
+	
+	<select id="findWithPGExtension" parameterType="BankAccountVO" resultMap="bankAccountResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="bankAccountSelective" />
+		<include refid="bankAccountConditions" />
+		<include refid="bankAccountOrderByConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+</mapper>

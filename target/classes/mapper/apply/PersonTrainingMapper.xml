@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.PersonTrainingMapper">
+	<resultMap id="personTrainingResultMap" type="PersonTraining">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="LOAN_ID" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="PERSON_IDNUM" property="personIdnum" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="COURSE" property="course" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PERIOD" property="period" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="ENTRANCE_TIME" property="entranceTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="SCHOOL_DISTRICT" property="schoolDistrict" jdbcType="VARCHAR" javaType="java.lang.String" />
+		
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" />
+	    <result column="CREATED_TIME" property="createdTime" jdbcType="DATE" />
+	    <result column="CREATOR_ID" property="creatorId" jdbcType="DECIMAL" />
+	    <result column="MODIFIER_ID" property="modifierId" jdbcType="DECIMAL" />
+	    <result column="MODIFIER" property="modifier" jdbcType="VARCHAR" />
+	    <result column="MODIFIED_TIME" property="modifiedTime" jdbcType="DATE" />
+	    <result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		
+	
+	</resultMap>
+
+	<sql id="personTrainingField">
+		ID, LOAN_ID,PERSON_IDNUM, COURSE, PERIOD, ENTRANCE_TIME, SCHOOL_DISTRICT,
+		CREATOR, CREATED_TIME, CREATOR_ID, MODIFIER_ID, MODIFIER, MODIFIED_TIME,VERSION
+		
+	</sql>
+	
+	
+	<sql id="personTrainingConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				PERSON_TRAINING.ID = #{id}
+			</if>
+			<if test="loanId != null">
+				AND PERSON_TRAINING.LOAN_ID = #{loanId}
+			</if>
+			
+		
+		</trim>
+	</sql>
+	
+	
+	
+	<!-- findListByVO   -->
+	<select id="findListByVO"  resultMap="personTrainingResultMap" parameterType="PersonTrainingVO" >
+		SELECT
+		<include refid="personTrainingField" />		
+		FROM PERSON_TRAINING
+		<include refid="personTrainingConditions" />	
+	</select>
+	<update id="update" parameterType="PersonTrainingVO">
+		UPDATE PERSON_TRAINING
+		<trim prefix="set" suffixOverrides=",">
+			
+			<if test="course != null">
+				COURSE = #{course},
+        	</if>
+        	<if test="period != null">
+        	
+				PERIOD = #{period},
+        	</if>
+        	
+        	<if test="entranceTime != null">
+				ENTRANCE_TIME = #{entranceTime},
+        	</if>
+        	<if test="entranceTime == null">
+				ENTRANCE_TIME = #{entranceTime,jdbcType=TIMESTAMP},
+        	</if>
+        	<if test="schoolDistrict != null">
+				SCHOOL_DISTRICT = #{schoolDistrict},
+        	</if>
+        	
+		</trim>
+		WHERE LOAN_ID = #{loanId}	  
+		
+	</update>
+	<sql id="personTrainingSelective">
+		SELECT
+		<include refid="personTrainingField"/>
+		FROM PERSON_TRAINING
+	</sql>
+	<select id="get" resultMap="personTrainingResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="personTrainingField" />
+		FROM PERSON_TRAINING
+		WHERE ID = #{id}
+	</select>
+
+	<select id="getpersonTrainingByPersonId" resultMap="personTrainingResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="personTrainingField" />
+		FROM PERSON_TRAINING
+		WHERE PERSON_ID = #{personIdnum}
+	</select>
+
+	<insert id="insert" parameterType="PersonTraining">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT SEQ_PERSON_TRAINING.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO PERSON_TRAINING
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			ID,
+			<if test="loanId != null">
+				LOAN_ID,
+			</if>
+			<if test="personIdnum != null">
+				PERSON_IDNUM,
+			</if>
+			<if test="course != null">
+				COURSE,
+			</if>
+			<if test="period != null">
+				PERIOD,
+			</if>
+			<if test="entranceTime != null">
+				ENTRANCE_TIME,
+			</if>
+			<if test="schoolDistrict != null">
+				SCHOOL_DISTRICT,
+			</if>
+			 <if test="creator != null" >
+		        CREATOR,
+		      </if>
+		      <if test="createdTime != null" >
+		        CREATED_TIME,
+		      </if>
+		      <if test="creatorId != null" >
+		        CREATOR_ID,
+		      </if>
+		      <if test="modifierId != null" >
+		        MODIFIER_ID,
+		      </if>
+		      <if test="modifier != null" >
+		        MODIFIER,
+		      </if>
+		      <if test="modifiedTime != null" >
+		        MODIFIED_TIME,
+		      </if>
+	      	<if test="version != null">
+				VERSION,
+       		</if>
+			
+	
+		</trim>
+		VALUES
+		<trim prefix="(" suffixOverrides="," suffix=")">
+			#{id},
+			<if test="loanId != null">
+				#{loanId},
+			</if>
+			<if test="personIdnum != null">
+				#{personIdnum},
+			</if>
+			<if test="course != null">
+				#{course},
+			</if>
+			<if test="period != null">
+				#{period},
+			</if>
+			<if test="entranceTime != null">
+				#{entranceTime},
+			</if>
+			<if test="schoolDistrict != null">
+				#{schoolDistrict},
+			</if>
+			<if test="creator != null" >
+		        #{creator,jdbcType=VARCHAR},
+		      </if>
+		      <if test="createdTime != null" >
+		        #{createdTime,jdbcType=DATE},
+		      </if>
+		      <if test="creatorId != null" >
+		        #{creatorId,jdbcType=DECIMAL},
+		      </if>
+		      <if test="modifierId != null" >
+		        #{modifierId,jdbcType=DECIMAL},
+		      </if>
+		      <if test="modifier != null" >
+		        #{modifier,jdbcType=VARCHAR},
+		      </if>
+		      <if test="modifiedTime != null" >
+		        #{modifiedTime,jdbcType=DATE},
+		      </if>
+		       <if test="version != null" >
+        			#{version},
+      			</if>
+			
+		</trim>
+	</insert>
+	
+
+
+
+</mapper>

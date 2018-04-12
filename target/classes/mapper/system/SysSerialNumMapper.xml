@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezendai.credit2.system.mapper.SysSerialNumMapper">
+
+<resultMap  id="sysSerialNumResultMap" type="SysSerialNum">
+	<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="creatorId" column="CREATOR_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="creator" column="CREATOR" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result property="modifierId" column="MODIFIER_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="modifier" column="MODIFIER" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="modifiedTime" column="MODIFIED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result property="mark" column="MARK" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="version" column="VERSION" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+	<result property="dbDate" column="DB_DATE" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result property="code" column="CODE" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	<result property="currSeq" column="CURR_SEQ" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+</resultMap>
+
+<sql id="sysSerialNumField">
+	sysSerialNum.ID,
+	sysSerialNum.CREATOR_ID,
+	sysSerialNum.CREATOR,
+	sysSerialNum.CREATED_TIME,
+	sysSerialNum.MODIFIER_ID,
+	sysSerialNum.MODIFIER,
+	sysSerialNum.MODIFIED_TIME,
+	sysSerialNum.MARK,
+	sysSerialNum.VERSION,
+	sysSerialNum.CODE,
+	sysSerialNum.CURR_SEQ,
+	sysdate DB_DATE
+	
+</sql>
+
+<sql id="sysSerialNumSelective">
+	select 
+	<include refid="sysSerialNumField" />
+	from SYS_SERIAL_NUM sysSerialNum
+</sql>
+
+<sql id="sysSerialNumConditions">
+	<where>
+		<if test="code != null">
+			AND code = #{code}
+		</if>
+		<if test="code == null">
+			AND 1 = 2
+		</if>
+	</where>
+</sql>
+
+<update id="update" parameterType="SysSerialNumVO">
+	<if test="mode == 1">
+		update SYS_SERIAL_NUM
+		<trim prefix="set" suffixOverrides=",">
+			CURR_SEQ = 2,
+			MODIFIED_TIME = sysdate,
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="version != null">
+				VERSION = #{version},
+			</if>
+		</trim>
+		where id = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} - 1
+		</if>
+	</if>
+	<if test="mode == 0">
+		update SYS_SERIAL_NUM
+		<trim prefix="set" suffixOverrides=",">
+			CURR_SEQ = CURR_SEQ + 1,
+			MODIFIED_TIME = sysdate,
+			<if test="modifierId != null">
+				MODIFIER_ID = #{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier},
+			</if>
+			<if test="version != null">
+				VERSION = #{version},
+			</if>
+		</trim>
+		where id = #{id}
+		<if test="version != null">
+			AND VERSION = #{version} - 1
+		</if>
+	</if>
+	<if test="mode == -1">
+		update SYS_SERIAL_NUM
+		set MODIFIED_TIME = sysdate
+		where 1 = 2
+	</if>
+</update>
+
+<select id="findListByVO" parameterType="SysSerialNumVO"  resultMap="sysSerialNumResultMap">
+	<include refid="sysSerialNumSelective" />
+	<include refid="sysSerialNumConditions" />
+</select>
+</mapper>

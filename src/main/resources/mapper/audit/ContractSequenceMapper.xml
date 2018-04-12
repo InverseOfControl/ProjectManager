@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.audit.mapper.ContractSequenceMapper">
+	<resultMap id="contractSequenceResultMap" type="com.ezendai.credit2.audit.model.ContractSequence">
+		<id column="ID" property="id" jdbcType="DECIMAL" javaType="java.lang.Long" />
+	</resultMap>
+	<select id="getContractSequenceForCar" resultType="java.lang.Long">
+		SELECT seq_contract_number_car.nextval FROM dual
+	</select>
+
+	<select id="getContractSequenceForPeanuts" resultType="java.lang.Long">
+		SELECT seq_contract_number_peanuts.nextval FROM dual
+	</select>
+  
+</mapper>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.system.mapper.TaskManagementMapper">
+	<resultMap id="taskManagementResultMap"
+		type="com.ezendai.credit2.system.model.TaskManagement">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="taskName" column="TASK_NAME" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="className" column="CLASS_NAME" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="executionDate" column="EXECUTION_DATE"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="executionTime" column="EXECUTION_TIME"
+			jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="taskDetailed" column="TASK_DETAILED"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="isDeleted" column="IS_DELETED" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result property="creatorId" column="CREATOR_ID" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result property="creator" column="CREATOR" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"
+			javaType="java.util.Date" />
+		<result property="modifierId" column="MODIFIER_ID" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result property="modifier" column="MODIFIER" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="modifiedTime" column="MODIFIED_TIME"
+			jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result property="version" column="VERSION" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result column="HANDLE_NUM" property="handleNum" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result column="SUCCESS_NUM" property="successNum" jdbcType="NUMERIC"
+			javaType="java.lang.Long" />
+		<result column="ERROR_MESSAGE" property="errorMessage"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="RUN_IP" property="runIp" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result column="RESULT_STATE" property="resultState" jdbcType="NUMERIC"
+			javaType="java.lang.Integer" />
+		<result column="START_TIME" property="startTime" jdbcType="TIMESTAMP"
+			javaType="java.util.Date" />
+	</resultMap>
+	<sql id="taskManagementAndSysJobLogField">
+		task.id,
+		task.task_name,
+		task.class_name,
+		task.execution_date,
+		task.execution_time,
+		task.task_detailed,
+		job4.start_time,
+		job4.result_state,
+		job4.handle_num,
+		job4.success_num,
+		job4.error_message,
+		job4.remark,
+		job4.run_ip,
+		ceil((job4.end_time -
+		job4.start_time) * 24 * 60 * 60) when
+	</sql>
+
+	<sql id="taskManagementField">
+		task.id,
+		task.task_name,
+		task.class_name,
+		task.execution_date,
+		task.execution_time,
+		task.task_detailed
+	</sql>
+	<sql id="taskManagementConditions">
+		AND task.IS_DELETED = 0
+		<if test="taskName != null and taskName !='' ">
+			AND task.TASK_NAME like '%${taskName}%'
+		</if>
+	</sql>
+
+	<sql id="taskManagementSelective">
+		select
+		<include refid="taskManagementField" />
+		from task_management task
+	</sql>
+	<sql id="taskManagementAndSysJobLogSelective">
+		select
+		<include refid="taskManagementAndSysJobLogField" />
+		from task_management task,
+		(select * from sys_job_log job2 ,
+		(select
+		max(job.id) AS aId from sys_job_log
+		job group by job.name)job3
+		where
+		job2.id=job3.aId) job4 where job4.name(+)=task.task_name
+	</sql>
+
+
+	<select id="count" parameterType="com.ezendai.credit2.system.vo.TaskManagementVO"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM task_management task,
+		(select * from sys_job_log
+		job2 ,
+		(select max(job.id) AS aId from sys_job_log
+		job group by
+		job.name)job3
+		where job2.id=job3.aId) job4 where
+		job4.name(+)=task.task_name
+		<include refid="taskManagementConditions" />
+	</select>
+
+	<select id="findWithPG" parameterType="com.ezendai.credit2.system.vo.TaskManagementVO"
+		resultMap="taskManagementResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="taskManagementAndSysJobLogSelective" />
+		<include refid="taskManagementConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.OrderBy" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+
+	<select id="get" parameterType="java.lang.Long" resultMap="taskManagementResultMap">
+		<include refid="taskManagementSelective" />
+		where task.id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="com.ezendai.credit2.system.model.TaskManagement">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			select
+			seq_task_management_id.nextval as id from dual
+		</selectKey>
+		insert into task_management
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID,
+			<if test="taskName != null">
+				TASK_NAME,
+			</if>
+			<if test="className != null">
+				CLASS_NAME,
+			</if>
+			<if test="executionDate != null">
+				EXECUTION_DATE,
+			</if>
+			<if test="executionTime != null">
+				EXECUTION_TIME,
+			</if>
+			<if test="taskDetailed != null">
+				TASK_DETAILED,
+			</if>
+			<if test="isDeleted != null">
+				IS_DELETED,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="taskName != null">
+				#{taskName},
+			</if>
+			<if test="className != null">
+				#{className},
+			</if>
+			<if test="executionDate != null">
+				#{executionDate},
+			</if>
+			<if test="executionTime != null">
+				#{executionTime},
+			</if>
+			<if test="taskDetailed != null">
+				#{taskDetailed},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.ezendai.credit2.system.model.TaskManagement">
+		update task_management
+		<set>
+			<if test="taskName != null">
+				TASK_NAME=#{taskName},
+			</if>
+			<if test="className != null">
+				CLASS_NAME=#{className},
+			</if>
+			<if test="executionDate != null">
+				EXECUTION_DATE=#{executionDate},
+			</if>
+			<if test="executionTime != null">
+				EXECUTION_TIME=#{executionTime},
+			</if>
+			<if test="taskDetailed != null">
+				TASK_DETAILED=#{taskDetailed},
+			</if>
+			<if test="isDeleted != null">
+				IS_DELETED=#{isDeleted},
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID=#{creatorId},
+			</if>
+			<if test="creator != null">
+				CREATOR=#{creator},
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME=#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID=#{modifierId},
+			</if>
+			<if test="modifier != null">
+				MODIFIER=#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME=#{modifiedTime},
+			</if>
+			<if test="version != null">
+				VERSION=#{version},
+			</if>
+		</set>
+		where ID = #{id}
+	</update>
+</mapper>

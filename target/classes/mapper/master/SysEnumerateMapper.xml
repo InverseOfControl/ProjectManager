@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.SysEnumerateMapper">
+	<!-- 单表查询结果集 -->
+	<resultMap type="SysEnumerate" id="sysEnumerateResultMap">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="enumType" column="ENUM_TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="enumCode" column="ENUM_CODE" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="enumValue" column="ENUM_VALUE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="parentId" column="PARENT_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="version" column="VERSION" jdbcType="NUMERIC" javaType="java.lang.Long" />		
+	</resultMap>
+	
+	<!--以数据类型为条件加载数据字典数据-->
+	<select id="findSysEnumerateListByType" resultMap="sysEnumerateResultMap" parameterType="java.lang.String">
+		SELECT ID,ENUM_TYPE,ENUM_CODE,ENUM_VALUE,PARENT_ID
+		FROM SYS_ENUMERATE sysEnumerate
+		WHERE sysEnumerate.ENUM_TYPE=#{enumType} 
+		ORDER BY sysEnumerate.ID
+	</select>
+	<!--  根据数据字典类型和Code取得备注 -->
+	<select id="findSysEnumerateByTypeAndCode" resultMap="sysEnumerateResultMap" parameterType="SysEnumerateVO">
+		SELECT ID,ENUM_TYPE,ENUM_CODE,ENUM_VALUE 
+		FROM SYS_ENUMERATE sysEnumerate
+		WHERE sysEnumerate.ENUM_TYPE=#{enumType} 
+		AND sysEnumerate.ENUM_CODE=#{enumCode} 
+		ORDER BY sysEnumerate.ID
+	</select>
+	<!--  根据OPTION_MODULE类型的Code为前缀,查询OPTION_TYPE类型的List-->
+	<select id="findOptionTypeListByOptionModule" resultMap="sysEnumerateResultMap" parameterType="SysEnumerateVO">
+		SELECT ID,ENUM_TYPE,ENUM_CODE,ENUM_VALUE 
+		FROM SYS_ENUMERATE sysEnumerate
+		<trim prefix="where" prefixOverrides="and">
+		<if test="enumType !=null">
+			sysEnumerate.ENUM_TYPE=#{enumType} 
+		</if>
+		<if test="enumCode !=null">
+			AND sysEnumerate.ENUM_CODE like  #{enumCode} || '%' 
+		</if>
+		<if test="parentId !=null">
+			AND sysEnumerate.PARENT_ID = #{parentId} 
+		</if>		
+		</trim>
+	</select>
+	
+</mapper>

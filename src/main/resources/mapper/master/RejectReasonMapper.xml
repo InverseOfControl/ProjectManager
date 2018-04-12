@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.RejectReasonMapper">
+	<!-- 单表查询结果集 -->
+	<resultMap type="RejectReason" id="rejectReasonResultMap">
+		<id property="id" column="ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="reason" column="REASON" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="explain" column="EXPLAIN" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="type" column="TYPE" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="parentId" column="PARENT_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result property="levelOrder" column="LEVEL_ORDER" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="loanType" column="LOAN_TYPE" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="toAllProduct" column="TO_ALL_PRODUCT" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="canRequestDays" column="CAN_REQUEST_DAYS" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result property="creatorId" column="CREATOR_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="creator" column="CREATOR" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="modifierId" column="MODIFIER_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="modifier" column="MODIFIER" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="modifiedTime" column="MODIFIED_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+		<result property="isDeleted" column="IS_DELETED" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+		<result property="version" column="VERSION" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="remark" column="REMARK" jdbcType="VARCHAR" javaType="java.lang.String" />
+		
+		
+	 	<association property="parent" column="PARENT_ID" javaType="RejectReason" resultMap="parentResultMap"/>
+	</resultMap>
+	<!-- 1对1关系 -->
+	<resultMap type="RejectReason" id="parentResultMap">
+		<id property="id" column="PARENT_ID" jdbcType="NUMERIC" javaType="java.lang.Long"/>
+		<result property="reason" column="PARENT_REASON" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	
+	<sql id="rejectReasonField">
+	    rejectReason.ID,
+	    rejectReason.REASON,
+	    rejectReason.EXPLAIN,   
+	    rejectReason.TYPE,
+	    rejectReason.PARENT_ID,
+	    rejectReason.LEVEL_ORDER,
+	    rejectReason.LOAN_TYPE,
+	    rejectReason.TO_ALL_PRODUCT,
+	    rejectReason.CAN_REQUEST_DAYS,
+		rejectReason.CREATOR_ID,
+	   	rejectReason.CREATOR,rejectReason.CREATED_TIME,rejectReason.MODIFIER_ID,rejectReason.MODIFIER,rejectReason.MODIFIED_TIME,
+	  	rejectReason.IS_DELETED,rejectReason.VERSION,rejectReason.REMARK
+	</sql>
+	
+	<sql id="rejectReasonSelective">
+		select 
+		<include refid="rejectReasonField" />
+		from REJECT_REASON rejectReason
+	</sql>
+
+	<sql id="rejectReasonSelectiveExtension">
+		select 
+		<include refid="rejectReasonField" />,
+		parent.REASON PARENT_REASON
+		from REJECT_REASON rejectReason
+		left join REJECT_REASON parent on parent.id = rejectReason.PARENT_ID
+	</sql>
+	<sql id="rejectReasonConditions">
+	   where IS_DELETED = 0
+			<if test="id != null">
+				AND ID = #{id}
+	        </if>
+	        <if test="type != null">
+				AND TYPE = #{type}
+	        </if>
+			<if test="loanType != null">
+				AND LOAN_TYPE = #{loanType}
+	        </if>
+	</sql>
+	<select id="get" parameterType="java.lang.Long" resultMap="rejectReasonResultMap">
+		<include refid="rejectReasonSelectiveExtension" />
+		WHERE rejectReason.ID = #{id}
+	</select>
+	<!--  根据拒绝分类和贷款类型取得id,拒绝理由  -->
+	<select id="findRejectReasonByTypeAndLoanType" resultMap="rejectReasonResultMap" parameterType="RejectReasonVO">
+		SELECT ID,REASON
+		FROM REJECT_REASON rejectReason
+		WHERE rejectReason.TYPE=#{type} 
+		AND rejectReason.LOAN_TYPE=#{loanType} 
+		AND rejectReason.IS_DELETED = 0
+		ORDER BY rejectReason.LEVEL_ORDER asc
+	</select>
+	<!--  根据ParentId取得id,拒绝理由  ,限制时间天数-->
+	<select id="findRejectReasonByParentId" resultMap="rejectReasonResultMap" parameterType="RejectReasonVO">
+		SELECT ID,REASON,CAN_REQUEST_DAYS
+		FROM REJECT_REASON rejectReason
+		WHERE rejectReason.PARENT_ID=#{parentId} 
+		AND rejectReason.IS_DELETED = 0
+		ORDER BY rejectReason.LEVEL_ORDER asc
+	</select>
+</mapper>

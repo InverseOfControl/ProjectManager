@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.audit.mapper.InternalMatchingMapper">
+	<resultMap id="loanHistoryMap" type="com.ezendai.credit2.audit.model.LoanHistory">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<id column="person_id" property="personId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<id column="loan_id" property="loanId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<id column="product_id" property="productId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="name" property="personName"   />
+		<result column="product_name" property="productName"  />
+		<result column="product_type" property="productType"  />
+		<result column="idnum" property="idNum"  />
+		<result column="base_name" property="salesDept"  />
+		<result column="company_name" property="companyName"   />
+		<result column="GUARANTEE_NAME" property="guaranteeName"  />
+		<result column="organ_name" property="organ"   />
+		<result column="cur_debtbalance_person" property="curDebtbalancePerson"  />
+		<result column="cur_debtbalance_company" property="curDebtbalanceCompany"   />
+		<result column="REQUEST_DATE" property="requestDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="STATUS" property="Status" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="REQUEST_MONEY" property="requestMoney"  />
+		
+		<result column="approvalConclusion" property="approvalConclusion"   />
+		<result column="matching_corresponding_msg" property="matchingCorrespondingMsg"   />
+		<result column="matching_person" property="matchingPerson"   />	 
+ 		<result column="matching_request_date" property="matchingRequestDate"   />
+	</resultMap>
+	
+
+	
+	<select id="findLoanHistoryWithPG"  resultMap="loanHistoryMap" parameterType="com.ezendai.credit2.audit.model.LoanHistory" >
+		 <include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		select p.id as person_id, l.id , pro.id as product_id, p.name,pro.product_name,p.idnum,com.name as company_name,l.GUARANTEE_NAME 
+        ,o.name as organ_name ,p.cur_debtbalance as cur_debtbalance_person ,com.cur_debtbalance as cur_debtbalance_company,l.status,l.request_date,
+        ba.name as base_name,l.product_type ,
+        	    (
+ 		 select message  from (   SELECT
+    	ID, LOAN_ID, OPERATOR, FLOW_STATUS,
+      CREATE_DATE, MESSAGE
+		FROM BUSINESS_LOG 
+    	 WHERE LOAN_ID = #{loanId}
+      	ORDER BY ID desc  )   WHERE ROWNUM    <![CDATA[ <= 1 ]]> 
+        ) as approvalConclusion,
+        l.REQUEST_MONEY
+        
+        from loan l 
+        left join person p on l.person_id =p.id
+        left join product pro on l.PRODUCT_ID =pro.id
+        left join company com on com.id=p.COMPANY_ID
+        left join base_area  ba on ba.id=l.SALES_DEPT_ID
+        left join organ o  on o.id=l.ORGAN_ID 
+		 	where 1=1 and l.PERSON_ID = #{personId}
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+		 ORDER BY request_date asc
+	</select>
+	<select  id="findLoanHistoryCount" resultType="integer" parameterType="com.ezendai.credit2.audit.model.LoanHistory" >
+   select count(*) from loan l 
+        left join person p on l.person_id =p.id
+        left join product pro on l.PRODUCT_ID =pro.id
+        left join company com on com.id=p.COMPANY_ID
+        left join base_area  ba on ba.id=l.SALES_DEPT_ID
+        left join organ o on o.id=l.ORGAN_ID 
+		 	where 1=1 and l.PERSON_ID = #{personId}
+  	</select>
+  	
+  	<!-- 根据手机查询数据项为联系人手机的匹配的loan -->
+  	<select id="selectOptionContacterPhone"  resultMap="loanHistoryMap" parameterType="com.ezendai.credit2.audit.model.LoanHistory" >
+		 select  p.id as person_id, l.id as loan_id , pro.id as product_id,p.name as matching_person,con.name as matching_corresponding_msg,
+		 					l.request_date as matching_request_date, pro.product_name,l.status,l.product_type ,
+		 				  message.message as approvalConclusion,   l.REQUEST_MONEY,p.idnum
+		 					  from  contacter con 
+		 				left join loan l on con.borrower_id =l.person_id 
+		 				left join person p on l.person_id =p.id
+      				    left join product pro on l.PRODUCT_ID =pro.id
+      				    left join (   select *
+ from (
+select loan_id,message, row_number() over (partition by loan_id order by id desc) rn
+from BUSINESS_LOG
+) t
+where rn <![CDATA[ <= 1 ]]>  ) message  on message.loan_id=l.id
+			 where con.mobile_phone=#{matchIngPhone} and con.borrower_id != #{personId}
+	</select>
+  	
+  	 	
+  	<!-- 根据手机查询数据项为手机的匹配的loan -->
+  	<select id="selectOptionPersonPhone"  resultMap="loanHistoryMap" parameterType="com.ezendai.credit2.audit.model.LoanHistory" >
+		 select  p.id as person_id, l.id as loan_id , pro.id as product_id,p.name as matching_person,p.name as matching_corresponding_msg,
+		 					l.request_date as matching_request_date, pro.product_name,l.status ,l.product_type ,
+		 		 message.message as approvalConclusion,   l.REQUEST_MONEY,p.idnum from  person p 
+		 				left join loan l  on l.person_id =p.id
+      				    left join product pro on l.PRODUCT_ID =pro.id
+      				     left join (   select *
+ from (
+select loan_id,message, row_number() over (partition by loan_id order by id desc) rn
+from BUSINESS_LOG
+) t
+where rn <![CDATA[ <= 1 ]]>  ) message  on message.loan_id=l.id
+			 where p.MOBILE_PHONE=#{matchIngPhone} and l.person_id != #{personId}
+	</select>
+	
+		<!-- 根据企业电话查询数据项为家庭电话的匹配的loan -->
+  	<select id="selectOptionHomePhone"  resultMap="loanHistoryMap" parameterType="com.ezendai.credit2.audit.model.LoanHistory" >
+		 select  p.id as person_id, l.id as loan_id , pro.id as product_id,p.name as matching_person,p.ADDRESS as matching_corresponding_msg,
+		 					l.request_date as matching_request_date, pro.product_name,l.status,l.product_type ,
+		 				 message.message as approvalConclusion, l.REQUEST_MONEY ,p.idnum from  person p 
+		 				left join loan l  on l.person_id =p.id
+      				    left join product pro on l.PRODUCT_ID =pro.id
+      				     left join (   select *
+ from (
+select loan_id,message, row_number() over (partition by loan_id order by id desc) rn
+from BUSINESS_LOG
+) t
+where rn <![CDATA[ <= 1 ]]>  ) message  on message.loan_id=l.id
+			 where p.HOME_PHONE=#{matchIngPhone} and l.person_id != #{personId}
+	</select>
+	
+		<!-- 根据企业电话数据项为企业电话的匹配的loan -->
+  	<select id="selectOptionCompanyPhone"  resultMap="loanHistoryMap" parameterType="com.ezendai.credit2.audit.model.LoanHistory" >
+		 select  p.id as person_id, l.id as loan_id , pro.id as product_id,p.name as matching_person,com.name as matching_corresponding_msg,
+		 					l.request_date as matching_request_date, pro.product_name,l.status,l.product_type ,
+		 						 message.message as approvalConclusion,  l.REQUEST_MONEY ,p.idnum from  company com 
+		 				left join person p on p.COMPANY_ID =com.id
+		 				left join loan l on p.id =l.person_id 
+      				    left join product pro on l.PRODUCT_ID =pro.id
+      				     left join (   select *
+ from (
+select loan_id,message, row_number() over (partition by loan_id order by id desc) rn
+from BUSINESS_LOG
+) t
+where rn <![CDATA[ <= 1 ]]>   ) message  on message.loan_id=l.id
+			 where com.PHONE=#{matchIngPhone} and l.person_id != #{personId}
+	</select>
+</mapper>
+ 

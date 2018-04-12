@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezendai.credit2.master.mapper.SysParameterManagerMapper">
+
+	<resultMap type="com.ezendai.credit2.master.model.SysParameterManager" id="SysParameterResultMap">
+		<id column="id" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="code"         property="code"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="name"         property="name"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="parameterValue"     property="parameterValue"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="inputType"    property="inputType"    jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="remark"       property="remark"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="creatorId"    property="creatorId"    jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="creator"      property="creator"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="createdTime"  property="createdTime"      jdbcType="TIMESTAMP" javaType="java.util.Date"  />
+		<result column="modifierId"   property="modifierId"    jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="modifier"     property="modifier"    jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="modifiedTime" property="modifiedTime"      jdbcType="TIMESTAMP" javaType="java.util.Date"  />
+		<result column="version"      property="spmversion"    jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="isDisabled"   property="isDisabled"    jdbcType="NUMERIC" javaType="java.lang.Integer" />
+	</resultMap>
+	
+	<sql id="SysParameterColumn">
+		sysParam.id as id,
+		sysParam.CODE as code,  
+		sysParam.NAME as name,
+		sysParam.PARAMETER_VALUE as parameterValue,
+		sysParam.INPUT_TYPE as inputType,
+		sysParam.REMARK as remark,
+		sysParam.CREATOR_ID as creatorId,
+		sysParam.CREATOR as creator,
+		sysParam.CREATED_TIME as createdTime,
+		sysParam.MODIFIER_ID as modifierId,
+		sysParam.MODIFIER as modifier,
+		sysParam.MODIFIED_TIME as modifiedTime,
+		sysParam.VERSION as version,
+		sysParam.IS_DISABLED as isDisabled
+	</sql>
+	
+	<!-- 获取系统参数列表 -->
+	<select id="getSysParameterList" resultMap="SysParameterResultMap" parameterType="com.ezendai.credit2.master.vo.SysParameterManagerVO">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart"/>
+		select  
+			<include refid="SysParameterColumn"/>
+		from SYS_PARAMETER sysParam
+		where 1=1
+		<if test="code != '' and code != null">
+			and sysParam.code = #{code}
+		</if>
+		<if test="name != '' and name != null">
+			and sysParam.name = #{name}
+		</if>
+		<if test="createdTimeStart != null ">
+		    and  sysParam.createdTime &gt;= to_date(#{createdTimeStart},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+	    <if test="createdTimeEnd != null ">
+		    and  sysParam.createdTime &lt;= to_date(#{createdTimeEnd},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+		<if test="modifiedTimeStart != null ">
+		    and  sysParam.modifiedTime &gt;= to_date(#{modifiedTimeStart},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+	    <if test="modifiedTimeEnd != null ">
+		    and  sysParam.modifiedTime &lt;= to_date(#{modifiedTimeEnd},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+		
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd"/>
+	</select>
+	
+	<!-- 主键获取系统参数信息 -->
+	<select id="getSysParameter" resultMap="SysParameterResultMap" parameterType="java.lang.Long">
+		select 
+			<include refid="SysParameterColumn"/>
+		from SYS_PARAMETER sysParam
+		where sysParam.id = #{id}
+	</select>
+	
+	<!-- 多条件获取系统参数信息 -->
+	<select id="getSysParameterByConditions" resultMap="SysParameterResultMap" parameterType="com.ezendai.credit2.master.vo.SysParameterManagerVO">
+		select  
+			<include refid="SysParameterColumn"/>
+		from SYS_PARAMETER sysParam
+		where 1=1
+		<if test="code != '' and code != null">
+			and sysParam.code = #{code}
+		</if>
+		<if test="name != '' and name != null">
+			and sysParam.name = #{name}
+		</if>
+		<if test="createdTimeStart != null ">
+		    and  sysParam.createdTime &gt;= to_date(#{createdTimeStart},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+	    <if test="createdTimeEnd != null ">
+		    and  sysParam.createdTime &lt;= to_date(#{createdTimeEnd},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+		<if test="modifiedTimeStart != null ">
+		    and  sysParam.modifiedTime &gt;= to_date(#{modifiedTimeStart},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+	    <if test="modifiedTimeEnd != null ">
+		    and  sysParam.modifiedTime &lt;= to_date(#{modifiedTimeEnd},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+		
+		
+	</select>
+	
+	<!-- 获取系统参数总条数 -->
+	<select id="getSysParameterCount"  resultType="int"  parameterType="com.ezendai.credit2.master.vo.SysParameterManagerVO">
+		select count(*) from SYS_PARAMETER sysParam
+		where 1=1
+		<if test="code != '' and code != null">
+			and sysParam.code = #{code}
+		</if>
+		<if test="name != '' and name != null">
+			and sysParam.name = #{name}
+		</if>
+		<if test="createdTimeStart != null ">
+		    and  sysParam.createdTime &gt;= to_date(#{createdTimeStart},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+	    <if test="createdTimeEnd != null ">
+		    and  sysParam.createdTime &lt;= to_date(#{createdTimeEnd},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+		<if test="modifiedTimeStart != null ">
+		    and  sysParam.modifiedTime &gt;= to_date(#{modifiedTimeStart},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+	    <if test="modifiedTimeEnd != null ">
+		    and  sysParam.modifiedTime &lt;= to_date(#{modifiedTimeEnd},'yyyy-mm-dd hh24:mi:ss')  
+	    </if>
+		
+	</select>
+	
+	<!-- 添加系统参数信息 -->
+	<insert id="addSysParameter"  parameterType="com.ezendai.credit2.master.vo.SysParameterManagerVO">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			select SEQ_SYS_PARAMETER_ID.nextval as id from dual
+	    </selectKey>
+		insert into SYS_PARAMETER sysParam
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    ID,
+			<if test="code != null and code !=''">
+				CODE，
+	        </if>  
+			<if test="name != null and name !=''">
+				NAME，
+	        </if>  
+			<if test="parameterValue != null ">
+				PARAMETER_VALUE，
+	        </if>  
+			<if test="inputType != null ">
+				INPUT_TYPE，
+	        </if>  
+			<if test="remark != null and remark !=''">
+				REMARK，
+	        </if>  
+			<if test="creatorId != null ">
+				CREATOR_ID，
+	        </if>  
+			<if test="creator != null and creator !=''">
+				CREATOR，
+	        </if>  
+			<if test="createdTime != null ">
+				CREATED_TIME，
+	        </if>  
+			<if test="modifierId != null ">
+				MODIFIER_ID，
+	        </if>  
+			<if test="modifier != null and modifier !=''">
+				MODIFIER，
+	        </if>  
+			<if test="modifiedTime != null ">
+				MODIFIED_TIME，
+	        </if>  
+			<if test="spmversion != null ">
+				VERSION，
+	        </if>  
+			<if test="isDisabled != null ">
+				IS_DISABLED
+	        </if>  
+			
+	    </trim>
+		values 
+		<trim prefix="(" suffixOverrides="," suffix=")">        
+			    #{id},
+			<if test="code != null and code !=''">
+				#{code},
+	        </if>  
+			<if test="name != null and name !=''">
+				#{name},
+	        </if>  
+			<if test="parameterValue != null ">
+				#{parameterValue},
+	        </if>  
+			<if test="inputType != null ">
+				#{inputType},
+	        </if>  
+			<if test="remark != null and remark !=''">
+				#{remark},
+	        </if>  
+			<if test="creatorId != null ">
+				#{creatorId},
+	        </if>  
+			<if test="creator != null and creator !=''">
+				#{creator},
+	        </if>  
+			<if test="createdTime != null ">
+				#{createdTime},
+	        </if>  
+			<if test="modifierId != null ">
+				#{modifierId},
+	        </if>  
+			<if test="modifier != null and modifier !=''">
+				#{modifier},
+	        </if>  
+			<if test="modifiedTime != null ">
+				#{modifiedTime},
+	        </if>  
+			<if test="spmversion != null ">
+				#{spmversion},
+	        </if>  
+			<if test="isDisabled != null ">
+				#{isDisabled}
+	        </if>  
+			<if test="isDisabled == null ">
+				0
+	        </if>  
+	    </trim>
+	</insert>
+	
+	
+	<!-- 主键修改系统参数信息 -->
+	<update id="updateSysParameter"  parameterType="com.ezendai.credit2.master.vo.SysParameterManagerVO">
+		update SYS_PARAMETER sysParam 
+		<trim prefix="set" suffixOverrides="," >
+			<if test="code != null and code !=''">
+				sysParam.CODE = #{code},
+	        </if>  
+			<if test="name != null and name !=''">
+				sysParam.NAME = #{name},
+	        </if>  
+			<if test="parameterValue != null ">
+				sysParam.PARAMETER_VALUE = #{parameterValue},
+	        </if>  
+			<if test="inputType != null ">
+				sysParam.INPUT_TYPE = #{inputType},
+	        </if>  
+			<if test="remark != null and remark !=''">
+				sysParam.REMARK = #{remark},
+	        </if>  
+			<if test="creatorId != null ">
+				sysParam.CREATOR_ID = #{creatorId},
+	        </if>  
+			<if test="creator != null and creator !=''">
+				sysParam.CREATOR = #{creator},
+	        </if>  
+			<if test="createdTime != null ">
+				sysParam.CREATED_TIME = #{createdTime},
+	        </if>  
+			<if test="modifierId != null ">
+				sysParam.MODIFIER_ID = #{modifierId},
+	        </if>  
+			<if test="modifier != null and modifier !=''">
+				sysParam.MODIFIER = #{modifier},
+	        </if>  
+			<if test="modifiedTime != null ">
+				sysParam.MODIFIED_TIME = #{modifiedTime},
+	        </if>  
+			<if test="spmversion != null ">
+				sysParam.VERSION = #{spmversion},
+	        </if>  
+			<if test="isDisabled != null ">
+				sysParam.IS_DISABLED = #{isDisabled}
+	        </if>  
+			<if test="isDisabled == null ">
+				sysParam.IS_DISABLED = 0
+	        </if>  
+		</trim>
+		WHERE sysParam.id=#{id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="deleteSysParameter" parameterType="java.lang.Long">
+		DELETE FROM SYS_PARAMETER WHERE
+		ID=#{id}
+	</delete>
+</mapper>

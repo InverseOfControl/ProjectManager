@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ezendai.credit2.apply.mapper.PersonMapper">
+	<resultMap id="personResultMap" type="com.ezendai.credit2.apply.model.Person">
+		<id column="ID" property="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="SEX" property="sex" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PERSON_NO" property="personNo" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="IDNUM" property="idnum" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MARRIED" property="married" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="IDENTIFIER" property="identifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="EDUCATION_LEVEL" property="educationLevel" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="HAS_CHILDREN" property="hasChildren" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CHILDREN_NUM" property="childrenNum" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="ZIP_CODE" property="zipCode" jdbcType="CHAR" javaType="java.lang.String" />
+		<result column="WITNESS" property="witness" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="OTHER_INCOME" property="otherIncome" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="PAY_DATE" property="payDate" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="WORK_NATURE" property="workNature" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="JOB" property="job" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="EXT" property="ext" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PLACE_DOMICILE" property="placeDomicile" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="HOUSEHOLD_ZIP_CODE" property="householdZipCode" jdbcType="CHAR" javaType="java.lang.String" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="MOBILE_PHONE" property="mobilePhone" jdbcType="CHAR" javaType="java.lang.String" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="HOME_PHONE" property="homePhone" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="HOUSE_ESTATE_TYPE" property="houseEstateType" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="RENT_PER_MONTH" property="rentPerMonth" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="LIVE_TYPE" property="liveType" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="HAS_HOUSE_LOAN" property="hasHouseLoan" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="HOUSE_ESTATE_ADDRESS" property="houseEstateAddress" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="INCOME_PER_MONTH" property="incomePerMonth" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+		<result column="COMPANY_ID" property="companyId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR_ID" property="creatorId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="CREATOR" property="creator" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="CREATED_TIME" property="createdTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="MODIFIER_ID" property="modifierId" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" javaType="java.lang.String"  />
+		<result column="MODIFIED_TIME" property="modifiedTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+		<result column="VERSION" property="version" jdbcType="NUMERIC" javaType="java.lang.Long" />
+		<result column="WORK_THAT_DEPT" property="workThatDept" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="WORK_THAT_POSITION" property="workThatPosition" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="WORK_THAT_TELL" property="workThatTell" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result column="PERSON_TYPE" property="personType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="COMPANY_TYPE" property="companyType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+		<result column="PROFESSION_TYPE" property="professionType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+   		<result column="MAX_REPAY_AMOUNT" property="maxRepayAmount" jdbcType="DECIMAL" javaType="java.math.BigDecimal"/>
+    	<result column="CHILDREN_SCHOOL" property="childrenSchool" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="PRIVATE_ENTERPRISE_TYPE" property="privateEnterpriseType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="FOUNDED_DATE" property="foundedDate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+    	<result column="BUSINESS_PLACE" property="businessPlace" jdbcType="DECIMAL" javaType="java.lang.Integer"/>
+    	<result column="TOTAL_EMPLOYEES" property="totalEmployees" jdbcType="DECIMAL" javaType="java.lang.Long" />
+    	<result column="RATIO_OF_INVESTMENTS" property="ratioOfInvestments" jdbcType="DECIMAL" javaType="java.lang.Integer"/>
+    	<result column="MONTH_OF_PROFIT" property="monthOfProfit" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+    	<result column="PRODUCT_TYPE" property="productType" jdbcType="NUMERIC" javaType="java.lang.Integer" />
+    	<result column="CUR_DEBTBALANCE" property="personDebtBalance" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    	<result column="MONTH_REPAY_AMOUNT" property="monthRepayAmount" jdbcType="NUMERIC" javaType="java.lang.Long" />
+    	
+    	<result column="LIVING_WITH" property="livingWith" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="INCOME_SOURCE" property="incomeSource" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	<result column="SNS" property="sns" jdbcType="VARCHAR" javaType="java.lang.String"/>
+    	
+    	
+    	
+    <result column="TOP_EDUCATION" property="topEducation" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+<result column="HOME_CONDITION" property="homeCondition" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+<result column="MONTH_INCOME" property="monthIncome" jdbcType="NUMERIC" javaType="java.lang.Double"/>
+<result column="IS_HAVE_CARLOAN" property="isHaveCarLoan" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+<result column="LOAN_SIZE" property="loanSize" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+<result column="UNIT_INDUSTRYCATE_GORY" property="unitIndustryCategory" jdbcType="NUMERIC" javaType="java.lang.Integer"/>
+	</resultMap>
+	
+	<sql id="personField">
+		ID, NAME, SEX, PERSON_NO, IDNUM, MARRIED,
+		IDENTIFIER, EDUCATION_LEVEL, HAS_CHILDREN,
+		CHILDREN_NUM, ZIP_CODE, WITNESS, OTHER_INCOME,
+		PAY_DATE, WORK_NATURE, JOB, DEPT_NAME, EXT,
+		PLACE_DOMICILE, HOUSEHOLD_ZIP_CODE,ADDRESS,
+		MOBILE_PHONE, EMAIL, HOME_PHONE, HOUSE_ESTATE_TYPE,
+		RENT_PER_MONTH, LIVE_TYPE, HAS_HOUSE_LOAN,
+		HOUSE_ESTATE_ADDRESS, INCOME_PER_MONTH,
+		COMPANY_ID, CREATOR_ID, CREATOR, CREATED_TIME,
+		MODIFIER_ID, MODIFIER, MODIFIED_TIME, VERSION,
+		WORK_THAT_DEPT,WORK_THAT_POSITION,
+		WORK_THAT_TELL,PERSON_TYPE,COMPANY_TYPE,PROFESSION_TYPE,
+		MAX_REPAY_AMOUNT, CHILDREN_SCHOOL, 
+    	PRIVATE_ENTERPRISE_TYPE, FOUNDED_DATE, 
+    	BUSINESS_PLACE, TOTAL_EMPLOYEES,
+    	RATIO_OF_INVESTMENTS, 
+    	MONTH_OF_PROFIT,PRODUCT_TYPE,CUR_DEBTBALANCE,MONTH_REPAY_AMOUNT,
+    	LIVING_WITH,INCOME_SOURCE,SNS,TOP_EDUCATION,HOME_CONDITION,MONTH_INCOME,IS_HAVE_CARLOAN,LOAN_SIZE,UNIT_INDUSTRYCATE_GORY 
+	</sql>
+	
+	<sql id="personSelective">
+		SELECT
+		<include refid="personField" />
+		FROM PERSON
+	</sql>
+
+	<sql id="personConditions">
+		<trim prefix="where" prefixOverrides="and">
+			<if test="id != null">
+				PERSON.ID = #{id}
+			</if>
+			<if test="name != null">
+				AND PERSON.NAME = #{name}
+			</if>
+			<if test="sex != null">
+				AND PERSON.SEX=#{sex}
+			</if>
+			<if test="personNo != null">
+				AND PERSON.PERSON_NO = #{personNo}
+			</if>
+			<if test="idnum != null">
+				AND PERSON.IDNUM = #{idnum}
+			</if>
+			<if test="married != null">
+				AND PERSON.MARRIED = #{married}
+			</if>
+			<if test="identifier != null">
+				 AND PERSON.IDENTIFIER = #{identifier}
+			</if>
+			<if test="educationLevel != null">
+				AND PERSON.EDUCATION_LEVEL = #{educationLevel}
+			</if>
+			<if test="hasChildren != null">
+				AND PERSON.HAS_CHILDREN = #{hasChildren}
+			</if>
+			<if test="childrenNum != null">
+				AND PERSON.CHILDREN_NUM = #{childrenNum}
+			</if>
+			<if test="zipCode != null">
+				AND PERSON.ZIP_CODE = #{zipCode}
+			</if>
+			<if test="witness != null">
+				AND PERSON.WITNESS = #{witness}
+			</if>
+			<if test="otherIncome != null">
+				AND PERSON.OTHER_INCOME #{otherIncome}
+			</if>
+			<if test="payDate != null">
+				AND PERSON.PAY_DATE = #{payDate}
+			</if>
+			<if test="workNature != null">
+				AND PERSON.WORK_NATURE = #{workNature}
+			</if>
+			<if test="job != null">
+				AND PERSON.JOB = #{job}
+			</if>
+			<if test="deptName != null">
+				AND  PERSON.DEPT_NAME = #{deptName}
+			</if>
+			<if test="ext != null">
+				AND PERSON.EXT = #{ext}
+			</if>
+			<if test="placeDomicile != null">
+				AND PERSON.PLACE_DOMICILE = #{placeDomicile}
+			</if>
+			<if test="householdZipCode != null">
+				AND PERSON.HOUSEHOLD_ZIP_CODE = #{householdZipCode}
+			</if>
+			<if test="address != null">
+				AND PERSON.ADDRESS = #{address}
+			</if>
+			<if test="mobilePhone != null">
+				AND PERSON.MOBILE_PHONE = #{mobilePhone}
+			</if>
+			<if test="email != null">
+				AND PERSON.EMAIL = #{email}
+			</if>
+			<if test="homePhone != null">
+				AND PERSON.HOME_PHONE = #{homePhone}
+			</if>
+			<if test="houseEstateType != null">
+				AND PERSON.HOUSE_ESTATE_TYPE = #{houseEstateType}
+			</if>
+			<if test="rentPerMonth != null">
+				AND PERSON.RENT_PER_MONTH = #{rentPerMonth}
+			</if>
+			<if test="liveType != null">
+				AND  PERSON.LIVE_TYPE = #{liveType}
+			</if>
+			<if test="hasHouseLoan != null">
+				AND  PERSON.HAS_HOUSE_LOAN = #{hasHouseLoan}
+			</if>
+			<if test="houseEstateAddress != null">
+				AND PERSON.HOUSE_ESTATE_ADDRESS = #{houseEstateAddress}
+			</if>
+			<if test="incomePerMonth != null">
+				AND PERSON.INCOME_PER_MONTH = #{incomePerMonth}
+			</if>
+			<if test="creatorId != null">
+				AND PERSON.CREATOR_ID = #{creatorId}
+			</if>
+			<if test="creator != null">
+				AND PERSON.CREATOR = #{creator}
+			</if>
+			<if test="createdTime != null">
+				AND 	PERSON.CREATED_TIME = #{createdTime}
+			</if>
+			<if test="modifierId != null">
+				AND 	PERSON.MODIFIER_ID = #{modifierId}
+			</if>
+			<if test="modifier != null">
+			   AND PERSON.MODIFIER =#{modifier}
+			</if>
+			<if test="modifiedTime != null">
+				AND PERSON.WORK_THAT_DEPT = #{workThatDept}
+			</if>
+			<if test="modifiedTime != null">
+				AND PERSON.WORK_THAT_POSITION = #{workThatPosition}
+			</if>
+			<if test="modifiedTime != null">
+				AND PERSON.WORK_THAT_TELL = #{workThatTell}
+			</if>
+			<if test="modifiedTime != null">
+				AND PERSON.PERSON_TYPE = #{personType}
+			</if>
+			<if test="modifiedTime != null">
+				AND PERSON.COMPANY_TYPE = #{companyType}
+			</if>			
+			<if test="version != null">
+				AND PERSON.VERSION = #{version}
+			</if>
+			 <if test="professionType != null" >
+       			AND  PROFESSION_TYPE = #{professionType}
+      		 </if>
+      		<if test="maxRepayAmount != null" >
+       		  	AND  MAX_REPAY_AMOUNT = #{maxRepayAmount}
+      		</if>
+      		<if test="childrenSchool != null" >
+       			 AND CHILDREN_SCHOOL = #{childrenSchool}
+      		</if>
+     		 <if test="privateEnterpriseType != null" >
+       			 AND  PRIVATE_ENTERPRISE_TYPE = #{privateEnterpriseType}
+      		</if>
+      		<if test="foundedDate != null" >
+       			 AND FOUNDED_DATE = #{foundedDate}
+      		</if>
+      		<if test="businessPlace != null" >
+       			 AND BUSINESS_PLACE = #{businessPlace}
+      		</if>
+      		<if test="totalEmployees != null" >
+        		AND TOTAL_EMPLOYEES = #{totalEmployees}
+      		</if>
+      		<if test="ratioOfInvestments != null" >
+        		AND RATIO_OF_INVESTMENTS = #{ratioOfInvestments}
+      		</if>
+      		<if test="monthOfProfit != null" >
+       			AND  MONTH_OF_PROFIT = #{monthOfProfit}
+      		</if>
+      		<if test="productType != null" >
+       			AND  PRODUCT_TYPE = #{productType}
+      		</if>
+		</trim>
+	</sql>
+
+	<sql id="personOrderByConditions">
+		ORDER BY CREATED_TIME
+	</sql>
+
+	<select id="get" resultMap="personResultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="personField" />
+		FROM PERSON
+		WHERE ID = #{id}
+	</select>
+	
+	<!-- 根据身份证号码查找客户 -->
+	<select id="getUserByIdnum" resultMap="personResultMap" parameterType="PersonVO">
+		SELECT
+		<include refid="personField" />
+		FROM PERSON 
+		<include refid="personConditions" />
+	</select>
+	
+	<!-- findListByVO   -->
+	<select id="findListByVO"  resultMap="personResultMap" parameterType="PersonVO" >
+		SELECT
+		<include refid="personField" />		
+		FROM PERSON  
+		<include refid="personConditions" />	
+		<include refid="personOrderByConditions" />
+	</select>
+	
+	<delete id="delete" parameterType="java.lang.Long"  >
+		DELETE FROM PERSON WHERE ID = #{id}
+	</delete>
+
+	<select id="exists" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM PERSON WHERE ID = #{ID}
+	</select>
+
+	<delete id="deleteByIdList" parameterType="com.ezendai.credit2.apply.vo.PersonVO">
+		DELETE FROM PERSON WHERE ID IN (
+		<foreach item="id" index="index" collection="idList" separator=","> #{id} </foreach>
+		)
+	</delete>
+
+	<insert id="insert" parameterType="com.ezendai.credit2.apply.model.Person">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT seq_person_id.nextval AS id FROM dual
+		</selectKey>
+		INSERT INTO PERSON
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="sex != null">
+				SEX,
+			</if>
+			<if test="personNo != null">
+				PERSON_NO,
+			</if>
+			<if test="companyId != null">
+				COMPANY_ID,
+			</if>
+			<if test="idnum != null">
+				IDNUM,
+			</if>
+			<if test="married != null">
+				MARRIED,
+			</if>
+			<if test="identifier != null">
+				IDENTIFIER,
+			</if>
+			<if test="educationLevel != null">
+				EDUCATION_LEVEL,
+			</if>
+			<if test="hasChildren != null">
+				HAS_CHILDREN,
+			</if>
+			<if test="childrenNum != null">
+				CHILDREN_NUM,
+			</if>
+			<if test="zipCode != null">
+				ZIP_CODE,
+			</if>
+			<if test="witness != null">
+				WITNESS,
+			</if>
+			<if test="otherIncome != null">
+				OTHER_INCOME,
+			</if>
+			<if test="payDate != null">
+				PAY_DATE,
+			</if>
+			<if test="workNature != null">
+				WORK_NATURE,
+			</if>
+			<if test="job != null">
+				JOB,
+			</if>
+			<if test="deptName != null">
+				DEPT_NAME,
+			</if>
+			<if test="ext != null">
+				EXT,
+			</if>
+			<if test="placeDomicile != null">
+				PLACE_DOMICILE,
+			</if>
+			<if test="householdZipCode != null">
+				HOUSEHOLD_ZIP_CODE,
+			</if>
+			<if test="address != null">
+				ADDRESS,
+			</if>
+			<if test="mobilePhone != null">
+				MOBILE_PHONE,
+			</if>
+			<if test="email != null">
+				EMAIL,
+			</if>
+			<if test="homePhone != null">
+				HOME_PHONE,
+			</if>
+			<if test="houseEstateType != null">
+				HOUSE_ESTATE_TYPE,
+			</if>
+			<if test="rentPerMonth != null">
+				RENT_PER_MONTH,
+			</if>
+			<if test="liveType != null">
+				LIVE_TYPE,
+			</if>
+			<if test="hasHouseLoan != null">
+				HAS_HOUSE_LOAN,
+			</if>
+			<if test="houseEstateAddress != null">
+				HOUSE_ESTATE_ADDRESS,
+			</if>
+			<if test="incomePerMonth != null">
+				INCOME_PER_MONTH,
+			</if>
+			<if test="creatorId != null">
+				CREATOR_ID,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="createdTime != null">
+				CREATED_TIME,
+			</if>
+			<if test="modifierId != null">
+				MODIFIER_ID,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedTime != null">
+				MODIFIED_TIME,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+			<if test="workThatDept != null">
+				WORK_THAT_DEPT,
+			</if>
+			<if test="workThatPosition != null">
+				WORK_THAT_POSITION,
+			</if>
+			<if test="workThatTell != null">
+				WORK_THAT_TELL,
+			</if>
+			<if test="personType != null">
+				PERSON_TYPE,
+			</if>
+			<if test="companyType != null">
+				COMPANY_TYPE,
+			</if>
+			 <if test="professionType != null" >
+       			 PROFESSION_TYPE,
+      		</if>
+     		 <if test="maxRepayAmount != null" >
+      			  MAX_REPAY_AMOUNT,
+     		 </if>
+     		 <if test="childrenSchool != null" >
+      			  CHILDREN_SCHOOL,
+      		</if>
+      		<if test="privateEnterpriseType != null" >
+      			  PRIVATE_ENTERPRISE_TYPE,
+      		</if>
+     		 <if test="foundedDate != null" >
+        		FOUNDED_DATE,
+      		</if>
+      		<if test="businessPlace != null" >
+       			 BUSINESS_PLACE,
+      		</if>
+      		<if test="totalEmployees != null" >
+        		TOTAL_EMPLOYEES,
+      		</if>
+      		<if test="ratioOfInvestments != null" >
+       			 RATIO_OF_INVESTMENTS,
+      		</if>
+      		<if test="monthOfProfit != null" >
+       			 MONTH_OF_PROFIT,
+      		</if>
+      		<if test="productType != null" >
+       			 PRODUCT_TYPE,
+      		</if>
+      		<if test="personDebtBalance != null" >
+       			 CUR_DEBTBALANCE,
+      		</if>
+      		<if test="monthRepayAmount != null" >
+       			 MONTH_REPAY_AMOUNT,
+      		</if>
+      		<if test="livingWith != null" >
+       			 LIVING_WITH,
+      		</if>
+      		<if test="incomeSource != null" >
+       			 INCOME_SOURCE,
+      		</if>
+      		<if test="sns != null" >
+       			 SNS,
+      		</if>
+      		<if test="topEducation != null">
+				TOP_EDUCATION,
+			</if>
+			<if test="homeCondition != null">
+				HOME_CONDITION,
+			</if>
+			<if test="monthIncome != null">
+				MONTH_INCOME,
+			</if>
+			<if test="isHaveCarLoan != null">
+				IS_HAVE_CARLOAN,
+			</if>
+			<if test="loanSize != null">
+				LOAN_SIZE,
+			</if>
+			<if test="unitIndustryCategory != null">
+				UNIT_INDUSTRYCATE_GORY,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="sex != null">
+				#{sex},
+			</if>
+			<if test="personNo != null">
+				#{personNo},
+			</if>
+			<if test="companyId != null">
+				#{companyId},
+			</if>
+			<if test="idnum != null">
+				#{idnum},
+			</if>
+			<if test="married != null">
+				#{married},
+			</if>
+			<if test="identifier != null">
+				#{identifier},
+			</if>
+			<if test="educationLevel != null">
+				#{educationLevel},
+			</if>
+			<if test="hasChildren != null">
+				#{hasChildren},
+			</if>
+			<if test="childrenNum != null">
+				#{childrenNum},
+			</if>
+			<if test="zipCode != null">
+				#{zipCode},
+			</if>
+			<if test="witness != null">
+				#{witness},
+			</if>
+			<if test="otherIncome != null">
+				#{otherIncome},
+			</if>
+			<if test="payDate != null">
+				#{payDate},
+			</if>
+			<if test="workNature != null">
+				#{workNature},
+			</if>
+			<if test="job != null">
+				#{job},
+			</if>
+			<if test="deptName != null">
+				#{deptName},
+			</if>
+			<if test="ext != null">
+				#{ext},
+			</if>
+			<if test="placeDomicile != null">
+				#{placeDomicile},
+			</if>
+			<if test="householdZipCode != null">
+				#{householdZipCode},
+			</if>
+			<if test="address != null">
+				#{address},
+			</if>
+			<if test="mobilePhone != null">
+				#{mobilePhone},
+			</if>
+			<if test="email != null">
+				#{email},
+			</if>
+			<if test="homePhone != null">
+				#{homePhone},
+			</if>
+			<if test="houseEstateType != null">
+				#{houseEstateType},
+			</if>
+			<if test="rentPerMonth != null">
+				#{rentPerMonth},
+			</if>
+			<if test="liveType != null">
+				#{liveType},
+			</if>
+			<if test="hasHouseLoan != null">
+				#{hasHouseLoan},
+			</if>
+			<if test="houseEstateAddress != null">
+				#{houseEstateAddress},
+			</if>
+			<if test="incomePerMonth != null">
+				#{incomePerMonth},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="createdTime != null">
+				#{createdTime},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId},
+			</if>
+			<if test="modifier != null">
+				#{modifier},
+			</if>
+			<if test="modifiedTime != null">
+				#{modifiedTime},
+			</if>
+			<if test="version != null">
+				#{version},
+			</if>
+			<if test="workThatDept != null">
+				#{workThatDept},
+			</if>
+			<if test="workThatPosition != null">
+				#{workThatPosition},
+			</if>
+			<if test="workThatTell != null">
+				#{workThatTell},
+			</if>
+			<if test="personType != null">
+				#{personType},				
+			</if>
+			<if test="companyType != null">
+				#{companyType},
+			</if>
+			<if test="professionType != null" >
+       			 #{professionType},
+      		</if>
+      		<if test="maxRepayAmount != null" >
+       			 #{maxRepayAmount},
+      		</if>
+      		<if test="childrenSchool != null" >
+       			 #{childrenSchool},
+      		</if>
+      		<if test="privateEnterpriseType != null" >
+       			 #{privateEnterpriseType},
+      		</if>
+      		<if test="foundedDate != null" >
+       			 #{foundedDate},
+      		</if>
+      		<if test="businessPlace != null" >
+        		#{businessPlace},
+      		</if>
+      		<if test="totalEmployees != null" >
+       		 	#{totalEmployees},
+      		</if>
+      		<if test="ratioOfInvestments != null" >
+       		 	#{ratioOfInvestments},
+      		</if>
+      		<if test="monthOfProfit != null" >
+        		#{monthOfProfit},
+      		</if>
+      		<if test="productType != null" >
+        		#{productType},
+      		</if>
+      		<if test="personDebtBalance != null" >
+       			 #{personDebtBalance},
+      		</if>
+      		<if test="monthRepayAmount != null" >
+       			 #{monthRepayAmount},
+      		</if>
+      		<if test="livingWith != null" >
+       			 #{livingWith},
+      		</if>
+      		<if test="incomeSource != null" >
+       			 #{incomeSource},
+      		</if>
+      		<if test="sns != null" >
+       			 #{sns},
+      		</if>
+      		<if test="topEducation != null">
+				#{topEducation},
+			</if>
+			<if test="homeCondition != null">
+				#{homeCondition},
+			</if>
+			<if test="monthIncome != null">
+				#{monthIncome},
+			</if>
+			<if test="isHaveCarLoan != null">
+				#{isHaveCarLoan},
+			</if>
+			<if test="loanSize != null">
+				#{loanSize},
+			</if>
+			<if test="unitIndustryCategory != null">
+				#{unitIndustryCategory},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="com.ezendai.credit2.apply.vo.PersonVO">
+	UPDATE PERSON
+	<set>
+		<if test="name != null">
+			NAME = #{name},
+		</if>
+		<if test="sex != null">
+			SEX = #{sex},
+		</if>
+		<if test="idnum != null">
+			IDNUM = #{idnum},
+		</if>
+		<if test="married != null">
+			MARRIED = #{married},
+		</if>
+		<if test="identifier != null">
+			IDENTIFIER = #{identifier},
+		</if>
+		<if test="educationLevel != null">
+			EDUCATION_LEVEL = #{educationLevel},
+		</if>
+		<if test="hasChildren != null">
+			HAS_CHILDREN = #{hasChildren},
+		</if>
+		<if test="childrenNum != null">
+			CHILDREN_NUM = #{childrenNum},
+		</if>
+		<if test="householdZipCode != null">
+			HOUSEHOLD_ZIP_CODE = #{householdZipCode},
+		</if>
+		<if test="zipCode != null">
+			ZIP_CODE = #{zipCode},
+		</if>
+		<if test="witness != null">
+			WITNESS = #{witness},
+		</if>
+		<if test="otherIncome != null">
+			OTHER_INCOME = #{otherIncome},
+		</if>
+		<if test="payDate != null">
+			PAY_DATE = #{payDate},
+		</if>
+		<if test="workNature != null">
+			WORK_NATURE = #{workNature},
+		</if>
+		<if test="job != null">
+			JOB = #{job},
+		</if>
+		<if test="deptName != null">
+			DEPT_NAME = #{deptName},
+		</if>
+		<if test="ext != null">
+			EXT = #{ext},
+		</if>
+		<if test="placeDomicile != null">
+			PLACE_DOMICILE = #{placeDomicile},
+		</if>
+		<if test="address != null">
+			ADDRESS = #{address},
+		</if>
+		<if test="mobilePhone != null">
+			MOBILE_PHONE = #{mobilePhone},
+		</if>
+		<if test="email != null">
+			EMAIL = #{email},
+		</if>
+		<if test="homePhone != null">
+			HOME_PHONE = #{homePhone},
+		</if>
+		<if test="houseEstateType != null and houseEstateType !='' ">
+			HOUSE_ESTATE_TYPE = #{houseEstateType},
+		</if>
+		<if test="rentPerMonth != null">
+			RENT_PER_MONTH = #{rentPerMonth},
+		</if>
+		<if test="liveType != null">
+			LIVE_TYPE = #{liveType},
+		</if>
+		<if test="hasHouseLoan != null">
+			HAS_HOUSE_LOAN = #{hasHouseLoan},
+		</if>
+		<if test="houseEstateAddress != null">
+			HOUSE_ESTATE_ADDRESS = #{houseEstateAddress},
+		</if>
+		<if test="incomePerMonth != null">
+			INCOME_PER_MONTH = #{incomePerMonth},
+		</if>
+		<if test="creatorId != null">
+			CREATOR_ID = #{creatorId},
+		</if>
+		<if test="creator != null">
+			CREATOR = #{creator},
+		</if>
+		<if test="createdTime != null">
+			CREATED_TIME = #{createdTime},
+		</if>
+		<if test="modifierId != null">
+			MODIFIER_ID = #{modifierId},
+		</if>
+		<if test="modifier != null">
+			MODIFIER = #{modifier},
+		</if>
+		<if test="modifiedTime != null">
+			MODIFIED_TIME = #{modifiedTime},
+		</if>
+		<if test="companyId != null">
+			COMPANY_ID = #{companyId},
+		</if>
+		<if test="version != null">
+			VERSION = #{version},
+		</if>
+		<if test="workThatDept != null">
+			WORK_THAT_DEPT = #{workThatDept},
+		</if>
+		<if test="workThatPosition != null">
+			WORK_THAT_POSITION = #{workThatPosition},
+		</if>
+		<if test="workThatTell != null">
+			WORK_THAT_TELL = #{workThatTell},
+		</if>
+		<if test="personType != null">
+			PERSON_TYPE = #{personType},
+		</if>
+		<if test="companyType != null">
+			COMPANY_TYPE = #{companyType},
+		</if>
+		<if test="professionType != null" >
+       		 PROFESSION_TYPE = #{professionType},
+      	</if>
+      	<if test="maxRepayAmount != null" >
+       		 MAX_REPAY_AMOUNT = #{maxRepayAmount},
+      	</if>
+      	<if test="childrenSchool != null" >
+       		 CHILDREN_SCHOOL = #{childrenSchool},
+      	</if>
+      	<if test="privateEnterpriseType != null" >
+       		 PRIVATE_ENTERPRISE_TYPE = #{privateEnterpriseType},
+      	</if>
+      	<if test="foundedDate != null" >
+        		FOUNDED_DATE = #{foundedDate},
+      	</if>
+      	<if test="businessPlace != null" >
+       		 BUSINESS_PLACE = #{businessPlace},
+      	</if>
+      	<if test="totalEmployees != null" >
+       		 TOTAL_EMPLOYEES = #{totalEmployees},
+      	</if>
+      	<if test="ratioOfInvestments != null" >
+        		RATIO_OF_INVESTMENTS = #{ratioOfInvestments},
+      	</if>
+      	<if test="monthOfProfit != null" >
+       		 MONTH_OF_PROFIT = #{monthOfProfit},
+      	</if>
+      	<if test="personDebtBalance != null" >
+       		 CUR_DEBTBALANCE = #{personDebtBalance},
+  		</if>
+  		<if test="monthRepayAmount != null" >
+   			 MONTH_REPAY_AMOUNT = #{monthRepayAmount},
+  		</if>
+  		<if test="livingWith != null" >
+       		LIVING_WITH = #{livingWith},
+   		</if>
+   		<if test="incomeSource != null" >
+    		INCOME_SOURCE = #{incomeSource},
+   		</if>
+   		<if test="sns != null" >
+    		SNS = #{sns},
+   		</if>
+   		<if test="ecifID != null" >
+       		ECIFID =  #{ecifID},
+      	</if>      	
+      	<if test="ecifReq != null" >
+       		ECIFREQ =  #{ecifReq},
+      	</if>
+      	
+      	<if test="ecifRes != null" >
+       		ECIFRES =  #{ecifRes},
+      	</if>
+      	<if test="topEducation != null">
+				TOP_EDUCATION = #{topEducation},
+			</if>
+			<if test="homeCondition != null">
+				HOME_CONDITION = #{homeCondition},
+			</if>
+			<if test="monthIncome != null">
+				MONTH_INCOME = #{monthIncome},
+			</if>
+			<if test="isHaveCarLoan != null">
+				IS_HAVE_CARLOAN = #{isHaveCarLoan},
+			</if>
+			<if test="loanSize != null">
+				LOAN_SIZE = #{loanSize},
+			</if>
+			<if test="unitIndustryCategory != null">
+				UNIT_INDUSTRYCATE_GORY = #{unitIndustryCategory},
+			</if>
+	</set>
+	WHERE ID = #{id}
+ 	<if test="version != null">
+		AND VERSION = #{version} -1 
+    </if>  
+</update>
+
+	<select id="count" parameterType="PersonVO" resultType="java.lang.Integer">
+		SELECT count(*) FROM (
+		<include refid="personSelective" />
+		<include refid="personConditions" />
+		)
+	</select>
+	
+	<select id="findWithPG" parameterType="PersonVO" resultMap="personResultMap">
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerStart" />
+		<include refid="personSelective" />
+		<include refid="personConditions" />
+		<include refid="personOrderByConditions" />
+		<include refid="com.ezendai.credit2.mapper.BaseMapper.pagerEnd" />
+	</select>
+</mapper>
